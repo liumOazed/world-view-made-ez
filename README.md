@@ -6,6 +6,8 @@ A map-first command center for understanding a country's economy, its connection
 
 ![ATLAS homepage](docs/screenshots/home.png)
 
+**Live site:** https://liumoazed.github.io/world-view-made-ez/
+
 ## What's here
 
 - **World intelligence map** (D3 + Natural Earth boundaries): six layers (growth, inflation, trade dependency, financial exposure, geopolitical pressure, influence & leverage). Color always means the selected metric, and the legend updates with it. Zoom, pan, hover, click.
@@ -20,6 +22,8 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # type-check + production build
 ```
+
+Every push to `main` builds and deploys to GitHub Pages via `.github/workflows/deploy.yml`.
 
 Press `/` to jump to search.
 
