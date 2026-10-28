@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { buildProfiles } from './data/countries';
 import { LAYER_BY_ID, type LayerId } from './data/layers';
 import { COUNTRY_FEATURES } from './geo';
@@ -17,18 +18,21 @@ export default function App() {
   const [layerId, setLayerId] = useState<LayerId>('growth');
   const [selected, setSelected] = useState<string | null>(null);
   const [tab, setTab] = useState<CountryTab>('overview');
+  const [panelOpen, setPanelOpen] = useState(true);
   const layer = LAYER_BY_ID[layerId];
   const country = selected ? profiles.get(selected) : undefined;
 
   const select = useCallback((name: string | null) => {
     setSelected(name);
-    if (!name) setTab('overview');
+    if (name) setPanelOpen(true);
+    else setTab('overview');
   }, []);
 
   const onExplore = (a: ExploreAction) => {
     const target = selected ?? 'Bangladesh';
     if (a === 'connections') setLayerId('leverage');
     setSelected(target);
+    setPanelOpen(true);
     setTab(a === 'connections' ? 'trade' : a === 'compare' ? 'economy' : 'risk');
     document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -38,7 +42,7 @@ export default function App() {
       <div className="bg-aurora" aria-hidden="true" />
       <Header profiles={profiles} onSelect={select} />
 
-      <main id="atlas-main" className="main">
+      <main id="atlas-main" className={`main${panelOpen ? '' : ' panel-collapsed'}`}>
         <section className="stage" aria-label="World intelligence map">
           <div className="stage-head">
             <div>
@@ -66,20 +70,45 @@ export default function App() {
           <RegionStrip />
         </section>
 
-        <aside className={`side-panel${country ? ' is-country' : ''}`} aria-live="polite">
-          {country ? (
-            <CountryPanel
-              country={country}
-              profiles={profiles}
-              tab={tab}
-              onTab={setTab}
-              onSelect={select}
-              onClose={() => select(null)}
-            />
+        <div className="panel-wrap">
+          <button
+            type="button"
+            className="panel-handle"
+            aria-expanded={panelOpen}
+            aria-controls="side-panel"
+            aria-label={panelOpen ? 'Collapse side panel' : 'Expand side panel'}
+            title={panelOpen ? 'Collapse panel' : 'Expand panel'}
+            onClick={() => setPanelOpen((o) => !o)}
+          >
+            {panelOpen ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
+          {panelOpen ? (
+            <aside id="side-panel" className={`side-panel${country ? ' is-country' : ''}`} aria-live="polite">
+              {country ? (
+                <CountryPanel
+                  country={country}
+                  profiles={profiles}
+                  tab={tab}
+                  onTab={setTab}
+                  onSelect={select}
+                  onClose={() => select(null)}
+                />
+              ) : (
+                <GlobalOverview onSelect={select} />
+              )}
+            </aside>
           ) : (
-            <GlobalOverview onSelect={select} />
+            <button
+              type="button"
+              id="side-panel"
+              className="panel-rail"
+              onClick={() => setPanelOpen(true)}
+              aria-label="Expand side panel"
+            >
+              <span>{country ? country.display : 'Global overview'}</span>
+            </button>
           )}
-        </aside>
+        </div>
       </main>
 
       <Explore onAction={onExplore} />
