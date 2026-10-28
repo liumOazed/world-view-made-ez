@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { geoDistance, geoGraticule10, geoNaturalEarth1, geoOrthographic, geoPath, type GeoProjection } from 'd3-geo';
 import { Crosshair, Globe2, Map as MapIcon, Minus, Pause, Play, Plus } from 'lucide-react';
-import { LINK_META, type CountryProfile } from '../data/countries';
+import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import type { CountryFeature } from '../geo';
@@ -12,6 +12,15 @@ interface Props {
   layer: Layer;
   selected: string | null;
   onSelect: (name: string | null) => void;
+  /** Connections to draw from the selected country. Empty hides them. */
+  links: MapLink[];
+}
+
+export interface MapLink {
+  name: string;
+  color: string;
+  /** Relative strength, roughly 0–100; sets line width. */
+  weight: number;
 }
 
 type Mode = 'globe' | 'flat';
@@ -47,7 +56,7 @@ const SPIN_DEG_PER_MS = 0.005;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
-export function WorldMap({ features, profiles, layer, selected, onSelect }: Props) {
+export function WorldMap({ features, profiles, layer, selected, onSelect, links }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [size, setSize] = useState({ w: 960, h: 520 });
@@ -174,6 +183,19 @@ export function WorldMap({ features, profiles, layer, selected, onSelect }: Prop
     return () => cancelAnimationFrame(raf);
   }, [mode, spin, selected, dragging, pointerInside, reduceMotion]);
 
+  // Back to the whole world when the selection is cleared.
+  const hadSelection = useRef(false);
+  useEffect(() => {
+    if (selected) {
+      hadSelection.current = true;
+      return;
+    }
+    if (!hadSelection.current) return;
+    hadSelection.current = false;
+    if (mode === 'globe') setSpin(true);
+    animateTo({ k: 1, ty: 0, ...(mode === 'globe' ? { phi: GLOBE_START.phi } : {}) }, 700);
+  }, [selected, mode, animateTo]);
+
   // Turn the globe to face the selected country.
   useEffect(() => {
     if (mode !== 'globe' || !selected) return;
@@ -295,32 +317,31 @@ export function WorldMap({ features, profiles, layer, selected, onSelect }: Prop
 
   /* ---------- selection & connections ---------- */
 
-  const profile = selected ? profiles.get(selected) : undefined;
-  const related = useMemo(() => new Set(profile?.partners.map((p) => p.name) ?? []), [profile]);
+  const related = useMemo(() => new Set(selected ? links.map((l) => l.name) : []), [selected, links]);
 
   const arcs = useMemo(() => {
-    if (!profile) return [];
-    const from = anchors.get(profile.name);
+    if (!selected) return [];
+    const from = anchors.get(selected);
     if (!from) return [];
-    return profile.partners.flatMap((p, i) => {
-      const to = anchors.get(p.name);
+    return links.flatMap((l, i) => {
+      const to = anchors.get(l.name);
       if (!to) return [];
       const d = path({ type: 'LineString', coordinates: [from, to] });
       if (!d) return [];
       return [
         {
-          key: `${p.name}-${p.kind}-${i}`,
+          key: `${l.name}-${l.color}-${i}`,
           d,
-          color: LINK_META[p.kind].color,
+          color: l.color,
           end: visible(to) ? project(to) : null,
-          width: 0.9 + p.share / 28,
-          delay: i * 0.12,
+          width: Math.min(4, 0.9 + l.weight / 28),
+          delay: i * 0.1,
         },
       ];
     });
-  }, [profile, anchors, path, project, visible]);
+  }, [selected, links, anchors, path, project, visible]);
 
-  const originAnchor = profile ? anchors.get(profile.name) : undefined;
+  const originAnchor = selected ? anchors.get(selected) : undefined;
   const origin = originAnchor && visible(originAnchor) ? project(originAnchor) : null;
 
   /* ---------- rendering helpers ---------- */

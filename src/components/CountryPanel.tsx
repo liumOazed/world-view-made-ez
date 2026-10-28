@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight, Info, MoveRight, X } from 'lucide-react';
 import { history, LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
+import { INFLUENCE_COLOR, INFLUENCE_LABEL, type InfluenceLink, type TradeLink } from '../data/connections';
 import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
 import { Flag } from './Flag';
 import { Sparkline } from './Sparkline';
@@ -22,9 +23,11 @@ interface Props {
   onTab: (t: CountryTab) => void;
   onSelect: (name: string) => void;
   onClose: () => void;
+  trade: TradeLink[];
+  influence: InfluenceLink[];
 }
 
-export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose }: Props) {
+export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose, trade, influence }: Props) {
   const nameOf = (n: string) => profiles.get(n)?.display ?? n;
   return (
     <div className="panel-body fade-in" key={country.name}>
@@ -66,7 +69,9 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose 
       <div className="tab-body" key={tab}>
         {tab === 'overview' && <Overview c={country} nameOf={nameOf} onTab={onTab} onSelect={onSelect} />}
         {tab === 'economy' && <Economy c={country} />}
-        {tab === 'trade' && <Connections c={country} nameOf={nameOf} onSelect={onSelect} />}
+        {tab === 'trade' && (
+          <Connections c={country} trade={trade} influence={influence} nameOf={nameOf} onSelect={onSelect} />
+        )}
         {tab === 'risk' && <Risk c={country} nameOf={nameOf} />}
         {tab === 'news' && <News c={country} />}
       </div>
@@ -271,11 +276,22 @@ function Economy({ c }: { c: CountryProfile }) {
 
 const KIND_ORDER: LinkKind[] = ['exports', 'imports', 'energy', 'food', 'tech', 'capital', 'people'];
 
-function Connections({ c, nameOf, onSelect }: { c: CountryProfile; nameOf: (n: string) => string; onSelect: (n: string) => void }) {
+function Connections({
+  c,
+  trade,
+  influence,
+  nameOf,
+  onSelect,
+}: {
+  c: CountryProfile;
+  trade: TradeLink[];
+  influence: InfluenceLink[];
+  nameOf: (n: string) => string;
+  onSelect: (n: string) => void;
+}) {
   const groups = useMemo(
-    () =>
-      KIND_ORDER.map((k) => ({ kind: k, items: c.partners.filter((p) => p.kind === k) })).filter((g) => g.items.length),
-    [c],
+    () => KIND_ORDER.map((k) => ({ kind: k, items: trade.filter((p) => p.kind === k) })).filter((g) => g.items.length),
+    [trade],
   );
   return (
     <>
@@ -285,6 +301,10 @@ function Connections({ c, nameOf, onSelect }: { c: CountryProfile; nameOf: (n: s
           <p>{c.leverageNote}</p>
         </div>
       )}
+      <div className="section-title">
+        <h3>Top {trade.length} trade connections</h3>
+        <span className="pill">By sector</span>
+      </div>
       <div className="conn-groups">
         {groups.map((g) => (
           <div key={g.kind} className="conn-group">
@@ -307,6 +327,29 @@ function Connections({ c, nameOf, onSelect }: { c: CountryProfile; nameOf: (n: s
       <p className="footnote">
         <Info size={12} /> Click a partner to open its profile. Connections work in both directions.
       </p>
+      <section className="panel-section">
+        <div className="section-title">
+          <h3>Who {c.display} influences most</h3>
+          <span className="pill">Top {influence.length}</span>
+        </div>
+        {influence.map((l, i) => (
+          <button key={l.name} type="button" className="conn-row" onClick={() => onSelect(l.name)}>
+            <span className="conn-name">
+              <span className="rank">{i + 1}</span>
+              {nameOf(l.name)}
+            </span>
+            <span className="conn-verb">{INFLUENCE_LABEL[l.kind]}</span>
+            <span className="bar">
+              <span style={{ width: `${l.score}%`, background: INFLUENCE_COLOR }} />
+            </span>
+            <span className="conn-share">{l.score}</span>
+          </button>
+        ))}
+        <p className="footnote">
+          <Info size={12} /> Relative influence score (strongest = 100), based on how much each country depends on{' '}
+          {c.display}. Illustrative.
+        </p>
+      </section>
       <section className="panel-section">
         <div className="section-title">
           <h3>Notable companies & sectors</h3>

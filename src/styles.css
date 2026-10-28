@@ -1786,3 +1786,117 @@ a:focus-visible {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ---------- selection bar & connection keys ---------- */
+
+.selection-bar {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 24px);
+  padding: 5px 6px 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  background: var(--glass-strong);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  animation: fade-in 0.3s ease both;
+  z-index: 3;
+}
+.selection-bar strong {
+  font-size: 13px;
+}
+.selection-sep {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--line-strong);
+}
+.selection-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.selection-bar button:hover {
+  color: var(--text);
+  background: rgba(148, 197, 255, 0.08);
+}
+.selection-bar button.is-active {
+  color: var(--text);
+  border-color: rgba(94, 234, 212, 0.35);
+  background: rgba(94, 234, 212, 0.1);
+}
+.selection-bar .selection-reset {
+  color: #04121f;
+  background: linear-gradient(90deg, var(--teal), var(--sky));
+  font-weight: 600;
+}
+.selection-bar .selection-reset:hover {
+  color: #04121f;
+  background: linear-gradient(90deg, #99f6e4, #7dd3fc);
+}
+
+.legend.has-keys {
+  width: 290px;
+}
+.legend-keys {
+  margin-top: 10px;
+}
+.legend-keys ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.legend-keys li {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend-swatch {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  flex: none;
+}
+.rank {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5d0fe;
+  background: rgba(232, 121, 249, 0.15);
+}
+
+@media (max-width: 720px) {
+  .selection-bar {
+    top: auto;
+    bottom: 8px;
+  }
+  .selection-bar strong,
+  .selection-bar .flag,
+  .selection-sep {
+    display: none;
+  }
+}
