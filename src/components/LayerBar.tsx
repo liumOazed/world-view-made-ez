@@ -33,9 +33,14 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
   );
 }
 
-export function Legend({ layer }: { layer: Layer }) {
+export interface LegendKey {
+  label: string;
+  color: string;
+}
+
+export function Legend({ layer, keyTitle, keys }: { layer: Layer; keyTitle?: string; keys?: LegendKey[] }) {
   return (
-    <div className="legend" aria-live="polite">
+    <div className={`legend${keys?.length ? ' has-keys' : ''}`} aria-live="polite">
       <div className="legend-head">
         <span className="eyebrow">Selected metric</span>
         <strong>{layer.metric}</strong>
@@ -51,7 +56,21 @@ export function Legend({ layer }: { layer: Layer }) {
         <span>{layer.low}</span>
         <span>{layer.high}</span>
       </div>
-      <p className="legend-desc">{layer.description}</p>
+      {keys?.length ? (
+        <div className="legend-keys">
+          <span className="eyebrow">{keyTitle}</span>
+          <ul>
+            {keys.map((k) => (
+              <li key={k.label}>
+                <span className="legend-swatch" style={{ background: k.color, boxShadow: `0 0 8px ${k.color}` }} />
+                {k.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="legend-desc">{layer.description}</p>
+      )}
     </div>
   );
 }
