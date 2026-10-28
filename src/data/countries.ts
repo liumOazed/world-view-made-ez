@@ -130,6 +130,7 @@ const ROWS: Row[] = [
   ['Vietnam', 'Vietnam', 'VN', 'Asia', 480, 4700, 6.8, 3.4, 2.2, 34, -3.5, 4.5, 175, 50, 40, 55, true, 45, 3],
   ['Thailand', 'Thailand', 'TH', 'Asia', 530, 7500, 2.5, 0.3, 1.0, 64, -4.0, 2.0, 120, 40, 40, 45, true, 30, 8],
   ['Malaysia', 'Malaysia', 'MY', 'Asia', 420, 12500, 4.5, 1.5, 3.2, 69, -4.0, 1.5, 135, 45, 30, 65, false, 35, 5],
+  ['Singapore', 'Singapore', 'SG', 'Asia', 550, 90000, 2.5, 2.0, 2.0, 170, 3.0, 18.0, 320, 25, 20, 82, true, 30, 7],
   ['Indonesia', 'Indonesia', 'ID', 'Asia', 1400, 5100, 5.0, 1.9, 4.8, 40, -2.5, -0.8, 40, 45, 30, 60, false, 35, 6],
   ['Philippines', 'Philippines', 'PH', 'Asia', 460, 4000, 5.7, 2.0, 4.0, 60, -5.5, -3.0, 70, 45, 45, 35, true, 40, 7],
   ['South Korea', 'South Korea', 'KR', 'Asia', 1800, 35000, 1.5, 2.1, 2.8, 53, -1.5, 4.5, 85, 40, 45, 80, true, 30, 7],
@@ -266,6 +267,11 @@ const PARTNERS: Record<string, Partner[]> = {
     { name: US, kind: 'capital', share: 30 }, { name: 'Brazil', kind: 'imports', share: 24 },
     { name: 'Chile', kind: 'energy', share: 10 },
   ],
+  Singapore: [
+    { name: 'China', kind: 'exports', share: 14 }, { name: US, kind: 'exports', share: 11 },
+    { name: 'Malaysia', kind: 'imports', share: 12 }, { name: 'Qatar', kind: 'energy', share: 25 },
+    { name: 'Taiwan', kind: 'tech', share: 20 }, { name: US, kind: 'capital', share: 20 },
+  ],
   Australia: [
     { name: 'China', kind: 'exports', share: 33 }, { name: 'Japan', kind: 'exports', share: 13 },
     { name: 'South Korea', kind: 'exports', share: 8 }, { name: 'Malaysia', kind: 'energy', share: 15 },
@@ -316,6 +322,11 @@ const COMPANIES: Record<string, Company[]> = {
     { name: 'SABIC', sector: 'Chemicals', note: 'Petrochemicals' },
     { name: 'Al Rajhi Bank', sector: 'Financials', note: 'Islamic banking' },
   ],
+  Singapore: [
+    { name: 'DBS', sector: 'Financials', note: 'Largest Southeast Asian bank' },
+    { name: 'PSA International', sector: 'Logistics', note: 'Port operator, transshipment' },
+    { name: 'Singapore Airlines', sector: 'Transport', note: 'Regional aviation hub' },
+  ],
   Netherlands: [
     { name: 'ASML', sector: 'Semiconductors', note: 'Lithography monopoly' },
     { name: 'Port of Rotterdam', sector: 'Logistics', note: "Europe's largest port" },
@@ -336,6 +347,7 @@ const LEVERAGE_NOTES: Record<string, string> = {
   China: 'Dominates refining of critical minerals and many manufacturing supply chains.',
   'United States of America': 'Issuer of the main reserve currency; dollar funding sets global conditions.',
   Chile: 'Large copper and lithium producer, key inputs for electrification.',
+  Singapore: 'Transshipment hub on the Strait of Malacca and one of Asia’s main financial and refining centres.',
   Malaysia: 'Sits on the Strait of Malacca and is a hub for chip packaging and testing.',
   Panama: 'Operates the Panama Canal linking Atlantic and Pacific trade.',
   'Dem. Rep. Congo': 'Supplies most of the world’s mined cobalt.',

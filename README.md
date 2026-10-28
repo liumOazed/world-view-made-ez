@@ -10,8 +10,9 @@ A map-first command center for understanding a country's economy, its connection
 
 ## What's here
 
-- **World intelligence map** (D3 + Natural Earth boundaries): six layers (growth, inflation, trade dependency, financial exposure, geopolitical pressure, influence & leverage). Color always means the selected metric, and the legend updates with it. Zoom, pan, hover, click.
+- **World intelligence map** (D3 + Natural Earth boundaries): a drag-to-spin 3D globe or a flat map you can pan, with scroll/button/keyboard zoom. Small states such as Singapore, Hong Kong and Bahrain are added from the 50m dataset (`npm run extract:small-countries`) and get clickable markers. Six layers (growth, inflation, trade dependency, financial exposure, geopolitical pressure, influence & leverage). Color always means the selected metric, and the legend updates with it. Zoom, pan, hover, click.
 - **Country intelligence panel**: opens on click or search. Tabs for Overview, Economy (with direction of travel), Connections (who supplies, buys, lends, powers it; click to jump), Risk (Exposure / Vulnerability / Resilience kept separate, plus a what-if shock explorer showing transmission pathways), and News (verified vs developing vs online sentiment).
+- **Collapsible side panel**: hide it to give the map the full width.
 - **Global overview**: four headline signals with trends, developing stories, and systemic chokepoints.
 - **Explore**: Compare, Connections, Risk & contagion, Shock scenarios.
 
