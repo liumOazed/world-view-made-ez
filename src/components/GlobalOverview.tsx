@@ -1,6 +1,6 @@
 import { Anchor, ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { CHOKEPOINTS, GLOBAL_KPIS, STORIES } from '../data/global';
-import { Sparkline } from './Sparkline';
+import { Sparkline, TREND_BAD, TREND_GOOD } from './Sparkline';
 
 export function GlobalOverview({ onSelect }: { onSelect: (name: string) => void }) {
   return (
@@ -28,7 +28,7 @@ export function GlobalOverview({ onSelect }: { onSelect: (name: string) => void 
                 </div>
                 <div className="kpi-note">{k.note}</div>
               </div>
-              <Sparkline values={k.series} color={k.good ? '#5eead4' : '#fb7185'} />
+              <Sparkline values={k.series} color={k.good ? TREND_GOOD : TREND_BAD} />
             </div>
           );
         })}

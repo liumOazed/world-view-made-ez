@@ -1,14 +1,14 @@
 import { ArrowUpRight, ChartColumn, Waypoints, ShieldAlert, Zap, type LucideIcon } from 'lucide-react';
 import { REGIONS } from '../data/global';
-import { Sparkline } from './Sparkline';
+import { Sparkline, TREND_NEUTRAL } from './Sparkline';
 
 export type ExploreAction = 'compare' | 'connections' | 'risk' | 'shock';
 
-const CARDS: { id: ExploreAction; title: string; body: string; tags: string; icon: LucideIcon; hue: string }[] = [
-  { id: 'compare', title: 'Compare', body: 'Put countries and regions side by side and see how they diverge over time.', tags: 'Countries · Regions', icon: ChartColumn, hue: '#38bdf8' },
-  { id: 'connections', title: 'Connections', body: 'Trace who supplies, buys, lends and powers whom, in both directions.', tags: 'Trade · Credit · Energy', icon: Waypoints, hue: '#a78bfa' },
-  { id: 'risk', title: 'Risk & contagion', body: 'Separate exposure, vulnerability and resilience, with the evidence behind each.', tags: 'Exposure · Buffers', icon: ShieldAlert, hue: '#fb7185' },
-  { id: 'shock', title: 'Shock scenarios', body: 'What if oil jumps 30% or a key market slumps? Follow the transmission channels.', tags: 'What-if · Pathways', icon: Zap, hue: '#fbbf24' },
+const CARDS: { id: ExploreAction; title: string; body: string; tags: string; icon: LucideIcon }[] = [
+  { id: 'compare', title: 'Compare', body: 'Put countries and regions side by side and see how they diverge over time.', tags: 'Countries · Regions', icon: ChartColumn },
+  { id: 'connections', title: 'Connections', body: 'Trace who supplies, buys, lends and powers whom, in both directions.', tags: 'Trade · Credit · Energy', icon: Waypoints },
+  { id: 'risk', title: 'Risk & contagion', body: 'Separate exposure, vulnerability and resilience, with the evidence behind each.', tags: 'Exposure · Buffers', icon: ShieldAlert },
+  { id: 'shock', title: 'Shock scenarios', body: 'What if oil jumps 30% or a key market slumps? Follow the transmission channels.', tags: 'What-if · Pathways', icon: Zap },
 ];
 
 export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) {
@@ -25,7 +25,7 @@ export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) 
       </div>
       <div className="explore-cards">
         {CARDS.map((c) => (
-          <button key={c.id} type="button" className="explore-card" style={{ ['--hue' as string]: c.hue }} onClick={() => onAction(c.id)}>
+          <button key={c.id} type="button" className="explore-card" onClick={() => onAction(c.id)}>
             <span className="explore-icon">
               <c.icon size={20} />
             </span>
@@ -44,22 +44,20 @@ export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) 
 
 export function RegionStrip() {
   return (
-    <div className="region-strip">
+    <div className="region-strip" aria-label="Regional overview">
       {REGIONS.map((r) => (
         <div key={r.name} className="region-card">
-          <div className="region-name">
-            <span className="region-dot" style={{ background: r.color, boxShadow: `0 0 10px ${r.color}` }} />
-            {r.name}
-          </div>
-          <div className="region-body">
-            <div>
-              <div className="region-gdp">{r.gdp}</div>
-              <div className="region-growth">
-                <ArrowUpRight size={12} /> {r.growth.toFixed(1)}% growth
-              </div>
+          <div>
+            <div className="region-name">{r.name}</div>
+            <div className="region-figures">
+              <span className="region-gdp">{r.gdp}</span>
+              <span className="region-growth">
+                <ArrowUpRight size={11} />
+                {r.growth.toFixed(1)}%
+              </span>
             </div>
-            <Sparkline values={r.series} color={r.color} width={56} height={24} />
           </div>
+          <Sparkline values={r.series} color={TREND_NEUTRAL} width={44} height={18} />
         </div>
       ))}
     </div>

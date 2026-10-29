@@ -5,7 +5,7 @@ import { INFLUENCE_COLOR, INFLUENCE_LABEL, type InfluenceLink, type TradeLink } 
 import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
 import { Flag } from './Flag';
 import { ScorecardTab } from './Scorecard';
-import { Sparkline } from './Sparkline';
+import { Sparkline, TREND_BAD, TREND_GOOD, TREND_NEUTRAL } from './Sparkline';
 
 export type CountryTab = 'overview' | 'scorecard' | 'economy' | 'trade' | 'risk' | 'news';
 
@@ -47,10 +47,10 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose,
       </div>
 
       <div className="illustrative-note">
-        <Info size={13} />
+        <Info size={12} />
         {country.curated
-          ? 'Illustrative values for layout. Not live, not sourced.'
-          : 'Generated placeholder values. Not live, not sourced.'}
+          ? 'Illustrative values · not live, not sourced'
+          : 'Generated placeholder values · not live, not sourced'}
       </div>
 
       <div className="tabs" role="tablist">
@@ -101,23 +101,52 @@ interface MetricProps {
   words: { up: string; down: string; flat: string };
 }
 
-function Metric({ label, value, sub, series, upIsGood, words }: MetricProps) {
+function Trend({ series, upIsGood, words, width = 52 }: Pick<MetricProps, 'series' | 'upIsGood' | 'words'> & { width?: number }) {
   const t = trendOf(series);
   const good = t === 'flat' || upIsGood === null ? null : (t === 'up') === upIsGood;
-  const color = good === null ? '#7dd3fc' : good ? '#5eead4' : '#fb7185';
+  const color = good === null ? TREND_NEUTRAL : good ? TREND_GOOD : TREND_BAD;
   const Arrow = t === 'up' ? ArrowUpRight : t === 'down' ? ArrowDownRight : MoveRight;
+  return (
+    <div className="metric-foot">
+      <span className="metric-trend" style={{ color }}>
+        <Arrow size={12} />
+        {words[t]}
+      </span>
+      <Sparkline values={series} color={color} width={width} height={18} />
+    </div>
+  );
+}
+
+function Metric({ label, value, sub, ...trend }: MetricProps) {
   return (
     <div className="metric">
       <div className="metric-label">{label}</div>
       <div className="metric-value">{value}</div>
-      <div className="metric-foot">
-        <span className="metric-trend" style={{ color }}>
-          <Arrow size={13} />
-          {words[t]}
-        </span>
-        <Sparkline values={series} color={color} width={64} height={22} />
-      </div>
+      <Trend {...trend} />
       <div className="metric-sub">{sub}</div>
+    </div>
+  );
+}
+
+/** GDP and GDP growth lead every country view; everything else is secondary. */
+function PrimaryMetrics({ c }: { c: CountryProfile }) {
+  return (
+    <div className="metric-primary">
+      <div>
+        <div className="pm-label">GDP</div>
+        <div className="pm-value">{fmtGdp(c.gdp)}</div>
+        <div className="metric-sub">Nominal · ${c.gdpPc.toLocaleString('en-US')} per person</div>
+      </div>
+      <div>
+        <div className="pm-label">GDP growth</div>
+        <div className="pm-value">{signed(c.growth)}</div>
+        <Trend
+          series={history(c.name + 'g', c.growth, 2)}
+          upIsGood
+          words={{ up: 'Accelerating', down: 'Slowing', flat: 'Steady' }}
+          width={60}
+        />
+      </div>
     </div>
   );
 }
@@ -142,15 +171,9 @@ function Overview({
   const exposure = risk[0];
   return (
     <>
+      <PrimaryMetrics c={c} />
+      <div className="group-label">Other indicators</div>
       <div className="metric-grid">
-        <Metric
-          label="GDP growth"
-          value={signed(c.growth)}
-          sub="Real, year over year"
-          series={history(c.name + 'g', c.growth, 2)}
-          upIsGood
-          words={{ up: 'Accelerating', down: 'Slowing', flat: 'Steady' }}
-        />
         <Metric
           label="Inflation"
           value={`${c.inflation.toFixed(1)}%`}
@@ -158,6 +181,14 @@ function Overview({
           series={history(c.name + 'i', c.inflation, Math.max(1, c.inflation / 3))}
           upIsGood={false}
           words={{ up: 'Accelerating', down: 'Easing', flat: 'Stable' }}
+        />
+        <Metric
+          label="Public debt"
+          value={`${Math.round(c.debt)}%`}
+          sub="General government, % GDP"
+          series={history(c.name + 'd', c.debt, 6)}
+          upIsGood={false}
+          words={{ up: 'Rising', down: 'Falling', flat: 'Stabilizing' }}
         />
         <Metric
           label="Current account"
@@ -176,6 +207,7 @@ function Overview({
           <div className="metric-sub">Dependencies to investigate</div>
         </div>
       </div>
+
 
       <section className="panel-section">
         <div className="section-title">
@@ -251,18 +283,9 @@ function invert(level: string) {
 function Economy({ c }: { c: CountryProfile }) {
   return (
     <>
-      <div className="headline-stats">
-        <div>
-          <span className="muted">GDP (nominal)</span>
-          <strong>{fmtGdp(c.gdp)}</strong>
-        </div>
-        <div>
-          <span className="muted">GDP per capita</span>
-          <strong>${c.gdpPc.toLocaleString('en-US')}</strong>
-        </div>
-      </div>
+      <PrimaryMetrics c={c} />
+      <div className="group-label">Other indicators</div>
       <div className="metric-grid">
-        <Metric label="GDP growth" value={signed(c.growth)} sub="Real, y/y" series={history(c.name + 'g', c.growth, 2)} upIsGood words={{ up: 'Accelerating', down: 'Slowing', flat: 'Steady' }} />
         <Metric label="Inflation" value={`${c.inflation.toFixed(1)}%`} sub="Consumer prices, y/y" series={history(c.name + 'i', c.inflation, Math.max(1, c.inflation / 3))} upIsGood={false} words={{ up: 'Accelerating', down: 'Easing', flat: 'Stable' }} />
         <Metric label="Unemployment" value={`${c.unemployment.toFixed(1)}%`} sub="Of labor force" series={history(c.name + 'u', c.unemployment, 1)} upIsGood={false} words={{ up: 'Rising', down: 'Falling', flat: 'Stable' }} />
         <Metric label="Public debt" value={`${Math.round(c.debt)}%`} sub="General government, % GDP" series={history(c.name + 'd', c.debt, 6)} upIsGood={false} words={{ up: 'Rising', down: 'Falling', flat: 'Stabilizing' }} />
