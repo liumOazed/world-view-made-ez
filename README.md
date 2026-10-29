@@ -19,7 +19,7 @@ Figures come from open sources fetched by scheduled GitHub Actions; every value 
 
 | Job | Script | Writes | Sources |
 |---|---|---|---|
-| `refresh-sections.yml` (weekly) | `scripts/fetch-sections.mjs` | `src/data/sections.json` | IMF WEO (DataMapper), World Bank WDI (incl. ILO, SIPRI, UCDP, WGI, debt statistics), BIS policy rates, OWID energy, Fragile States Index, INFORM Risk |
+| `refresh-sections.yml` (weekly) | `scripts/fetch-sections.mjs` | `src/data/sections.json` | IMF WEO (DataMapper), World Bank WDI (incl. ILO, SIPRI, UCDP, WGI, debt statistics), BIS policy rates, OWID energy, Fragile States Index, ND-GAIN |
 | `refresh-trade.yml` | `scripts/fetch-trade.mjs` | `src/data/trade.json` | UN Comtrade |
 | `refresh-fbic.yml` | `scripts/fetch-fbic.mjs` | `src/data/influence.json` | FBIC Index (Pardee) |
 | `refresh-indices.yml` | `scripts/fetch-indices.mjs` | `src/data/indices.json` | Scorecard indices |

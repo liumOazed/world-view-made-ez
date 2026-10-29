@@ -217,7 +217,7 @@ export default function App() {
       <footer className="footer">
         <p>
           <strong>About the data.</strong> The seven sections draw on the IMF World Economic Outlook, World Bank (with ILO, SIPRI,
-          UCDP and debt statistics), BIS, Our World in Data, the Fragile States Index, the INFORM Risk Index, UN Comtrade and the
+          UCDP and debt statistics), BIS, Our World in Data, the Fragile States Index, the ND-GAIN climate index, UN Comtrade and the
           FBIC Index, refreshed by scheduled jobs. Every value shows its year, and anything not fetched yet says so. The News
           tab and the developing-story text are still illustrative.
         </p>

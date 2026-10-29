@@ -6,7 +6,7 @@
  * Sources: IMF World Economic Outlook (DataMapper API), World Bank WDI (which
  * also republishes ILO, SIPRI, WGI and International Debt Statistics series),
  * BIS policy rates, Our World in Data energy data, the Fragile States Index
- * workbook and the INFORM Risk Index. Each indicator keeps the latest value per
+ * workbook and the ND-GAIN climate index. Each indicator keeps the latest value per
  * country with its year; IMF series also keep a short history and forecast.
  * Indicators that fail keep their previous values, so one broken download never
  * blanks a section. Needs internet access, which CI has; see
@@ -14,6 +14,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import ExcelJS from 'exceljs';
+import JSZip from 'jszip';
 import { isoCountries, mapCountries } from './lib/map-countries.mjs';
 
 const OUT = new URL('../src/data/sections.json', import.meta.url);
@@ -36,7 +37,7 @@ const SOURCES = {
   bis: { name: 'BIS central bank policy rates', licence: 'Free with attribution', url: 'https://data.bis.org/topics/CBPOL' },
   owid: { name: 'Energy Institute Statistical Review via Our World in Data', licence: 'CC BY 4.0', url: 'https://github.com/owid/energy-data' },
   fsi: { name: 'Fragile States Index (Fund for Peace)', licence: 'Non-commercial, with attribution', url: 'https://fragilestatesindex.org/' },
-  inform: { name: 'INFORM Risk Index (European Commission JRC)', licence: 'CC BY 4.0', url: 'https://drmkc.jrc.ec.europa.eu/inform-index' },
+  ndgain: { name: 'ND-GAIN Country Index (University of Notre Dame)', licence: 'Free with attribution', url: 'https://gain.nd.edu/our-work/country-index/' },
 };
 
 /** IMF DataMapper series: id -> [code, label, unit]. */
@@ -310,59 +311,36 @@ async function fsiColumn(match) {
 }
 
 /**
- * INFORM Risk Index: find the newest release's workflow, then pull every
- * indicator country by country (the API returns nothing for an all-country
- * query). Scores are cached so the four indicators share one pass.
+ * ND-GAIN Country Index (University of Notre Dame): one zip of wide CSVs
+ * (ISO3, Name, then one column per year). The zip's name changes each year,
+ * so it is read from the download page.
  */
-const INFORM_API = 'https://drmkc.jrc.ec.europa.eu/inform-index/API/InformAPI';
-let informScores;
-async function inform(indicator) {
-  if (!informScores) {
-    let flow;
-    for (const year of [THIS_YEAR + 1, THIS_YEAR, THIS_YEAR - 1]) {
-      const list = await get(`${INFORM_API}/workflows/GetByWorkflowGroup/INFORM${year}`, 'json').catch(() => []);
-      const flows = (Array.isArray(list) ? list : []).filter((w) => w.WorkflowId);
-      if (!flows.length) continue;
-      flow = { ...flows.sort((a, b) => b.WorkflowId - a.WorkflowId)[0], year };
-      console.log(`  INFORM${year} workflow ${flow.WorkflowId} (${flow.Name ?? ''})`);
-      break;
-    }
-    if (!flow) throw new Error('No INFORM workflow found');
-    // Log what a few query shapes return, so a changed API is easy to diagnose.
-    for (const q of [
-      `countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=AFG`,
-      `countries/Scores/?WorkflowId=${flow.WorkflowId}&IndicatorId=INFORM&Iso3=AFG`,
-      `Countries/Scores/?WorkflowId=${flow.WorkflowId}&IndicatorId=INFORM`,
-      `countries/Scores?workflowId=${flow.WorkflowId}&iso3=AFG`,
-    ]) {
-      const res = await fetch(`${INFORM_API}/${q}`, { headers: UA, signal: AbortSignal.timeout(20000) }).catch((e) => ({ status: e.message, text: async () => '' }));
-      console.log(`  ${q} -> ${res.status} ${(await res.text()).slice(0, 200)}`);
-    }
-    informScores = new Map();
-    const isos = [...new Set(mapCountries().values())];
-    let logged = false;
-    let misses = 0;
-    for (let i = 0; i < isos.length; i += 8) {
-      // One try per country: the API is slow, and a run must finish in minutes.
-      if (i >= 40 && misses > i * 0.8) throw new Error(`INFORM returned nothing for ${misses} of the first ${i} countries`);
-      await Promise.all(
-        isos.slice(i, i + 8).map(async (iso) => {
-          const rows = await get(`${INFORM_API}/countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=${iso}`, 'json', 1, 15000).catch(() => []);
-          if (!Array.isArray(rows) || !rows.length) return void misses++;
-          if (rows.length && !logged) (logged = true), console.log(`  row: ${JSON.stringify(rows[0])}`);
-          for (const r of rows) {
-            const v = Number(r.IndicatorScore ?? r.Score ?? r.Value);
-            if (Number.isFinite(v)) informScores.set(`${iso}:${r.IndicatorId}`, [round(v), flow.year]);
-          }
-        }),
-      );
-    }
-    console.log(`  ${informScores.size} INFORM scores`);
+const NDGAIN_PAGE = 'https://gain.nd.edu/our-work/country-index/download-data/';
+const NDGAIN_FALLBACK = 'https://gain.nd.edu/assets/647440/ndgain_countryindex_2026.zip';
+let ndgainZip;
+async function ndgain(file) {
+  if (!ndgainZip) {
+    const html = await get(NDGAIN_PAGE).catch(() => '');
+    const link = html.match(/https?:\/\/gain\.nd\.edu\/assets\/[^"']+ndgain_countryindex[^"']*\.zip/i)?.[0] ?? NDGAIN_FALLBACK;
+    console.log(`  ${link}`);
+    ndgainZip = await JSZip.loadAsync(await get(link, 'buffer'));
+    console.log(`  files: ${Object.keys(ndgainZip.files).filter((f) => f.endsWith('.csv')).slice(0, 40).join(', ')}`);
   }
+  const name = Object.keys(ndgainZip.files).find((f) => new RegExp(`(^|/)${file}\\.csv$`, 'i').test(f));
+  if (!name) throw new Error(`No ${file}.csv in the ND-GAIN zip`);
+  const [head, ...rows] = parseCsv(await ndgainZip.files[name].async('string'));
+  const iso = head.findIndex((h) => /^iso3$/i.test(h.trim()));
+  const years = head.map((h, i) => [Number(h), i]).filter(([y]) => y > 1990 && y <= THIS_YEAR);
+  if (iso < 0 || !years.length) throw new Error(`Unexpected ND-GAIN columns: ${head.slice(0, 6).join(' | ')}`);
   const out = {};
-  for (const [key, value] of informScores) {
-    const [iso, id] = key.split(':');
-    if (id === indicator) out[iso] = { value };
+  for (const r of rows) {
+    for (const [y, i] of [...years].reverse()) {
+      const v = Number(r[i]);
+      if (r[i] !== '' && r[i] !== 'NA' && Number.isFinite(v) && y >= OLDEST_YEAR) {
+        out[r[iso]] = { value: [round(v), y] };
+        break;
+      }
+    }
   }
   return out;
 }
@@ -390,10 +368,9 @@ const INDICATORS = {
   fsiRefugees: { label: 'Refugees and displaced people', unit: '0–10, higher is worse', source: 'fsi', code: 'S2', fetch: () => fsiColumn(/^S2/) },
   fsiEconomy: { label: 'Economic decline', unit: '0–10, higher is worse', source: 'fsi', code: 'E1', fetch: () => fsiColumn(/^E1/) },
   fsiLegitimacy: { label: 'State legitimacy', unit: '0–10, higher is worse', source: 'fsi', code: 'P1', fetch: () => fsiColumn(/^P1/) },
-  informRisk: { label: 'INFORM disaster and crisis risk', unit: '0–10, higher is worse', source: 'inform', code: 'INFORM', fetch: () => inform('INFORM') },
-  informHazard: { label: 'Hazard and exposure', unit: '0–10, higher is worse', source: 'inform', code: 'HA', fetch: () => inform('HA') },
-  informVulnerability: { label: 'Vulnerability', unit: '0–10, higher is worse', source: 'inform', code: 'VU', fetch: () => inform('VU') },
-  informCoping: { label: 'Lack of coping capacity', unit: '0–10, higher is worse', source: 'inform', code: 'CC', fetch: () => inform('CC') },
+  ndgain: { label: 'ND-GAIN climate adaptation index', unit: '0–100, higher is better prepared', source: 'ndgain', code: 'gain', fetch: () => ndgain('gain') },
+  ndVulnerability: { label: 'Climate vulnerability', unit: '0–1, higher is more vulnerable', source: 'ndgain', code: 'vulnerability', fetch: () => ndgain('vulnerability') },
+  ndReadiness: { label: 'Readiness to adapt', unit: '0–1, higher is better', source: 'ndgain', code: 'readiness', fetch: () => ndgain('readiness') },
 };
 
 async function main() {

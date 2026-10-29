@@ -137,10 +137,9 @@ export const META: Record<string, MetricMeta> = {
   fsiRefugees: { fmt: FMT.index, higherIsBetter: false },
   fsiEconomy: { fmt: FMT.index, higherIsBetter: false },
   fsiLegitimacy: { fmt: FMT.index, higherIsBetter: false },
-  informRisk: { fmt: FMT.index, higherIsBetter: false },
-  informHazard: { fmt: FMT.index, higherIsBetter: false },
-  informVulnerability: { fmt: FMT.index, higherIsBetter: false },
-  informCoping: { fmt: FMT.index, higherIsBetter: false },
+  ndgain: { fmt: FMT.index, higherIsBetter: true },
+  ndVulnerability: { fmt: (v) => v.toFixed(3), higherIsBetter: false },
+  ndReadiness: { fmt: (v) => v.toFixed(3), higherIsBetter: true },
 };
 
 /* ---------- computed measures (ours, from the fetched numbers) ---------- */
@@ -211,7 +210,7 @@ export const RESILIENCE_INPUTS: ResilienceInput[] = [
   { id: 'inflation', label: 'Inflation', higherIsBetter: false, read: (c) => num('inflation', c), fmt: FMT.pct, home: 'prices' },
   { id: 'politicalStability', label: 'Political stability', higherIsBetter: true, read: (c) => num('politicalStability', c), fmt: FMT.wgi, home: 'risk' },
   { id: 'fsi', label: 'Fragile States Index', higherIsBetter: false, read: fsiTotal, fmt: FMT.index, home: 'risk' },
-  { id: 'informRisk', label: 'Disaster risk (INFORM)', higherIsBetter: false, read: (c) => num('informRisk', c), fmt: FMT.index, home: 'risk' },
+  { id: 'ndgain', label: 'Climate readiness (ND-GAIN)', higherIsBetter: true, read: (c) => num('ndgain', c), fmt: FMT.index, home: 'risk' },
 ];
 const MIN_INPUTS = 5;
 
@@ -760,7 +759,7 @@ export const SECTIONS: Section[] = [
           low: 'Fragile',
           high: 'Resilient',
           ticks: ['10', '50', '90'],
-          description: 'Mean percentile across reserves, current account, debt, budget balance, inflation, political stability, fragility and disaster risk.',
+          description: 'Mean percentile across reserves, current account, debt, budget balance, inflation, political stability, fragility and climate readiness.',
         },
         metrics: [],
         ours: 'Our composite: each input is ranked against every country, then averaged. Countries need at least five of the eight inputs.',
@@ -855,16 +854,18 @@ export const SECTIONS: Section[] = [
       {
         id: 'climate',
         label: 'Climate & disasters',
-        question: 'Where could disasters overwhelm the response?',
-        map: ind('informRisk', {
-          ramp: [...GOOD].reverse(),
-          domain: [0, 8],
-          low: 'Low',
-          high: 'High',
-          ticks: ['0', '4', '8+'],
-          description: 'INFORM Risk Index (EC JRC): hazard and exposure, vulnerability and lack of coping capacity.',
+        question: 'Who is most exposed to climate change, and least ready for it?',
+        map: ind('ndgain', {
+          metric: 'Climate adaptation (ND-GAIN)',
+          ramp: GOOD,
+          domain: [25, 75],
+          low: 'Vulnerable',
+          high: 'Prepared',
+          ticks: ['25', '50', '75'],
+          description: 'ND-GAIN Country Index (Notre Dame): vulnerability to climate change set against readiness to adapt.',
         }),
-        metrics: ['informRisk', 'informHazard', 'informVulnerability', 'informCoping'],
+        metrics: ['ndgain', 'ndVulnerability', 'ndReadiness'],
+        pending: 'Disaster hazard scores (INFORM Risk Index) are not loaded: its API returned no data.',
       },
     ],
   },
