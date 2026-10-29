@@ -111,7 +111,7 @@ export default function App() {
     setDrawerOpen(true);
     const t: SectionId = a === 'connections' ? 'trade' : a === 'compare' ? 'growth' : 'risk';
     setTab(t);
-    setLayerId(a === 'connections' ? 'trade.dependency' : layerFor(t));
+    setLayerId(a === 'connections' ? 'trade.dependency' : a === 'shock' ? 'risk.shock' : layerFor(t));
     document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
   };
 

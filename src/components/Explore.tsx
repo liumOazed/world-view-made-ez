@@ -9,8 +9,8 @@ export type ExploreAction = 'compare' | 'connections' | 'risk' | 'shock';
 const CARDS: { id: ExploreAction; title: string; body: string; tags: string; icon: LucideIcon }[] = [
   { id: 'compare', title: 'Compare', body: 'Put countries and regions side by side and see how they diverge over time.', tags: 'Countries · Regions', icon: ChartColumn },
   { id: 'connections', title: 'Connections', body: 'Trace who supplies, buys, lends and powers whom, in both directions.', tags: 'Trade · Credit · Energy', icon: Waypoints },
-  { id: 'risk', title: 'Risk & contagion', body: 'Separate exposure, vulnerability and resilience, with the evidence behind each.', tags: 'Exposure · Buffers', icon: ShieldAlert },
-  { id: 'shock', title: 'Shock scenarios', body: 'What if oil jumps 30% or a key market slumps? Follow the transmission channels.', tags: 'What-if · Pathways', icon: Zap },
+  { id: 'risk', title: 'Resilience', body: 'A score built from reserves, debt, inflation, stability and disaster risk, with every input shown.', tags: 'Buffers · Fragility', icon: ShieldAlert },
+  { id: 'shock', title: 'Shock exposure', body: 'Who swings with commodity prices, imported energy or one big trading partner?', tags: 'Commodities · Energy', icon: Zap },
 ];
 
 export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) {
