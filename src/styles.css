@@ -400,6 +400,8 @@ a {
   background: linear-gradient(180deg, rgba(10, 24, 46, 0.45), rgba(5, 13, 27, 0.4));
   border: 1px solid var(--line);
   overflow: hidden;
+  /* clip, not just hide: the off-screen layer-measure row must never make the stage scrollable */
+  overflow: clip;
 }
 .stage-head {
   display: flex;

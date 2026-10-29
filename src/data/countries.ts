@@ -6,6 +6,7 @@
  * The real product should replace this module with an API that returns the
  * same shape plus a source, reporting period and update timestamp per value.
  */
+import ISO2 from './iso-codes.json';
 
 export type Region =
   | 'North America'
@@ -522,6 +523,7 @@ function generated(name: string, lon: number, lat: number): CountryProfile {
   return {
     name,
     display: name,
+    iso2: (ISO2 as Record<string, string>)[name],
     region,
     curated: false,
     gdp: Math.round(5 + r() * 120),
