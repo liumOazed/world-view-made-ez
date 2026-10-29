@@ -5,9 +5,11 @@
  *   node scripts/fetch-trade.mjs            all countries on the map
  *   node scripts/fetch-trade.mjs DEU BGD    just these (ISO alpha-3), merged into the existing file
  *
- * Uses the public preview API (no key, max 500 rows per call), so it runs
- * slowly on purpose. It needs internet access, which CI has; see
- * .github/workflows/refresh-trade.yml.
+ * Uses the public preview API (no key, max 500 rows per call), which allows
+ * roughly one request every ten seconds, so a full pass takes several runs.
+ * Each run fills in missing countries first, then any older than STALE_DAYS,
+ * and keeps everything it already has. It needs internet access, which CI
+ * has; see .github/workflows/refresh-trade.yml.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -24,7 +26,8 @@ const REF = 'https://comtradeapi.un.org/files/v1/app/reference/Reporters.json';
 // 2023 is the most recent year most reporters have filed; 2024 is still patchy.
 const YEARS = [2023, 2022, 2024, 2021];
 const TOP = 15;
-const PAUSE_MS = 1500;
+const PAUSE_MS = 10_000;
+const STALE_DAYS = 30;
 
 // Fetched first, so a run that is cut short still covers the biggest economies.
 const PRIORITY = `USA CHN DEU JPN IND GBR FRA ITA BRA CAN RUS KOR AUS ESP MEX IDN NLD SAU TUR CHE POL TWN BEL SWE
@@ -45,6 +48,8 @@ const NAME_ISO = {
 };
 // Where Comtrade's numeric code differs from ISO 3166 (used only if the reference file is unavailable).
 const COMTRADE_CODE = { USA: 842, FRA: 251, IND: 699, NOR: 579, CHE: 757, TWN: 490, ITA: 380 };
+// Comtrade reports Taiwan as "Other Asia, nes".
+const PARTNER_ISO = { S19: 'TWN' };
 
 /** Map name -> ISO alpha-3, for every country drawn on the map. */
 function mapCountries() {
@@ -118,7 +123,10 @@ async function fetchCountry(name, iso, code, isoByCode) {
   }
   if (!year) return null;
 
-  const partnerIso = (r) => r.partnerISO ?? isoByCode.get(r.partnerCode);
+  const partnerIso = (r) => {
+    const p = r.partnerISO ?? isoByCode.get(r.partnerCode);
+    return PARTNER_ISO[p] ?? p;
+  };
   const by = new Map();
   const row = (r) => {
     const p = partnerIso(r);
@@ -176,13 +184,24 @@ async function main() {
   const all = mapCountries();
   const only = new Set(process.argv.slice(2).map((s) => s.toUpperCase()));
   const rank = (iso) => (PRIORITY.includes(iso) ? PRIORITY.indexOf(iso) : PRIORITY.length);
-  const targets = [...all].filter(([, iso]) => !only.size || only.has(iso)).sort((a, b) => rank(a[1]) - rank(b[1]));
+  const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : { countries: {} };
+  const today = new Date().toISOString().slice(0, 10);
+  const age = (name) => {
+    const r = prev.countries[name]?.retrieved ?? prev.retrieved;
+    return prev.countries[name] && r ? (Date.parse(today) - Date.parse(r)) / 86_400_000 : Infinity;
+  };
+  // Missing countries first (biggest economies first), then the stalest.
+  const targets = [...all]
+    .filter(([name, iso]) => (only.size ? only.has(iso) : age(name) > STALE_DAYS))
+    .sort((a, b) => (age(b[0]) === Infinity) - (age(a[0]) === Infinity) || rank(a[1]) - rank(b[1]) || age(b[0]) - age(a[0]));
+  console.log(`${targets.length} countries to fetch`);
   const codes = await reporterCodes();
   const codeOf = (iso) => codes.get(iso) ?? COMTRADE_CODE[iso] ?? Number(countries.alpha3ToNumeric(iso));
   const isoByCode = new Map([...codes].map(([iso, code]) => [code, iso]));
 
-  const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : { countries: {} };
-  const out = only.size ? { ...prev.countries } : {};
+  const out = { ...prev.countries };
+  // Tag rows from before per-country dates existed.
+  for (const c of Object.values(out)) c.retrieved ??= prev.retrieved;
   const isoToName = Object.fromEntries([...all].map(([name, iso]) => [iso, name]));
   // Saved after every country, so a run stopped by its time limit keeps what it fetched.
   const save = () => {
@@ -194,7 +213,7 @@ async function main() {
           source: 'UN Comtrade (HS, annual goods trade), the data behind World Bank WITS',
           sourceUrl: 'https://comtradeplus.un.org/',
           licence: 'UN Comtrade terms of use; attribution required',
-          retrieved: new Date().toISOString().slice(0, 10),
+          retrieved: Object.values(out).reduce((m, c) => (c.retrieved > m ? c.retrieved : m), ''),
           units: 'USD millions',
           isoToName,
           countries: sorted,
@@ -206,6 +225,7 @@ async function main() {
     return sorted;
   };
   const failed = [];
+  let fetched = 0;
   let i = 0;
   for (const [name, iso] of targets) {
     i++;
@@ -214,11 +234,12 @@ async function main() {
     try {
       const data = await fetchCountry(name, iso, code, isoByCode);
       if (data) {
-        out[name] = data;
+        out[name] = { ...data, retrieved: today };
+        fetched++;
         save();
         console.log(`[${i}/${targets.length}] ${name}: ${data.year}, ${data.partners.length} partners`);
       } else console.log(`[${i}/${targets.length}] ${name}: no data`);
-      if (i === 8 && Object.keys(out).length === (only.size ? Object.keys(prev.countries).length : 0)) {
+      if (i === 8 && fetched === 0) {
         throw new Error('No data for the first 8 countries; the API or its response format has probably changed');
       }
     } catch (e) {
@@ -231,7 +252,7 @@ async function main() {
 
   const sorted = save();
   console.log(`Wrote ${Object.keys(sorted).length} countries; ${failed.length} failed${failed.length ? `: ${failed.join(', ')}` : ''}`);
-  if (Object.keys(sorted).length === 0) process.exit(1);
+  if (targets.length && fetched === 0) process.exit(1);
 }
 
 main();

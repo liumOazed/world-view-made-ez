@@ -41,6 +41,7 @@ interface CountryTrade {
   exportsTotal: number;
   importsTotal: number;
   partners: PartnerFlow[];
+  retrieved?: string;
 }
 interface TradeSnapshot {
   source: string;
@@ -62,9 +63,8 @@ export interface TradeSource {
 /** Where a country's trade links come from, or null while they are placeholders. */
 export function tradeSource(name: string): TradeSource | null {
   const t = TRADE.countries[name];
-  return t && TRADE.retrieved
-    ? { year: t.year, retrieved: TRADE.retrieved, source: 'UN Comtrade', url: TRADE.sourceUrl }
-    : null;
+  const retrieved = t?.retrieved ?? TRADE.retrieved;
+  return t && retrieved ? { year: t.year, retrieved, source: 'UN Comtrade', url: TRADE.sourceUrl } : null;
 }
 
 /** What a partner mainly is to the reporter, judged from the flows between them. */

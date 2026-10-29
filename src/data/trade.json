@@ -295,7 +295,7 @@
      "chips": 27
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 9948,
      "imp": 6147,
      "energy": 2714,
@@ -342,7 +342,8 @@
      "food": 581,
      "chips": 2
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Belgium": {
    "iso": "BEL",
@@ -470,7 +471,8 @@
      "food": 189,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Brazil": {
    "iso": "BRA",
@@ -598,7 +600,8 @@
      "food": 296,
      "chips": 20
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Canada": {
    "iso": "CAN",
@@ -719,14 +722,15 @@
      "chips": 4
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 1488,
      "imp": 5994,
      "energy": 2,
      "food": 148,
      "chips": 469
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "China": {
    "iso": "CHN",
@@ -767,7 +771,7 @@
      "chips": 20
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 68506,
      "imp": 199345,
      "energy": 482,
@@ -854,7 +858,8 @@
      "food": 3509,
      "chips": 72
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "France": {
    "iso": "FRA",
@@ -982,7 +987,8 @@
      "food": 132,
      "chips": 121
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Germany": {
    "iso": "DEU",
@@ -1110,7 +1116,8 @@
      "food": 796,
      "chips": 16
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "India": {
    "iso": "IND",
@@ -1238,7 +1245,8 @@
      "food": 2848,
      "chips": 494
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Indonesia": {
    "iso": "IDN",
@@ -1335,7 +1343,7 @@
      "chips": 0
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 6704,
      "imp": 3970,
      "energy": 96,
@@ -1366,7 +1374,8 @@
      "food": 3627,
      "chips": 2
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Italy": {
    "iso": "ITA",
@@ -1494,7 +1503,8 @@
      "food": 8,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Japan": {
    "iso": "JPN",
@@ -1527,7 +1537,7 @@
      "chips": 1
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 42899,
      "imp": 35653,
      "energy": 61,
@@ -1622,7 +1632,8 @@
      "food": 4048,
      "chips": 5
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Mexico": {
    "iso": "MEX",
@@ -1679,7 +1690,7 @@
      "chips": 1740
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 5111,
      "imp": 14317,
      "energy": 8,
@@ -1750,7 +1761,8 @@
      "food": 178,
      "chips": 6
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Netherlands": {
    "iso": "NLD",
@@ -1871,14 +1883,15 @@
      "chips": 5
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 8527,
      "imp": 7951,
      "energy": 47,
      "food": 81,
      "chips": 429
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Poland": {
    "iso": "POL",
@@ -2006,7 +2019,8 @@
      "food": 1699,
      "chips": 27
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Russia": {
    "iso": "RUS",
@@ -2134,7 +2148,8 @@
      "food": 108,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Saudi Arabia": {
    "iso": "SAU",
@@ -2262,7 +2277,8 @@
      "food": 335,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "South Korea": {
    "iso": "KOR",
@@ -2311,7 +2327,7 @@
      "chips": 1
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 20177,
      "imp": 24371,
      "energy": 89,
@@ -2390,7 +2406,8 @@
      "food": 186,
      "chips": 36
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Spain": {
    "iso": "ESP",
@@ -2518,7 +2535,8 @@
      "food": 295,
      "chips": 4
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Switzerland": {
    "iso": "CHE",
@@ -2646,7 +2664,8 @@
      "food": 1252,
      "chips": 176
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Taiwan": {
    "iso": "TWN",
@@ -2743,7 +2762,7 @@
      "chips": 795
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 0,
      "imp": 16894,
      "energy": 0,
@@ -2774,7 +2793,8 @@
      "food": 4,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "Turkey": {
    "iso": "TUR",
@@ -2902,7 +2922,8 @@
      "food": 248,
      "chips": 0
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "United Kingdom": {
    "iso": "GBR",
@@ -3030,7 +3051,8 @@
      "food": 983,
      "chips": 1
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   },
   "United States of America": {
    "iso": "USA",
@@ -3095,7 +3117,7 @@
      "chips": 64
     },
     {
-     "iso": "S19",
+     "iso": "TWN",
      "exp": 39774,
      "imp": 89919,
      "energy": 602,
@@ -3158,7 +3180,8 @@
      "food": 6250,
      "chips": 1
     }
-   ]
+   ],
+   "retrieved": "2026-10-29"
   }
  }
 }

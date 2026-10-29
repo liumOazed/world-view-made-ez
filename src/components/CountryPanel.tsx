@@ -354,13 +354,13 @@ function Connections({
       <p className="footnote">
         <Info size={12} />{' '}
         {source ? (
-          <>
+          <span>
             Share of {c.display}’s goods trade (exports + imports) in {source.year}, from{' '}
             <a href={source.url} target="_blank" rel="noreferrer">
               UN Comtrade
             </a>
             , retrieved {source.retrieved}. Energy, food and chips are tagged when they dominate what it buys from a partner.
-          </>
+          </span>
         ) : (
           'Placeholder partners: real trade data is not loaded for this country yet.'
         )}
