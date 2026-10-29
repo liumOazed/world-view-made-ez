@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight, Info, MoveRight, X } from 'lucide-react';
 import { history, LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
-import { INFLUENCE_COLOR, INFLUENCE_LABEL, type InfluenceLink, type TradeLink } from '../data/connections';
+import { INFLUENCE_COLOR, INFLUENCE_LABEL, tradeSource, type InfluenceLink, type TradeLink } from '../data/connections';
 import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
 import { Flag } from './Flag';
 import { ScorecardTab } from './Scorecard';
@@ -315,6 +315,7 @@ function Connections({
   nameOf: (n: string) => string;
   onSelect: (n: string) => void;
 }) {
+  const source = tradeSource(c.name);
   const groups = useMemo(
     () => KIND_ORDER.map((k) => ({ kind: k, items: trade.filter((p) => p.kind === k) })).filter((g) => g.items.length),
     [trade],
@@ -329,7 +330,7 @@ function Connections({
       )}
       <div className="section-title">
         <h3>Top {trade.length} trade connections</h3>
-        <span className="pill">By sector</span>
+        <span className="pill">{source ? `UN Comtrade ${source.year}` : 'Placeholder'}</span>
       </div>
       <div className="conn-groups">
         {groups.map((g) => (
@@ -351,7 +352,18 @@ function Connections({
         ))}
       </div>
       <p className="footnote">
-        <Info size={12} /> Click a partner to open its profile. Connections work in both directions.
+        <Info size={12} />{' '}
+        {source ? (
+          <>
+            Share of {c.display}’s goods trade (exports + imports) in {source.year}, from{' '}
+            <a href={source.url} target="_blank" rel="noreferrer">
+              UN Comtrade
+            </a>
+            , retrieved {source.retrieved}. Energy, food and chips are tagged when they dominate what it buys from a partner.
+          </>
+        ) : (
+          'Placeholder partners: real trade data is not loaded for this country yet.'
+        )}
       </p>
       <section className="panel-section">
         <div className="section-title">
@@ -372,8 +384,8 @@ function Connections({
           </button>
         ))}
         <p className="footnote">
-          <Info size={12} /> Relative influence score (strongest = 100), based on how much each country depends on{' '}
-          {c.display}. Illustrative.
+          <Info size={12} /> Relative influence score (strongest = 100), based on how much each country’s trade depends on{' '}
+          {c.display}. {source ? `From UN Comtrade, ${source.year}.` : 'Illustrative.'}
         </p>
       </section>
       <section className="panel-section">

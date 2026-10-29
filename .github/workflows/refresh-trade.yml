@@ -1,0 +1,54 @@
+name: Refresh trade data
+
+# Pulls each country's top trade partners from UN Comtrade into
+# src/data/trade.json. On main it opens a PR instead of pushing.
+on:
+  schedule:
+    - cron: '0 6 3 * *' # monthly; Comtrade annual data lands gradually
+  workflow_dispatch:
+    inputs:
+      countries:
+        description: ISO alpha-3 codes to refresh (blank = all)
+        required: false
+  push:
+    branches: ['claude/**']
+    paths: ['scripts/fetch-trade.mjs', '.github/workflows/refresh-trade.yml']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-trade-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-trade.mjs ${{ inputs.countries }}
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/trade.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh trade data from UN Comtrade ($(date -u +%Y-%m-%d))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            branch="data/trade-refresh-$(date -u +%Y%m%d)"
+            git push origin "HEAD:refs/heads/$branch"
+            gh pr create --head "$branch" --base main --title 'Refresh trade data from UN Comtrade' \
+              --body 'Automated monthly refresh of `src/data/trade.json`.' || echo 'Could not open a PR; the branch is pushed.'
+          else
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
