@@ -14,7 +14,7 @@ import {
 import { Flag } from './Flag';
 
 const band = (v: number | null) =>
-  v === null ? '#5b6f8e' : v >= 75 ? '#5eead4' : v >= 55 ? '#38bdf8' : v >= 40 ? '#fbbf24' : '#fb7185';
+  v === null ? '#5b6f8e' : v >= 75 ? '#5fd39a' : v >= 55 ? '#9fb3cf' : v >= 40 ? '#f2b84b' : '#ef7f86';
 
 function Ring({ value, size = 92 }: { value: number | null; size?: number }) {
   const r = size / 2 - 7;

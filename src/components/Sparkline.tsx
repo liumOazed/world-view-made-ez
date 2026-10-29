@@ -1,5 +1,10 @@
 import { useId } from 'react';
 
+/** Trend colors follow meaning: green favorable, red adverse, blue-gray neutral. */
+export const TREND_GOOD = '#5fd39a';
+export const TREND_BAD = '#ef7f86';
+export const TREND_NEUTRAL = '#8a9dba';
+
 interface Props {
   values: number[];
   color: string;
@@ -22,13 +27,13 @@ export function Sparkline({ values, color, width = 84, height = 28 }: Props) {
     <svg className="sparkline" width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.35" />
+          <stop offset="0%" stopColor={color} stopOpacity="0.14" />
           <stop offset="100%" stopColor={color} stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={`${line} L${width},${height} L0,${height} Z`} fill={`url(#${id})`} />
-      <path d={line} fill="none" stroke={color} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
-      <circle cx={lx} cy={ly} r="2.4" fill={color} />
+      <path d={line} fill="none" stroke={color} strokeOpacity="0.75" strokeWidth="1.1" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx={lx} cy={ly} r="1.8" fill={color} />
     </svg>
   );
 }

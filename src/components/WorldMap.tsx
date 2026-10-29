@@ -5,6 +5,7 @@ import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import type { CountryFeature } from '../geo';
+import { Flag } from './Flag';
 
 interface Props {
   features: CountryFeature[];
@@ -40,6 +41,9 @@ interface Hover {
   x: number;
   y: number;
 }
+
+const fmtGdp = (bn: number) => (bn >= 1000 ? `$${(bn / 1000).toFixed(1)}T` : `$${Math.round(bn)}B`);
+const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 interface Tip {
   title: string;
@@ -104,7 +108,8 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
       ),
     [features, size],
   );
-  const baseScale = mode === 'globe' ? Math.min(size.w, size.h) / 2 - 22 : flatFit.scale();
+  // The globe fills most of the frame; the corners stay free for controls.
+  const baseScale = mode === 'globe' ? Math.min(size.w, size.h) / 2 - 44 : flatFit.scale();
 
   const projection: GeoProjection = useMemo(() => {
     const c: [number, number] = [size.w / 2, size.h / 2];
@@ -124,6 +129,19 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
   }, [mode, size, baseScale, flatFit, view]);
 
   const path = useMemo(() => geoPath(projection), [projection]);
+  // The far hemisphere, seen through the globe: same parallel projection,
+  // viewed from behind and mirrored, so its points line up with the front.
+  const farSide = useMemo(() => {
+    if (mode !== 'globe') return '';
+    const back = geoOrthographic()
+      .scale(baseScale * view.k)
+      .translate([size.w / 2, size.h / 2])
+      .rotate([view.lambda + 180, -view.phi])
+      .reflectX(true)
+      .clipAngle(90)
+      .precision(1.5);
+    return geoPath(back)({ type: 'FeatureCollection', features }) ?? '';
+  }, [mode, baseScale, size, view, features]);
   const outline = path({ type: 'Sphere' }) ?? '';
   const graticule = useMemo(() => path(geoGraticule10()) ?? '', [path]);
   const cLon = -view.lambda;
@@ -156,7 +174,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
     const t0 = performance.now();
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / ms);
-      const e = 1 - Math.pow(1 - t, 3);
+      const e = easeInOut(t);
       setView({
         lambda: from.lambda + dl * e,
         phi: from.phi + (to.phi - from.phi) * e,
@@ -196,11 +214,15 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
     animateTo({ k: 1, ty: 0, ...(mode === 'globe' ? { phi: GLOBE_START.phi } : {}) }, 700);
   }, [selected, mode, animateTo]);
 
-  // Turn the globe to face the selected country.
+  // Turn the globe to face the selected country. Short hops are quick, long
+  // ones take a little longer, so the camera never whips round.
   useEffect(() => {
     if (mode !== 'globe' || !selected) return;
     const a = anchors.get(selected);
-    if (a) animateTo({ lambda: -a[0], phi: -clamp(a[1], -55, 55) }, 900);
+    if (!a) return;
+    const v = viewRef.current;
+    const dist = geoDistance([-v.lambda, -v.phi], [a[0], clamp(a[1], -55, 55)]);
+    animateTo({ lambda: -a[0], phi: -clamp(a[1], -55, 55) }, 700 + dist * 320);
   }, [selected, mode, anchors, animateTo]);
 
   /* ---------- pointer interaction ---------- */
@@ -417,18 +439,16 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
             <stop offset="88%" stopColor="#000" stopOpacity="0.35" />
             <stop offset="100%" stopColor="#000" stopOpacity="0.6" />
           </radialGradient>
+          {/* Soft halo: strongest just outside the rim, fading well beyond it. */}
           <radialGradient id="atmosphere" cx="50%" cy="50%" r="50%">
-            <stop offset="86%" stopColor="#38bdf8" stopOpacity="0" />
-            <stop offset="91%" stopColor="#38bdf8" stopOpacity="0.32" />
+            <stop offset={`${(100 / 1.22) - 1}%`} stopColor="#67e8f9" stopOpacity="0" />
+            <stop offset={`${100 / 1.22}%`} stopColor="#67e8f9" stopOpacity="0.16" />
+            <stop offset="90%" stopColor="#38bdf8" stopOpacity="0.05" />
             <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
           </radialGradient>
-          <filter id="landGlow" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
           <filter id="selGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="b" />
+            <feGaussianBlur stdDeviation="2.5" result="b" />
             <feMerge>
-              <feMergeNode in="b" />
               <feMergeNode in="b" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
@@ -442,7 +462,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
           <circle
             cx={size.w / 2}
             cy={size.h / 2}
-            r={R * 1.12}
+            r={R * 1.22}
             fill="url(#atmosphere)"
             pointerEvents="none"
           />
@@ -455,11 +475,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
           <path d={graticule} className="graticule" />
         </g>
 
-        {!dragging && (
-          <g filter="url(#landGlow)" opacity={selected ? 0.3 : 0.8} pointerEvents="none">
-            {shapes.map((s) => s.d && <path key={s.name} d={s.d} fill={fillOf(s.name)} />)}
-          </g>
-        )}
+        {isGlobe && <path d={farSide} className="far-side" pointerEvents="none" />}
 
         <g className="countries">
           {shapes.map((s) => {
@@ -470,9 +486,8 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
               <path
                 key={s.name}
                 d={s.d}
-                className={`country${isSel ? ' is-selected' : ''}${related.has(s.name) ? ' is-related' : ''}${hover?.name === s.name ? ' is-hover' : ''}`}
-                fill={fillOf(s.name)}
-                fillOpacity={dim ? (isGlobe ? 0.3 : 0.18) : 0.94}
+                className={`country${isSel ? ' is-selected' : ''}${related.has(s.name) ? ' is-related' : ''}`}
+                style={{ fill: fillOf(s.name), fillOpacity: dim ? (isGlobe ? 0.3 : 0.18) : 0.92 }}
                 {...countryHandlers(s.name)}
               />
             );
@@ -480,6 +495,12 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
         </g>
 
         {isGlobe && <path d={outline} fill="url(#globeShade)" pointerEvents="none" />}
+
+        {isGlobe && <path d={outline} className="globe-rim" pointerEvents="none" />}
+
+        {hover && hover.name !== selected && !dragging && (
+          <path d={shapes.find((s) => s.name === hover.name)?.d} className="hover-outline" pointerEvents="none" />
+        )}
 
         {selected && (
           <path
@@ -506,7 +527,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
                 {...countryHandlers(s.name)}
               >
                 <circle r={9} className="hit" />
-                <circle r={isSel ? 4.5 : 3.2} fill={fillOf(s.name)} className="dot" />
+                <circle r={isSel ? 4 : 2.6} style={{ fill: fillOf(s.name) }} className="dot" />
               </g>
             );
           })}
@@ -523,13 +544,13 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
                 className="arc"
                 style={{ animationDelay: `${a.delay}s` }}
               />
-              {a.end && <circle cx={a.end[0]} cy={a.end[1]} r={3} fill={a.color} className="arc-end" />}
+              {a.end && <circle cx={a.end[0]} cy={a.end[1]} r={2.5} fill={a.color} className="arc-end" />}
             </g>
           ))}
           {origin && (
             <>
-              <circle cx={origin[0]} cy={origin[1]} r={10} className="origin-pulse" />
-              <circle cx={origin[0]} cy={origin[1]} r={3.5} className="origin-dot" />
+              <circle cx={origin[0]} cy={origin[1]} r={9} className="origin-pulse" />
+              <circle cx={origin[0]} cy={origin[1]} r={3} className="origin-dot" />
             </>
           )}
         </g>
@@ -554,8 +575,9 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
                   if (!suppressClick.current && profiles.has(c.country)) onSelect(c.country);
                 }}
               >
-                <circle r={9} className="cp-ring" />
-                <rect x={-3.2} y={-3.2} width={6.4} height={6.4} transform="rotate(45)" className="cp-core" />
+                <circle r={9} className="cp-hit" />
+                <circle r={6} className="cp-ring" />
+                <rect x={-2.4} y={-2.4} width={4.8} height={4.8} transform="rotate(45)" className="cp-core" />
                 {layer.id === 'leverage' && (
                   <text x={9} y={3.5} className="cp-label">
                     {c.name}
@@ -568,17 +590,28 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
       </svg>
 
       {hovered && hover && !tip && !dragging && (
-        <div className="tooltip" style={{ left: hover.x, top: hover.y }}>
-          <div className="tooltip-name">{hovered.display}</div>
+        <div className={`tooltip${hover.x > size.w - 220 ? ' is-flipped' : ''}`} style={{ left: hover.x, top: hover.y }}>
+          <div className="tooltip-name">
+            <Flag country={hovered} size="xs" />
+            {hovered.display}
+          </div>
+          <div className="tooltip-row">
+            <span>GDP</span>
+            <strong>{fmtGdp(hovered.gdp)}</strong>
+          </div>
           <div className="tooltip-row">
             <span>{layer.metric}</span>
-            <strong style={{ color: Number.isNaN(layer.value(hovered)) ? undefined : layer.color(layer.value(hovered)) }}>{layer.format(layer.value(hovered))}</strong>
+            <strong>
+              {!Number.isNaN(layer.value(hovered)) && (
+                <i className="tooltip-swatch" style={{ background: layer.color(layer.value(hovered)) }} />
+              )}
+              {layer.format(layer.value(hovered))}
+            </strong>
           </div>
-          <div className="tooltip-foot">Illustrative · click to open</div>
         </div>
       )}
       {tip && !dragging && (
-        <div className="tooltip" style={{ left: tip.x, top: tip.y }}>
+        <div className={`tooltip${tip.x > size.w - 220 ? ' is-flipped' : ''}`} style={{ left: tip.x, top: tip.y }}>
           <div className="tooltip-name">{tip.title}</div>
           <div className="tooltip-foot">{tip.sub}</div>
         </div>

@@ -80,16 +80,12 @@ export default function App() {
       <main id="atlas-main" className={`main${panelOpen ? '' : ' panel-collapsed'}`}>
         <section className="stage" aria-label="World intelligence map">
           <div className="stage-head">
-            <div>
-              <h1>
-                Global insights. <span className="grad">In seconds.</span>
-              </h1>
-              <p className="muted">{layer.question} Click any country to explore.</p>
-            </div>
-            <div className="stage-meta">
-              <span className="eyebrow">World intelligence map</span>
-              <span className="stage-year">2026 · Illustrative, not live</span>
-            </div>
+            <h1>
+              Global insights. <span className="grad">In seconds.</span>
+            </h1>
+            <p className="muted">
+              {layer.question} <span className="stage-hint">Click any country to explore.</span>
+            </p>
           </div>
           <LayerBar layer={layer} onChange={setLayerId} />
           <div className="map-frame">
@@ -122,6 +118,7 @@ export default function App() {
                 >
                   <Sparkles size={13} /> Influence
                 </button>
+                <span className="selection-sep" />
                 <button type="button" className="selection-reset" onClick={() => select(null)}>
                   <Globe2 size={13} /> Back to world <X size={12} />
                 </button>
