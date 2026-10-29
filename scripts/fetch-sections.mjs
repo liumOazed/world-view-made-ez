@@ -328,6 +328,16 @@ async function inform(indicator) {
       break;
     }
     if (!flow) throw new Error('No INFORM workflow found');
+    // Log what a few query shapes return, so a changed API is easy to diagnose.
+    for (const q of [
+      `countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=AFG`,
+      `countries/Scores/?WorkflowId=${flow.WorkflowId}&IndicatorId=INFORM&Iso3=AFG`,
+      `Countries/Scores/?WorkflowId=${flow.WorkflowId}&IndicatorId=INFORM`,
+      `countries/Scores?workflowId=${flow.WorkflowId}&iso3=AFG`,
+    ]) {
+      const res = await fetch(`${INFORM_API}/${q}`, { headers: UA, signal: AbortSignal.timeout(20000) }).catch((e) => ({ status: e.message, text: async () => '' }));
+      console.log(`  ${q} -> ${res.status} ${(await res.text()).slice(0, 200)}`);
+    }
     informScores = new Map();
     const isos = [...new Set(mapCountries().values())];
     let logged = false;

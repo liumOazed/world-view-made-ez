@@ -46,5 +46,7 @@ jobs:
               --body 'Automated refresh of `src/data/sections.json`.' \
               || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
           else
+            # Code may have been pushed while the fetch ran.
+            git pull --rebase origin "$GITHUB_REF_NAME"
             git push origin "HEAD:$GITHUB_REF_NAME"
           fi
