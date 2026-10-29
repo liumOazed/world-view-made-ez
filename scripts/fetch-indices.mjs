@@ -173,7 +173,7 @@ async function main() {
 
   const sorted = Object.fromEntries(Object.entries(indices).sort(([a], [b]) => a.localeCompare(b)));
   writeFileSync(OUT, JSON.stringify({ indices: sorted }, null, 1) + '\n');
-  console.log(`Wrote ${Object.keys(sorted).length} indices; failed: ${failed.join(', ') || 'none'}`);
+  console.log(`Wrote ${Object.keys(sorted).length} indices (${Object.keys(SOURCES).length} configured); failed: ${failed.join(', ') || 'none'}`);
   if (Object.keys(sorted).length === 0) process.exit(1);
 }
 
