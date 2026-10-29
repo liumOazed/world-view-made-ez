@@ -1,0 +1,3187 @@
+{
+ "source": "UN Comtrade (HS, annual goods trade), the data behind World Bank WITS",
+ "sourceUrl": "https://comtradeplus.un.org/",
+ "licence": "UN Comtrade terms of use; attribution required",
+ "retrieved": "2026-10-29",
+ "units": "USD millions",
+ "isoToName": {
+  "FJI": "Fiji",
+  "TZA": "Tanzania",
+  "ESH": "W. Sahara",
+  "CAN": "Canada",
+  "USA": "United States of America",
+  "KAZ": "Kazakhstan",
+  "UZB": "Uzbekistan",
+  "PNG": "Papua New Guinea",
+  "IDN": "Indonesia",
+  "ARG": "Argentina",
+  "CHL": "Chile",
+  "COD": "Dem. Rep. Congo",
+  "SOM": "Somalia",
+  "KEN": "Kenya",
+  "SDN": "Sudan",
+  "TCD": "Chad",
+  "HTI": "Haiti",
+  "DOM": "Dominican Rep.",
+  "RUS": "Russia",
+  "BHS": "Bahamas",
+  "FLK": "Falkland Is.",
+  "NOR": "Norway",
+  "GRL": "Greenland",
+  "ATF": "Fr. S. Antarctic Lands",
+  "TLS": "Timor-Leste",
+  "ZAF": "South Africa",
+  "LSO": "Lesotho",
+  "MEX": "Mexico",
+  "URY": "Uruguay",
+  "BRA": "Brazil",
+  "BOL": "Bolivia",
+  "PER": "Peru",
+  "COL": "Colombia",
+  "PAN": "Panama",
+  "CRI": "Costa Rica",
+  "NIC": "Nicaragua",
+  "HND": "Honduras",
+  "SLV": "El Salvador",
+  "GTM": "Guatemala",
+  "BLZ": "Belize",
+  "VEN": "Venezuela",
+  "GUY": "Guyana",
+  "SUR": "Suriname",
+  "FRA": "France",
+  "ECU": "Ecuador",
+  "PRI": "Puerto Rico",
+  "JAM": "Jamaica",
+  "CUB": "Cuba",
+  "ZWE": "Zimbabwe",
+  "BWA": "Botswana",
+  "NAM": "Namibia",
+  "SEN": "Senegal",
+  "MLI": "Mali",
+  "MRT": "Mauritania",
+  "BEN": "Benin",
+  "NER": "Niger",
+  "NGA": "Nigeria",
+  "CMR": "Cameroon",
+  "TGO": "Togo",
+  "GHA": "Ghana",
+  "CIV": "Côte d'Ivoire",
+  "GIN": "Guinea",
+  "GNB": "Guinea-Bissau",
+  "LBR": "Liberia",
+  "SLE": "Sierra Leone",
+  "BFA": "Burkina Faso",
+  "CAF": "Central African Rep.",
+  "COG": "Congo",
+  "GAB": "Gabon",
+  "GNQ": "Eq. Guinea",
+  "ZMB": "Zambia",
+  "MWI": "Malawi",
+  "MOZ": "Mozambique",
+  "SWZ": "eSwatini",
+  "AGO": "Angola",
+  "BDI": "Burundi",
+  "ISR": "Israel",
+  "LBN": "Lebanon",
+  "MDG": "Madagascar",
+  "PSE": "Palestine",
+  "GMB": "Gambia",
+  "TUN": "Tunisia",
+  "DZA": "Algeria",
+  "JOR": "Jordan",
+  "ARE": "United Arab Emirates",
+  "QAT": "Qatar",
+  "KWT": "Kuwait",
+  "IRQ": "Iraq",
+  "OMN": "Oman",
+  "VUT": "Vanuatu",
+  "KHM": "Cambodia",
+  "THA": "Thailand",
+  "LAO": "Laos",
+  "MMR": "Myanmar",
+  "VNM": "Vietnam",
+  "PRK": "North Korea",
+  "KOR": "South Korea",
+  "MNG": "Mongolia",
+  "IND": "India",
+  "BGD": "Bangladesh",
+  "BTN": "Bhutan",
+  "NPL": "Nepal",
+  "PAK": "Pakistan",
+  "AFG": "Afghanistan",
+  "TJK": "Tajikistan",
+  "KGZ": "Kyrgyzstan",
+  "TKM": "Turkmenistan",
+  "IRN": "Iran",
+  "SYR": "Syria",
+  "ARM": "Armenia",
+  "SWE": "Sweden",
+  "BLR": "Belarus",
+  "UKR": "Ukraine",
+  "POL": "Poland",
+  "AUT": "Austria",
+  "HUN": "Hungary",
+  "MDA": "Moldova",
+  "ROU": "Romania",
+  "LTU": "Lithuania",
+  "LVA": "Latvia",
+  "EST": "Estonia",
+  "DEU": "Germany",
+  "BGR": "Bulgaria",
+  "GRC": "Greece",
+  "TUR": "Turkey",
+  "ALB": "Albania",
+  "HRV": "Croatia",
+  "CHE": "Switzerland",
+  "LUX": "Luxembourg",
+  "BEL": "Belgium",
+  "NLD": "Netherlands",
+  "PRT": "Portugal",
+  "ESP": "Spain",
+  "IRL": "Ireland",
+  "NCL": "New Caledonia",
+  "SLB": "Solomon Is.",
+  "NZL": "New Zealand",
+  "AUS": "Australia",
+  "LKA": "Sri Lanka",
+  "CHN": "China",
+  "TWN": "Taiwan",
+  "ITA": "Italy",
+  "DNK": "Denmark",
+  "GBR": "United Kingdom",
+  "ISL": "Iceland",
+  "AZE": "Azerbaijan",
+  "GEO": "Georgia",
+  "PHL": "Philippines",
+  "MYS": "Malaysia",
+  "BRN": "Brunei",
+  "SVN": "Slovenia",
+  "FIN": "Finland",
+  "SVK": "Slovakia",
+  "CZE": "Czechia",
+  "ERI": "Eritrea",
+  "JPN": "Japan",
+  "PRY": "Paraguay",
+  "YEM": "Yemen",
+  "SAU": "Saudi Arabia",
+  "ATA": "Antarctica",
+  "CYP": "Cyprus",
+  "MAR": "Morocco",
+  "EGY": "Egypt",
+  "LBY": "Libya",
+  "ETH": "Ethiopia",
+  "DJI": "Djibouti",
+  "UGA": "Uganda",
+  "RWA": "Rwanda",
+  "BIH": "Bosnia and Herz.",
+  "MKD": "Macedonia",
+  "SRB": "Serbia",
+  "MNE": "Montenegro",
+  "XKX": "Kosovo",
+  "TTO": "Trinidad and Tobago",
+  "SSD": "S. Sudan",
+  "FSM": "Micronesia",
+  "MHL": "Marshall Is.",
+  "CYM": "Cayman Is.",
+  "BMU": "Bermuda",
+  "TON": "Tonga",
+  "SGP": "Singapore",
+  "SYC": "Seychelles",
+  "STP": "São Tomé and Principe",
+  "SMR": "San Marino",
+  "WSM": "Samoa",
+  "VCT": "St. Vin. and Gren.",
+  "LCA": "Saint Lucia",
+  "KNA": "St. Kitts and Nevis",
+  "PLW": "Palau",
+  "ABW": "Aruba",
+  "CUW": "Curaçao",
+  "NRU": "Nauru",
+  "MCO": "Monaco",
+  "MUS": "Mauritius",
+  "MLT": "Malta",
+  "MDV": "Maldives",
+  "LIE": "Liechtenstein",
+  "KIR": "Kiribati",
+  "GRD": "Grenada",
+  "PYF": "Fr. Polynesia",
+  "DMA": "Dominica",
+  "COM": "Comoros",
+  "MAC": "Macao",
+  "HKG": "Hong Kong",
+  "CPV": "Cabo Verde",
+  "BRB": "Barbados",
+  "BHR": "Bahrain",
+  "ATG": "Antigua and Barb.",
+  "AND": "Andorra"
+ },
+ "countries": {
+  "Australia": {
+   "iso": "AUS",
+   "year": 2023,
+   "exportsTotal": 369235,
+   "importsTotal": 287223,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 120219,
+     "imp": 71821,
+     "energy": 2223,
+     "food": 1309,
+     "chips": 79
+    },
+    {
+     "iso": "_X ",
+     "exp": 63868,
+     "imp": 5608,
+     "energy": 0,
+     "food": 0,
+     "chips": 0
+    },
+    {
+     "iso": "JPN",
+     "exp": 36190,
+     "imp": 18109,
+     "energy": 1778,
+     "food": 247,
+     "chips": 7
+    },
+    {
+     "iso": "USA",
+     "exp": 12593,
+     "imp": 32482,
+     "energy": 1422,
+     "food": 1623,
+     "chips": 46
+    },
+    {
+     "iso": "KOR",
+     "exp": 20905,
+     "imp": 18097,
+     "energy": 11145,
+     "food": 224,
+     "chips": 29
+    },
+    {
+     "iso": "IND",
+     "exp": 16177,
+     "imp": 6247,
+     "energy": 1586,
+     "food": 446,
+     "chips": 0
+    },
+    {
+     "iso": "MYS",
+     "exp": 5736,
+     "imp": 12791,
+     "energy": 8051,
+     "food": 614,
+     "chips": 61
+    },
+    {
+     "iso": "SGP",
+     "exp": 6628,
+     "imp": 11048,
+     "energy": 8399,
+     "food": 639,
+     "chips": 8
+    },
+    {
+     "iso": "THA",
+     "exp": 4446,
+     "imp": 13083,
+     "energy": 228,
+     "food": 996,
+     "chips": 27
+    },
+    {
+     "iso": "TWN",
+     "exp": 9948,
+     "imp": 6147,
+     "energy": 2714,
+     "food": 278,
+     "chips": 117
+    },
+    {
+     "iso": "DEU",
+     "exp": 1923,
+     "imp": 12504,
+     "energy": 31,
+     "food": 460,
+     "chips": 13
+    },
+    {
+     "iso": "VNM",
+     "exp": 7824,
+     "imp": 6558,
+     "energy": 714,
+     "food": 697,
+     "chips": 35
+    },
+    {
+     "iso": "NZL",
+     "exp": 8265,
+     "imp": 5285,
+     "energy": 250,
+     "food": 2639,
+     "chips": 0
+    },
+    {
+     "iso": "IDN",
+     "exp": 7477,
+     "imp": 3826,
+     "energy": 451,
+     "food": 514,
+     "chips": 0
+    },
+    {
+     "iso": "GBR",
+     "exp": 3780,
+     "imp": 5589,
+     "energy": 22,
+     "food": 581,
+     "chips": 2
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Belgium": {
+   "iso": "BEL",
+   "year": 2023,
+   "exportsTotal": 393622,
+   "importsTotal": 403076,
+   "partners": [
+    {
+     "iso": "NLD",
+     "exp": 52189,
+     "imp": 87511,
+     "energy": 32681,
+     "food": 15212,
+     "chips": 362
+    },
+    {
+     "iso": "DEU",
+     "exp": 62957,
+     "imp": 52673,
+     "energy": 1465,
+     "food": 4860,
+     "chips": 471
+    },
+    {
+     "iso": "FRA",
+     "exp": 50889,
+     "imp": 47017,
+     "energy": 4754,
+     "food": 9315,
+     "chips": 3467
+    },
+    {
+     "iso": "USA",
+     "exp": 30257,
+     "imp": 27826,
+     "energy": 3048,
+     "food": 229,
+     "chips": 74
+    },
+    {
+     "iso": "GBR",
+     "exp": 23460,
+     "imp": 13991,
+     "energy": 6897,
+     "food": 559,
+     "chips": 1
+    },
+    {
+     "iso": "ITA",
+     "exp": 17778,
+     "imp": 16617,
+     "energy": 238,
+     "food": 1616,
+     "chips": 4
+    },
+    {
+     "iso": "CHN",
+     "exp": 6816,
+     "imp": 14331,
+     "energy": 306,
+     "food": 863,
+     "chips": 258
+    },
+    {
+     "iso": "ESP",
+     "exp": 10871,
+     "imp": 9330,
+     "energy": 275,
+     "food": 1635,
+     "chips": 2
+    },
+    {
+     "iso": "POL",
+     "exp": 10032,
+     "imp": 7665,
+     "energy": 244,
+     "food": 911,
+     "chips": 0
+    },
+    {
+     "iso": "CHE",
+     "exp": 4992,
+     "imp": 10432,
+     "energy": 1,
+     "food": 62,
+     "chips": 5
+    },
+    {
+     "iso": "SWE",
+     "exp": 6986,
+     "imp": 7815,
+     "energy": 121,
+     "food": 251,
+     "chips": 1
+    },
+    {
+     "iso": "IRL",
+     "exp": 3123,
+     "imp": 10769,
+     "energy": 6,
+     "food": 372,
+     "chips": 34
+    },
+    {
+     "iso": "JPN",
+     "exp": 4319,
+     "imp": 9170,
+     "energy": 12,
+     "food": 23,
+     "chips": 219
+    },
+    {
+     "iso": "NOR",
+     "exp": 3461,
+     "imp": 9288,
+     "energy": 8797,
+     "food": 4,
+     "chips": 0
+    },
+    {
+     "iso": "IND",
+     "exp": 4849,
+     "imp": 4356,
+     "energy": 74,
+     "food": 189,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Brazil": {
+   "iso": "BRA",
+   "year": 2023,
+   "exportsTotal": 339696,
+   "importsTotal": 252352,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 104325,
+     "imp": 55980,
+     "energy": 731,
+     "food": 476,
+     "chips": 1382
+    },
+    {
+     "iso": "USA",
+     "exp": 37452,
+     "imp": 40191,
+     "energy": 10104,
+     "food": 487,
+     "chips": 65
+    },
+    {
+     "iso": "ARG",
+     "exp": 16712,
+     "imp": 12419,
+     "energy": 1424,
+     "food": 3398,
+     "chips": 0
+    },
+    {
+     "iso": "DEU",
+     "exp": 5647,
+     "imp": 13624,
+     "energy": 90,
+     "food": 259,
+     "chips": 27
+    },
+    {
+     "iso": "NLD",
+     "exp": 12148,
+     "imp": 2969,
+     "energy": 1457,
+     "food": 259,
+     "chips": 0
+    },
+    {
+     "iso": "MEX",
+     "exp": 8572,
+     "imp": 5777,
+     "energy": 2,
+     "food": 63,
+     "chips": 30
+    },
+    {
+     "iso": "RUS",
+     "exp": 1343,
+     "imp": 11134,
+     "energy": 6326,
+     "food": 283,
+     "chips": 0
+    },
+    {
+     "iso": "CHL",
+     "exp": 7945,
+     "imp": 4457,
+     "energy": 0,
+     "food": 1464,
+     "chips": 0
+    },
+    {
+     "iso": "ESP",
+     "exp": 7859,
+     "imp": 4199,
+     "energy": 1064,
+     "food": 325,
+     "chips": 1
+    },
+    {
+     "iso": "JPN",
+     "exp": 6620,
+     "imp": 5399,
+     "energy": 90,
+     "food": 16,
+     "chips": 112
+    },
+    {
+     "iso": "IND",
+     "exp": 4686,
+     "imp": 7181,
+     "energy": 999,
+     "food": 118,
+     "chips": 1
+    },
+    {
+     "iso": "KOR",
+     "exp": 5641,
+     "imp": 5051,
+     "energy": 133,
+     "food": 9,
+     "chips": 1085
+    },
+    {
+     "iso": "ITA",
+     "exp": 4085,
+     "imp": 6093,
+     "energy": 46,
+     "food": 405,
+     "chips": 2
+    },
+    {
+     "iso": "CAN",
+     "exp": 5772,
+     "imp": 3626,
+     "energy": 125,
+     "food": 123,
+     "chips": 6
+    },
+    {
+     "iso": "FRA",
+     "exp": 2976,
+     "imp": 5683,
+     "energy": 46,
+     "food": 296,
+     "chips": 20
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Canada": {
+   "iso": "CAN",
+   "year": 2023,
+   "exportsTotal": 567345,
+   "importsTotal": 554144,
+   "partners": [
+    {
+     "iso": "USA",
+     "exp": 438650,
+     "imp": 276807,
+     "energy": 29670,
+     "food": 27331,
+     "chips": 234
+    },
+    {
+     "iso": "CHN",
+     "exp": 22612,
+     "imp": 66087,
+     "energy": 125,
+     "food": 1749,
+     "chips": 191
+    },
+    {
+     "iso": "MEX",
+     "exp": 6571,
+     "imp": 34224,
+     "energy": 2,
+     "food": 3131,
+     "chips": 17
+    },
+    {
+     "iso": "JPN",
+     "exp": 11737,
+     "imp": 15331,
+     "energy": 158,
+     "food": 158,
+     "chips": 38
+    },
+    {
+     "iso": "DEU",
+     "exp": 5340,
+     "imp": 18444,
+     "energy": 207,
+     "food": 485,
+     "chips": 51
+    },
+    {
+     "iso": "GBR",
+     "exp": 11283,
+     "imp": 6976,
+     "energy": 652,
+     "food": 564,
+     "chips": 11
+    },
+    {
+     "iso": "KOR",
+     "exp": 5158,
+     "imp": 10299,
+     "energy": 97,
+     "food": 207,
+     "chips": 100
+    },
+    {
+     "iso": "ITA",
+     "exp": 1994,
+     "imp": 9551,
+     "energy": 126,
+     "food": 1447,
+     "chips": 3
+    },
+    {
+     "iso": "VNM",
+     "exp": 576,
+     "imp": 9826,
+     "energy": 0,
+     "food": 519,
+     "chips": 83
+    },
+    {
+     "iso": "BRA",
+     "exp": 3031,
+     "imp": 6807,
+     "energy": 68,
+     "food": 1233,
+     "chips": 0
+    },
+    {
+     "iso": "CHE",
+     "exp": 3543,
+     "imp": 6240,
+     "energy": 43,
+     "food": 467,
+     "chips": 9
+    },
+    {
+     "iso": "FRA",
+     "exp": 3165,
+     "imp": 6410,
+     "energy": 112,
+     "food": 1053,
+     "chips": 9
+    },
+    {
+     "iso": "IND",
+     "exp": 3802,
+     "imp": 5573,
+     "energy": 71,
+     "food": 757,
+     "chips": 1
+    },
+    {
+     "iso": "NLD",
+     "exp": 5514,
+     "imp": 3234,
+     "energy": 1155,
+     "food": 453,
+     "chips": 4
+    },
+    {
+     "iso": "TWN",
+     "exp": 1488,
+     "imp": 5994,
+     "energy": 2,
+     "food": 148,
+     "chips": 469
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "China": {
+   "iso": "CHN",
+   "year": 2023,
+   "exportsTotal": 3379748,
+   "importsTotal": 2452467,
+   "partners": [
+    {
+     "iso": "USA",
+     "exp": 501221,
+     "imp": 165157,
+     "energy": 22438,
+     "food": 30065,
+     "chips": 8307
+    },
+    {
+     "iso": "JPN",
+     "exp": 157500,
+     "imp": 160476,
+     "energy": 1008,
+     "food": 1370,
+     "chips": 20757
+    },
+    {
+     "iso": "KOR",
+     "exp": 148983,
+     "imp": 161739,
+     "energy": 4917,
+     "food": 1594,
+     "chips": 65635
+    },
+    {
+     "iso": "HKG",
+     "exp": 274519,
+     "imp": 13671,
+     "energy": 144,
+     "food": 974,
+     "chips": 20
+    },
+    {
+     "iso": "TWN",
+     "exp": 68506,
+     "imp": 199345,
+     "energy": 482,
+     "food": 435,
+     "chips": 134868
+    },
+    {
+     "iso": "RUS",
+     "exp": 110935,
+     "imp": 129206,
+     "energy": 94773,
+     "food": 8779,
+     "chips": 9
+    },
+    {
+     "iso": "VNM",
+     "exp": 137607,
+     "imp": 92136,
+     "energy": 142,
+     "food": 6655,
+     "chips": 15087
+    },
+    {
+     "iso": "AUS",
+     "exp": 73814,
+     "imp": 155641,
+     "energy": 22820,
+     "food": 9864,
+     "chips": 2
+    },
+    {
+     "iso": "DEU",
+     "exp": 100565,
+     "imp": 106207,
+     "energy": 183,
+     "food": 2026,
+     "chips": 1563
+    },
+    {
+     "iso": "MYS",
+     "exp": 87370,
+     "imp": 102905,
+     "energy": 45882,
+     "food": 3132,
+     "chips": 22625
+    },
+    {
+     "iso": "BRA",
+     "exp": 59105,
+     "imp": 122491,
+     "energy": 23308,
+     "food": 57352,
+     "chips": 1
+    },
+    {
+     "iso": "IDN",
+     "exp": 65196,
+     "imp": 74166,
+     "energy": 21590,
+     "food": 9742,
+     "chips": 210
+    },
+    {
+     "iso": "IND",
+     "exp": 117679,
+     "imp": 18541,
+     "energy": 562,
+     "food": 3372,
+     "chips": 6
+    },
+    {
+     "iso": "THA",
+     "exp": 75733,
+     "imp": 50546,
+     "energy": 439,
+     "food": 12934,
+     "chips": 5918
+    },
+    {
+     "iso": "NLD",
+     "exp": 100195,
+     "imp": 16901,
+     "energy": 15,
+     "food": 3509,
+     "chips": 72
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "France": {
+   "iso": "FRA",
+   "year": 2023,
+   "exportsTotal": 660449,
+   "importsTotal": 796218,
+   "partners": [
+    {
+     "iso": "DEU",
+     "exp": 90761,
+     "imp": 99966,
+     "energy": 2547,
+     "food": 7986,
+     "chips": 428
+    },
+    {
+     "iso": "BEL",
+     "exp": 52977,
+     "imp": 67121,
+     "energy": 26242,
+     "food": 10449,
+     "chips": 19
+    },
+    {
+     "iso": "ITA",
+     "exp": 58397,
+     "imp": 58451,
+     "energy": 905,
+     "food": 7190,
+     "chips": 47
+    },
+    {
+     "iso": "USA",
+     "exp": 50994,
+     "imp": 57155,
+     "energy": 16460,
+     "food": 1060,
+     "chips": 264
+    },
+    {
+     "iso": "CHN",
+     "exp": 27837,
+     "imp": 79401,
+     "energy": 1144,
+     "food": 948,
+     "chips": 336
+    },
+    {
+     "iso": "ESP",
+     "exp": 49042,
+     "imp": 55701,
+     "energy": 7348,
+     "food": 11184,
+     "chips": 10
+    },
+    {
+     "iso": "GBR",
+     "exp": 39632,
+     "imp": 28685,
+     "energy": 1484,
+     "food": 5242,
+     "chips": 36
+    },
+    {
+     "iso": "NLD",
+     "exp": 25206,
+     "imp": 36216,
+     "energy": 5703,
+     "food": 9348,
+     "chips": 103
+    },
+    {
+     "iso": "CHE",
+     "exp": 27410,
+     "imp": 19569,
+     "energy": 557,
+     "food": 2014,
+     "chips": 68
+    },
+    {
+     "iso": "POL",
+     "exp": 15907,
+     "imp": 18112,
+     "energy": 207,
+     "food": 3255,
+     "chips": 3
+    },
+    {
+     "iso": "TUR",
+     "exp": 12935,
+     "imp": 12423,
+     "energy": 240,
+     "food": 570,
+     "chips": 0
+    },
+    {
+     "iso": "KOR",
+     "exp": 6725,
+     "imp": 13942,
+     "energy": 1264,
+     "food": 83,
+     "chips": 565
+    },
+    {
+     "iso": "IRL",
+     "exp": 8198,
+     "imp": 10920,
+     "energy": 86,
+     "food": 1594,
+     "chips": 25
+    },
+    {
+     "iso": "IND",
+     "exp": 7721,
+     "imp": 10805,
+     "energy": 2693,
+     "food": 507,
+     "chips": 1
+    },
+    {
+     "iso": "JPN",
+     "exp": 7504,
+     "imp": 10715,
+     "energy": 23,
+     "food": 132,
+     "chips": 121
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Germany": {
+   "iso": "DEU",
+   "year": 2023,
+   "exportsTotal": 1711348,
+   "importsTotal": 1486210,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 106019,
+     "imp": 178216,
+     "energy": 219,
+     "food": 2661,
+     "chips": 2598
+    },
+    {
+     "iso": "USA",
+     "exp": 171617,
+     "imp": 101552,
+     "energy": 13113,
+     "food": 3697,
+     "chips": 1871
+    },
+    {
+     "iso": "NLD",
+     "exp": 120106,
+     "imp": 105840,
+     "energy": 21076,
+     "food": 24182,
+     "chips": 1330
+    },
+    {
+     "iso": "FRA",
+     "exp": 130096,
+     "imp": 75609,
+     "energy": 1610,
+     "food": 8789,
+     "chips": 176
+    },
+    {
+     "iso": "POL",
+     "exp": 97422,
+     "imp": 89663,
+     "energy": 1544,
+     "food": 14104,
+     "chips": 23
+    },
+    {
+     "iso": "ITA",
+     "exp": 92158,
+     "imp": 77765,
+     "energy": 316,
+     "food": 10779,
+     "chips": 30
+    },
+    {
+     "iso": "AUT",
+     "exp": 84075,
+     "imp": 55404,
+     "energy": 1912,
+     "food": 6545,
+     "chips": 177
+    },
+    {
+     "iso": "CHE",
+     "exp": 73971,
+     "imp": 58273,
+     "energy": 990,
+     "food": 2491,
+     "chips": 94
+    },
+    {
+     "iso": "GBR",
+     "exp": 85425,
+     "imp": 39815,
+     "energy": 5244,
+     "food": 1543,
+     "chips": 145
+    },
+    {
+     "iso": "CZE",
+     "exp": 56136,
+     "imp": 65917,
+     "energy": 1374,
+     "food": 3454,
+     "chips": 113
+    },
+    {
+     "iso": "BEL",
+     "exp": 65773,
+     "imp": 54301,
+     "energy": 7068,
+     "food": 6842,
+     "chips": 109
+    },
+    {
+     "iso": "ESP",
+     "exp": 58531,
+     "imp": 42102,
+     "energy": 258,
+     "food": 8606,
+     "chips": 13
+    },
+    {
+     "iso": "HUN",
+     "exp": 35134,
+     "imp": 40078,
+     "energy": 183,
+     "food": 1903,
+     "chips": 186
+    },
+    {
+     "iso": "TUR",
+     "exp": 33483,
+     "imp": 26559,
+     "energy": 233,
+     "food": 2136,
+     "chips": 1
+    },
+    {
+     "iso": "SWE",
+     "exp": 32108,
+     "imp": 19950,
+     "energy": 823,
+     "food": 796,
+     "chips": 16
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "India": {
+   "iso": "IND",
+   "year": 2023,
+   "exportsTotal": 431412,
+   "importsTotal": 664403,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 16245,
+     "imp": 121967,
+     "energy": 675,
+     "food": 427,
+     "chips": 10063
+    },
+    {
+     "iso": "USA",
+     "exp": 75805,
+     "imp": 42116,
+     "energy": 13407,
+     "food": 1411,
+     "chips": 58
+    },
+    {
+     "iso": "RUS",
+     "exp": 4058,
+     "imp": 67071,
+     "energy": 58731,
+     "food": 1321,
+     "chips": 0
+    },
+    {
+     "iso": "ARE",
+     "exp": 33021,
+     "imp": 37541,
+     "energy": 16832,
+     "food": 161,
+     "chips": 2
+    },
+    {
+     "iso": "SAU",
+     "exp": 10832,
+     "imp": 34644,
+     "energy": 26705,
+     "food": 38,
+     "chips": 0
+    },
+    {
+     "iso": "IRQ",
+     "exp": 3471,
+     "imp": 29843,
+     "energy": 29637,
+     "food": 197,
+     "chips": 0
+    },
+    {
+     "iso": "IDN",
+     "exp": 7398,
+     "imp": 24034,
+     "energy": 9786,
+     "food": 5455,
+     "chips": 15
+    },
+    {
+     "iso": "DEU",
+     "exp": 9667,
+     "imp": 18119,
+     "energy": 65,
+     "food": 114,
+     "chips": 50
+    },
+    {
+     "iso": "AUS",
+     "exp": 7722,
+     "imp": 18546,
+     "energy": 12998,
+     "food": 752,
+     "chips": 0
+    },
+    {
+     "iso": "KOR",
+     "exp": 6285,
+     "imp": 19640,
+     "energy": 1267,
+     "food": 33,
+     "chips": 2563
+    },
+    {
+     "iso": "NLD",
+     "exp": 23108,
+     "imp": 2415,
+     "energy": 54,
+     "food": 108,
+     "chips": 1
+    },
+    {
+     "iso": "JPN",
+     "exp": 5084,
+     "imp": 18753,
+     "energy": 216,
+     "food": 19,
+     "chips": 544
+    },
+    {
+     "iso": "CHE",
+     "exp": 1381,
+     "imp": 18599,
+     "energy": 2,
+     "food": 46,
+     "chips": 3
+    },
+    {
+     "iso": "ZAF",
+     "exp": 8020,
+     "imp": 11360,
+     "energy": 3836,
+     "food": 115,
+     "chips": 0
+    },
+    {
+     "iso": "MYS",
+     "exp": 6678,
+     "imp": 12556,
+     "energy": 2222,
+     "food": 2848,
+     "chips": 494
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Indonesia": {
+   "iso": "IDN",
+   "year": 2023,
+   "exportsTotal": 259528,
+   "importsTotal": 223016,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 65037,
+     "imp": 63387,
+     "energy": 1934,
+     "food": 3138,
+     "chips": 762
+    },
+    {
+     "iso": "JPN",
+     "exp": 20788,
+     "imp": 16542,
+     "energy": 91,
+     "food": 68,
+     "chips": 145
+    },
+    {
+     "iso": "USA",
+     "exp": 23310,
+     "imp": 11359,
+     "energy": 2200,
+     "food": 2950,
+     "chips": 7
+    },
+    {
+     "iso": "SGP",
+     "exp": 12608,
+     "imp": 18420,
+     "energy": 10464,
+     "food": 415,
+     "chips": 258
+    },
+    {
+     "iso": "IND",
+     "exp": 20297,
+     "imp": 6743,
+     "energy": 966,
+     "food": 1322,
+     "chips": 3
+    },
+    {
+     "iso": "MYS",
+     "exp": 12804,
+     "imp": 10786,
+     "energy": 4971,
+     "food": 595,
+     "chips": 164
+    },
+    {
+     "iso": "KOR",
+     "exp": 10305,
+     "imp": 10555,
+     "energy": 978,
+     "food": 244,
+     "chips": 888
+    },
+    {
+     "iso": "THA",
+     "exp": 7223,
+     "imp": 10274,
+     "energy": 166,
+     "food": 2576,
+     "chips": 55
+    },
+    {
+     "iso": "VNM",
+     "exp": 7545,
+     "imp": 5367,
+     "energy": 43,
+     "food": 955,
+     "chips": 65
+    },
+    {
+     "iso": "PHL",
+     "exp": 11040,
+     "imp": 1491,
+     "energy": 53,
+     "food": 96,
+     "chips": 239
+    },
+    {
+     "iso": "AUS",
+     "exp": 3177,
+     "imp": 9303,
+     "energy": 2160,
+     "food": 3316,
+     "chips": 0
+    },
+    {
+     "iso": "TWN",
+     "exp": 6704,
+     "imp": 3970,
+     "energy": 96,
+     "food": 51,
+     "chips": 1200
+    },
+    {
+     "iso": "DEU",
+     "exp": 2523,
+     "imp": 4716,
+     "energy": 7,
+     "food": 132,
+     "chips": 75
+    },
+    {
+     "iso": "SAU",
+     "exp": 2079,
+     "imp": 4068,
+     "energy": 3324,
+     "food": 14,
+     "chips": 0
+    },
+    {
+     "iso": "BRA",
+     "exp": 1278,
+     "imp": 4857,
+     "energy": 366,
+     "food": 3627,
+     "chips": 2
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Italy": {
+   "iso": "ITA",
+   "year": 2023,
+   "exportsTotal": 676820,
+   "importsTotal": 640045,
+   "partners": [
+    {
+     "iso": "DEU",
+     "exp": 80800,
+     "imp": 95035,
+     "energy": 384,
+     "food": 8259,
+     "chips": 490
+    },
+    {
+     "iso": "FRA",
+     "exp": 68734,
+     "imp": 48674,
+     "energy": 3025,
+     "food": 7610,
+     "chips": 222
+    },
+    {
+     "iso": "USA",
+     "exp": 72634,
+     "imp": 27287,
+     "energy": 8262,
+     "food": 1385,
+     "chips": 59
+    },
+    {
+     "iso": "CHN",
+     "exp": 20728,
+     "imp": 52605,
+     "energy": 27,
+     "food": 739,
+     "chips": 159
+    },
+    {
+     "iso": "ESP",
+     "exp": 35804,
+     "imp": 35737,
+     "energy": 1397,
+     "food": 7774,
+     "chips": 15
+    },
+    {
+     "iso": "NLD",
+     "exp": 20001,
+     "imp": 39118,
+     "energy": 1340,
+     "food": 5968,
+     "chips": 524
+    },
+    {
+     "iso": "CHE",
+     "exp": 32989,
+     "imp": 19462,
+     "energy": 3102,
+     "food": 264,
+     "chips": 13
+    },
+    {
+     "iso": "BEL",
+     "exp": 20869,
+     "imp": 28351,
+     "energy": 389,
+     "food": 2199,
+     "chips": 185
+    },
+    {
+     "iso": "POL",
+     "exp": 21375,
+     "imp": 17916,
+     "energy": 176,
+     "food": 2637,
+     "chips": 36
+    },
+    {
+     "iso": "GBR",
+     "exp": 28171,
+     "imp": 9467,
+     "energy": 773,
+     "food": 529,
+     "chips": 12
+    },
+    {
+     "iso": "AUT",
+     "exp": 15350,
+     "imp": 13826,
+     "energy": 390,
+     "food": 2008,
+     "chips": 10
+    },
+    {
+     "iso": "TUR",
+     "exp": 15379,
+     "imp": 12486,
+     "energy": 641,
+     "food": 1125,
+     "chips": 2
+    },
+    {
+     "iso": "ROU",
+     "exp": 11122,
+     "imp": 9968,
+     "energy": 38,
+     "food": 979,
+     "chips": 48
+    },
+    {
+     "iso": "CZE",
+     "exp": 9081,
+     "imp": 9710,
+     "energy": 20,
+     "food": 644,
+     "chips": 31
+    },
+    {
+     "iso": "DZA",
+     "exp": 3042,
+     "imp": 15221,
+     "energy": 14961,
+     "food": 8,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Japan": {
+   "iso": "JPN",
+   "year": 2023,
+   "exportsTotal": 717219,
+   "importsTotal": 787191,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 126133,
+     "imp": 173928,
+     "energy": 1640,
+     "food": 9002,
+     "chips": 1753
+    },
+    {
+     "iso": "USA",
+     "exp": 144730,
+     "imp": 83798,
+     "energy": 13102,
+     "food": 13859,
+     "chips": 2139
+    },
+    {
+     "iso": "AUS",
+     "exp": 16748,
+     "imp": 65227,
+     "energy": 48921,
+     "food": 5088,
+     "chips": 1
+    },
+    {
+     "iso": "TWN",
+     "exp": 42899,
+     "imp": 35653,
+     "energy": 61,
+     "food": 721,
+     "chips": 17832
+    },
+    {
+     "iso": "KOR",
+     "exp": 46906,
+     "imp": 31004,
+     "energy": 5646,
+     "food": 2501,
+     "chips": 1573
+    },
+    {
+     "iso": "THA",
+     "exp": 29328,
+     "imp": 25712,
+     "energy": 165,
+     "food": 4375,
+     "chips": 1068
+    },
+    {
+     "iso": "ARE",
+     "exp": 10385,
+     "imp": 36956,
+     "energy": 35746,
+     "food": 12,
+     "chips": 0
+    },
+    {
+     "iso": "VNM",
+     "exp": 17142,
+     "imp": 25798,
+     "energy": 388,
+     "food": 1921,
+     "chips": 42
+    },
+    {
+     "iso": "DEU",
+     "exp": 19330,
+     "imp": 22468,
+     "energy": 23,
+     "food": 504,
+     "chips": 524
+    },
+    {
+     "iso": "SAU",
+     "exp": 6345,
+     "imp": 34713,
+     "energy": 33954,
+     "food": 2,
+     "chips": 0
+    },
+    {
+     "iso": "IDN",
+     "exp": 14422,
+     "imp": 24442,
+     "energy": 8453,
+     "food": 2200,
+     "chips": 72
+    },
+    {
+     "iso": "MYS",
+     "exp": 13939,
+     "imp": 20213,
+     "energy": 7407,
+     "food": 1371,
+     "chips": 1181
+    },
+    {
+     "iso": "HKG",
+     "exp": 32502,
+     "imp": 1525,
+     "energy": 2,
+     "food": 183,
+     "chips": 10
+    },
+    {
+     "iso": "SGP",
+     "exp": 18805,
+     "imp": 8603,
+     "energy": 192,
+     "food": 418,
+     "chips": 912
+    },
+    {
+     "iso": "CAN",
+     "exp": 10901,
+     "imp": 14545,
+     "energy": 4629,
+     "food": 4048,
+     "chips": 5
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Mexico": {
+   "iso": "MEX",
+   "year": 2023,
+   "exportsTotal": 595973,
+   "importsTotal": 605583,
+   "partners": [
+    {
+     "iso": "USA",
+     "exp": 475203,
+     "imp": 261799,
+     "energy": 44470,
+     "food": 28259,
+     "chips": 1396
+    },
+    {
+     "iso": "CHN",
+     "exp": 9151,
+     "imp": 114678,
+     "energy": 1348,
+     "food": 867,
+     "chips": 3679
+    },
+    {
+     "iso": "CAN",
+     "exp": 17731,
+     "imp": 13099,
+     "energy": 149,
+     "food": 2718,
+     "chips": 110
+    },
+    {
+     "iso": "DEU",
+     "exp": 8746,
+     "imp": 21232,
+     "energy": 50,
+     "food": 184,
+     "chips": 361
+    },
+    {
+     "iso": "JPN",
+     "exp": 3846,
+     "imp": 20713,
+     "energy": 642,
+     "food": 23,
+     "chips": 528
+    },
+    {
+     "iso": "KOR",
+     "exp": 3807,
+     "imp": 19532,
+     "energy": 268,
+     "food": 23,
+     "chips": 1740
+    },
+    {
+     "iso": "TWN",
+     "exp": 5111,
+     "imp": 14317,
+     "energy": 8,
+     "food": 11,
+     "chips": 4183
+    },
+    {
+     "iso": "A59",
+     "exp": 18871,
+     "imp": 0,
+     "energy": 0,
+     "food": 0,
+     "chips": 0
+    },
+    {
+     "iso": "BRA",
+     "exp": 4319,
+     "imp": 13419,
+     "energy": 1,
+     "food": 2493,
+     "chips": 4
+    },
+    {
+     "iso": "MYS",
+     "exp": 400,
+     "imp": 12130,
+     "energy": 429,
+     "food": 87,
+     "chips": 5908
+    },
+    {
+     "iso": "VNM",
+     "exp": 383,
+     "imp": 11582,
+     "energy": 0,
+     "food": 195,
+     "chips": 2633
+    },
+    {
+     "iso": "_X ",
+     "exp": 5597,
+     "imp": 4071,
+     "energy": 317,
+     "food": 1202,
+     "chips": 1
+    },
+    {
+     "iso": "ITA",
+     "exp": 785,
+     "imp": 8585,
+     "energy": 21,
+     "food": 230,
+     "chips": 8
+    },
+    {
+     "iso": "THA",
+     "exp": 338,
+     "imp": 8756,
+     "energy": 1,
+     "food": 128,
+     "chips": 808
+    },
+    {
+     "iso": "IND",
+     "exp": 860,
+     "imp": 8021,
+     "energy": 2,
+     "food": 178,
+     "chips": 6
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Netherlands": {
+   "iso": "NLD",
+   "year": 2023,
+   "exportsTotal": 717440,
+   "importsTotal": 647034,
+   "partners": [
+    {
+     "iso": "DEU",
+     "exp": 163738,
+     "imp": 109375,
+     "energy": 8322,
+     "food": 15602,
+     "chips": 767
+    },
+    {
+     "iso": "BEL",
+     "exp": 84701,
+     "imp": 62288,
+     "energy": 13091,
+     "food": 11608,
+     "chips": 57
+    },
+    {
+     "iso": "USA",
+     "exp": 35225,
+     "imp": 67802,
+     "energy": 27875,
+     "food": 2280,
+     "chips": 308
+    },
+    {
+     "iso": "FRA",
+     "exp": 57722,
+     "imp": 23217,
+     "energy": 2885,
+     "food": 5256,
+     "chips": 94
+    },
+    {
+     "iso": "GBR",
+     "exp": 45415,
+     "imp": 33631,
+     "energy": 12595,
+     "food": 2130,
+     "chips": 42
+    },
+    {
+     "iso": "CHN",
+     "exp": 19173,
+     "imp": 53665,
+     "energy": 1153,
+     "food": 1704,
+     "chips": 464
+    },
+    {
+     "iso": "ITA",
+     "exp": 29416,
+     "imp": 16173,
+     "energy": 775,
+     "food": 2437,
+     "chips": 17
+    },
+    {
+     "iso": "POL",
+     "exp": 20184,
+     "imp": 14788,
+     "energy": 630,
+     "food": 3120,
+     "chips": 34
+    },
+    {
+     "iso": "ESP",
+     "exp": 22762,
+     "imp": 11996,
+     "energy": 1604,
+     "food": 3560,
+     "chips": 12
+    },
+    {
+     "iso": "NOR",
+     "exp": 6884,
+     "imp": 21244,
+     "energy": 18559,
+     "food": 333,
+     "chips": 2
+    },
+    {
+     "iso": "SWE",
+     "exp": 15496,
+     "imp": 9805,
+     "energy": 1067,
+     "food": 580,
+     "chips": 4
+    },
+    {
+     "iso": "IRL",
+     "exp": 8349,
+     "imp": 12137,
+     "energy": 40,
+     "food": 1306,
+     "chips": 14
+    },
+    {
+     "iso": "CZE",
+     "exp": 8897,
+     "imp": 8691,
+     "energy": 30,
+     "food": 488,
+     "chips": 83
+    },
+    {
+     "iso": "DNK",
+     "exp": 9274,
+     "imp": 8050,
+     "energy": 2174,
+     "food": 1342,
+     "chips": 5
+    },
+    {
+     "iso": "TWN",
+     "exp": 8527,
+     "imp": 7951,
+     "energy": 47,
+     "food": 81,
+     "chips": 429
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Poland": {
+   "iso": "POL",
+   "year": 2023,
+   "exportsTotal": 381933,
+   "importsTotal": 371401,
+   "partners": [
+    {
+     "iso": "DEU",
+     "exp": 106697,
+     "imp": 73913,
+     "energy": 3986,
+     "food": 7032,
+     "chips": 267
+    },
+    {
+     "iso": "CHN",
+     "exp": 3310,
+     "imp": 51524,
+     "energy": 187,
+     "food": 750,
+     "chips": 449
+    },
+    {
+     "iso": "CZE",
+     "exp": 24085,
+     "imp": 12040,
+     "energy": 789,
+     "food": 994,
+     "chips": 72
+    },
+    {
+     "iso": "ITA",
+     "exp": 17537,
+     "imp": 18209,
+     "energy": 55,
+     "food": 2069,
+     "chips": 28
+    },
+    {
+     "iso": "FRA",
+     "exp": 23426,
+     "imp": 12199,
+     "energy": 108,
+     "food": 1213,
+     "chips": 37
+    },
+    {
+     "iso": "NLD",
+     "exp": 17280,
+     "imp": 15053,
+     "energy": 1001,
+     "food": 2945,
+     "chips": 1290
+    },
+    {
+     "iso": "USA",
+     "exp": 11839,
+     "imp": 16215,
+     "energy": 1879,
+     "food": 646,
+     "chips": 52
+    },
+    {
+     "iso": "GBR",
+     "exp": 18965,
+     "imp": 6635,
+     "energy": 706,
+     "food": 574,
+     "chips": 10
+    },
+    {
+     "iso": "ESP",
+     "exp": 10520,
+     "imp": 7894,
+     "energy": 25,
+     "food": 1941,
+     "chips": 9
+    },
+    {
+     "iso": "BEL",
+     "exp": 9071,
+     "imp": 8547,
+     "energy": 570,
+     "food": 1381,
+     "chips": 21
+    },
+    {
+     "iso": "UKR",
+     "exp": 12266,
+     "imp": 4791,
+     "energy": 57,
+     "food": 1825,
+     "chips": 0
+    },
+    {
+     "iso": "SWE",
+     "exp": 9438,
+     "imp": 6953,
+     "energy": 1939,
+     "food": 454,
+     "chips": 41
+    },
+    {
+     "iso": "SVK",
+     "exp": 10455,
+     "imp": 5702,
+     "energy": 175,
+     "food": 628,
+     "chips": 4
+    },
+    {
+     "iso": "HUN",
+     "exp": 9127,
+     "imp": 5842,
+     "energy": 94,
+     "food": 652,
+     "chips": 4
+    },
+    {
+     "iso": "DNK",
+     "exp": 6154,
+     "imp": 7101,
+     "energy": 48,
+     "food": 1699,
+     "chips": 27
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Russia": {
+   "iso": "RUS",
+   "year": 2021,
+   "exportsTotal": 492314,
+   "importsTotal": 293497,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 68679,
+     "imp": 72693,
+     "energy": 42,
+     "food": 1444,
+     "chips": 397
+    },
+    {
+     "iso": "DEU",
+     "exp": 29646,
+     "imp": 27351,
+     "energy": 145,
+     "food": 1512,
+     "chips": 7
+    },
+    {
+     "iso": "NLD",
+     "exp": 42145,
+     "imp": 4284,
+     "energy": 100,
+     "food": 686,
+     "chips": 1
+    },
+    {
+     "iso": "BLR",
+     "exp": 23130,
+     "imp": 15636,
+     "energy": 165,
+     "food": 4576,
+     "chips": 66
+    },
+    {
+     "iso": "USA",
+     "exp": 17748,
+     "imp": 17265,
+     "energy": 28,
+     "food": 471,
+     "chips": 48
+    },
+    {
+     "iso": "TUR",
+     "exp": 26426,
+     "imp": 6515,
+     "energy": 17,
+     "food": 1857,
+     "chips": 0
+    },
+    {
+     "iso": "ITA",
+     "exp": 19284,
+     "imp": 12034,
+     "energy": 16,
+     "food": 1191,
+     "chips": 1
+    },
+    {
+     "iso": "KOR",
+     "exp": 16895,
+     "imp": 12987,
+     "energy": 213,
+     "food": 219,
+     "chips": 75
+    },
+    {
+     "iso": "GBR",
+     "exp": 22275,
+     "imp": 4467,
+     "energy": 49,
+     "food": 544,
+     "chips": 1
+    },
+    {
+     "iso": "KAZ",
+     "exp": 18494,
+     "imp": 7132,
+     "energy": 452,
+     "food": 502,
+     "chips": 0
+    },
+    {
+     "iso": "POL",
+     "exp": 16722,
+     "imp": 5808,
+     "energy": 54,
+     "food": 498,
+     "chips": 0
+    },
+    {
+     "iso": "FRA",
+     "exp": 9910,
+     "imp": 12211,
+     "energy": 36,
+     "food": 1065,
+     "chips": 15
+    },
+    {
+     "iso": "JPN",
+     "exp": 10726,
+     "imp": 9127,
+     "energy": 64,
+     "food": 71,
+     "chips": 14
+    },
+    {
+     "iso": "IND",
+     "exp": 9128,
+     "imp": 4428,
+     "energy": 8,
+     "food": 722,
+     "chips": 2
+    },
+    {
+     "iso": "FIN",
+     "exp": 9656,
+     "imp": 3566,
+     "energy": 200,
+     "food": 108,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Saudi Arabia": {
+   "iso": "SAU",
+   "year": 2023,
+   "exportsTotal": 320018,
+   "importsTotal": 206940,
+   "partners": [
+    {
+     "iso": "_X ",
+     "exp": 247386,
+     "imp": 3,
+     "energy": 0,
+     "food": 0,
+     "chips": 0
+    },
+    {
+     "iso": "CHN",
+     "exp": 7611,
+     "imp": 43347,
+     "energy": 192,
+     "food": 521,
+     "chips": 36
+    },
+    {
+     "iso": "ARE",
+     "exp": 13759,
+     "imp": 13347,
+     "energy": 3551,
+     "food": 1289,
+     "chips": 0
+    },
+    {
+     "iso": "USA",
+     "exp": 2759,
+     "imp": 18901,
+     "energy": 72,
+     "food": 1701,
+     "chips": 17
+    },
+    {
+     "iso": "IND",
+     "exp": 6216,
+     "imp": 11619,
+     "energy": 382,
+     "food": 2247,
+     "chips": 1
+    },
+    {
+     "iso": "DEU",
+     "exp": 459,
+     "imp": 9125,
+     "energy": 21,
+     "food": 566,
+     "chips": 6
+    },
+    {
+     "iso": "JPN",
+     "exp": 600,
+     "imp": 8185,
+     "energy": 11,
+     "food": 24,
+     "chips": 1
+    },
+    {
+     "iso": "EGY",
+     "exp": 2627,
+     "imp": 5268,
+     "energy": 2726,
+     "food": 897,
+     "chips": 0
+    },
+    {
+     "iso": "CHE",
+     "exp": 913,
+     "imp": 6612,
+     "energy": 1,
+     "food": 284,
+     "chips": 1
+    },
+    {
+     "iso": "KOR",
+     "exp": 1207,
+     "imp": 6032,
+     "energy": 125,
+     "food": 38,
+     "chips": 1
+    },
+    {
+     "iso": "ITA",
+     "exp": 737,
+     "imp": 5875,
+     "energy": 21,
+     "food": 554,
+     "chips": 4
+    },
+    {
+     "iso": "TUR",
+     "exp": 3073,
+     "imp": 2623,
+     "energy": 31,
+     "food": 414,
+     "chips": 1
+    },
+    {
+     "iso": "GBR",
+     "exp": 1009,
+     "imp": 4540,
+     "energy": 10,
+     "food": 294,
+     "chips": 4
+    },
+    {
+     "iso": "BHR",
+     "exp": 2307,
+     "imp": 2844,
+     "energy": 242,
+     "food": 394,
+     "chips": 0
+    },
+    {
+     "iso": "OMN",
+     "exp": 1220,
+     "imp": 3870,
+     "energy": 1602,
+     "food": 335,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "South Korea": {
+   "iso": "KOR",
+   "year": 2023,
+   "exportsTotal": 631804,
+   "importsTotal": 642550,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 124656,
+     "imp": 142854,
+     "energy": 885,
+     "food": 4872,
+     "chips": 16817
+    },
+    {
+     "iso": "USA",
+     "exp": 116290,
+     "imp": 71732,
+     "energy": 22310,
+     "food": 8711,
+     "chips": 2490
+    },
+    {
+     "iso": "VNM",
+     "exp": 53474,
+     "imp": 25942,
+     "energy": 52,
+     "food": 1684,
+     "chips": 275
+    },
+    {
+     "iso": "JPN",
+     "exp": 28997,
+     "imp": 47647,
+     "energy": 1513,
+     "food": 561,
+     "chips": 5059
+    },
+    {
+     "iso": "AUS",
+     "exp": 17789,
+     "imp": 32823,
+     "energy": 18680,
+     "food": 3779,
+     "chips": 1
+    },
+    {
+     "iso": "TWN",
+     "exp": 20177,
+     "imp": 24371,
+     "energy": 89,
+     "food": 258,
+     "chips": 17283
+    },
+    {
+     "iso": "SAU",
+     "exp": 5316,
+     "imp": 32763,
+     "energy": 31521,
+     "food": 2,
+     "chips": 0
+    },
+    {
+     "iso": "DEU",
+     "exp": 10312,
+     "imp": 23610,
+     "energy": 53,
+     "food": 823,
+     "chips": 811
+    },
+    {
+     "iso": "SGP",
+     "exp": 18751,
+     "imp": 11179,
+     "energy": 2029,
+     "food": 179,
+     "chips": 2927
+    },
+    {
+     "iso": "HKG",
+     "exp": 25193,
+     "imp": 1831,
+     "energy": 15,
+     "food": 175,
+     "chips": 954
+    },
+    {
+     "iso": "MYS",
+     "exp": 9755,
+     "imp": 15237,
+     "energy": 6783,
+     "food": 736,
+     "chips": 2057
+    },
+    {
+     "iso": "IND",
+     "exp": 17905,
+     "imp": 6728,
+     "energy": 1657,
+     "food": 582,
+     "chips": 5
+    },
+    {
+     "iso": "IDN",
+     "exp": 9139,
+     "imp": 12146,
+     "energy": 4946,
+     "food": 846,
+     "chips": 70
+    },
+    {
+     "iso": "ARE",
+     "exp": 4407,
+     "imp": 16423,
+     "energy": 15594,
+     "food": 53,
+     "chips": 0
+    },
+    {
+     "iso": "MEX",
+     "exp": 12217,
+     "imp": 7631,
+     "energy": 2412,
+     "food": 186,
+     "chips": 36
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Spain": {
+   "iso": "ESP",
+   "year": 2023,
+   "exportsTotal": 420170,
+   "importsTotal": 469043,
+   "partners": [
+    {
+     "iso": "FRA",
+     "exp": 63198,
+     "imp": 41257,
+     "energy": 1848,
+     "food": 7284,
+     "chips": 44
+    },
+    {
+     "iso": "DEU",
+     "exp": 42268,
+     "imp": 49573,
+     "energy": 137,
+     "food": 4015,
+     "chips": 322
+    },
+    {
+     "iso": "ITA",
+     "exp": 34858,
+     "imp": 29733,
+     "energy": 2435,
+     "food": 2799,
+     "chips": 20
+    },
+    {
+     "iso": "CHN",
+     "exp": 8043,
+     "imp": 47555,
+     "energy": 365,
+     "food": 1534,
+     "chips": 145
+    },
+    {
+     "iso": "PRT",
+     "exp": 33574,
+     "imp": 17165,
+     "energy": 905,
+     "food": 3807,
+     "chips": 11
+    },
+    {
+     "iso": "USA",
+     "exp": 19691,
+     "imp": 30500,
+     "energy": 10717,
+     "food": 2187,
+     "chips": 42
+    },
+    {
+     "iso": "E19",
+     "exp": 13913,
+     "imp": 22905,
+     "energy": 1266,
+     "food": 85,
+     "chips": 4
+    },
+    {
+     "iso": "GBR",
+     "exp": 24244,
+     "imp": 11578,
+     "energy": 506,
+     "food": 1039,
+     "chips": 8
+    },
+    {
+     "iso": "NLD",
+     "exp": 12950,
+     "imp": 21026,
+     "energy": 1497,
+     "food": 4248,
+     "chips": 229
+    },
+    {
+     "iso": "BEL",
+     "exp": 16123,
+     "imp": 10568,
+     "energy": 602,
+     "food": 2028,
+     "chips": 4
+    },
+    {
+     "iso": "MAR",
+     "exp": 12820,
+     "imp": 9764,
+     "energy": 37,
+     "food": 2312,
+     "chips": 10
+    },
+    {
+     "iso": "TUR",
+     "exp": 9383,
+     "imp": 9847,
+     "energy": 579,
+     "food": 435,
+     "chips": 0
+    },
+    {
+     "iso": "POL",
+     "exp": 9781,
+     "imp": 9184,
+     "energy": 50,
+     "food": 2030,
+     "chips": 7
+    },
+    {
+     "iso": "CHE",
+     "exp": 7128,
+     "imp": 5111,
+     "energy": 2,
+     "food": 104,
+     "chips": 2
+    },
+    {
+     "iso": "MEX",
+     "exp": 6024,
+     "imp": 6067,
+     "energy": 3774,
+     "food": 295,
+     "chips": 4
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Switzerland": {
+   "iso": "CHE",
+   "year": 2023,
+   "exportsTotal": 419923,
+   "importsTotal": 365372,
+   "partners": [
+    {
+     "iso": "DEU",
+     "exp": 51148,
+     "imp": 66308,
+     "energy": 5324,
+     "food": 2905,
+     "chips": 178
+    },
+    {
+     "iso": "USA",
+     "exp": 62853,
+     "imp": 33040,
+     "energy": 973,
+     "food": 325,
+     "chips": 43
+    },
+    {
+     "iso": "CHN",
+     "exp": 45163,
+     "imp": 20479,
+     "energy": 7,
+     "food": 236,
+     "chips": 104
+    },
+    {
+     "iso": "ITA",
+     "exp": 27018,
+     "imp": 28414,
+     "energy": 605,
+     "food": 2630,
+     "chips": 20
+    },
+    {
+     "iso": "FRA",
+     "exp": 20107,
+     "imp": 21708,
+     "energy": 4572,
+     "food": 2043,
+     "chips": 11
+    },
+    {
+     "iso": "SVN",
+     "exp": 17450,
+     "imp": 13492,
+     "energy": 1,
+     "food": 44,
+     "chips": 0
+    },
+    {
+     "iso": "GBR",
+     "exp": 14713,
+     "imp": 6976,
+     "energy": 9,
+     "food": 259,
+     "chips": 8
+    },
+    {
+     "iso": "AUT",
+     "exp": 10737,
+     "imp": 10893,
+     "energy": 742,
+     "food": 637,
+     "chips": 19
+    },
+    {
+     "iso": "ARE",
+     "exp": 11116,
+     "imp": 10439,
+     "energy": 0,
+     "food": 4,
+     "chips": 0
+    },
+    {
+     "iso": "HKG",
+     "exp": 15213,
+     "imp": 4844,
+     "energy": 0,
+     "food": 2,
+     "chips": 9
+    },
+    {
+     "iso": "IND",
+     "exp": 16771,
+     "imp": 2934,
+     "energy": 0,
+     "food": 141,
+     "chips": 1
+    },
+    {
+     "iso": "ESP",
+     "exp": 8590,
+     "imp": 10358,
+     "energy": 3,
+     "food": 1190,
+     "chips": 2
+    },
+    {
+     "iso": "TUR",
+     "exp": 16301,
+     "imp": 2451,
+     "energy": 1,
+     "food": 185,
+     "chips": 1
+    },
+    {
+     "iso": "JPN",
+     "exp": 8546,
+     "imp": 7664,
+     "energy": 1,
+     "food": 25,
+     "chips": 18
+    },
+    {
+     "iso": "NLD",
+     "exp": 7154,
+     "imp": 6556,
+     "energy": 823,
+     "food": 1252,
+     "chips": 176
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Taiwan": {
+   "iso": "TWN",
+   "year": 2023,
+   "exportsTotal": 432204,
+   "importsTotal": 358505,
+   "partners": [
+    {
+     "iso": "CHN",
+     "exp": 95725,
+     "imp": 70347,
+     "energy": 195,
+     "food": 1010,
+     "chips": 17191
+    },
+    {
+     "iso": "USA",
+     "exp": 76402,
+     "imp": 40971,
+     "energy": 7972,
+     "food": 3781,
+     "chips": 4663
+    },
+    {
+     "iso": "JPN",
+     "exp": 31359,
+     "imp": 44269,
+     "energy": 304,
+     "food": 1004,
+     "chips": 7156
+    },
+    {
+     "iso": "HKG",
+     "exp": 56435,
+     "imp": 1482,
+     "energy": 40,
+     "food": 29,
+     "chips": 51
+    },
+    {
+     "iso": "KOR",
+     "exp": 18167,
+     "imp": 28460,
+     "energy": 1104,
+     "food": 417,
+     "chips": 16898
+    },
+    {
+     "iso": "SGP",
+     "exp": 29747,
+     "imp": 9502,
+     "energy": 434,
+     "food": 115,
+     "chips": 3839
+    },
+    {
+     "iso": "MYS",
+     "exp": 15159,
+     "imp": 9684,
+     "energy": 1151,
+     "food": 487,
+     "chips": 3677
+    },
+    {
+     "iso": "AUS",
+     "exp": 5783,
+     "imp": 17422,
+     "energy": 13185,
+     "food": 814,
+     "chips": 0
+    },
+    {
+     "iso": "DEU",
+     "exp": 8120,
+     "imp": 13867,
+     "energy": 22,
+     "food": 222,
+     "chips": 2139
+    },
+    {
+     "iso": "NLD",
+     "exp": 12921,
+     "imp": 7409,
+     "energy": 158,
+     "food": 250,
+     "chips": 35
+    },
+    {
+     "iso": "VNM",
+     "exp": 11724,
+     "imp": 6150,
+     "energy": 12,
+     "food": 520,
+     "chips": 795
+    },
+    {
+     "iso": "TWN",
+     "exp": 0,
+     "imp": 16894,
+     "energy": 0,
+     "food": 10,
+     "chips": 12723
+    },
+    {
+     "iso": "THA",
+     "exp": 10887,
+     "imp": 5378,
+     "energy": 86,
+     "food": 755,
+     "chips": 1079
+    },
+    {
+     "iso": "IDN",
+     "exp": 3006,
+     "imp": 7380,
+     "energy": 2670,
+     "food": 294,
+     "chips": 27
+    },
+    {
+     "iso": "SAU",
+     "exp": 998,
+     "imp": 9150,
+     "energy": 8363,
+     "food": 4,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "Turkey": {
+   "iso": "TUR",
+   "year": 2023,
+   "exportsTotal": 255627,
+   "importsTotal": 361967,
+   "partners": [
+    {
+     "iso": "RUS",
+     "exp": 10907,
+     "imp": 45600,
+     "energy": 30095,
+     "food": 5231,
+     "chips": 0
+    },
+    {
+     "iso": "DEU",
+     "exp": 21083,
+     "imp": 28688,
+     "energy": 110,
+     "food": 662,
+     "chips": 21
+    },
+    {
+     "iso": "CHN",
+     "exp": 3306,
+     "imp": 45048,
+     "energy": 22,
+     "food": 414,
+     "chips": 291
+    },
+    {
+     "iso": "USA",
+     "exp": 14880,
+     "imp": 15780,
+     "energy": 1301,
+     "food": 1059,
+     "chips": 27
+    },
+    {
+     "iso": "ITA",
+     "exp": 12373,
+     "imp": 14994,
+     "energy": 488,
+     "food": 347,
+     "chips": 14
+    },
+    {
+     "iso": "XX ",
+     "exp": 1773,
+     "imp": 24552,
+     "energy": 24552,
+     "food": 0,
+     "chips": 0
+    },
+    {
+     "iso": "CHE",
+     "exp": 2325,
+     "imp": 19914,
+     "energy": 7,
+     "food": 115,
+     "chips": 1
+    },
+    {
+     "iso": "FRA",
+     "exp": 10296,
+     "imp": 11548,
+     "energy": 86,
+     "food": 480,
+     "chips": 8
+    },
+    {
+     "iso": "ARE",
+     "exp": 8573,
+     "imp": 11530,
+     "energy": 68,
+     "food": 29,
+     "chips": 0
+    },
+    {
+     "iso": "ESP",
+     "exp": 9784,
+     "imp": 9507,
+     "energy": 202,
+     "food": 231,
+     "chips": 0
+    },
+    {
+     "iso": "GBR",
+     "exp": 12463,
+     "imp": 6523,
+     "energy": 50,
+     "food": 369,
+     "chips": 1
+    },
+    {
+     "iso": "IRQ",
+     "exp": 12759,
+     "imp": 1498,
+     "energy": 1132,
+     "food": 20,
+     "chips": 0
+    },
+    {
+     "iso": "NLD",
+     "exp": 7857,
+     "imp": 4420,
+     "energy": 209,
+     "food": 530,
+     "chips": 0
+    },
+    {
+     "iso": "POL",
+     "exp": 5955,
+     "imp": 5074,
+     "energy": 3,
+     "food": 426,
+     "chips": 2
+    },
+    {
+     "iso": "ROU",
+     "exp": 6952,
+     "imp": 3686,
+     "energy": 89,
+     "food": 248,
+     "chips": 0
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "United Kingdom": {
+   "iso": "GBR",
+   "year": 2023,
+   "exportsTotal": 521207,
+   "importsTotal": 780040,
+   "partners": [
+    {
+     "iso": "USA",
+     "exp": 71908,
+     "imp": 94926,
+     "energy": 22166,
+     "food": 2507,
+     "chips": 263
+    },
+    {
+     "iso": "CHN",
+     "exp": 34286,
+     "imp": 99221,
+     "energy": 1928,
+     "food": 2819,
+     "chips": 324
+    },
+    {
+     "iso": "DEU",
+     "exp": 39591,
+     "imp": 74926,
+     "energy": 517,
+     "food": 6175,
+     "chips": 83
+    },
+    {
+     "iso": "FRA",
+     "exp": 29230,
+     "imp": 40638,
+     "energy": 2277,
+     "food": 7135,
+     "chips": 49
+    },
+    {
+     "iso": "NLD",
+     "exp": 36871,
+     "imp": 27188,
+     "energy": 5243,
+     "food": 8471,
+     "chips": 44
+    },
+    {
+     "iso": "IRL",
+     "exp": 28638,
+     "imp": 20869,
+     "energy": 489,
+     "food": 6544,
+     "chips": 5
+    },
+    {
+     "iso": "CHE",
+     "exp": 35632,
+     "imp": 13587,
+     "energy": 8,
+     "food": 611,
+     "chips": 5
+    },
+    {
+     "iso": "ITA",
+     "exp": 12072,
+     "imp": 30322,
+     "energy": 259,
+     "food": 5690,
+     "chips": 16
+    },
+    {
+     "iso": "BEL",
+     "exp": 20660,
+     "imp": 18277,
+     "energy": 2621,
+     "food": 3878,
+     "chips": 14
+    },
+    {
+     "iso": "ESP",
+     "exp": 11710,
+     "imp": 26513,
+     "energy": 396,
+     "food": 5896,
+     "chips": 33
+    },
+    {
+     "iso": "NOR",
+     "exp": 4078,
+     "imp": 32468,
+     "energy": 29097,
+     "food": 986,
+     "chips": 6
+    },
+    {
+     "iso": "_X ",
+     "exp": 17935,
+     "imp": 10675,
+     "energy": 0,
+     "food": 0,
+     "chips": 0
+    },
+    {
+     "iso": "POL",
+     "exp": 8214,
+     "imp": 19032,
+     "energy": 99,
+     "food": 4795,
+     "chips": 9
+    },
+    {
+     "iso": "IND",
+     "exp": 12867,
+     "imp": 14366,
+     "energy": 2239,
+     "food": 1097,
+     "chips": 2
+    },
+    {
+     "iso": "TUR",
+     "exp": 8142,
+     "imp": 15551,
+     "energy": 370,
+     "food": 983,
+     "chips": 1
+    }
+   ],
+   "retrieved": "2026-10-29"
+  },
+  "United States of America": {
+   "iso": "USA",
+   "year": 2023,
+   "exportsTotal": 2018543,
+   "importsTotal": 3168471,
+   "partners": [
+    {
+     "iso": "MEX",
+     "exp": 323228,
+     "imp": 480051,
+     "energy": 25012,
+     "food": 47040,
+     "chips": 1687
+    },
+    {
+     "iso": "CAN",
+     "exp": 352760,
+     "imp": 429605,
+     "energy": 131910,
+     "food": 43932,
+     "chips": 278
+    },
+    {
+     "iso": "CHN",
+     "exp": 147806,
+     "imp": 448017,
+     "energy": 239,
+     "food": 6311,
+     "chips": 1846
+    },
+    {
+     "iso": "DEU",
+     "exp": 76473,
+     "imp": 162959,
+     "energy": 407,
+     "food": 2704,
+     "chips": 730
+    },
+    {
+     "iso": "JPN",
+     "exp": 76154,
+     "imp": 151581,
+     "energy": 733,
+     "food": 1531,
+     "chips": 1039
+    },
+    {
+     "iso": "KOR",
+     "exp": 64836,
+     "imp": 119716,
+     "energy": 4899,
+     "food": 1606,
+     "chips": 2400
+    },
+    {
+     "iso": "GBR",
+     "exp": 74054,
+     "imp": 64777,
+     "energy": 3460,
+     "food": 3052,
+     "chips": 64
+    },
+    {
+     "iso": "TWN",
+     "exp": 39774,
+     "imp": 89919,
+     "energy": 602,
+     "food": 919,
+     "chips": 7329
+    },
+    {
+     "iso": "VNM",
+     "exp": 9812,
+     "imp": 118940,
+     "energy": 1,
+     "food": 4169,
+     "chips": 1714
+    },
+    {
+     "iso": "IND",
+     "exp": 40116,
+     "imp": 87279,
+     "energy": 5135,
+     "food": 5648,
+     "chips": 15
+    },
+    {
+     "iso": "NLD",
+     "exp": 82186,
+     "imp": 39317,
+     "energy": 3833,
+     "food": 3421,
+     "chips": 25
+    },
+    {
+     "iso": "FRA",
+     "exp": 45256,
+     "imp": 58922,
+     "energy": 1415,
+     "food": 6873,
+     "chips": 146
+    },
+    {
+     "iso": "ITA",
+     "exp": 28917,
+     "imp": 75171,
+     "energy": 2162,
+     "food": 7849,
+     "chips": 22
+    },
+    {
+     "iso": "IRL",
+     "exp": 16942,
+     "imp": 82715,
+     "energy": 36,
+     "food": 1416,
+     "chips": 1704
+    },
+    {
+     "iso": "BRA",
+     "exp": 44808,
+     "imp": 40998,
+     "energy": 8319,
+     "food": 6250,
+     "chips": 1
+    }
+   ],
+   "retrieved": "2026-10-29"
+  }
+ }
+}

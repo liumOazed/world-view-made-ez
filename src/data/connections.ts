@@ -1,5 +1,6 @@
 import { geoDistance } from 'd3-geo';
 import { seeded, type CountryProfile, type LinkKind } from './countries';
+import snapshot from './trade.json';
 
 /**
  * ILLUSTRATIVE connection logic. Curated partners come first; the rest of a
@@ -22,6 +23,93 @@ export interface InfluenceLink {
 }
 
 type Anchors = Map<string, [number, number]>;
+
+/* ---------- real trade from UN Comtrade (scripts/fetch-trade.mjs) ---------- */
+
+interface PartnerFlow {
+  iso: string;
+  /** USD millions; energy, food and chips are imports by product. */
+  exp: number;
+  imp: number;
+  energy: number;
+  food: number;
+  chips: number;
+}
+interface CountryTrade {
+  iso: string;
+  year: number;
+  exportsTotal: number;
+  importsTotal: number;
+  partners: PartnerFlow[];
+  retrieved?: string;
+}
+interface TradeSnapshot {
+  source: string;
+  sourceUrl: string;
+  retrieved: string | null;
+  isoToName: Record<string, string>;
+  countries: Record<string, CountryTrade>;
+}
+
+const TRADE = snapshot as TradeSnapshot;
+
+export interface TradeSource {
+  year: number;
+  retrieved: string;
+  source: string;
+  url: string;
+}
+
+/** Where a country's trade links come from, or null while they are placeholders. */
+export function tradeSource(name: string): TradeSource | null {
+  const t = TRADE.countries[name];
+  const retrieved = t?.retrieved ?? TRADE.retrieved;
+  return t && retrieved ? { year: t.year, retrieved, source: 'UN Comtrade', url: TRADE.sourceUrl } : null;
+}
+
+/** What a partner mainly is to the reporter, judged from the flows between them. */
+function kindOf(p: PartnerFlow): LinkKind {
+  if (p.imp > 0) {
+    if (p.energy / p.imp >= 0.4) return 'energy';
+    if (p.chips / p.imp >= 0.25) return 'tech';
+    if (p.food / p.imp >= 0.3) return 'food';
+  }
+  return p.exp >= p.imp ? 'exports' : 'imports';
+}
+
+const pctOf = (part: number, total: number) => {
+  const v = total > 0 ? (100 * part) / total : 0;
+  return v < 10 ? Math.round(v * 10) / 10 : Math.round(v);
+};
+
+function realTradeLinks(t: CountryTrade, profiles: Map<string, CountryProfile>, n: number): TradeLink[] {
+  const total = t.exportsTotal + t.importsTotal;
+  return t.partners
+    .map((p) => ({ name: TRADE.isoToName[p.iso], kind: kindOf(p), share: pctOf(p.exp + p.imp, total) }))
+    .filter((l) => l.name && profiles.has(l.name))
+    .slice(0, n);
+}
+
+/** Countries whose trade leans most on `c`, from their own reported flows. */
+function realInfluence(c: CountryProfile, n: number): InfluenceLink[] | null {
+  const iso = TRADE.countries[c.name]?.iso;
+  if (!iso) return null;
+  const found: { name: string; kind: LinkKind; value: number }[] = [];
+  for (const [name, t] of Object.entries(TRADE.countries)) {
+    if (name === c.name) continue;
+    const p = t.partners.find((x) => x.iso === iso);
+    if (!p) continue;
+    const total = t.exportsTotal + t.importsTotal;
+    const dependence = total > 0 ? (p.exp + p.imp) / total : 0;
+    // Sway over a large trader counts for more than over a tiny one.
+    found.push({ name, kind: kindOf(p), value: dependence * Math.pow(Math.max(1, total), 0.35) });
+  }
+  if (found.length < n) return null;
+  found.sort((a, b) => b.value - a.value);
+  const top = found.slice(0, n);
+  const max = top[0].value || 1;
+  return top.map((t) => ({ name: t.name, kind: t.kind, score: Math.max(8, Math.round((t.value / max) * 100)) }));
+}
 
 const HUBS = [
   'United States of America', 'China', 'Germany', 'Japan', 'India', 'United Kingdom', 'France',
@@ -55,6 +143,9 @@ export function tradeLinks(
   anchors: Anchors,
   n = 10,
 ): TradeLink[] {
+  const real = TRADE.countries[c.name];
+  if (real) return realTradeLinks(real, profiles, n);
+
   const out: TradeLink[] = [];
   const keys = new Set<string>();
   const countries = new Set<string>();
@@ -90,6 +181,9 @@ export function influenceLinks(
   anchors: Anchors,
   n = 5,
 ): InfluenceLink[] {
+  const real = realInfluence(c, n);
+  if (real) return real;
+
   const scores = new Map<string, { raw: number; kind: LinkKind; best: number }>();
   for (const other of profiles.values()) {
     if (other.name === c.name) continue;
