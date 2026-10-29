@@ -1,0 +1,50 @@
+name: Refresh scorecard indices
+
+# Pulls the scorecard indices into src/data/indices.json. On main it opens or
+# updates a PR on the data/indices-refresh branch instead of pushing.
+on:
+  schedule:
+    - cron: '0 5 1 * *' # monthly; most indices publish once a year
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['scripts/fetch-indices.mjs', '.github/workflows/refresh-indices.yml']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-indices-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-indices.mjs
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/indices.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh scorecard indices ($(date -u +%Y-%m-%d))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/indices-refresh
+            gh pr create --head data/indices-refresh --base main --title 'Refresh scorecard indices' \
+              --body 'Automated refresh of `src/data/indices.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

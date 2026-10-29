@@ -1,7 +1,7 @@
 import { scaleLinear, scaleSqrt } from 'd3-scale';
 import { interpolateRgbBasis } from 'd3-interpolate';
 import type { CountryProfile } from './countries';
-import { PILLARS, scorecardOf, type PillarId } from './scorecard';
+import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
 
 export type LayerId =
   | 'growth'
@@ -150,8 +150,8 @@ LAYERS.push({
   id: 'scorecard',
   label: 'Country scorecard',
   metric: 'Overall scorecard',
-  unit: '17 global indices, 0–100',
-  question: 'How do countries compare across 17 global indices?',
+  unit: `${LOADED.length} of ${SCORED.length} global indices loaded, 0–100`,
+  question: 'How do countries compare across global indices?',
   description: 'Weighted blend of four pillars: economy, human development, institutions and stability.',
   value: (c) => scorecardOf(c.name)?.overall ?? NaN,
   format: score,

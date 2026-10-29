@@ -1,12 +1,12 @@
 /**
- * COUNTRY SCORECARD — MOCK FOR REVIEW.
+ * COUNTRY SCORECARD.
  *
- * The index list, pillars, weights and source notes below are the proposal.
- * The per-country values are generated placeholders shaped like each index's
- * real scale so the layout can be judged. None of them come from the actual
- * publishers yet.
+ * Values come from src/data/indices.json (scripts/fetch-indices.mjs). Indices
+ * not loaded yet have no values and are left out of the score, which is then
+ * provisional: pillars and the overall score are computed from what is loaded.
  */
-import { seeded, type CountryProfile } from './countries';
+import type { CountryProfile } from './countries';
+import snapshot from './indices.json';
 
 export type PillarId = 'economy' | 'human' | 'institutions' | 'stability';
 
@@ -39,13 +39,20 @@ export interface IndexDef {
   coverage: number;
   licence: Licence;
   licenceNote: string;
-  /** Native scale, used to fake believable values. */
-  min: number;
-  max: number;
   lowerIsBetter?: boolean;
   format: (v: number) => string;
-  year: number;
 }
+
+interface Snapshot {
+  indices: Record<
+    string,
+    { publisher: string; via: string; page: string; note?: string; retrieved: string; values: Record<string, [number, number]> }
+  >;
+}
+const DATA = (snapshot as unknown as Snapshot).indices;
+
+/** Where a loaded index came from, or undefined while it is not loaded. */
+export const indexSource = (id: string) => DATA[id];
 
 const f1 = (v: number) => v.toFixed(1);
 const f2 = (v: number) => v.toFixed(2);
@@ -54,30 +61,30 @@ const int = (v: number) => String(Math.round(v));
 
 export const INDICES: IndexDef[] = [
   // Economy & prosperity (25)
-  { id: 'gdpPpp', name: 'GDP per capita (PPP)', publisher: 'World Bank WDI / IMF WEO', pillar: 'economy', weight: 8, cadence: 'Annual (IMF updates Apr & Oct)', coverage: 200, licence: 'open', licenceNote: 'CC BY 4.0', min: 900, max: 130000, format: (v) => `$${Math.round(v / 100) / 10}k`, year: 2025 },
-  { id: 'gii', name: 'Global Innovation Index', publisher: 'WIPO', pillar: 'economy', weight: 6, cadence: 'Annual (Sept)', coverage: 133, licence: 'open', licenceNote: 'CC BY 4.0', min: 10, max: 68, format: f1, year: 2025 },
-  { id: 'eci', name: 'Economic Complexity Index', publisher: 'Harvard Growth Lab (Atlas)', pillar: 'economy', weight: 6, cadence: 'Annual', coverage: 145, licence: 'free', licenceNote: 'Non-commercial, attribution', min: -2, max: 2.6, format: f2, year: 2023 },
-  { id: 'econFreedom', name: 'Index of Economic Freedom', publisher: 'Heritage Foundation', pillar: 'economy', weight: 5, cadence: 'Annual (Feb)', coverage: 184, licence: 'free', licenceNote: 'Free download, attribution', min: 30, max: 85, format: f1, year: 2026 },
+  { id: 'gdpPpp', name: 'GDP per capita (PPP)', publisher: 'World Bank WDI', pillar: 'economy', weight: 8, cadence: 'Annual (IMF updates Apr & Oct)', coverage: 200, licence: 'open', licenceNote: 'CC BY 4.0', format: (v) => `$${(v / 1000).toFixed(1)}k` },
+  { id: 'gii', name: 'Global Innovation Index', publisher: 'WIPO', pillar: 'economy', weight: 6, cadence: 'Annual (Sept)', coverage: 133, licence: 'open', licenceNote: 'CC BY 4.0', format: f1 },
+  { id: 'eci', name: 'Economic Complexity Index', publisher: 'Harvard Growth Lab (Atlas)', pillar: 'economy', weight: 6, cadence: 'Annual', coverage: 145, licence: 'free', licenceNote: 'Non-commercial, attribution', format: f2 },
+  { id: 'econFreedom', name: 'Index of Economic Freedom', publisher: 'Heritage Foundation', pillar: 'economy', weight: 5, cadence: 'Annual (Feb)', coverage: 184, licence: 'free', licenceNote: 'Free download, attribution', format: f1 },
   // Human development & quality of life (30)
-  { id: 'hdi', name: 'Human Development Index', publisher: 'UNDP', pillar: 'human', weight: 10, cadence: 'Annual (spring)', coverage: 193, licence: 'open', licenceNote: 'CC BY 3.0 IGO', min: 0.38, max: 0.97, format: f3, year: 2023 },
-  { id: 'spi', name: 'Social Progress Index', publisher: 'Social Progress Imperative', pillar: 'human', weight: 7, cadence: 'Annual (Jan)', coverage: 170, licence: 'free', licenceNote: 'Non-commercial, attribution', min: 30, max: 92, format: f1, year: 2025 },
-  { id: 'happiness', name: 'World Happiness Report', publisher: 'WHR / Gallup World Poll', pillar: 'human', weight: 5, cadence: 'Annual (March), 3-yr average', coverage: 147, licence: 'free', licenceNote: 'Free download, check reuse terms', min: 2, max: 7.8, format: f2, year: 2026 },
-  { id: 'gender', name: 'Global Gender Gap Index', publisher: 'World Economic Forum', pillar: 'human', weight: 4, cadence: 'Annual (June)', coverage: 146, licence: 'free', licenceNote: 'Non-commercial, attribution', min: 0.57, max: 0.93, format: f3, year: 2025 },
-  { id: 'epi', name: 'Environmental Performance Index', publisher: 'Yale / Columbia', pillar: 'human', weight: 4, cadence: 'Every 2 years', coverage: 180, licence: 'free', licenceNote: 'Free, attribution', min: 25, max: 78, format: f1, year: 2024 },
+  { id: 'hdi', name: 'Human Development Index', publisher: 'UNDP', pillar: 'human', weight: 10, cadence: 'Annual (spring)', coverage: 193, licence: 'open', licenceNote: 'CC BY 3.0 IGO', format: f3 },
+  { id: 'spi', name: 'Social Progress Index', publisher: 'Social Progress Imperative', pillar: 'human', weight: 7, cadence: 'Annual (Jan)', coverage: 170, licence: 'free', licenceNote: 'Non-commercial, attribution', format: f1 },
+  { id: 'happiness', name: 'Life evaluation (World Happiness Report)', publisher: 'WHR / Gallup World Poll', pillar: 'human', weight: 5, cadence: 'Annual (March), 3-yr average', coverage: 147, licence: 'free', licenceNote: 'Free download, check reuse terms', format: f2 },
+  { id: 'gender', name: 'Global Gender Gap Index', publisher: 'World Economic Forum', pillar: 'human', weight: 4, cadence: 'Annual (June)', coverage: 146, licence: 'free', licenceNote: 'Non-commercial, attribution', format: f3 },
+  { id: 'epi', name: 'Environmental Performance Index', publisher: 'Yale / Columbia', pillar: 'human', weight: 4, cadence: 'Every 2 years', coverage: 180, licence: 'free', licenceNote: 'Free, attribution', format: f1 },
   // Institutions & freedom (30)
-  { id: 'ruleOfLaw', name: 'Rule of Law Index', publisher: 'World Justice Project', pillar: 'institutions', weight: 8, cadence: 'Annual (Oct)', coverage: 142, licence: 'free', licenceNote: 'Non-commercial; WGI fills gaps', min: 0.28, max: 0.9, format: f2, year: 2025 },
-  { id: 'cpi', name: 'Corruption Perceptions Index', publisher: 'Transparency International', pillar: 'institutions', weight: 7, cadence: 'Annual (Feb)', coverage: 180, licence: 'open', licenceNote: 'CC BY-ND 4.0', min: 8, max: 90, format: int, year: 2025 },
-  { id: 'democracy', name: 'Democracy Index', publisher: 'EIU (or V-Dem as open swap)', pillar: 'institutions', weight: 7, cadence: 'Annual (Feb)', coverage: 167, licence: 'restricted', licenceNote: 'EIU data gated; V-Dem is CC BY-SA', min: 0.3, max: 9.8, format: f2, year: 2025 },
-  { id: 'humanFreedom', name: 'Human Freedom Index', publisher: 'Cato Institute / Fraser', pillar: 'institutions', weight: 4, cadence: 'Annual (Dec), ~2-yr lag', coverage: 165, licence: 'free', licenceNote: 'Free, attribution', min: 3.5, max: 9.1, format: f2, year: 2023 },
-  { id: 'pressFreedom', name: 'World Press Freedom Index', publisher: 'Reporters Without Borders', pillar: 'institutions', weight: 4, cadence: 'Annual (May)', coverage: 180, licence: 'free', licenceNote: 'Free, attribution', min: 18, max: 93, format: f1, year: 2026 },
+  { id: 'ruleOfLaw', name: 'Rule of Law', publisher: 'World Bank WGI (WJP planned)', pillar: 'institutions', weight: 8, cadence: 'Annual', coverage: 200, licence: 'open', licenceNote: 'CC BY 4.0', format: (v) => `${v > 0 ? '+' : ''}${v.toFixed(2)}` },
+  { id: 'cpi', name: 'Corruption Perceptions Index', publisher: 'Transparency International', pillar: 'institutions', weight: 7, cadence: 'Annual (Feb)', coverage: 180, licence: 'open', licenceNote: 'CC BY-ND 4.0', format: int },
+  { id: 'democracy', name: 'Liberal Democracy Index', publisher: 'V-Dem (in place of EIU)', pillar: 'institutions', weight: 7, cadence: 'Annual (March)', coverage: 179, licence: 'open', licenceNote: 'CC BY-SA 4.0', format: f2 },
+  { id: 'humanFreedom', name: 'Human Freedom Index', publisher: 'Cato Institute / Fraser', pillar: 'institutions', weight: 4, cadence: 'Annual (Dec), ~2-yr lag', coverage: 165, licence: 'free', licenceNote: 'Free, attribution', format: f2 },
+  { id: 'pressFreedom', name: 'World Press Freedom Index', publisher: 'Reporters Without Borders', pillar: 'institutions', weight: 4, cadence: 'Annual (May)', coverage: 180, licence: 'free', licenceNote: 'Free, attribution', format: f1 },
   // Stability & security (15)
-  { id: 'gpi', name: 'Global Peace Index', publisher: 'Institute for Economics & Peace', pillar: 'stability', weight: 7, cadence: 'Annual (June)', coverage: 163, licence: 'free', licenceNote: 'Non-commercial, attribution', min: 1.1, max: 3.4, lowerIsBetter: true, format: f2, year: 2026 },
-  { id: 'fsi', name: 'Fragile States Index', publisher: 'Fund for Peace', pillar: 'stability', weight: 5, cadence: 'Annual', coverage: 179, licence: 'free', licenceNote: 'Non-commercial, attribution', min: 15, max: 112, lowerIsBetter: true, format: f1, year: 2025 },
-  { id: 'gti', name: 'Global Terrorism Index', publisher: 'Institute for Economics & Peace', pillar: 'stability', weight: 3, cadence: 'Annual (March)', coverage: 163, licence: 'free', licenceNote: 'Non-commercial, attribution', min: 0, max: 8.6, lowerIsBetter: true, format: f2, year: 2026 },
+  { id: 'gpi', name: 'Global Peace Index', publisher: 'Institute for Economics & Peace', pillar: 'stability', weight: 7, cadence: 'Annual (June)', coverage: 163, licence: 'free', licenceNote: 'Non-commercial, attribution', lowerIsBetter: true, format: f2 },
+  { id: 'fsi', name: 'Fragile States Index', publisher: 'Fund for Peace', pillar: 'stability', weight: 5, cadence: 'Annual', coverage: 179, licence: 'free', licenceNote: 'Non-commercial, attribution', lowerIsBetter: true, format: f1 },
+  { id: 'gti', name: 'Global Terrorism Index', publisher: 'Institute for Economics & Peace', pillar: 'stability', weight: 3, cadence: 'Annual (March)', coverage: 163, licence: 'free', licenceNote: 'Non-commercial, attribution', lowerIsBetter: true, format: f2 },
   // Context only, not scored
-  { id: 'usNews', name: 'U.S. News Best Countries', publisher: 'U.S. News & World Report', pillar: null, weight: 0, cadence: 'Annual (Sept)', coverage: 89, licence: 'restricted', licenceNote: 'Proprietary; rank only, linked', min: 1, max: 89, lowerIsBetter: true, format: (v) => `#${Math.round(v)}`, year: 2025 },
-  { id: 'goodCountry', name: 'Good Country Index', publisher: 'Simon Anholt', pillar: null, weight: 0, cadence: 'Irregular', coverage: 169, licence: 'free', licenceNote: 'Free, attribution', min: 1, max: 169, lowerIsBetter: true, format: (v) => `#${Math.round(v)}`, year: 2023 },
-  { id: 'competitiveness', name: 'World Competitiveness Ranking', publisher: 'IMD (WEF GCI discontinued)', pillar: null, weight: 0, cadence: 'Annual (June)', coverage: 69, licence: 'restricted', licenceNote: 'Paid data; rank only, linked', min: 1, max: 69, lowerIsBetter: true, format: (v) => `#${Math.round(v)}`, year: 2026 },
+  { id: 'usNews', name: 'U.S. News Best Countries', publisher: 'U.S. News & World Report', pillar: null, weight: 0, cadence: 'Annual (Sept)', coverage: 89, licence: 'restricted', licenceNote: 'Proprietary; rank only, linked', lowerIsBetter: true, format: (v) => `#${Math.round(v)}` },
+  { id: 'goodCountry', name: 'Good Country Index', publisher: 'Simon Anholt', pillar: null, weight: 0, cadence: 'Irregular', coverage: 169, licence: 'free', licenceNote: 'Free, attribution', lowerIsBetter: true, format: (v) => `#${Math.round(v)}` },
+  { id: 'competitiveness', name: 'World Competitiveness Ranking', publisher: 'IMD (WEF GCI discontinued)', pillar: null, weight: 0, cadence: 'Annual (June)', coverage: 69, licence: 'restricted', licenceNote: 'Paid data; rank only, linked', lowerIsBetter: true, format: (v) => `#${Math.round(v)}` },
 ];
 
 export const SCORED = INDICES.filter((i) => i.pillar);
@@ -85,7 +92,10 @@ export const CONTEXT = INDICES.filter((i) => !i.pillar);
 
 export interface IndexValue {
   def: IndexDef;
+  /** False while this index has no data in the snapshot. */
+  loaded: boolean;
   raw: number | null;
+  year: number | null;
   /** 0–100 percentile among covered countries, best = 100. */
   pct: number | null;
   rank: number | null;
@@ -102,33 +112,15 @@ export interface Scorecard {
   covered: number;
 }
 
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
-/** A fake latent "quality" per country so the placeholder indices correlate like real ones do. */
-function latent(c: CountryProfile) {
-  const wealth = clamp01((Math.log10(Math.max(600, c.gdpPc)) - 2.8) / 2.2);
-  const calm = 1 - c.geoPressure / 100;
-  return 0.6 * wealth + 0.4 * calm;
-}
-
-function fakeRaw(c: CountryProfile, d: IndexDef, total: number): number | null {
-  const r = seeded(`${c.name}:${d.id}`);
-  // Curated (large) economies are almost always covered; the rest fill up to the index's real coverage.
-  const covered = c.curated ? d.coverage > 60 || r() < 0.8 : r() < (d.coverage - 44) / (total - 44);
-  if (!covered) return null;
-  if (d.id === 'gdpPpp') return Math.min(d.max, c.gdpPc * (1.15 + r() * 0.9));
-  const q = clamp01(latent(c) + (r() - 0.5) * 0.2);
-  const good = d.lowerIsBetter ? 1 - q : q;
-  return d.min + good * (d.max - d.min);
-}
+export const LOADED = SCORED.filter((d) => DATA[d.id]);
 
 let cache: Map<string, Scorecard> | null = null;
 
 export function buildScorecards(profiles: Map<string, CountryProfile>): Map<string, Scorecard> {
   if (cache) return cache;
   const list = [...profiles.values()];
-  const raws = new Map<string, Record<string, number | null>>();
-  for (const c of list) raws.set(c.name, Object.fromEntries(INDICES.map((d) => [d.id, fakeRaw(c, d, list.length)])));
+  const raws = new Map<string, Record<string, [number, number] | null>>();
+  for (const c of list) raws.set(c.name, Object.fromEntries(INDICES.map((d) => [d.id, DATA[d.id]?.values[c.name] ?? null])));
 
   const cards = new Map<string, Scorecard>();
   for (const c of list) {
@@ -145,18 +137,21 @@ export function buildScorecards(profiles: Map<string, CountryProfile>): Map<stri
 
   for (const d of INDICES) {
     const have = list
-      .map((c) => ({ name: c.name, v: raws.get(c.name)![d.id] }))
+      .map((c) => ({ name: c.name, v: raws.get(c.name)![d.id]?.[0] ?? null }))
       .filter((x): x is { name: string; v: number } => x.v !== null)
       .sort((a, b) => (d.lowerIsBetter ? a.v - b.v : b.v - a.v));
     const n = have.length;
     const pos = new Map(have.map((x, i) => [x.name, i]));
     for (const c of list) {
-      const raw = raws.get(c.name)![d.id];
+      const got = raws.get(c.name)![d.id];
+      const raw = got?.[0] ?? null;
       const i = pos.get(c.name);
       const card = cards.get(c.name)!;
       card.values[d.id] = {
         def: d,
+        loaded: Boolean(DATA[d.id]),
         raw,
+        year: got?.[1] ?? null,
         pct: i === undefined ? null : Math.round(100 * (1 - i / Math.max(1, n - 1))),
         rank: i === undefined ? null : i + 1,
         of: n,
@@ -165,13 +160,15 @@ export function buildScorecards(profiles: Map<string, CountryProfile>): Map<stri
     }
   }
 
-  // Pillar = weighted mean of the indices it has; needs 60% of the pillar's weight.
+  // Pillar = weighted mean of the indices a country has, among those loaded; it
+  // needs 60% of the loaded weight. Pillars with nothing loaded are skipped.
   for (const card of cards.values()) {
     let total = 0;
     let wsum = 0;
     let complete = true;
     for (const p of PILLARS) {
-      const defs = SCORED.filter((d) => d.pillar === p.id);
+      const defs = LOADED.filter((d) => d.pillar === p.id);
+      if (!defs.length) continue;
       const full = defs.reduce((s, d) => s + d.weight, 0);
       let acc = 0;
       let w = 0;
@@ -190,7 +187,7 @@ export function buildScorecards(profiles: Map<string, CountryProfile>): Map<stri
         wsum += p.weight;
       }
     }
-    card.overall = complete ? total / wsum : null;
+    card.overall = complete && wsum > 0 ? total / wsum : null;
   }
 
   const rankBy = (get: (s: Scorecard) => number | null, set: (s: Scorecard, r: number, of: number) => void) => {

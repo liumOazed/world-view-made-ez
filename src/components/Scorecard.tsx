@@ -3,7 +3,9 @@ import { ExternalLink, Info } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import {
   CONTEXT,
+  indexSource,
   LICENCE_META,
+  LOADED,
   PILLARS,
   SCORED,
   scorecardOf,
@@ -47,6 +49,7 @@ function Ring({ value, size = 92 }: { value: number | null; size?: number }) {
 
 function IndexRow({ v }: { v: IndexValue }) {
   const { def } = v;
+  const src = indexSource(def.id);
   return (
     <li className="index-row">
       <div className="index-main">
@@ -55,12 +58,21 @@ function IndexRow({ v }: { v: IndexValue }) {
           {def.weight > 0 && <span className="index-weight">{def.weight}%</span>}
         </div>
         <div className="index-meta">
-          {def.publisher} · {def.year}
+          {src ? (
+            <a href={src.page} target="_blank" rel="noreferrer" title={src.note ?? `Via ${src.via}`}>
+              {def.publisher}
+            </a>
+          ) : (
+            def.publisher
+          )}
+          {v.year ? ` · ${v.year}` : ''}
           <span className="licence-dot" style={{ background: LICENCE_META[def.licence].color }} title={def.licenceNote} />
         </div>
       </div>
       <div className="index-val">
-        {v.raw === null ? (
+        {!v.loaded ? (
+          <span className="muted small">Not loaded yet</span>
+        ) : v.raw === null ? (
           <span className="muted small">Not covered</span>
         ) : (
           <>
@@ -84,9 +96,11 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
   if (!s) return null;
   return (
     <div className="scorecard">
-      <div className="mock-note">
-        <Info size={13} /> Mock: proposed indices and weights, placeholder values.
-      </div>
+      {LOADED.length < SCORED.length && (
+        <div className="mock-note">
+          <Info size={13} /> Provisional: {LOADED.length} of {SCORED.length} indices loaded so far. The score uses only those.
+        </div>
+      )}
       <div className="score-hero">
         <Ring value={s.overall} />
         <div>
@@ -101,7 +115,7 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
             )}
           </div>
           <div className="muted small">
-            {s.covered} of {SCORED.length} indices covered · percentile-based, best = 100
+            {s.covered} of {LOADED.length} loaded indices cover {c.display} · percentile-based, best = 100
           </div>
         </div>
       </div>
@@ -110,6 +124,7 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
         {PILLARS.map((p) => {
           const ps = s.pillars[p.id];
           const isOpen = open === p.id;
+          const loaded = LOADED.some((d) => d.pillar === p.id);
           return (
             <div key={p.id} className={`pillar${isOpen ? ' is-open' : ''}`}>
               <button type="button" className="pillar-head" onClick={() => setOpen(isOpen ? null : p.id)} aria-expanded={isOpen}>
@@ -124,7 +139,7 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
                 <span className="bar pillar-bar-fill">
                   <span style={{ width: `${ps.score ?? 0}%`, background: p.color }} />
                 </span>
-                <span className="pillar-rank muted small">{ps.rank ? `#${ps.rank}` : 'n/a'}</span>
+                <span className="pillar-rank muted small">{ps.rank ? `#${ps.rank}` : loaded ? 'n/a' : 'Not loaded yet'}</span>
               </button>
               {isOpen && (
                 <ul className="index-list">
@@ -149,7 +164,7 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
             return (
               <div key={d.id} className="context-chip">
                 <span className="muted small">{d.name}</span>
-                <strong>{v.raw === null ? 'Not ranked' : d.format(v.raw)}</strong>
+                <strong>{!v.loaded ? 'Not loaded yet' : v.raw === null ? 'Not ranked' : d.format(v.raw)}</strong>
               </div>
             );
           })}
@@ -183,24 +198,30 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
     const list: { c: CountryProfile; s: Scorecard; score: number }[] = [];
     for (const c of profiles.values()) {
       const s = scorecardOf(c.name);
-      if (!s || s.overall === null || !c.curated) continue;
-      const score = PILLARS.reduce((acc, p) => acc + (s.pillars[p.id].score ?? 0) * weights[p.id], 0) / 100;
+      if (!s || s.overall === null) continue;
+      // Re-weight over the pillars that have data loaded.
+      const have = PILLARS.filter((p) => s.pillars[p.id].score !== null);
+      const w = have.reduce((acc, p) => acc + weights[p.id], 0);
+      const score = have.reduce((acc, p) => acc + s.pillars[p.id].score! * weights[p.id], 0) / w;
       list.push({ c, s, score });
     }
-    return list.sort((a, b) => b.score - a.score).slice(0, 12);
+    list.sort((a, b) => b.score - a.score);
+    return { top: list.slice(0, 12), total: list.length };
   }, [profiles, weights]);
 
   return (
     <section className="rankings" aria-labelledby="rankings-title" id="method">
       <div className="rankings-head">
         <div>
-          <span className="eyebrow">Country scorecard · mock</span>
+          <span className="eyebrow">
+            Country scorecard{LOADED.length < SCORED.length ? ` · provisional, ${LOADED.length} of ${SCORED.length} indices loaded` : ''}
+          </span>
           <h2 id="rankings-title">
             17 global indices. <span className="grad">One honest score.</span>
           </h2>
           <p className="muted">
             Each index is turned into a 0–100 percentile, averaged inside its pillar, then weighted. Perception rankings are
-            shown but never scored. Values here are placeholders.
+            shown but never scored. Indices not loaded yet are left out rather than guessed.
           </p>
         </div>
         <div className="preset-bar" role="tablist" aria-label="Weighting">
@@ -234,7 +255,7 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ c, s, score }, i) => (
+            {rows.top.map(({ c, s, score }, i) => (
               <tr key={c.name} onClick={() => onSelect(c.name)}>
                 <td className="muted">{i + 1}</td>
                 <td>
@@ -261,7 +282,10 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
               </tr>
             ))}
           </tbody>
-          <caption className="rank-caption">Top 12 of the mock set. Placeholder values, so the order means nothing yet.</caption>
+          <caption className="rank-caption">
+            Top 12 of {rows.total} ranked countries.
+            {LOADED.length < SCORED.length && ' Provisional until all indices are loaded; the order will shift.'}
+          </caption>
         </table>
 
         <div className="weights-card">
@@ -279,14 +303,14 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
                   <span
                     key={d.id}
                     className="weights-seg"
-                    style={{ flex: d.weight, background: p.color }}
-                    title={`${d.name}: ${d.weight}`}
+                    style={{ flex: d.weight, background: p.color, opacity: indexSource(d.id) ? undefined : 0.15 }}
+                    title={`${d.name}: ${d.weight}${indexSource(d.id) ? '' : ' (not loaded yet)'}`}
                   />
                 ))}
               </div>
               <div className="weights-names muted small">
                 {SCORED.filter((d) => d.pillar === p.id)
-                  .map((d) => `${d.name.replace(/ Index$/, '').replace('World ', '')} ${d.weight}`)
+                  .map((d) => `${d.name.replace(/ Index$/, '').replace('World ', '')} ${d.weight}${indexSource(d.id) ? '' : ' (soon)'}`)
                   .join(' · ')}
               </div>
             </div>
