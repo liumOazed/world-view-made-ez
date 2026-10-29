@@ -1,7 +1,15 @@
 import { useMemo, useState } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight, Info, MoveRight, X } from 'lucide-react';
 import { history, LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
-import { INFLUENCE_COLOR, INFLUENCE_LABEL, tradeSource, type InfluenceLink, type TradeLink } from '../data/connections';
+import {
+  INFLUENCE_COLOR,
+  INFLUENCE_LABEL,
+  influencedBy,
+  influenceSource,
+  tradeSource,
+  type InfluenceLink,
+  type TradeLink,
+} from '../data/connections';
 import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
 import { Flag } from './Flag';
 import { ScorecardTab } from './Scorecard';
@@ -69,7 +77,7 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose,
       </div>
 
       <div className="tab-body" key={tab}>
-        {tab === 'overview' && <Overview c={country} nameOf={nameOf} onTab={onTab} onSelect={onSelect} />}
+        {tab === 'overview' && <Overview c={country} profiles={profiles} nameOf={nameOf} onTab={onTab} onSelect={onSelect} />}
         {tab === 'scorecard' && <ScorecardTab c={country} />}
         {tab === 'economy' && <Economy c={country} />}
         {tab === 'trade' && (
@@ -158,17 +166,21 @@ const signed = (v: number, unit = '%') => `${v > 0 ? '+' : ''}${v.toFixed(1)}${u
 
 function Overview({
   c,
+  profiles,
   nameOf,
   onTab,
   onSelect,
 }: {
   c: CountryProfile;
+  profiles: Map<string, CountryProfile>;
   nameOf: (n: string) => string;
   onTab: (t: CountryTab) => void;
   onSelect: (n: string) => void;
 }) {
   const risk = riskProfile(c);
   const exposure = risk[0];
+  const by = influencedBy(c, profiles);
+  const fbic = influenceSource(c.name);
   return (
     <>
       <PrimaryMetrics c={c} />
@@ -239,7 +251,20 @@ function Overview({
           </button>
         </div>
         <div className="partner-chips">
-          {c.partners.slice(0, 5).map((p, i) => (
+          {by?.map((l) => (
+            <button
+              key={l.name}
+              type="button"
+              className="partner-chip"
+              style={{ ['--c' as string]: INFLUENCE_COLOR }}
+              onClick={() => onSelect(l.name)}
+            >
+              <span className="partner-dot" />
+              <span>{nameOf(l.name)}</span>
+              <small>{l.score}</small>
+            </button>
+          ))}
+          {!by && c.partners.slice(0, 5).map((p, i) => (
             <button
               key={`${p.name}-${p.kind}-${i}`}
               type="button"
@@ -253,6 +278,18 @@ function Overview({
             </button>
           ))}
         </div>
+        {by && fbic && (
+          <p className="footnote">
+            <Info size={12} />
+            <span>
+              Influence capacity over {c.display} (strongest = 100) from the{' '}
+              <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
+                FBIC Index
+              </a>
+              , {fbic.year}.
+            </span>
+          </p>
+        )}
       </section>
 
       <section className="panel-section">
@@ -316,6 +353,7 @@ function Connections({
   onSelect: (n: string) => void;
 }) {
   const source = tradeSource(c.name);
+  const fbic = influenceSource(c.name);
   const groups = useMemo(
     () => KIND_ORDER.map((k) => ({ kind: k, items: trade.filter((p) => p.kind === k) })).filter((g) => g.items.length),
     [trade],
@@ -384,8 +422,22 @@ function Connections({
           </button>
         ))}
         <p className="footnote">
-          <Info size={12} /> Relative influence score (strongest = 100), based on how much each country’s trade depends on{' '}
-          {c.display}. {source ? `From UN Comtrade, ${source.year}.` : 'Illustrative.'}
+          <Info size={12} />
+          {fbic ? (
+            <span>
+              Influence capacity (strongest = 100) from the{' '}
+              <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
+                FBIC Index
+              </a>{' '}
+              ({fbic.year}, Pardee Institute, {fbic.licence}), which combines economic, security and political ties. The
+              channel shown is the trade link where Comtrade has one.
+            </span>
+          ) : (
+            <span>
+              Relative influence score (strongest = 100), based on how much each country’s trade depends on {c.display}.{' '}
+              {source ? `From UN Comtrade, ${source.year}.` : 'Illustrative.'}
+            </span>
+          )}
         </p>
       </section>
       <section className="panel-section">

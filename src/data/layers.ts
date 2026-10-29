@@ -2,6 +2,7 @@ import { scaleLinear, scaleSqrt } from 'd3-scale';
 import { interpolateRgbBasis } from 'd3-interpolate';
 import type { CountryProfile } from './countries';
 import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
+import { influenceReach, influenceYear } from './connections';
 
 export type LayerId =
   | 'growth'
@@ -130,16 +131,16 @@ export const LAYERS: Layer[] = [
   {
     id: 'leverage',
     label: 'Influence & leverage',
-    metric: 'Strategic leverage',
-    unit: 'composite index, 0–100',
-    question: 'Who holds something the world cannot easily replace?',
-    description: 'Control of critical resources, chokepoints, currencies or supply chains.',
-    value: (c) => c.leverage,
-    format: idx,
+    metric: 'Influence capacity (FBIC)',
+    unit: `percentile of total influence over other countries, ${influenceYear}`,
+    question: 'Who has the most capacity to sway other countries?',
+    description: 'FBIC Index (Pardee Institute): economic, security and political ties, summed over every other country.',
+    value: (c) => influenceReach(c.name),
+    format: (v) => (Number.isNaN(v) ? 'Not covered' : `${Math.round(v)} / 100`),
     color: ramp(LEVERAGE, [0, 100]),
     ramp: LEVERAGE,
-    low: 'Dependent',
-    high: 'Pivotal',
+    low: 'Little reach',
+    high: 'Wide reach',
     ticks: ['0', '50', '100'],
   },
 ];
