@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Activity, Award, ChevronDown, Flame, Gauge, Landmark, Ship, Sparkles, type LucideIcon } from 'lucide-react';
 import { LAYERS, PILLAR_LAYERS, type Layer, type LayerId } from '../data/layers';
+import { LOADED, SCORED } from '../data/scorecard';
 
 const ICONS: Partial<Record<LayerId, LucideIcon>> = {
   growth: Activity,
@@ -134,7 +135,9 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
               {l.label}
             </button>
           ))}
-          <span className="pillar-note">Mock values · 17 indices · weights 25 / 30 / 30 / 15</span>
+          <span className="pillar-note">
+            {LOADED.length} of {SCORED.length} indices loaded · weights 25 / 30 / 30 / 15
+          </span>
         </div>
       )}
     </>
