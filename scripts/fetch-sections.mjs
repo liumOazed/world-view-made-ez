@@ -326,12 +326,19 @@ async function ndgain(file) {
     ndgainZip = await JSZip.loadAsync(await get(link, 'buffer'));
     console.log(`  files: ${Object.keys(ndgainZip.files).filter((f) => f.endsWith('.csv')).slice(0, 40).join(', ')}`);
   }
-  const name = Object.keys(ndgainZip.files).find((f) => new RegExp(`(^|/)${file}\\.csv$`, 'i').test(f));
-  if (!name) throw new Error(`No ${file}.csv in the ND-GAIN zip`);
-  const [head, ...rows] = parseCsv(await ndgainZip.files[name].async('string'));
-  const iso = head.findIndex((h) => /^iso3$/i.test(h.trim()));
-  const years = head.map((h, i) => [Number(h), i]).filter(([y]) => y > 1990 && y <= THIS_YEAR);
-  if (iso < 0 || !years.length) throw new Error(`Unexpected ND-GAIN columns: ${head.slice(0, 6).join(' | ')}`);
+  // Several files share a name (indicator metadata too): take the first with year columns.
+  const names = Object.keys(ndgainZip.files)
+    .filter((f) => new RegExp(`(^|/)${file}\\.csv$`, 'i').test(f))
+    .sort((a, b) => a.split('/').length - b.split('/').length);
+  let head, rows, iso, years;
+  for (const name of names) {
+    [head, ...rows] = parseCsv(await ndgainZip.files[name].async('string'));
+    iso = head.findIndex((h) => /^iso3$/i.test(h.trim()));
+    years = head.map((h, i) => [Number(h), i]).filter(([y]) => y > 1990 && y <= THIS_YEAR);
+    if (iso >= 0 && years.length) break;
+  }
+  if (!names.length) throw new Error(`No ${file}.csv in the ND-GAIN zip`);
+  if (iso < 0 || !years.length) throw new Error(`Unexpected ND-GAIN columns in ${names.join(', ')}`);
   const out = {};
   for (const r of rows) {
     for (const [y, i] of [...years].reverse()) {
