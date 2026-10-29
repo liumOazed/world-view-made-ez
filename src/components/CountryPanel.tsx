@@ -4,12 +4,14 @@ import { history, LINK_META, type CountryProfile, type LinkKind } from '../data/
 import { INFLUENCE_COLOR, INFLUENCE_LABEL, type InfluenceLink, type TradeLink } from '../data/connections';
 import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
 import { Flag } from './Flag';
+import { ScorecardTab } from './Scorecard';
 import { Sparkline } from './Sparkline';
 
-export type CountryTab = 'overview' | 'economy' | 'trade' | 'risk' | 'news';
+export type CountryTab = 'overview' | 'scorecard' | 'economy' | 'trade' | 'risk' | 'news';
 
 const TABS: { id: CountryTab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
+  { id: 'scorecard', label: 'Scorecard' },
   { id: 'economy', label: 'Economy' },
   { id: 'trade', label: 'Connections' },
   { id: 'risk', label: 'Risk' },
@@ -68,6 +70,7 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose,
 
       <div className="tab-body" key={tab}>
         {tab === 'overview' && <Overview c={country} nameOf={nameOf} onTab={onTab} onSelect={onSelect} />}
+        {tab === 'scorecard' && <ScorecardTab c={country} />}
         {tab === 'economy' && <Economy c={country} />}
         {tab === 'trade' && (
           <Connections c={country} trade={trade} influence={influence} nameOf={nameOf} onSelect={onSelect} />
