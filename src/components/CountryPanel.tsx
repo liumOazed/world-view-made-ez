@@ -399,7 +399,6 @@ function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props
           ))}
           {id === 'trade' && ' · UN Comtrade'}
           {id === 'influence' && ' · FBIC Index (CC0)'}
-          {id === 'risk' && indexSource('fsi') && ' · Fragile States Index'}
           . Retrieved {indicator(section.subs.flatMap((s) => s.metrics).find((m) => indicator(m)) ?? '')?.retrieved ?? '—'}.
         </span>
       </p>

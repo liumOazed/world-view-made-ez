@@ -2473,16 +2473,17 @@ a:focus-visible {
 .drawer-close {
   position: absolute;
   z-index: 2;
-  top: 14px;
-  right: 14px;
+  top: 22px;
+  left: -14px;
   display: grid;
   place-items: center;
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(8, 18, 34, 0.6);
+  border: 1px solid var(--line-strong);
+  background: #0c1a30;
   color: var(--muted);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 .drawer-close:hover {
   color: var(--text);
@@ -2491,10 +2492,7 @@ a:focus-visible {
 .drawer-grip {
   display: none;
 }
-.drawer .panel-head,
-.drawer .country-head {
-  padding-right: 34px;
-}
+
 @media (min-width: 1101px) {
   .main.drawer-open .stage {
     padding-right: calc(var(--drawer-w) + 30px);
@@ -2563,7 +2561,16 @@ a:focus-visible {
     background: rgba(148, 197, 255, 0.3);
   }
   .drawer-close {
-    top: 22px;
+    top: 26px;
+    left: auto;
+    right: 14px;
+  }
+  .drawer-close svg {
+    transform: rotate(90deg);
+  }
+  .drawer .panel-head,
+  .drawer .country-head {
+    padding-right: 34px;
   }
   .stage-head .drawer-toggle {
     margin-left: 0;
