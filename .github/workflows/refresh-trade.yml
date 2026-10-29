@@ -33,7 +33,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Comtrade's free API is slow; keep whatever is fetched in 50 minutes.
       - run: node scripts/fetch-trade.mjs ${{ inputs.countries }}
+        timeout-minutes: 50
+        continue-on-error: true
       - run: npm run build
       - name: Commit the snapshot
         env:

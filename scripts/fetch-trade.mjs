@@ -21,9 +21,14 @@ const small = JSON.parse(readFileSync(new URL('../src/data/small-countries.json'
 const OUT = new URL('../src/data/trade.json', import.meta.url);
 const API = 'https://comtradeapi.un.org/public/v1/preview/C/A/HS';
 const REF = 'https://comtradeapi.un.org/files/v1/app/reference/Reporters.json';
-const YEARS = [2024, 2023, 2022, 2021];
+// 2023 is the most recent year most reporters have filed; 2024 is still patchy.
+const YEARS = [2023, 2022, 2024, 2021];
 const TOP = 15;
 const PAUSE_MS = 1500;
+
+// Fetched first, so a run that is cut short still covers the biggest economies.
+const PRIORITY = `USA CHN DEU JPN IND GBR FRA ITA BRA CAN RUS KOR AUS ESP MEX IDN NLD SAU TUR CHE POL TWN BEL SWE
+  ARG NOR AUT ARE IRL ISR THA SGP MYS VNM PHL BGD EGY NGA ZAF PAK CHL COL KEN ETH GHA LKA KAZ QAT IRN UKR`.split(/\s+/);
 
 // Map names the ISO library cannot resolve.
 const NAME_ISO = {
@@ -170,13 +175,36 @@ async function fetchCountry(name, iso, code, isoByCode) {
 async function main() {
   const all = mapCountries();
   const only = new Set(process.argv.slice(2).map((s) => s.toUpperCase()));
-  const targets = [...all].filter(([, iso]) => !only.size || only.has(iso));
+  const rank = (iso) => (PRIORITY.includes(iso) ? PRIORITY.indexOf(iso) : PRIORITY.length);
+  const targets = [...all].filter(([, iso]) => !only.size || only.has(iso)).sort((a, b) => rank(a[1]) - rank(b[1]));
   const codes = await reporterCodes();
   const codeOf = (iso) => codes.get(iso) ?? COMTRADE_CODE[iso] ?? Number(countries.alpha3ToNumeric(iso));
   const isoByCode = new Map([...codes].map(([iso, code]) => [code, iso]));
 
   const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : { countries: {} };
   const out = only.size ? { ...prev.countries } : {};
+  const isoToName = Object.fromEntries([...all].map(([name, iso]) => [iso, name]));
+  // Saved after every country, so a run stopped by its time limit keeps what it fetched.
+  const save = () => {
+    const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
+    writeFileSync(
+      OUT,
+      JSON.stringify(
+        {
+          source: 'UN Comtrade (HS, annual goods trade), the data behind World Bank WITS',
+          sourceUrl: 'https://comtradeplus.un.org/',
+          licence: 'UN Comtrade terms of use; attribution required',
+          retrieved: new Date().toISOString().slice(0, 10),
+          units: 'USD millions',
+          isoToName,
+          countries: sorted,
+        },
+        null,
+        1,
+      ) + '\n',
+    );
+    return sorted;
+  };
   const failed = [];
   let i = 0;
   for (const [name, iso] of targets) {
@@ -187,6 +215,7 @@ async function main() {
       const data = await fetchCountry(name, iso, code, isoByCode);
       if (data) {
         out[name] = data;
+        save();
         console.log(`[${i}/${targets.length}] ${name}: ${data.year}, ${data.partners.length} partners`);
       } else console.log(`[${i}/${targets.length}] ${name}: no data`);
       if (i === 8 && Object.keys(out).length === (only.size ? Object.keys(prev.countries).length : 0)) {
@@ -200,24 +229,7 @@ async function main() {
     }
   }
 
-  const isoToName = Object.fromEntries([...all].map(([name, iso]) => [iso, name]));
-  const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
-  writeFileSync(
-    OUT,
-    JSON.stringify(
-      {
-        source: 'UN Comtrade (HS, annual goods trade), the data behind World Bank WITS',
-        sourceUrl: 'https://comtradeplus.un.org/',
-        licence: 'UN Comtrade terms of use; attribution required',
-        retrieved: new Date().toISOString().slice(0, 10),
-        units: 'USD millions',
-        isoToName,
-        countries: sorted,
-      },
-      null,
-      1,
-    ) + '\n',
-  );
+  const sorted = save();
   console.log(`Wrote ${Object.keys(sorted).length} countries; ${failed.length} failed${failed.length ? `: ${failed.join(', ')}` : ''}`);
   if (Object.keys(sorted).length === 0) process.exit(1);
 }
