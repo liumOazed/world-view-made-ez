@@ -2,33 +2,14 @@
 import ExcelJS from 'exceljs';
 
 const PAGES = [
-  'https://rsf.org/en/index',
-  'https://epi.yale.edu/downloads',
-  'https://fragilestatesindex.org/excel/',
-  'https://fragilestatesindex.org/category/publications-and-downloads/',
-  'https://www.heritage.org/index/',
-  'https://www.heritage.org/index/pages/all-country-scores',
-  'https://www.economicsandpeace.org/global-peace-index/',
   'https://www.visionofhumanity.org/maps/',
-  'https://www.visionofhumanity.org/resources/',
-  'https://www.socialprogress.org/download',
-  'https://www.socialprogress.org/',
-  'https://www.wipo.int/web-publications/global-innovation-index-2025/en/',
-  'https://www.wipo.int/global_innovation_index/en/',
-  'https://www.weforum.org/publications/global-gender-gap-report-2025/',
-  'https://www.cato.org/human-freedom-index/2025',
-  'https://www.fraserinstitute.org/economic-freedom/dataset',
-  'https://www.fraserinstitute.org/studies/human-freedom-index-2025',
-  'https://atlas.hks.harvard.edu/rankings',
-  'https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/XTAQMC',
-  'https://goodcountry.org/index/results/',
+  'https://epi.yale.edu/country/2024/all',
 ];
 const FILES = [
-  'https://rsf.org/sites/default/files/import_classement/2026.csv',
-  'https://rsf.org/sites/default/files/import_classement/2025.csv',
-  'https://fragilestatesindex.org/wp-content/uploads/2023/06/FSI-2023-DOWNLOAD.xlsx',
+  'https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/XTAQMC',
+  'https://dataverse.harvard.edu/api/search?q=%22Environmental%20Performance%20Index%22&type=dataset&sort=date&order=desc&per_page=5',
+  'https://tind.wipo.int/record/58882/files/wipo-pub-2000-2025-gii-tech1.xlsx',
 ];
-
 const UA = { 'user-agent': 'Mozilla/5.0 (atlas-world-view; github.com/liumOazed/world-view-made-ez)' };
 
 async function page(url) {
@@ -42,7 +23,7 @@ async function page(url) {
       if (/\.(csv|xlsx?|zip|json)(\?|$)/i.test(h) || /download|dataset|export|api\//i.test(h)) links.add(new URL(h, url).href);
     }
     for (const m of html.matchAll(/https?:[^"'\s<>]+\.(?:csv|xlsx?|zip)\b/gi)) links.add(m[0]);
-    for (const l of [...links].slice(0, 60)) console.log('  ', l);
+    for (const l of [...links].slice(0, 80)) console.log('  ', l);
   } catch (e) {
     console.log(`\n=== PAGE ERROR ${url}: ${e.message}`);
   }
@@ -60,7 +41,7 @@ async function file(url) {
         console.log(`  sheet "${ws.name}" ${ws.rowCount} rows`);
         for (let r = 1; r <= Math.min(5, ws.rowCount); r++) console.log('   ', JSON.stringify(ws.getRow(r).values).slice(0, 400));
       }
-    } else console.log(buf.toString('utf8', 0, 900));
+    } else console.log(buf.toString('utf8', 0, /dataverse/.test(url) ? 6000 : 900));
   } catch (e) {
     console.log(`\n=== FILE ERROR ${url}: ${e.message}`);
   }
