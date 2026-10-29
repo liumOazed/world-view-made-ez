@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight, Globe2, Sparkles, Waypoints, X } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Globe2, PanelRightClose, PanelRightOpen, Sparkles, Waypoints, X } from 'lucide-react';
 import { buildProfiles, LINK_META } from './data/countries';
-import { INFLUENCE_COLOR, influenceLinks, tradeLinks } from './data/connections';
-import { LAYER_BY_ID, type LayerId } from './data/layers';
+import { INFLUENCE_COLOR, influenceLinks, supplyLinks, tradeLinks } from './data/connections';
+import { LAYER_BY_ID, layerFor, sectionOf, type LayerId } from './data/layers';
+import { findSub, SECTION_BY_ID, type SectionId } from './data/sections';
 import { buildScorecards } from './data/scorecard';
 import { COUNTRY_FEATURES } from './geo';
 import { Header } from './components/Header';
@@ -13,6 +14,9 @@ import { CountryPanel, type CountryTab } from './components/CountryPanel';
 import { Flag } from './components/Flag';
 import { Explore, RegionStrip, type ExploreAction } from './components/Explore';
 import { Rankings } from './components/Scorecard';
+import { Drawer } from './components/Drawer';
+
+const DEFAULT_LAYER: LayerId = 'growth.gdp';
 
 export default function App() {
   const profiles = useMemo(() => {
@@ -20,11 +24,16 @@ export default function App() {
     buildScorecards(p);
     return p;
   }, []);
-  const [layerId, setLayerId] = useState<LayerId>('growth');
+  const [layerId, setLayerId] = useState<LayerId>(DEFAULT_LAYER);
   const [selected, setSelected] = useState<string | null>(null);
   const [tab, setTab] = useState<CountryTab>('overview');
-  const [panelOpen, setPanelOpen] = useState(true);
+  // The drawer starts closed so the first view is the whole globe.
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const layer = LAYER_BY_ID[layerId];
+  const sub = useMemo(() => {
+    const s = sectionOf(layerId);
+    return s ? findSub(s, layerId.split('.')[1]) : null;
+  }, [layerId]);
   const country = selected ? profiles.get(selected) : undefined;
   const anchors = useMemo(
     () => new Map(COUNTRY_FEATURES.map((f) => [f.properties.name, f.anchor] as [string, [number, number]])),
@@ -35,19 +44,25 @@ export default function App() {
     () => (country ? influenceLinks(country, profiles, anchors, 5) : []),
     [country, profiles, anchors],
   );
+  const supply = useMemo(() => (country ? supplyLinks(country, profiles) ?? [] : []), [country, profiles]);
+  const coverageNote = useMemo(() => {
+    const n = [...profiles.values()].filter((p) => Number.isFinite(layer.value(p))).length;
+    return `${n} countries${sub?.pending ? ' · partly loaded' : ''}${sub?.ours ? ' · our measure' : ''}`;
+  }, [layer, profiles, sub]);
 
-  // Connections belong to the layer that explains them; other layers show the
-  // country on its own so the colors stay readable.
+  // Connections belong to the subsection that explains them; other layers
+  // show the country on its own so the colors stay readable.
   const { links, keys, keyTitle } = useMemo((): { links: MapLink[]; keys: LegendKey[]; keyTitle: string } => {
-    if (layerId === 'trade') {
-      const kinds = [...new Set(trade.map((l) => l.kind))];
+    if (sub?.arcs === 'trade' || sub?.arcs === 'energy') {
+      const list = sub.arcs === 'trade' ? trade : supply;
+      const kinds = [...new Set(list.map((l) => l.kind))];
       return {
-        links: trade.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share })),
+        links: list.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share })),
         keys: kinds.map((k) => ({ label: LINK_META[k].label, color: LINK_META[k].color })),
-        keyTitle: `Top ${trade.length} trade links`,
+        keyTitle: sub.arcs === 'trade' ? `Top ${list.length} trade links` : 'Main energy, food and chip suppliers',
       };
     }
-    if (layerId === 'leverage') {
+    if (sub?.arcs === 'influence') {
       return {
         links: influence.map((l) => ({ name: l.name, color: INFLUENCE_COLOR, weight: l.score })),
         keys: [{ label: 'Countries it influences most', color: INFLUENCE_COLOR }],
@@ -55,20 +70,48 @@ export default function App() {
       };
     }
     return { links: [], keys: [], keyTitle: '' };
-  }, [layerId, trade, influence]);
+  }, [sub, trade, supply, influence]);
 
   const select = useCallback((name: string | null) => {
     setSelected(name);
-    if (name) setPanelOpen(true);
+    if (name) setDrawerOpen(true);
     else setTab('overview');
   }, []);
 
+  // A section picked on the map opens the same section in the country view.
+  const changeLayer = useCallback(
+    (id: LayerId) => {
+      setLayerId(id);
+      const s = sectionOf(id);
+      if (selected && s && tab !== 'overview') setTab(s);
+      if (selected && id === 'scorecard') setTab('scorecard');
+    },
+    [selected, tab],
+  );
+  const changeTab = useCallback(
+    (t: CountryTab) => {
+      setTab(t);
+      if (t in SECTION_BY_ID && sectionOf(layerId) !== t) setLayerId(layerFor(t as SectionId));
+    },
+    [layerId],
+  );
+
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !(e.target as HTMLElement)?.closest?.('input, .layer-menu')) setDrawerOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [drawerOpen]);
+
   const onExplore = (a: ExploreAction) => {
     const target = selected ?? 'Bangladesh';
-    if (a === 'connections') setLayerId('leverage');
     setSelected(target);
-    setPanelOpen(true);
-    setTab(a === 'connections' ? 'trade' : a === 'compare' ? 'economy' : 'risk');
+    setDrawerOpen(true);
+    const t: SectionId = a === 'connections' ? 'trade' : a === 'compare' ? 'growth' : 'risk';
+    setTab(t);
+    setLayerId(a === 'connections' ? 'trade.dependency' : layerFor(t));
     document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -77,7 +120,7 @@ export default function App() {
       <div className="bg-aurora" aria-hidden="true" />
       <Header profiles={profiles} onSelect={select} />
 
-      <main id="atlas-main" className={`main${panelOpen ? '' : ' panel-collapsed'}`}>
+      <main id="atlas-main" className={`main${drawerOpen ? ' drawer-open' : ''}`}>
         <section className="stage" aria-label="World intelligence map">
           <div className="stage-head">
             <h1>
@@ -86,8 +129,18 @@ export default function App() {
             <p className="muted">
               {layer.question} <span className="stage-hint">Click any country to explore.</span>
             </p>
+            <button
+              type="button"
+              className={`drawer-toggle${drawerOpen ? ' is-active' : ''}`}
+              aria-expanded={drawerOpen}
+              aria-controls="drawer"
+              onClick={() => setDrawerOpen((o) => !o)}
+            >
+              {drawerOpen ? <PanelRightClose size={15} /> : <PanelRightOpen size={15} />}
+              {country ? country.display : 'Overview'}
+            </button>
           </div>
-          <LayerBar layer={layer} onChange={setLayerId} />
+          <LayerBar layer={layer} onChange={changeLayer} coverage={coverageNote} />
           <div className="map-frame">
             <WorldMap
               features={COUNTRY_FEATURES}
@@ -104,17 +157,17 @@ export default function App() {
                 <span className="selection-sep" />
                 <button
                   type="button"
-                  className={layerId === 'trade' ? 'is-active' : undefined}
-                  aria-pressed={layerId === 'trade'}
-                  onClick={() => setLayerId('trade')}
+                  className={sub?.arcs === 'trade' ? 'is-active' : undefined}
+                  aria-pressed={sub?.arcs === 'trade'}
+                  onClick={() => changeLayer('trade.dependency')}
                 >
                   <Waypoints size={13} /> Trade links
                 </button>
                 <button
                   type="button"
-                  className={layerId === 'leverage' ? 'is-active' : undefined}
-                  aria-pressed={layerId === 'leverage'}
-                  onClick={() => setLayerId('leverage')}
+                  className={sub?.arcs === 'influence' ? 'is-active' : undefined}
+                  aria-pressed={sub?.arcs === 'influence'}
+                  onClick={() => changeLayer('influence.network')}
                 >
                   <Sparkles size={13} /> Influence
                 </button>
@@ -126,55 +179,27 @@ export default function App() {
             )}
             <Legend layer={layer} keyTitle={keyTitle} keys={selected ? keys : []} />
           </div>
-          <RegionStrip />
+          <RegionStrip profiles={profiles} />
         </section>
 
-        <div className="panel-wrap">
-          <button
-            type="button"
-            className="panel-handle"
-            aria-expanded={panelOpen}
-            aria-controls="side-panel"
-            aria-label={panelOpen ? 'Collapse side panel' : 'Expand side panel'}
-            title={panelOpen ? 'Collapse panel' : 'Expand panel'}
-            onClick={() => setPanelOpen((o) => !o)}
-          >
-            {panelOpen ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-          </button>
-          {panelOpen ? (
-            <aside
-              key={selected ?? 'global'}
-              id="side-panel"
-              className={`side-panel${country ? ' is-country' : ''}`}
-              aria-live="polite"
-            >
-              {country ? (
-                <CountryPanel
-                  country={country}
-                  profiles={profiles}
-                  tab={tab}
-                  onTab={setTab}
-                  trade={trade}
-                  influence={influence}
-                  onSelect={select}
-                  onClose={() => select(null)}
-                />
-              ) : (
-                <GlobalOverview onSelect={select} />
-              )}
-            </aside>
+        <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title={country ? country.display : 'Global overview'}>
+          {country ? (
+            <CountryPanel
+              country={country}
+              profiles={profiles}
+              tab={tab}
+              onTab={changeTab}
+              trade={trade}
+              influence={influence}
+              onSelect={select}
+              onClose={() => select(null)}
+              layerId={layerId}
+              onLayer={changeLayer}
+            />
           ) : (
-            <button
-              type="button"
-              id="side-panel"
-              className="panel-rail"
-              onClick={() => setPanelOpen(true)}
-              aria-label="Expand side panel"
-            >
-              <span>{country ? country.display : 'Global overview'}</span>
-            </button>
+            <GlobalOverview layer={layer} profiles={profiles} onSelect={select} />
           )}
-        </div>
+        </Drawer>
       </main>
 
       <Rankings
@@ -182,6 +207,7 @@ export default function App() {
         onSelect={(n) => {
           select(n);
           setTab('scorecard');
+          setLayerId('scorecard');
           document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
         }}
       />
@@ -190,9 +216,10 @@ export default function App() {
 
       <footer className="footer">
         <p>
-          <strong>About the data.</strong> Every figure on this page is an illustrative placeholder for layout only. It is not
-          live, sourced or suitable for decisions. The production version will attach a source, reporting period and update
-          time to every value, drawing on IMF, World Bank, UN Comtrade, WITS and BIS data.
+          <strong>About the data.</strong> The seven sections draw on the IMF World Economic Outlook, World Bank (with ILO, SIPRI,
+          UCDP and debt statistics), BIS, Our World in Data, the Fragile States Index, the INFORM Risk Index, UN Comtrade and the
+          FBIC Index, refreshed by scheduled jobs. Every value shows its year, and anything not fetched yet says so. The News
+          tab and the developing-story text are still illustrative.
         </p>
         <p className="muted small">ATLAS prototype · Boundaries from Natural Earth via world-atlas.</p>
       </footer>

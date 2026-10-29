@@ -563,7 +563,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
               <g
                 key={c.name}
                 transform={`translate(${x},${y})`}
-                className={`chokepoint${layer.id === 'leverage' ? ' is-emphasis' : ''}`}
+                className={`chokepoint${layer.id.startsWith('influence.') ? ' is-emphasis' : ''}`}
                 onPointerMove={(e) => {
                   if (dragRef.current?.moved) return;
                   setHover(null);
@@ -578,7 +578,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
                 <circle r={9} className="cp-hit" />
                 <circle r={6} className="cp-ring" />
                 <rect x={-2.4} y={-2.4} width={4.8} height={4.8} transform="rotate(45)" className="cp-core" />
-                {layer.id === 'leverage' && (
+                {layer.id.startsWith('influence.') && (
                   <text x={9} y={3.5} className="cp-label">
                     {c.name}
                   </text>

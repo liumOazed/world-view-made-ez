@@ -1,5 +1,7 @@
-import { ArrowUpRight, ChartColumn, Waypoints, ShieldAlert, Zap, type LucideIcon } from 'lucide-react';
-import { REGIONS } from '../data/global';
+import { useMemo } from 'react';
+import { ArrowDownRight, ArrowUpRight, ChartColumn, Waypoints, ShieldAlert, Zap, type LucideIcon } from 'lucide-react';
+import type { CountryProfile, Region } from '../data/countries';
+import { FMT, indicator } from '../data/sections';
 import { Sparkline, TREND_NEUTRAL } from './Sparkline';
 
 export type ExploreAction = 'compare' | 'connections' | 'risk' | 'shock';
@@ -42,24 +44,61 @@ export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) 
   );
 }
 
-export function RegionStrip() {
+const REGION_ORDER: Region[] = ['North America', 'Europe', 'Asia', 'Middle East', 'Africa', 'Latin America'];
+
+/** Regional GDP and GDP-weighted growth, summed from IMF country data. */
+export function RegionStrip({ profiles }: { profiles: Map<string, CountryProfile> }) {
+  const regions = useMemo(() => {
+    const growth = indicator('gdpGrowth');
+    const gdp = indicator('gdpUsd');
+    if (!growth?.series || !gdp?.series) return [];
+    return REGION_ORDER.map((name) => {
+      const members = [...profiles.values()].filter((p) => p.region === name && gdp.series![p.name]);
+      const len = gdp.series![members[0]?.name]?.length ?? 0;
+      // Actual years only: the series ends with this year and next year's forecasts.
+      const series: number[] = [];
+      let total = 0;
+      let year = 0;
+      for (let i = 0; i < len - 2; i++) {
+        let w = 0;
+        let g = 0;
+        for (const m of members) {
+          const gi = growth.series![m.name]?.[i];
+          const wi = gdp.series![m.name]?.[i];
+          if (gi == null || wi == null) continue;
+          w += wi;
+          g += gi * wi;
+        }
+        if (w > 0) {
+          series.push(g / w);
+          total = w;
+          year = (growth.seriesFrom ?? 0) + i;
+        }
+      }
+      return { name, total, year, growth: series[series.length - 1] ?? NaN, series };
+    }).filter((r) => r.series.length > 2);
+  }, [profiles]);
+
   return (
     <div className="region-strip" aria-label="Regional overview">
-      {REGIONS.map((r) => (
-        <div key={r.name} className="region-card">
-          <div>
-            <div className="region-name">{r.name}</div>
-            <div className="region-figures">
-              <span className="region-gdp">{r.gdp}</span>
-              <span className="region-growth">
-                <ArrowUpRight size={11} />
-                {r.growth.toFixed(1)}%
-              </span>
+      {regions.map((r) => {
+        const Arrow = r.growth >= 0 ? ArrowUpRight : ArrowDownRight;
+        return (
+          <div key={r.name} className="region-card" title={`IMF WEO, ${r.year}. GDP in current US$, growth weighted by GDP.`}>
+            <div>
+              <div className="region-name">{r.name}</div>
+              <div className="region-figures">
+                <span className="region-gdp">{FMT.usdBn(r.total)}</span>
+                <span className="region-growth">
+                  <Arrow size={11} />
+                  {r.growth.toFixed(1)}%
+                </span>
+              </div>
             </div>
+            <Sparkline values={r.series} color={TREND_NEUTRAL} width={44} height={18} />
           </div>
-          <Sparkline values={r.series} color={TREND_NEUTRAL} width={44} height={18} />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

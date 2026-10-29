@@ -94,11 +94,11 @@ const WB = {
   battleDeaths: ['VC.BTL.DETH', 'Battle-related deaths', 'people', 'ucdp'],
 };
 
-async function get(url, as = 'text') {
-  for (let i = 0; i < 4; i++) {
-    const res = await fetch(url, { headers: UA }).catch((e) => ({ ok: false, status: e.message }));
+async function get(url, as = 'text', tries = 4, timeout = 60000) {
+  for (let i = 0; i < tries; i++) {
+    const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(timeout) }).catch((e) => ({ ok: false, status: e.message }));
     if (res.ok) return as === 'json' ? res.json() : as === 'buffer' ? Buffer.from(await res.arrayBuffer()) : res.text();
-    if (res.status === 404 || res.status === 403 || res.status === 400) throw new Error(`${res.status} on ${url}`);
+    if (res.status === 404 || res.status === 403 || res.status === 400 || i === tries - 1) throw new Error(`${res.status} on ${url}`);
     console.warn(`  ${res.status} on ${url}, retrying`);
     await new Promise((r) => setTimeout(r, 3000 * 2 ** i));
   }
@@ -331,11 +331,14 @@ async function inform(indicator) {
     informScores = new Map();
     const isos = [...new Set(mapCountries().values())];
     let logged = false;
+    let misses = 0;
     for (let i = 0; i < isos.length; i += 8) {
+      // One try per country: the API is slow, and a run must finish in minutes.
+      if (i >= 40 && misses > i * 0.8) throw new Error(`INFORM returned nothing for ${misses} of the first ${i} countries`);
       await Promise.all(
         isos.slice(i, i + 8).map(async (iso) => {
-          const rows = await get(`${INFORM_API}/countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=${iso}`, 'json').catch(() => []);
-          if (!Array.isArray(rows)) return;
+          const rows = await get(`${INFORM_API}/countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=${iso}`, 'json', 1, 15000).catch(() => []);
+          if (!Array.isArray(rows) || !rows.length) return void misses++;
           if (rows.length && !logged) (logged = true), console.log(`  row: ${JSON.stringify(rows[0])}`);
           for (const r of rows) {
             const v = Number(r.IndicatorScore ?? r.Score ?? r.Value);
