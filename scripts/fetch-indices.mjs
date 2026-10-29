@@ -13,8 +13,10 @@ import { mapCountries } from './lib/map-countries.mjs';
 
 const OUT = new URL('../src/data/indices.json', import.meta.url);
 const owid = (slug) => `https://ourworldindata.org/grapher/${slug}.csv`;
-const wb = (indicator, source = 2) =>
-  `https://api.worldbank.org/v2/country/all/indicator/${indicator}?format=json&per_page=20000&mrnev=1&source=${source}`;
+const wb = (indicator, source) =>
+  `https://api.worldbank.org/v2/country/all/indicator/${indicator}?format=json&per_page=20000&mrnev=1${source ? `&source=${source}` : ''}`;
+// Values older than this are dropped rather than shown as current.
+const OLDEST_YEAR = new Date().getUTCFullYear() - 7;
 
 /**
  * Scorecard index id -> where its data comes from. Our World in Data republishes
@@ -34,7 +36,8 @@ const SOURCES = {
     via: 'World Bank API',
     page: 'https://www.worldbank.org/en/publication/worldwide-governance-indicators',
     note: 'Rule of Law estimate, about −2.5 to +2.5. Stands in until World Justice Project data is added.',
-    fetch: () => worldBank(wb('RL.EST', 3)),
+    // The WGI series moved to new codes in 2024; try the new one first.
+    fetch: () => worldBank(wb('GOV_WGI_RL.EST'), wb('GOV_WGI_RL_EST'), wb('RL.EST', 3)),
   },
   hdi: {
     publisher: 'UNDP Human Development Report',
@@ -62,18 +65,10 @@ const SOURCES = {
     note: 'Liberal Democracy Index, 0–1, used in place of the EIU Democracy Index',
     fetch: () => owidCsv('liberal-democracy-index'),
   },
-  pressFreedom: {
-    publisher: 'Reporters Without Borders',
-    via: 'Our World in Data',
-    page: 'https://ourworldindata.org/grapher/press-freedom-index-rsf',
-    fetch: () => owidCsv('press-freedom-index-rsf'),
-  },
-  eci: {
-    publisher: 'Harvard Growth Lab',
-    via: 'Our World in Data',
-    page: 'https://ourworldindata.org/grapher/economic-complexity-index',
-    fetch: () => owidCsv('economic-complexity-index'),
-  },
+  // Next batch, from the publishers' own downloads: press freedom (RSF; OWID's
+  // copy stops at 2021 on the old scale), economic complexity (Harvard Growth
+  // Lab), innovation (WIPO), economic freedom, social progress, gender gap,
+  // EPI, human freedom, peace, fragility and terrorism.
 };
 
 async function get(url, as = 'text') {
@@ -124,22 +119,27 @@ async function owidCsv(slug) {
     const iso = r[code];
     const v = Number(r[value]);
     const y = Number(r[year]);
-    if (!/^[A-Z]{3}$/.test(iso) || r[value] === '' || !Number.isFinite(v)) continue;
+    if (!/^[A-Z]{3}$/.test(iso) || r[value] === '' || !Number.isFinite(v) || y < OLDEST_YEAR) continue;
     if (!out[iso] || y > out[iso][1]) out[iso] = [v, y];
   }
   return out;
 }
 
-/** Most recent non-empty value per country from the World Bank API. */
-async function worldBank(url) {
-  const body = await get(url, 'json');
-  const rows = Array.isArray(body) ? body[1] ?? [] : [];
-  if (!rows.length) throw new Error(`No rows: ${JSON.stringify(body).slice(0, 200)}`);
+/** Most recent non-empty value per country from the World Bank API; tries each URL in turn. */
+async function worldBank(...urls) {
+  let rows = [];
+  for (const url of urls) {
+    const body = await get(url, 'json');
+    rows = Array.isArray(body) ? body[1] ?? [] : [];
+    if (rows.length) break;
+    console.warn(`  no rows from ${url}: ${JSON.stringify(body).slice(0, 160)}`);
+  }
+  if (!rows.length) throw new Error('No rows from any World Bank URL');
   const out = {};
   for (const r of rows) {
     const iso = r.countryiso3code;
-    if (!iso || r.value === null) continue;
     const y = Number(r.date);
+    if (!iso || r.value === null || y < OLDEST_YEAR) continue;
     if (!out[iso] || y > out[iso][1]) out[iso] = [r.value, y];
   }
   return out;
@@ -149,7 +149,8 @@ async function main() {
   const countries = mapCountries();
   const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, 'utf8')) : { indices: {} };
   const today = new Date().toISOString().slice(0, 10);
-  const indices = { ...prev.indices };
+  // Keep previous values only for sources still configured.
+  const indices = Object.fromEntries(Object.entries(prev.indices).filter(([id]) => SOURCES[id]));
   const failed = [];
 
   for (const [id, src] of Object.entries(SOURCES)) {
