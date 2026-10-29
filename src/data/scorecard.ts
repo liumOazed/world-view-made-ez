@@ -49,7 +49,7 @@ interface Snapshot {
     { publisher: string; via: string; page: string; note?: string; retrieved: string; values: Record<string, [number, number]> }
   >;
 }
-const DATA = (snapshot as Snapshot).indices;
+const DATA = (snapshot as unknown as Snapshot).indices;
 
 /** Where a loaded index came from, or undefined while it is not loaded. */
 export const indexSource = (id: string) => DATA[id];
