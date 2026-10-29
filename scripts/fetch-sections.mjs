@@ -45,10 +45,9 @@ const IMF = {
   gdpUsd: ['NGDPD', 'GDP, current prices', 'US$ billions'],
   gdpPcUsd: ['NGDPDPC', 'GDP per capita, current prices', 'US$'],
   inflation: ['PCPIPCH', 'Inflation, average consumer prices', '% change'],
-  unemploymentImf: ['LUR', 'Unemployment rate', '% of labour force'],
   deficit: ['GGXCNL_NGDP', 'Government net lending / borrowing', '% of GDP'],
-  revenue: ['GGR_NGDP', 'Government revenue', '% of GDP'],
-  spending: ['GGX_NGDP', 'Government expenditure', '% of GDP'],
+  revenue: [['GGR_NGDP', 'rev'], 'Government revenue', '% of GDP'],
+  spending: [['GGX_NGDP', 'exp'], 'Government expenditure', '% of GDP'],
   debt: ['GGXWDG_NGDP', 'Government gross debt', '% of GDP'],
   currentAccount: ['BCA_NGDPD', 'Current account balance', '% of GDP'],
 };
@@ -88,13 +87,11 @@ const WB = {
   oresExports: ['TX.VAL.MMTL.ZS.UN', 'Ores and metals exports', '% of merchandise exports', 'wdi'],
   migrants: ['SM.POP.TOTL.ZS', 'International migrant stock', '% of population', 'wdi'],
   remittances: ['BX.TRF.PWKR.DT.GD.ZS', 'Remittances received', '% of GDP', 'wdi'],
-  tourism: ['ST.INT.ARVL', 'International tourist arrivals', 'arrivals', 'wdi'],
   externalDebt: ['DT.DOD.DECT.GN.ZS', 'External debt stocks', '% of GNI', 'ids'],
   debtService: ['DT.TDS.DECT.EX.ZS', 'External debt service', '% of exports and income', 'ids'],
   shortTermDebt: ['DT.DOD.DSTC.ZS', 'Short-term external debt', '% of total external debt', 'ids'],
   politicalStability: [['GOV_WGI_PV.EST', 'GOV_WGI_PV_EST', 'PV.EST'], 'Political stability and absence of violence', 'estimate, about −2.5 to +2.5', 'wgi'],
   battleDeaths: ['VC.BTL.DETH', 'Battle-related deaths', 'people', 'ucdp'],
-  refugeesOrigin: ['SM.POP.REFG.OR', 'Refugees by country of origin', 'people', 'wdi'],
 };
 
 async function get(url, as = 'text') {
@@ -138,10 +135,15 @@ const round = (v) => Number(Math.abs(v) >= 1000 ? v.toPrecision(6) : v.toPrecisi
  * as { values: { CODE: { ISO: { year: value } } } }. The WEO marks no flag in
  * this API, so we treat years before the current one as actuals.
  */
-async function imf(code) {
-  const body = await get(`https://www.imf.org/external/datamapper/api/v1/${code}`, 'json');
-  const byIso = body?.values?.[code];
-  if (!byIso) throw new Error(`No values for ${code}`);
+async function imf(codes) {
+  let byIso;
+  for (const code of [codes].flat()) {
+    const body = await get(`https://www.imf.org/external/datamapper/api/v1/${code}`, 'json').catch((e) => console.warn(`  ${e.message}`));
+    byIso = body?.values?.[code];
+    if (byIso) break;
+    console.warn(`  no values for ${code}: ${JSON.stringify(body ?? null).slice(0, 160)}`);
+  }
+  if (!byIso) throw new Error('No values from any IMF code');
   const out = {};
   for (const [iso, years] of Object.entries(byIso)) {
     if (!/^[A-Z]{3}$/.test(iso)) continue;
@@ -201,17 +203,20 @@ async function bisPolicyRates() {
   const value = head.indexOf('OBS_VALUE');
   if (area < 0 || period < 0 || value < 0) throw new Error(`Unexpected BIS columns: ${head.join(' | ')}`);
   const out = {};
+  let euro;
   for (const r of rows) {
     const v = Number(r[value]);
-    if (r[value] === '' || !Number.isFinite(v)) continue;
     const year = Number(r[period].slice(0, 4));
+    // Series that stopped (national rates before the euro) end years ago.
+    if (r[value] === '' || !Number.isFinite(v) || year < THIS_YEAR - 1) continue;
     const entry = { value: [v, year], period: r[period] };
-    if (r[area] === 'XM') for (const iso of EURO) out[iso] ??= entry;
+    if (r[area] === 'XM') euro = entry;
     else {
       const iso = isoCountries.alpha2ToAlpha3(r[area]);
       if (iso) out[iso] = entry;
     }
   }
+  if (euro) for (const iso of EURO) out[iso] = euro;
   return out;
 }
 
@@ -304,37 +309,47 @@ async function fsiColumn(match) {
   return out;
 }
 
-/** INFORM Risk Index: find the newest release's workflow, then pull one indicator for all countries. */
-const INFORM_API = ['https://drmkc.jrc.ec.europa.eu/inform-index/API/InformAPI', 'https://drmkc.jrc.ec.europa.eu/informindex/API/InformAPI'];
-let informWorkflow;
+/**
+ * INFORM Risk Index: find the newest release's workflow, then pull every
+ * indicator country by country (the API returns nothing for an all-country
+ * query). Scores are cached so the four indicators share one pass.
+ */
+const INFORM_API = 'https://drmkc.jrc.ec.europa.eu/inform-index/API/InformAPI';
+let informScores;
 async function inform(indicator) {
-  if (!informWorkflow) {
-    for (const base of INFORM_API) {
-      for (const year of [THIS_YEAR + 1, THIS_YEAR, THIS_YEAR - 1]) {
-        try {
-          const list = await get(`${base}/workflows/GetByWorkflowGroup/INFORM${year}`, 'json');
-          const flows = (Array.isArray(list) ? list : []).filter((w) => w.WorkflowId);
-          if (!flows.length) continue;
-          const pick = flows.sort((a, b) => b.WorkflowId - a.WorkflowId)[0];
-          informWorkflow = { base, id: pick.WorkflowId, year };
-          console.log(`  INFORM${year} workflow ${pick.WorkflowId} (${pick.Name ?? ''})`);
-          break;
-        } catch (e) {
-          console.warn(`  ${e.message}`);
-        }
-      }
-      if (informWorkflow) break;
+  if (!informScores) {
+    let flow;
+    for (const year of [THIS_YEAR + 1, THIS_YEAR, THIS_YEAR - 1]) {
+      const list = await get(`${INFORM_API}/workflows/GetByWorkflowGroup/INFORM${year}`, 'json').catch(() => []);
+      const flows = (Array.isArray(list) ? list : []).filter((w) => w.WorkflowId);
+      if (!flows.length) continue;
+      flow = { ...flows.sort((a, b) => b.WorkflowId - a.WorkflowId)[0], year };
+      console.log(`  INFORM${year} workflow ${flow.WorkflowId} (${flow.Name ?? ''})`);
+      break;
     }
-    if (!informWorkflow) throw new Error('No INFORM workflow found');
+    if (!flow) throw new Error('No INFORM workflow found');
+    informScores = new Map();
+    const isos = [...new Set(mapCountries().values())];
+    let logged = false;
+    for (let i = 0; i < isos.length; i += 8) {
+      await Promise.all(
+        isos.slice(i, i + 8).map(async (iso) => {
+          const rows = await get(`${INFORM_API}/countries/Scores/?WorkflowId=${flow.WorkflowId}&Iso3=${iso}`, 'json').catch(() => []);
+          if (!Array.isArray(rows)) return;
+          if (rows.length && !logged) (logged = true), console.log(`  row: ${JSON.stringify(rows[0])}`);
+          for (const r of rows) {
+            const v = Number(r.IndicatorScore ?? r.Score ?? r.Value);
+            if (Number.isFinite(v)) informScores.set(`${iso}:${r.IndicatorId}`, [round(v), flow.year]);
+          }
+        }),
+      );
+    }
+    console.log(`  ${informScores.size} INFORM scores`);
   }
-  const { base, id, year } = informWorkflow;
-  const rows = await get(`${base}/countries/Scores/?WorkflowId=${id}&IndicatorId=${indicator}`, 'json');
-  if (!Array.isArray(rows) || !rows.length) throw new Error(`No INFORM rows: ${JSON.stringify(rows).slice(0, 160)}`);
   const out = {};
-  for (const r of rows) {
-    const iso = r.Iso3 ?? r.ISO3 ?? r.iso3;
-    const v = Number(r.IndicatorScore ?? r.Score ?? r.Value);
-    if (/^[A-Z]{3}$/.test(iso ?? '') && Number.isFinite(v)) out[iso] = { value: [round(v), year] };
+  for (const [key, value] of informScores) {
+    const [iso, id] = key.split(':');
+    if (id === indicator) out[iso] = { value };
   }
   return out;
 }
@@ -342,7 +357,10 @@ async function inform(indicator) {
 /** Every indicator: id -> { label, unit, source, code, fetch }. */
 const INDICATORS = {
   ...Object.fromEntries(
-    Object.entries(IMF).map(([id, [code, label, unit]]) => [id, { label, unit, source: 'imf', code, fetch: () => imf(code) }]),
+    Object.entries(IMF).map(([id, [code, label, unit]]) => [
+      id,
+      { label, unit, source: 'imf', code: [code].flat()[0], fetch: () => imf(code) },
+    ]),
   ),
   ...Object.fromEntries(
     Object.entries(WB).map(([id, [code, label, unit, source]]) => [
