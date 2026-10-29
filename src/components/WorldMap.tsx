@@ -367,7 +367,9 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
 
   const fillOf = (name: string) => {
     const p = profiles.get(name);
-    return p ? layer.color(layer.value(p)) : '#1e293b';
+    if (!p) return '#1e293b';
+    const v = layer.value(p);
+    return Number.isNaN(v) ? '#1e293b' : layer.color(v);
   };
 
   const hovered = hover ? profiles.get(hover.name) : undefined;
@@ -570,7 +572,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
           <div className="tooltip-name">{hovered.display}</div>
           <div className="tooltip-row">
             <span>{layer.metric}</span>
-            <strong style={{ color: layer.color(layer.value(hovered)) }}>{layer.format(layer.value(hovered))}</strong>
+            <strong style={{ color: Number.isNaN(layer.value(hovered)) ? undefined : layer.color(layer.value(hovered)) }}>{layer.format(layer.value(hovered))}</strong>
           </div>
           <div className="tooltip-foot">Illustrative · click to open</div>
         </div>

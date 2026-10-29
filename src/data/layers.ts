@@ -1,8 +1,17 @@
 import { scaleLinear, scaleSqrt } from 'd3-scale';
 import { interpolateRgbBasis } from 'd3-interpolate';
 import type { CountryProfile } from './countries';
+import { PILLARS, scorecardOf, type PillarId } from './scorecard';
 
-export type LayerId = 'growth' | 'inflation' | 'trade' | 'financial' | 'geopolitical' | 'leverage';
+export type LayerId =
+  | 'growth'
+  | 'inflation'
+  | 'trade'
+  | 'financial'
+  | 'geopolitical'
+  | 'leverage'
+  | 'scorecard'
+  | `score-${PillarId}`;
 
 export interface Layer {
   id: LayerId;
@@ -11,6 +20,7 @@ export interface Layer {
   unit: string;
   question: string;
   description: string;
+  /** NaN means no data: the country is drawn in the empty color. */
   value: (c: CountryProfile) => number;
   format: (v: number) => string;
   color: (v: number) => string;
@@ -36,6 +46,7 @@ const TRADE = ['#172554', '#1d4ed8', '#06b6d4', '#a7f3d0'];
 const FINANCIAL = ['#0f2a3f', '#0e7490', '#eab308', '#f97316', '#e11d48'];
 const GEO = ['#13233f', '#4338ca', '#a21caf', '#f43f5e'];
 const LEVERAGE = ['#0f1e3a', '#3b2a7a', '#7c3aed', '#c084fc', '#f5d0fe'];
+const SCORE = ['#e11d48', '#f97316', '#eab308', '#2dd4bf', '#38bdf8', '#e0f2fe'];
 
 export const LAYERS: Layer[] = [
   {
@@ -133,4 +144,36 @@ export const LAYERS: Layer[] = [
   },
 ];
 
-export const LAYER_BY_ID = Object.fromEntries(LAYERS.map((l) => [l.id, l])) as Record<LayerId, Layer>;
+const score = (v: number) => (Number.isNaN(v) ? 'Not enough data' : `${Math.round(v)} / 100`);
+
+LAYERS.push({
+  id: 'scorecard',
+  label: 'Country scorecard',
+  metric: 'Overall scorecard',
+  unit: '17 global indices, 0–100',
+  question: 'How do countries compare across 17 global indices?',
+  description: 'Weighted blend of four pillars: economy, human development, institutions and stability.',
+  value: (c) => scorecardOf(c.name)?.overall ?? NaN,
+  format: score,
+  color: ramp(SCORE, [15, 90]),
+  ramp: SCORE,
+  low: 'Weaker',
+  high: 'Stronger',
+  ticks: ['15', '50', '90'],
+});
+
+/** One layer per pillar, reached from the scorecard layer's sub-switcher. */
+export const PILLAR_LAYERS: Layer[] = PILLARS.map((p) => ({
+  ...LAYERS[LAYERS.length - 1],
+  id: `score-${p.id}` as LayerId,
+  label: p.short,
+  metric: p.label,
+  unit: `scorecard pillar, 0–100 · ${p.weight}% of overall`,
+  question: `How do countries compare on ${p.label.toLowerCase()}?`,
+  value: (c: CountryProfile) => scorecardOf(c.name)?.pillars[p.id].score ?? NaN,
+}));
+
+export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS].map((l) => [l.id, l])) as Record<
+  LayerId,
+  Layer
+>;

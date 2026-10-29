@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Globe2, Sparkles, Waypoints, X } from 'lucid
 import { buildProfiles, LINK_META } from './data/countries';
 import { INFLUENCE_COLOR, influenceLinks, tradeLinks } from './data/connections';
 import { LAYER_BY_ID, type LayerId } from './data/layers';
+import { buildScorecards } from './data/scorecard';
 import { COUNTRY_FEATURES } from './geo';
 import { Header } from './components/Header';
 import { WorldMap, type MapLink } from './components/WorldMap';
@@ -11,12 +12,14 @@ import { GlobalOverview } from './components/GlobalOverview';
 import { CountryPanel, type CountryTab } from './components/CountryPanel';
 import { Flag } from './components/Flag';
 import { Explore, RegionStrip, type ExploreAction } from './components/Explore';
+import { Rankings } from './components/Scorecard';
 
 export default function App() {
-  const profiles = useMemo(
-    () => buildProfiles(COUNTRY_FEATURES.map((f) => ({ name: f.properties.name, centroid: f.anchor }))),
-    [],
-  );
+  const profiles = useMemo(() => {
+    const p = buildProfiles(COUNTRY_FEATURES.map((f) => ({ name: f.properties.name, centroid: f.anchor })));
+    buildScorecards(p);
+    return p;
+  }, []);
   const [layerId, setLayerId] = useState<LayerId>('growth');
   const [selected, setSelected] = useState<string | null>(null);
   const [tab, setTab] = useState<CountryTab>('overview');
@@ -176,6 +179,15 @@ export default function App() {
           )}
         </div>
       </main>
+
+      <Rankings
+        profiles={profiles}
+        onSelect={(n) => {
+          select(n);
+          setTab('scorecard');
+          document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
       <Explore onAction={onExplore} />
 
