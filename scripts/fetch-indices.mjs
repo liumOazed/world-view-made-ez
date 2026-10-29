@@ -9,7 +9,8 @@
  * .github/workflows/refresh-indices.yml.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { mapCountries } from './lib/map-countries.mjs';
+import ExcelJS from 'exceljs';
+import { isoCountries, mapCountries } from './lib/map-countries.mjs';
 
 const OUT = new URL('../src/data/indices.json', import.meta.url);
 const owid = (slug) => `https://ourworldindata.org/grapher/${slug}.csv`;
@@ -65,18 +66,48 @@ const SOURCES = {
     note: 'Liberal Democracy Index, 0–1, used in place of the EIU Democracy Index',
     fetch: () => owidCsv('liberal-democracy-index'),
   },
-  // Next batch, from the publishers' own downloads: press freedom (RSF; OWID's
-  // copy stops at 2021 on the old scale), economic complexity (Harvard Growth
-  // Lab), innovation (WIPO), economic freedom, social progress, gender gap,
-  // EPI, human freedom, peace, fragility and terrorism.
+  pressFreedom: {
+    publisher: 'Reporters Without Borders (RSF)',
+    via: 'RSF download',
+    page: 'https://rsf.org/en/index',
+    note: 'Score 0–100, higher is freer (methodology since 2022)',
+    fetch: rsf,
+  },
+  gii: {
+    publisher: 'WIPO Global Innovation Index',
+    via: 'WIPO data file',
+    page: 'https://www.wipo.int/global_innovation_index/en/',
+    note: 'Overall GII score, 0–100',
+    fetch: gii,
+  },
+  eci: {
+    publisher: 'Harvard Growth Lab',
+    via: 'Harvard Dataverse (CC0)',
+    page: 'https://atlas.hks.harvard.edu/rankings',
+    note: 'Economic Complexity Index (HS products)',
+    fetch: eci,
+  },
+  fsi: {
+    publisher: 'Fund for Peace',
+    via: 'Fragile States Index download',
+    page: 'https://fragilestatesindex.org/excel/',
+    note: 'Total score, 0–120, lower is more stable',
+    fetch: fsi,
+  },
+  // Not automated yet: Heritage economic freedom, Cato/Fraser human freedom and
+  // WEF gender gap block scripted downloads; the Social Progress Index data is
+  // paid; GPI, GTI and EPI have no direct data file we could find.
 };
+
+const latestYears = (n) => Array.from({ length: n }, (_, i) => new Date().getUTCFullYear() - i);
 
 async function get(url, as = 'text') {
   for (let i = 0; i < 4; i++) {
     const res = await fetch(url, { headers: { 'user-agent': 'atlas-world-view (github.com/liumOazed/world-view-made-ez)' } }).catch(
       (e) => ({ ok: false, status: e.message }),
     );
-    if (res.ok) return as === 'json' ? res.json() : res.text();
+    if (res.ok) return as === 'json' ? res.json() : as === 'buffer' ? Buffer.from(await res.arrayBuffer()) : res.text();
+    if (res.status === 404 || res.status === 403) throw new Error(`${res.status} on ${url}`);
     console.warn(`  ${res.status} on ${url}, retrying`);
     await new Promise((r) => setTimeout(r, 3000 * 2 ** i));
   }
@@ -142,6 +173,142 @@ async function worldBank(...urls) {
     if (!iso || r.value === null || y < OLDEST_YEAR) continue;
     if (!out[iso] || y > out[iso][1]) out[iso] = [r.value, y];
   }
+  return out;
+}
+
+/** ISO alpha-3 from an English country name, for files that have no codes. */
+const NAME_FIX = {
+  'Congo Democratic Republic': 'COD',
+  'Congo Republic': 'COG',
+  'Cote d\'Ivoire': 'CIV',
+  "Côte d'Ivoire": 'CIV',
+  'Guinea Bissau': 'GNB',
+  Kosovo: 'XKX',
+  'Micronesia': 'FSM',
+  'Israel and West Bank': 'ISR',
+  'Kyrgyz Republic': 'KGZ',
+  'Slovak Republic': 'SVK',
+  'Czechia': 'CZE',
+  'Turkey': 'TUR',
+  'Swaziland': 'SWZ',
+  'Eswatini': 'SWZ',
+  'Cape Verde': 'CPV',
+  'Brunei Darussalam': 'BRN',
+  'Laos': 'LAO',
+  'North Korea': 'PRK',
+  'South Korea': 'KOR',
+  'Russia': 'RUS',
+  'Vietnam': 'VNM',
+  'Iran': 'IRN',
+  'Syria': 'SYR',
+  'Bolivia': 'BOL',
+  'Venezuela': 'VEN',
+  'Tanzania': 'TZA',
+  'Moldova': 'MDA',
+  'Macedonia': 'MKD',
+  'North Macedonia': 'MKD',
+  'Palestine': 'PSE',
+};
+const nameToIso = (name) => {
+  const n = String(name).trim();
+  return NAME_FIX[n] ?? isoCountries.getAlpha3Code(n, 'en');
+};
+
+async function xlsxRows(buf, sheet) {
+  const wb = new ExcelJS.Workbook();
+  await wb.xlsx.load(buf);
+  const ws = sheet ? wb.getWorksheet(sheet) : wb.worksheets[0];
+  if (!ws) throw new Error(`No sheet ${sheet}`);
+  const rows = [];
+  ws.eachRow((row) => rows.push(row.values.slice(1).map((v) => (v && typeof v === 'object' && 'result' in v ? v.result : v))));
+  return rows;
+}
+
+/** RSF publishes one semicolon-separated CSV per year, with ISO codes and comma decimals. */
+async function rsf() {
+  for (const year of latestYears(3)) {
+    let buf;
+    try {
+      buf = await get(`https://rsf.org/sites/default/files/import_classement/${year}.csv`, 'buffer');
+    } catch (e) {
+      console.warn(`  ${e.message}`);
+      continue;
+    }
+    const [head, ...rows] = new TextDecoder('latin1').decode(buf).split(/\r?\n/).map((l) => l.split(';'));
+    const iso = head.indexOf('ISO');
+    const score = head.findIndex((h) => /^Score \d{4}$/.test(h.trim()));
+    if (iso < 0 || score < 0) throw new Error(`Unexpected RSF columns: ${head.join(' | ')}`);
+    const out = {};
+    for (const r of rows) {
+      const v = Number(r[score]?.replace(',', '.'));
+      if (/^[A-Z]{3}$/.test(r[iso]) && Number.isFinite(v) && r[score] !== '') out[r[iso]] = [v, year];
+    }
+    return out;
+  }
+  throw new Error('No RSF file for recent years');
+}
+
+/** WIPO's GII data workbook (record on tind.wipo.int); update the record each September. */
+const GII_FILE = { year: 2025, url: 'https://tind.wipo.int/record/58882/files/wipo-pub-2000-2025-gii-tech1.xlsx' };
+async function gii() {
+  const rows = await xlsxRows(await get(GII_FILE.url, 'buffer'), 'Data');
+  const [head, ...data] = rows;
+  const iso = head.indexOf('ISO3');
+  const name = head.indexOf('NAME');
+  const score = head.indexOf('SCORE');
+  const out = {};
+  for (const r of data) {
+    if (r[name] === 'Global Innovation Index' && Number.isFinite(r[score])) out[r[iso]] = [r[score], GII_FILE.year];
+  }
+  return out;
+}
+
+/** Growth Lab's "Growth Projections and Complexity Rankings" on Harvard Dataverse. */
+async function eci() {
+  const DV = 'https://dataverse.harvard.edu/api';
+  const list = await get(`${DV}/datasets/:persistentId/versions/:latest/files?persistentId=doi:10.7910/DVN/XTAQMC`, 'json');
+  const files = list.data.map((f) => ({ id: f.dataFile.id, name: f.dataFile.originalFileName ?? f.dataFile.filename }));
+  console.log(`  files: ${files.map((f) => f.name).join(', ')}`);
+  const file = files.find((f) => /rank/i.test(f.name) && /\.(csv|tab)$/i.test(f.name)) ?? files.find((f) => /\.(csv|tab)$/i.test(f.name));
+  if (!file) throw new Error('No CSV in the dataset');
+  const text = await get(`${DV}/access/datafile/${file.id}?format=original`);
+  const [head, ...rows] = parseCsv(text.includes('\t') && !text.split('\n')[0].includes(',') ? text.replaceAll('\t', ',') : text);
+  console.log(`  ${file.name} columns: ${head.join(' | ')}`);
+  const iso = head.findIndex((h) => /iso|country_code|code/i.test(h));
+  const year = head.findIndex((h) => /^year$/i.test(h));
+  const value = head.findIndex((h) => /^(hs_)?eci(_hs.*)?$/i.test(h));
+  if (iso < 0 || year < 0 || value < 0) throw new Error('Unexpected ECI columns');
+  const out = {};
+  for (const r of rows) {
+    const v = Number(r[value]);
+    const y = Number(r[year]);
+    if (!/^[A-Z]{3}$/.test(r[iso]) || r[value] === '' || !Number.isFinite(v) || y < OLDEST_YEAR) continue;
+    if (!out[r[iso]] || y > out[r[iso]][1]) out[r[iso]] = [v, y];
+  }
+  return out;
+}
+
+/** Fund for Peace posts one workbook per year; take the newest linked from its Excel page. */
+async function fsi() {
+  const html = await get('https://fragilestatesindex.org/excel/');
+  const links = [...html.matchAll(/https:\/\/fragilestatesindex\.org\/wp-content\/uploads\/[^"']+\.xlsx/gi)].map((m) => m[0]);
+  const yearOf = (u) => Number(u.match(/(20\d\d)[^/]*\.xlsx$/i)?.[1] ?? 0);
+  const url = links.sort((a, b) => yearOf(b) - yearOf(a))[0];
+  if (!url) throw new Error('No FSI workbook linked');
+  console.log(`  ${url}`);
+  const [head, ...rows] = await xlsxRows(await get(url, 'buffer'));
+  const country = head.indexOf('Country');
+  const year = head.indexOf('Year');
+  const total = head.indexOf('Total');
+  const out = {};
+  const missed = [];
+  for (const r of rows) {
+    const iso = nameToIso(r[country]);
+    const y = r[year] instanceof Date ? r[year].getUTCFullYear() : Number(r[year]);
+    if (!iso) missed.push(r[country]);
+    else if (Number.isFinite(r[total])) out[iso] = [Math.round(r[total] * 10) / 10, y];
+  }
+  if (missed.length) console.warn(`  unmatched names: ${missed.join(', ')}`);
   return out;
 }
 

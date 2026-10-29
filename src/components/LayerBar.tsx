@@ -14,8 +14,9 @@ const ICONS: Partial<Record<LayerId, LucideIcon>> = {
 };
 
 const GAP = 4;
-/** Room kept for the "More" button when some layers overflow. */
+/** Room kept for the "More" button, which shows the active layer's name when that layer is hidden. */
 const MORE_WIDTH = 96;
+const CHEVRON = 22;
 
 export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: LayerId) => void }) {
   const isScore = layer.id === 'scorecard' || layer.id.startsWith('score-');
@@ -35,7 +36,7 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
       const total = widths.reduce((a, b) => a + b, 0);
       // Phones scroll the row sideways instead.
       if (total <= avail || row.clientWidth < 560) return setFit(LAYERS.length);
-      let used = MORE_WIDTH;
+      let used = Math.max(MORE_WIDTH, ...widths.map((w) => w + CHEVRON));
       let n = 0;
       while (n < widths.length && used + widths[n] <= avail) used += widths[n++];
       setFit(Math.max(1, n));

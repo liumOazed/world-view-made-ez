@@ -1,6 +1,7 @@
 import { geoDistance } from 'd3-geo';
 import { seeded, type CountryProfile, type LinkKind } from './countries';
 import snapshot from './trade.json';
+import fbic from './influence.json';
 
 /**
  * ILLUSTRATIVE connection logic. Curated partners come first; the rest of a
@@ -17,7 +18,7 @@ export interface TradeLink {
 export interface InfluenceLink {
   name: string;
   /** Strongest channel through which the selected country matters to `name`. */
-  kind: LinkKind | 'regional';
+  kind: LinkKind | 'regional' | 'ties';
   /** Relative strength, 0–100. */
   score: number;
 }
@@ -111,6 +112,58 @@ function realInfluence(c: CountryProfile, n: number): InfluenceLink[] | null {
   return top.map((t) => ({ name: t.name, kind: t.kind, score: Math.max(8, Math.round((t.value / max) * 100)) }));
 }
 
+/* ---------- FBIC influence capacity (scripts/fetch-fbic.mjs) ---------- */
+
+interface FbicSnapshot {
+  source: string;
+  sourceUrl: string;
+  dataUrl: string;
+  licence: string;
+  year: number;
+  retrieved: string;
+  countries: Record<string, { reach: number; over: [string, number][]; by: [string, number][] }>;
+}
+const FBIC = fbic as unknown as FbicSnapshot;
+export const influenceYear = FBIC.year;
+
+/** Source details when FBIC covers `name`, for footnotes. */
+export function influenceSource(name: string) {
+  return FBIC.countries[name] ? FBIC : null;
+}
+
+// Total outward influence is very skewed (a few powers hold most of it), so the map uses its percentile.
+const REACH_RANK = new Map(
+  Object.entries(FBIC.countries)
+    .sort((a, b) => a[1].reach - b[1].reach)
+    .map(([name], i, all) => [name, (i / Math.max(1, all.length - 1)) * 100]),
+);
+/** Percentile (0–100) of a country's total FBIC influence over others; NaN when not covered. */
+export const influenceReach = (name: string) => REACH_RANK.get(name) ?? NaN;
+
+/** Channel label for an FBIC link: the trade channel when trade data shows one. */
+function fbicKind(from: string, to: string): InfluenceLink['kind'] {
+  const iso = TRADE.countries[from]?.iso;
+  const p = iso && TRADE.countries[to]?.partners.find((x) => x.iso === iso);
+  return p ? kindOf(p) : 'ties';
+}
+
+function fbicLinks(
+  list: [string, number][] | undefined,
+  kind: (name: string) => InfluenceLink['kind'],
+  profiles: Map<string, CountryProfile>,
+  n: number,
+): InfluenceLink[] | null {
+  const top = (list ?? []).filter(([name]) => profiles.has(name)).slice(0, n);
+  if (top.length < n) return null;
+  const max = top[0][1] || 1;
+  return top.map(([name, v]) => ({ name, kind: kind(name), score: Math.max(1, Math.round((v / max) * 100)) }));
+}
+
+/** The `n` countries with the most influence capacity over `c`, from FBIC; null when not covered. */
+export function influencedBy(c: CountryProfile, profiles: Map<string, CountryProfile>, n = 5): InfluenceLink[] | null {
+  return fbicLinks(FBIC.countries[c.name]?.by, (name) => fbicKind(name, c.name), profiles, n);
+}
+
 const HUBS = [
   'United States of America', 'China', 'Germany', 'Japan', 'India', 'United Kingdom', 'France',
   'South Korea', 'Netherlands', 'Saudi Arabia', 'Singapore', 'United Arab Emirates', 'Russia',
@@ -181,6 +234,8 @@ export function influenceLinks(
   anchors: Anchors,
   n = 5,
 ): InfluenceLink[] {
+  const measured = fbicLinks(FBIC.countries[c.name]?.over, (name) => fbicKind(c.name, name), profiles, n);
+  if (measured) return measured;
   const real = realInfluence(c, n);
   if (real) return real;
 
@@ -233,6 +288,7 @@ export const INFLUENCE_LABEL: Record<InfluenceLink['kind'], string> = {
   capital: 'Lender & investor',
   people: 'Jobs & remittances',
   regional: 'Regional weight',
+  ties: 'Combined ties',
 };
 
 export const INFLUENCE_COLOR = '#e879f9';

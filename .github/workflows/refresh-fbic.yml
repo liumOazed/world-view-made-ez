@@ -1,0 +1,50 @@
+name: Refresh FBIC influence
+
+# Pulls FBIC influence scores into src/data/influence.json. On main it updates
+# a data/fbic-refresh branch instead of pushing.
+on:
+  schedule:
+    - cron: '0 5 15 * *' # monthly; FBIC updates about once a year
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['scripts/fetch-fbic.mjs', '.github/workflows/refresh-fbic.yml']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-fbic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-fbic.mjs
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/influence.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh FBIC influence ($(date -u +%Y-%m-%d))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/fbic-refresh
+            gh pr create --head data/fbic-refresh --base main --title 'Refresh FBIC influence' \
+              --body 'Automated refresh of `src/data/influence.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
