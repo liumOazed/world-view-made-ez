@@ -292,3 +292,35 @@ export const INFLUENCE_LABEL: Record<InfluenceLink['kind'], string> = {
 };
 
 export const INFLUENCE_COLOR = '#e879f9';
+
+/**
+ * Where a country buys its energy, food and chips, from UN Comtrade. Shares are
+ * of all its imports of that product group. Null when Comtrade is not loaded.
+ */
+export function supplyLinks(c: CountryProfile, profiles: Map<string, CountryProfile>, n = 8): TradeLink[] | null {
+  const t = TRADE.countries[c.name];
+  if (!t) return null;
+  const groups = [
+    ['energy', 'energy'],
+    ['food', 'food'],
+    ['chips', 'tech'],
+  ] as const;
+  const out: TradeLink[] = [];
+  for (const [field, kind] of groups) {
+    const total = t.partners.reduce((s, p) => s + p[field], 0);
+    if (total <= 0) continue;
+    for (const p of t.partners) {
+      const name = TRADE.isoToName[p.iso];
+      if (name && profiles.has(name) && p[field] > 0) out.push({ name, kind, share: pctOf(p[field], total) });
+    }
+  }
+  // The largest supplier in each group first, then the rest by share.
+  out.sort((a, b) => b.share - a.share);
+  const picked: TradeLink[] = [];
+  for (const kind of ['energy', 'food', 'tech'] as const) {
+    const top = out.find((l) => l.kind === kind);
+    if (top) picked.push(top);
+  }
+  for (const l of out) if (picked.length < n && !picked.includes(l)) picked.push(l);
+  return picked.sort((a, b) => b.share - a.share);
+}

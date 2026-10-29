@@ -1,28 +1,43 @@
-import { useMemo, useState } from 'react';
-import { ArrowDownRight, ArrowRight, ArrowUpRight, ChevronRight, Info, MoveRight, X } from 'lucide-react';
-import { history, LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Globe2, Info, Map as MapIcon, MoveRight } from 'lucide-react';
+import { LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
 import {
   INFLUENCE_COLOR,
   INFLUENCE_LABEL,
   influencedBy,
   influenceSource,
+  supplyLinks,
   tradeSource,
   type InfluenceLink,
   type TradeLink,
 } from '../data/connections';
-import { pathway, riskProfile, SHOCKS, type ShockId, type StepLevel } from '../data/risk';
+import { layerFor, type LayerId } from '../data/layers';
+import { indexSource } from '../data/scorecard';
+import {
+  FMT,
+  indicator,
+  META,
+  nextYearGrowth,
+  outlookOf,
+  resilience,
+  SECTION_BY_ID,
+  SECTIONS,
+  SOURCES,
+  tradeBalance,
+  commodityExports,
+  valueOf,
+  type SectionId,
+  type Subsection,
+} from '../data/sections';
 import { Flag } from './Flag';
 import { ScorecardTab } from './Scorecard';
 import { Sparkline, TREND_BAD, TREND_GOOD, TREND_NEUTRAL } from './Sparkline';
 
-export type CountryTab = 'overview' | 'scorecard' | 'economy' | 'trade' | 'risk' | 'news';
+export type CountryTab = 'overview' | SectionId | 'scorecard' | 'news';
 
 const TABS: { id: CountryTab; label: string }[] = [
   { id: 'overview', label: 'Overview' },
+  ...SECTIONS.map((s) => ({ id: s.id as CountryTab, label: s.short })),
   { id: 'scorecard', label: 'Scorecard' },
-  { id: 'economy', label: 'Economy' },
-  { id: 'trade', label: 'Connections' },
-  { id: 'risk', label: 'Risk' },
   { id: 'news', label: 'News' },
 ];
 
@@ -35,30 +50,23 @@ interface Props {
   onClose: () => void;
   trade: TradeLink[];
   influence: InfluenceLink[];
+  layerId: LayerId;
+  onLayer: (id: LayerId) => void;
 }
 
-export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose, trade, influence }: Props) {
-  const nameOf = (n: string) => profiles.get(n)?.display ?? n;
+export function CountryPanel(props: Props) {
+  const { country, tab, onTab, onClose } = props;
   return (
     <div className="panel-body fade-in" key={country.name}>
       <div className="country-head">
         <Flag country={country} size="lg" />
         <div>
           <h2>{country.display}</h2>
-          <div className="muted">
-            {country.region} · Country intelligence
-          </div>
+          <div className="muted">{country.region} · Country intelligence</div>
         </div>
-        <button type="button" className="icon-btn" aria-label="Close country view" onClick={onClose}>
-          <X size={16} />
+        <button type="button" className="back-world" onClick={onClose} title="Back to the global overview">
+          <Globe2 size={13} /> World
         </button>
-      </div>
-
-      <div className="illustrative-note">
-        <Info size={12} />
-        {country.curated
-          ? 'Illustrative values · not live, not sourced'
-          : 'Generated placeholder values · not live, not sourced'}
       </div>
 
       <div className="tabs" role="tablist">
@@ -77,14 +85,10 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose,
       </div>
 
       <div className="tab-body" key={tab}>
-        {tab === 'overview' && <Overview c={country} profiles={profiles} nameOf={nameOf} onTab={onTab} onSelect={onSelect} />}
+        {tab === 'overview' && <Overview {...props} />}
         {tab === 'scorecard' && <ScorecardTab c={country} />}
-        {tab === 'economy' && <Economy c={country} />}
-        {tab === 'trade' && (
-          <Connections c={country} trade={trade} influence={influence} nameOf={nameOf} onSelect={onSelect} />
-        )}
-        {tab === 'risk' && <Risk c={country} nameOf={nameOf} />}
         {tab === 'news' && <News c={country} />}
+        {tab in SECTION_BY_ID && <SectionView id={tab as SectionId} {...props} />}
       </div>
     </div>
   );
@@ -92,219 +96,235 @@ export function CountryPanel({ country, profiles, tab, onTab, onSelect, onClose,
 
 /* ---------- shared bits ---------- */
 
-function trendOf(series: number[]) {
-  const recent = series[series.length - 1];
-  const earlier = series.slice(0, 4).reduce((s, v) => s + v, 0) / 4;
-  const diff = recent - earlier;
-  return Math.abs(diff) < 0.15 * Math.max(1, Math.abs(earlier) / 4) ? 'flat' : diff > 0 ? 'up' : 'down';
+const nameOf = (profiles: Map<string, CountryProfile>) => (n: string) => profiles.get(n)?.display ?? n;
+
+/** Ranks are computed once per indicator. */
+const rankCache = new Map<string, Map<string, number>>();
+function rankOf(id: string, country: string, higherIsBetter: boolean) {
+  let ranks = rankCache.get(id);
+  if (!ranks) {
+    const values = Object.entries(indicator(id)?.values ?? {}).sort(([, a], [, b]) => (higherIsBetter ? b[0] - a[0] : a[0] - b[0]));
+    ranks = new Map(values.map(([c], i) => [c, i + 1]));
+    ranks.set('__total', values.length);
+    rankCache.set(id, ranks);
+  }
+  const r = ranks.get(country);
+  return r ? { rank: r, of: ranks.get('__total')! } : null;
 }
 
-interface MetricProps {
-  label: string;
-  value: string;
-  sub: string;
-  series: number[];
-  /** Is a rising value good news? null when neutral. */
-  upIsGood: boolean | null;
-  words: { up: string; down: string; flat: string };
+function seriesOf(id: string, country: string) {
+  const ind = indicator(id);
+  const s = ind?.series?.[country];
+  if (!s || ind?.seriesFrom === undefined) return null;
+  // Years up to the latest actual; forecasts are shown separately.
+  const latest = ind.values[country]?.[1];
+  const pts = s.slice(0, latest ? latest - ind.seriesFrom + 1 : s.length).filter((v): v is number => v !== null);
+  return pts.length >= 3 ? pts : null;
 }
 
-function Trend({ series, upIsGood, words, width = 52 }: Pick<MetricProps, 'series' | 'upIsGood' | 'words'> & { width?: number }) {
-  const t = trendOf(series);
-  const good = t === 'flat' || upIsGood === null ? null : (t === 'up') === upIsGood;
-  const color = good === null ? TREND_NEUTRAL : good ? TREND_GOOD : TREND_BAD;
-  const Arrow = t === 'up' ? ArrowUpRight : t === 'down' ? ArrowDownRight : MoveRight;
+function trendColor(series: number[], higherIsBetter: boolean | null) {
+  const last = series[series.length - 1];
+  const prev = series[series.length - 2];
+  if (higherIsBetter === null || Math.abs(last - prev) < 1e-9) return TREND_NEUTRAL;
+  return last > prev === higherIsBetter ? TREND_GOOD : TREND_BAD;
+}
+
+/** One sourced number: label, value, year, rank, and a sparkline where there is history. */
+function MetricRow({ id, country }: { id: string; country: string }) {
+  const ind = indicator(id);
+  const meta = META[id];
+  const v = valueOf(id, country);
+  const label = meta?.label ?? ind?.label ?? id;
+  if (!ind) {
+    return (
+      <div className="mrow is-empty">
+        <div className="mrow-label">{label}</div>
+        <div className="mrow-value muted">Not loaded yet</div>
+      </div>
+    );
+  }
+  if (!v) {
+    return (
+      <div className="mrow is-empty">
+        <div className="mrow-label">
+          {label}
+          <span className="mrow-unit">{ind.unit}</span>
+        </div>
+        <div className="mrow-value muted">No data</div>
+      </div>
+    );
+  }
+  const series = seriesOf(id, country);
+  const fc = ind.forecast?.[country];
+  const rank = meta?.higherIsBetter === null || !meta ? null : rankOf(id, country, meta.higherIsBetter);
   return (
-    <div className="metric-foot">
-      <span className="metric-trend" style={{ color }}>
-        <Arrow size={12} />
-        {words[t]}
-      </span>
-      <Sparkline values={series} color={color} width={width} height={18} />
+    <div className="mrow">
+      <div className="mrow-label">
+        {label}
+        <span className="mrow-unit">{ind.unit}</span>
+      </div>
+      <div className="mrow-figure">
+        {series && <Sparkline values={series} color={trendColor(series, meta?.higherIsBetter ?? null)} width={52} height={18} />}
+        <div className="mrow-value">{(meta?.fmt ?? FMT.index)(v[0])}</div>
+      </div>
+      <div className="mrow-meta">
+        <span>{v[1]}</span>
+        {fc && (
+          <span>
+            {fc[1]} forecast {(meta?.fmt ?? FMT.index)(fc[0])}
+          </span>
+        )}
+        {rank && (
+          <span>
+            #{rank.rank} of {rank.of}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
 
-function Metric({ label, value, sub, ...trend }: MetricProps) {
+function Note({ children, tone = 'muted' }: { children: React.ReactNode; tone?: 'muted' | 'warn' }) {
+  return (
+    <p className={`sub-note sub-note-${tone}`}>
+      <Info size={12} />
+      <span>{children}</span>
+    </p>
+  );
+}
+
+/* ---------- overview ---------- */
+
+function Headline({ id, country, label }: { id: string; country: string; label: string }) {
+  const v = valueOf(id, country);
+  const meta = META[id];
+  const series = seriesOf(id, country);
+  const fc = indicator(id)?.forecast?.[country];
+  const up = series && series[series.length - 1] > series[series.length - 2];
+  const Arrow = !series ? MoveRight : up ? ArrowUpRight : ArrowDownRight;
   return (
     <div className="metric">
       <div className="metric-label">{label}</div>
-      <div className="metric-value">{value}</div>
-      <Trend {...trend} />
-      <div className="metric-sub">{sub}</div>
-    </div>
-  );
-}
-
-/** GDP and GDP growth lead every country view; everything else is secondary. */
-function PrimaryMetrics({ c }: { c: CountryProfile }) {
-  return (
-    <div className="metric-primary">
-      <div>
-        <div className="pm-label">GDP</div>
-        <div className="pm-value">{fmtGdp(c.gdp)}</div>
-        <div className="metric-sub">Nominal · ${c.gdpPc.toLocaleString('en-US')} per person</div>
-      </div>
-      <div>
-        <div className="pm-label">GDP growth</div>
-        <div className="pm-value">{signed(c.growth)}</div>
-        <Trend
-          series={history(c.name + 'g', c.growth, 2)}
-          upIsGood
-          words={{ up: 'Accelerating', down: 'Slowing', flat: 'Steady' }}
-          width={60}
-        />
+      <div className="metric-value">{v ? meta.fmt(v[0]) : '—'}</div>
+      {series && (
+        <div className="metric-foot">
+          <span className="metric-trend" style={{ color: trendColor(series, meta.higherIsBetter) }}>
+            <Arrow size={12} />
+            {v?.[1]}
+          </span>
+          <Sparkline values={series} color={trendColor(series, meta.higherIsBetter)} width={52} height={18} />
+        </div>
+      )}
+      <div className="metric-sub">
+        {fc ? `${fc[1]} forecast ${meta.fmt(fc[0])}` : v ? `${v[1]}` : 'No data'}
       </div>
     </div>
   );
 }
 
-const fmtGdp = (bn: number) => (bn >= 1000 ? `$${(bn / 1000).toFixed(1)}T` : `$${Math.round(bn)}B`);
-const signed = (v: number, unit = '%') => `${v > 0 ? '+' : ''}${v.toFixed(1)}${unit}`;
-
-/* ---------- tabs ---------- */
-
-function Overview({
-  c,
-  profiles,
-  nameOf,
-  onTab,
-  onSelect,
-}: {
-  c: CountryProfile;
-  profiles: Map<string, CountryProfile>;
-  nameOf: (n: string) => string;
-  onTab: (t: CountryTab) => void;
-  onSelect: (n: string) => void;
-}) {
-  const risk = riskProfile(c);
-  const exposure = risk[0];
+function Overview({ country: c, profiles, onTab, onSelect }: Props) {
+  const gdp = valueOf('gdpUsd', c.name);
+  const growth = valueOf('gdpGrowth', c.name);
+  const growthSeries = seriesOf('gdpGrowth', c.name);
+  const outlook = outlookOf(c.name);
+  const res = resilience(c.name, [...profiles.keys()]);
   const by = influencedBy(c, profiles);
   const fbic = influenceSource(c.name);
+  const display = nameOf(profiles);
   return (
     <>
-      <PrimaryMetrics c={c} />
-      <div className="group-label">Other indicators</div>
-      <div className="metric-grid">
-        <Metric
-          label="Inflation"
-          value={`${c.inflation.toFixed(1)}%`}
-          sub="Consumer prices, y/y"
-          series={history(c.name + 'i', c.inflation, Math.max(1, c.inflation / 3))}
-          upIsGood={false}
-          words={{ up: 'Accelerating', down: 'Easing', flat: 'Stable' }}
-        />
-        <Metric
-          label="Public debt"
-          value={`${Math.round(c.debt)}%`}
-          sub="General government, % GDP"
-          series={history(c.name + 'd', c.debt, 6)}
-          upIsGood={false}
-          words={{ up: 'Rising', down: 'Falling', flat: 'Stabilizing' }}
-        />
-        <Metric
-          label="Current account"
-          value={signed(c.currentAccount)}
-          sub="% of GDP · not the fiscal balance"
-          series={history(c.name + 'ca', c.currentAccount, 1.5)}
-          upIsGood
-          words={{ up: 'Improving', down: 'Widening gap', flat: 'Stable' }}
-        />
-        <div className="metric">
-          <div className="metric-label">External exposure</div>
-          <div className={`metric-value level level-${exposure.level.toLowerCase()}`}>{exposure.level}</div>
-          <button type="button" className="metric-link" onClick={() => onTab('risk')}>
-            See what drives it <ChevronRight size={13} />
-          </button>
-          <div className="metric-sub">Dependencies to investigate</div>
+      <div className="metric-primary">
+        <div>
+          <div className="pm-label">GDP</div>
+          <div className="pm-value">{gdp ? FMT.usdBn(gdp[0]) : '—'}</div>
+          <div className="metric-sub">
+            {gdp ? `${gdp[1]} · current US$` : 'No IMF estimate'}
+            {valueOf('gdpPcPpp', c.name) && ` · ${FMT.dollars(valueOf('gdpPcPpp', c.name)![0])} per person (PPP)`}
+          </div>
+        </div>
+        <div>
+          <div className="pm-label">GDP growth</div>
+          <div className="pm-value">{growth ? FMT.pctSigned(growth[0]) : '—'}</div>
+          {growthSeries && (
+            <div className="metric-foot">
+              <span className="metric-trend" style={{ color: trendColor(growthSeries, true) }}>
+                {growth?.[1]}
+              </span>
+              <Sparkline values={growthSeries} color={trendColor(growthSeries, true)} width={60} height={18} />
+            </div>
+          )}
         </div>
       </div>
+      {outlook && (
+        <button type="button" className={`outlook-strip outlook-${outlook.toLowerCase()}`} onClick={() => onTab('growth')}>
+          <span>Outlook</span>
+          <strong>{outlook}</strong>
+          <span className="muted">IMF forecast {FMT.pctSigned(nextYearGrowth(c.name))} next year</span>
+          <ArrowRight size={13} />
+        </button>
+      )}
 
-
-      <section className="panel-section">
-        <div className="section-title">
-          <h3>What matters now</h3>
-          <button type="button" className="link" onClick={() => onTab('news')}>
-            All issues <ArrowRight size={13} />
+      <div className="metric-grid">
+        <Headline id="inflation" country={c.name} label="Inflation" />
+        <Headline id="debt" country={c.name} label="Public debt, % GDP" />
+        <Headline id="currentAccount" country={c.name} label="Current account, % GDP" />
+        <div className="metric">
+          <div className="metric-label">Resilience score</div>
+          <div className="metric-value">{res ? Math.round(res.score) : '—'}</div>
+          <button type="button" className="metric-link" onClick={() => onTab('risk')}>
+            What drives it <ArrowRight size={13} />
           </button>
+          <div className="metric-sub">{res ? `Our composite of ${res.parts.length} inputs` : 'Not enough inputs'}</div>
         </div>
-        <ul className="issue-list">
-          {c.issues.map((i) => (
-            <li key={i.title}>
-              <span className={`sev sev-${i.severity.toLowerCase()}`} />
-              <div>
-                <div className="issue-title">{i.title}</div>
-                <div className="issue-meta">
-                  Channel: {i.channel} · <span className={`status-text status-${i.status.split(' ')[0].toLowerCase()}`}>{i.status}</span>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+      </div>
 
       <section className="panel-section">
         <div className="section-title">
           <h3>Who influences {c.display}?</h3>
-          <button type="button" className="link" onClick={() => onTab('trade')}>
-            All connections <ArrowRight size={13} />
+          <button type="button" className="link" onClick={() => onTab('influence')}>
+            Influence <ArrowRight size={13} />
           </button>
         </div>
-        <div className="partner-chips">
-          {by?.map((l) => (
-            <button
-              key={l.name}
-              type="button"
-              className="partner-chip"
-              style={{ ['--c' as string]: INFLUENCE_COLOR }}
-              onClick={() => onSelect(l.name)}
-            >
-              <span className="partner-dot" />
-              <span>{nameOf(l.name)}</span>
-              <small>{l.score}</small>
-            </button>
-          ))}
-          {!by && c.partners.slice(0, 5).map((p, i) => (
-            <button
-              key={`${p.name}-${p.kind}-${i}`}
-              type="button"
-              className="partner-chip"
-              style={{ ['--c' as string]: LINK_META[p.kind].color }}
-              onClick={() => onSelect(p.name)}
-            >
-              <span className="partner-dot" />
-              <span>{nameOf(p.name)}</span>
-              <small>{LINK_META[p.kind].label}</small>
-            </button>
-          ))}
-        </div>
+        {by ? (
+          <div className="partner-chips">
+            {by.map((l) => (
+              <button
+                key={l.name}
+                type="button"
+                className="partner-chip"
+                style={{ ['--c' as string]: INFLUENCE_COLOR }}
+                onClick={() => onSelect(l.name)}
+              >
+                <span className="partner-dot" />
+                <span>{display(l.name)}</span>
+                <small>{l.score}</small>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="muted small">The FBIC Index does not cover {c.display}.</p>
+        )}
         {by && fbic && (
-          <p className="footnote">
-            <Info size={12} />
-            <span>
-              Influence capacity over {c.display} (strongest = 100) from the{' '}
-              <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
-                FBIC Index
-              </a>
-              , {fbic.year}.
-            </span>
-          </p>
+          <Note>
+            Influence capacity over {c.display} (strongest = 100) from the{' '}
+            <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
+              FBIC Index
+            </a>
+            , {fbic.year}.
+          </Note>
         )}
       </section>
 
       <section className="panel-section">
         <div className="section-title">
-          <h3>How resilient is it?</h3>
-          <button type="button" className="link" onClick={() => onTab('risk')}>
-            Run a shock <ArrowRight size={13} />
-          </button>
+          <h3>Go deeper</h3>
         </div>
-        <div className="dim-mini">
-          {risk.map((d) => (
-            <div key={d.key} className="dim-mini-item">
-              <span className="muted">{d.title}</span>
-              <span className={`level level-${(d.key === 'resilience' ? invert(d.level) : d.level).toLowerCase()}`}>{d.level}</span>
-            </div>
+        <div className="section-links">
+          {SECTIONS.map((s) => (
+            <button key={s.id} type="button" onClick={() => onTab(s.id)}>
+              <strong>{s.label}</strong>
+              <span>{s.blurb}</span>
+            </button>
           ))}
         </div>
       </section>
@@ -312,64 +332,224 @@ function Overview({
   );
 }
 
-/** For resilience, "High" is good news, so color it like a low risk. */
-function invert(level: string) {
-  return ({ Low: 'High', Moderate: 'Elevated', Elevated: 'Moderate', High: 'Low' } as Record<string, string>)[level] ?? level;
-}
+/* ---------- one section ---------- */
 
-function Economy({ c }: { c: CountryProfile }) {
+function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props & { id: SectionId }) {
+  const section = SECTION_BY_ID[id];
+  const used = new Set<string>();
+  for (const sub of section.subs) for (const m of sub.metrics) if (indicator(m)) used.add(indicator(m)!.source);
   return (
     <>
-      <PrimaryMetrics c={c} />
-      <div className="group-label">Other indicators</div>
-      <div className="metric-grid">
-        <Metric label="Inflation" value={`${c.inflation.toFixed(1)}%`} sub="Consumer prices, y/y" series={history(c.name + 'i', c.inflation, Math.max(1, c.inflation / 3))} upIsGood={false} words={{ up: 'Accelerating', down: 'Easing', flat: 'Stable' }} />
-        <Metric label="Unemployment" value={`${c.unemployment.toFixed(1)}%`} sub="Of labor force" series={history(c.name + 'u', c.unemployment, 1)} upIsGood={false} words={{ up: 'Rising', down: 'Falling', flat: 'Stable' }} />
-        <Metric label="Public debt" value={`${Math.round(c.debt)}%`} sub="General government, % GDP" series={history(c.name + 'd', c.debt, 6)} upIsGood={false} words={{ up: 'Rising', down: 'Falling', flat: 'Stabilizing' }} />
-        <Metric label="Fiscal balance" value={signed(c.fiscal)} sub="Government budget, % GDP" series={history(c.name + 'f', c.fiscal, 1.5)} upIsGood words={{ up: 'Narrowing', down: 'Widening', flat: 'Stable' }} />
-        <Metric label="Current account" value={signed(c.currentAccount)} sub="External balance, % GDP" series={history(c.name + 'ca', c.currentAccount, 1.5)} upIsGood words={{ up: 'Improving', down: 'Widening gap', flat: 'Stable' }} />
-      </div>
-      <p className="footnote">
-        <Info size={12} /> The fiscal balance is the government’s budget. The current account covers trade, income and transfers
-        with the rest of the world. They are different deficits and are labeled separately.
+      <p className="muted small section-blurb">{section.blurb}</p>
+      {section.subs.map((sub) => {
+        const lid = layerFor(id, sub.id);
+        return (
+          <section key={sub.id} className={`sub-card${layerId === lid ? ' is-on-map' : ''}`}>
+            <div className="sub-head">
+              <h3>{sub.label}</h3>
+              <button
+                type="button"
+                className="sub-map"
+                aria-pressed={layerId === lid}
+                onClick={() => onLayer(lid)}
+                title={`Color the map by ${sub.map.metric.toLowerCase()}`}
+              >
+                <MapIcon size={12} />
+                {layerId === lid ? 'On map' : 'Map'}
+              </button>
+            </div>
+            <SubExtra sub={sub} sectionId={id} c={c} {...rest} />
+            {sub.metrics.map((m) => (
+              <MetricRow key={m} id={m} country={c.name} />
+            ))}
+            {sub.ours && <Note>{sub.ours}</Note>}
+            {sub.pending && <Note tone="warn">{sub.pending}</Note>}
+            {sub.seeAlso && (
+              <div className="see-also">
+                Related:
+                {sub.seeAlso.map((s) => (
+                  <button
+                    key={s.label}
+                    type="button"
+                    onClick={() => {
+                      onTab(s.section);
+                      onLayer(layerFor(s.section, s.sub));
+                    }}
+                  >
+                    {s.label} <ArrowRight size={11} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })}
+      <p className="footnote sources">
+        <Info size={12} />
+        <span>
+          Sources:{' '}
+          {[...used].map((s, i) => (
+            <span key={s}>
+              {i > 0 && ' · '}
+              <a href={SOURCES[s]?.url} target="_blank" rel="noreferrer">
+                {SOURCES[s]?.name}
+              </a>{' '}
+              ({SOURCES[s]?.licence})
+            </span>
+          ))}
+          {id === 'trade' && ' · UN Comtrade'}
+          {id === 'influence' && ' · FBIC Index (CC0)'}
+          . Retrieved {indicator(section.subs.flatMap((s) => s.metrics).find((m) => indicator(m)) ?? '')?.retrieved ?? '—'}.
+        </span>
       </p>
     </>
   );
 }
 
-const KIND_ORDER: LinkKind[] = ['exports', 'imports', 'energy', 'food', 'tech', 'capital', 'people'];
-
-function Connections({
+/** Extra content some subsections need beyond plain numbers. */
+function SubExtra({
+  sub,
+  sectionId,
   c,
+  profiles,
   trade,
   influence,
-  nameOf,
   onSelect,
 }: {
+  sub: Subsection;
+  sectionId: SectionId;
   c: CountryProfile;
+  profiles: Map<string, CountryProfile>;
   trade: TradeLink[];
   influence: InfluenceLink[];
-  nameOf: (n: string) => string;
   onSelect: (n: string) => void;
 }) {
-  const source = tradeSource(c.name);
-  const fbic = influenceSource(c.name);
-  const groups = useMemo(
-    () => KIND_ORDER.map((k) => ({ kind: k, items: trade.filter((p) => p.kind === k) })).filter((g) => g.items.length),
-    [trade],
-  );
-  return (
-    <>
-      {c.leverageNote && (
-        <div className="leverage-card">
-          <span className="eyebrow">Leverage</span>
-          <p>{c.leverageNote}</p>
-        </div>
-      )}
-      <div className="section-title">
-        <h3>Top {trade.length} trade connections</h3>
-        <span className="pill">{source ? `UN Comtrade ${source.year}` : 'Placeholder'}</span>
+  const key = `${sectionId}.${sub.id}`;
+  const display = nameOf(profiles);
+  if (key === 'growth.outlook') {
+    const o = outlookOf(c.name);
+    return o ? (
+      <div className={`outlook-strip outlook-${o.toLowerCase()} is-static`}>
+        <span>Outlook</span>
+        <strong>{o}</strong>
+        <span className="muted">IMF forecast {FMT.pctSigned(nextYearGrowth(c.name))} next year</span>
       </div>
+    ) : null;
+  }
+  if (key === 'growth.sectors') return <SectorBar c={c.name} />;
+  if (key === 'trade.balance') {
+    const b = tradeBalance(c.name);
+    return Number.isFinite(b) ? (
+      <div className="mrow">
+        <div className="mrow-label">
+          Trade balance<span className="mrow-unit">goods and services, % of GDP (computed)</span>
+        </div>
+        <div className="mrow-figure">
+          <div className="mrow-value">{FMT.pctSigned(b)}</div>
+        </div>
+        <div className="mrow-meta">
+          <span>{valueOf('exports', c.name)?.[1]}</span>
+        </div>
+      </div>
+    ) : null;
+  }
+  if (key === 'trade.dependency') return <TradeList c={c} trade={trade} display={display} onSelect={onSelect} />;
+  if (key === 'influence.network') return <InfluenceList c={c} influence={influence} display={display} onSelect={onSelect} />;
+  if (key === 'influence.energy') {
+    const links = supplyLinks(c, profiles);
+    return links?.length ? (
+      <LinkList
+        title="Main suppliers"
+        links={links}
+        display={display}
+        onSelect={onSelect}
+        note={`Share of ${c.display}’s imports of each product group, UN Comtrade ${tradeSource(c.name)?.year ?? ''}.`}
+      />
+    ) : (
+      <p className="muted small">Supplier links need UN Comtrade data, which is loaded for 58 countries so far.</p>
+    );
+  }
+  if (key === 'risk.resilience') return <ResilienceBreakdown c={c} profiles={profiles} />;
+  if (key === 'risk.shock') {
+    const v = commodityExports(c.name);
+    return Number.isFinite(v) ? (
+      <div className="mrow">
+        <div className="mrow-label">
+          Commodity exports<span className="mrow-unit">fuel, ores and metals, % of goods exports (computed)</span>
+        </div>
+        <div className="mrow-figure">
+          <div className="mrow-value">{FMT.pct(v)}</div>
+        </div>
+        <div className="mrow-meta" />
+      </div>
+    ) : null;
+  }
+  if (key === 'risk.social') {
+    const fsi = indexSource('fsi')?.values[c.name];
+    return fsi ? (
+      <div className="mrow">
+        <div className="mrow-label">
+          Fragile States Index<span className="mrow-unit">total, 0–120, lower is more stable</span>
+        </div>
+        <div className="mrow-figure">
+          <div className="mrow-value">{fsi[0].toFixed(1)}</div>
+        </div>
+        <div className="mrow-meta">
+          <span>{fsi[1]}</span>
+        </div>
+      </div>
+    ) : null;
+  }
+  return null;
+}
+
+const SECTOR_COLORS: Record<string, string> = {
+  services: '#38bdf8',
+  industry: '#a78bfa',
+  agriculture: '#5fd39a',
+};
+function SectorBar({ c }: { c: string }) {
+  const parts = (['services', 'industry', 'agriculture'] as const).map((id) => ({ id, v: valueOf(id, c)?.[0] ?? 0 }));
+  const total = parts.reduce((s, p) => s + p.v, 0);
+  if (total <= 0) return null;
+  return (
+    <div className="sector-bar" aria-label="Value added by sector">
+      <div className="sector-track">
+        {parts.map((p) => (
+          <span key={p.id} style={{ width: `${(p.v / total) * 100}%`, background: SECTOR_COLORS[p.id] }} />
+        ))}
+      </div>
+      <div className="sector-keys">
+        {parts.map((p) => (
+          <span key={p.id}>
+            <i style={{ background: SECTOR_COLORS[p.id] }} />
+            {indicator(p.id)?.label.split(',')[0]} {Math.round(p.v)}%
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const KIND_ORDER: LinkKind[] = ['exports', 'imports', 'energy', 'food', 'tech', 'capital', 'people'];
+
+function LinkList({
+  title,
+  links,
+  display,
+  onSelect,
+  note,
+}: {
+  title: string;
+  links: TradeLink[];
+  display: (n: string) => string;
+  onSelect: (n: string) => void;
+  note: React.ReactNode;
+}) {
+  const groups = KIND_ORDER.map((k) => ({ kind: k, items: links.filter((p) => p.kind === k) })).filter((g) => g.items.length);
+  return (
+    <div className="sub-links">
+      <div className="sub-links-title">{title}</div>
       <div className="conn-groups">
         {groups.map((g) => (
           <div key={g.kind} className="conn-group">
@@ -378,7 +558,7 @@ function Connections({
             </div>
             {g.items.map((p, i) => (
               <button key={`${p.name}-${i}`} type="button" className="conn-row" onClick={() => onSelect(p.name)}>
-                <span className="conn-name">{nameOf(p.name)}</span>
+                <span className="conn-name">{display(p.name)}</span>
                 <span className="conn-verb">{LINK_META[p.kind].verb}</span>
                 <span className="bar">
                   <span style={{ width: `${Math.min(100, p.share)}%`, background: LINK_META[p.kind].color }} />
@@ -389,166 +569,122 @@ function Connections({
           </div>
         ))}
       </div>
-      <p className="footnote">
-        <Info size={12} />{' '}
-        {source ? (
-          <span>
-            Share of {c.display}’s goods trade (exports + imports) in {source.year}, from{' '}
-            <a href={source.url} target="_blank" rel="noreferrer">
-              UN Comtrade
-            </a>
-            , retrieved {source.retrieved}. Energy, food and chips are tagged when they dominate what it buys from a partner.
-          </span>
-        ) : (
-          'Placeholder partners: real trade data is not loaded for this country yet.'
-        )}
-      </p>
-      <section className="panel-section">
-        <div className="section-title">
-          <h3>Who {c.display} influences most</h3>
-          <span className="pill">Top {influence.length}</span>
-        </div>
-        {influence.map((l, i) => (
-          <button key={l.name} type="button" className="conn-row" onClick={() => onSelect(l.name)}>
-            <span className="conn-name">
-              <span className="rank">{i + 1}</span>
-              {nameOf(l.name)}
-            </span>
-            <span className="conn-verb">{INFLUENCE_LABEL[l.kind]}</span>
-            <span className="bar">
-              <span style={{ width: `${l.score}%`, background: INFLUENCE_COLOR }} />
-            </span>
-            <span className="conn-share">{l.score}</span>
-          </button>
-        ))}
-        <p className="footnote">
-          <Info size={12} />
-          {fbic ? (
-            <span>
-              Influence capacity (strongest = 100) from the{' '}
-              <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
-                FBIC Index
-              </a>{' '}
-              ({fbic.year}, Pardee Institute, {fbic.licence}), which combines economic, security and political ties. The
-              channel shown is the trade link where Comtrade has one.
-            </span>
-          ) : (
-            <span>
-              Relative influence score (strongest = 100), based on how much each country’s trade depends on {c.display}.{' '}
-              {source ? `From UN Comtrade, ${source.year}.` : 'Illustrative.'}
-            </span>
-          )}
-        </p>
-      </section>
-      <section className="panel-section">
-        <div className="section-title">
-          <h3>Notable companies & sectors</h3>
-        </div>
-        {c.companies.length ? (
-          <ul className="company-list">
-            {c.companies.map((co) => (
-              <li key={co.name}>
-                <span className="company-mark">{co.name.slice(0, 1)}</span>
-                <div>
-                  <div className="company-name">{co.name}</div>
-                  <div className="muted small">
-                    {co.sector} · {co.note}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="muted small">Company coverage for this country is not in the prototype yet.</p>
-        )}
-      </section>
-    </>
+      <Note>{note}</Note>
+    </div>
   );
 }
 
-const STEP_CLASS: Record<StepLevel, string> = {
-  Low: 'low',
-  Moderate: 'moderate',
-  Elevated: 'elevated',
-  High: 'high',
-  Offsetting: 'offset',
-};
+function TradeList({
+  c,
+  trade,
+  display,
+  onSelect,
+}: {
+  c: CountryProfile;
+  trade: TradeLink[];
+  display: (n: string) => string;
+  onSelect: (n: string) => void;
+}) {
+  const source = tradeSource(c.name);
+  return source ? (
+    <LinkList
+      title={`Top ${trade.length} trade partners`}
+      links={trade}
+      display={display}
+      onSelect={onSelect}
+      note={
+        <>
+          Share of {c.display}’s goods trade (exports + imports) in {source.year}, from{' '}
+          <a href={source.url} target="_blank" rel="noreferrer">
+            UN Comtrade
+          </a>
+          , retrieved {source.retrieved}.
+        </>
+      }
+    />
+  ) : (
+    <Note tone="warn">Partner-level trade is not loaded for {c.display} yet (UN Comtrade covers 58 countries so far).</Note>
+  );
+}
 
-function Risk({ c, nameOf }: { c: CountryProfile; nameOf: (n: string) => string }) {
-  const [shock, setShock] = useState<ShockId>('market');
-  const dims = riskProfile(c);
-  const steps = pathway(c, shock, nameOf);
+function InfluenceList({
+  c,
+  influence,
+  display,
+  onSelect,
+}: {
+  c: CountryProfile;
+  influence: InfluenceLink[];
+  display: (n: string) => string;
+  onSelect: (n: string) => void;
+}) {
+  const fbic = influenceSource(c.name);
   return (
-    <>
-      <div className="dims">
-        {dims.map((d) => (
-          <div key={d.key} className="dim">
-            <div className="dim-head">
-              <div>
-                <div className="dim-title">{d.title}</div>
-                <div className="muted small">{d.question}</div>
-              </div>
-              <span className={`level level-${(d.key === 'resilience' ? invert(d.level) : d.level).toLowerCase()}`}>{d.level}</span>
-            </div>
-            <ul className="factors">
-              {d.factors.map((f) => (
-                <li key={f.label}>
-                  <span>{f.label}</span>
-                  <span className="muted">{f.detail}</span>
-                  <span className="bar thin">
-                    <span style={{ width: `${f.weight}%` }} className={`fill-${d.key}`} />
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-
-      <section className="panel-section">
-        <div className="section-title">
-          <h3>What-if shock explorer</h3>
-        </div>
-        <div className="shock-picker" role="radiogroup" aria-label="Shock scenario">
-          {SHOCKS.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              role="radio"
-              aria-checked={shock === s.id}
-              className={shock === s.id ? 'is-active' : undefined}
-              onClick={() => setShock(s.id)}
-            >
-              {s.short}
-            </button>
-          ))}
-        </div>
-        <ol className="pathway" key={shock}>
-          {steps.map((s, i) => (
-            <li key={s.title} style={{ animationDelay: `${i * 0.08}s` }}>
-              <span className={`step-dot step-${STEP_CLASS[s.level]}`} />
-              <div>
-                <div className="step-title">
-                  {s.title}
-                  <span className={`step-tag step-${STEP_CLASS[s.level]}`}>{s.level === 'Offsetting' ? 'Offsetting' : `${s.level} exposure`}</span>
-                </div>
-                <div className="muted small">{s.detail}</div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p className="footnote">
-          <Info size={12} /> Illustrative pathway showing channels, not a prediction. Actual effects depend on the country and the
-          shock.
-        </p>
-      </section>
-    </>
+    <div className="sub-links">
+      <div className="sub-links-title">Who {c.display} influences most</div>
+      {influence.map((l, i) => (
+        <button key={l.name} type="button" className="conn-row" onClick={() => onSelect(l.name)}>
+          <span className="conn-name">
+            <span className="rank">{i + 1}</span>
+            {display(l.name)}
+          </span>
+          <span className="conn-verb">{INFLUENCE_LABEL[l.kind]}</span>
+          <span className="bar">
+            <span style={{ width: `${l.score}%`, background: INFLUENCE_COLOR }} />
+          </span>
+          <span className="conn-share">{l.score}</span>
+        </button>
+      ))}
+      <Note>
+        {fbic ? (
+          <>
+            Influence capacity (strongest = 100) from the{' '}
+            <a href={fbic.sourceUrl} target="_blank" rel="noreferrer">
+              FBIC Index
+            </a>{' '}
+            ({fbic.year}, Pardee Institute, {fbic.licence}).
+          </>
+        ) : (
+          <>The FBIC Index does not cover {c.display}; this list is estimated from trade dependence.</>
+        )}
+      </Note>
+    </div>
   );
 }
+
+function ResilienceBreakdown({ c, profiles }: { c: CountryProfile; profiles: Map<string, CountryProfile> }) {
+  const res = resilience(c.name, [...profiles.keys()]);
+  if (!res) return <Note tone="warn">Not enough inputs to score {c.display} (needs five of eight).</Note>;
+  return (
+    <div className="res">
+      <div className="res-score">
+        <strong>{Math.round(res.score)}</strong>
+        <span>/ 100</span>
+      </div>
+      <ul className="res-parts">
+        {res.parts.map(({ input, pct }) => (
+          <li key={input.id}>
+            <span>{input.label}</span>
+            <span className="muted">{input.fmt(input.read(c.name))}</span>
+            <span className="bar thin">
+              <span style={{ width: `${pct}%`, background: pct >= 50 ? 'var(--good)' : pct >= 25 ? 'var(--warn)' : 'var(--bad)' }} />
+            </span>
+            <span className="res-pct">{Math.round(pct)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ---------- news (illustrative) ---------- */
 
 function News({ c }: { c: CountryProfile }) {
   return (
     <>
+      <div className="illustrative-note">
+        <Info size={12} /> Illustrative placeholder · no news feed is connected yet
+      </div>
       <ul className="news-list">
         {c.issues.map((i) => (
           <li key={i.title}>
@@ -560,17 +696,10 @@ function News({ c }: { c: CountryProfile }) {
             <div className="issue-meta">
               Economic channel: <strong>{i.channel}</strong>
             </div>
-            <div className="source-row">
-              <span className="source-chip">Original reporting · link pending</span>
-              <span className="muted small">Updated —</span>
-            </div>
           </li>
         ))}
       </ul>
-      <p className="footnote">
-        <Info size={12} /> Verified events, developing stories and online sentiment are kept separate. Social media users are not
-        representative of a whole population.
-      </p>
     </>
   );
 }
+

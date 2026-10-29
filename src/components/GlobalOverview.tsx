@@ -1,34 +1,96 @@
-import { Anchor, ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { CHOKEPOINTS, GLOBAL_KPIS, STORIES } from '../data/global';
+import { useMemo } from 'react';
+import { Anchor, ArrowDownRight, ArrowRight, ArrowUpRight, Info } from 'lucide-react';
+import type { CountryProfile } from '../data/countries';
+import { CHOKEPOINTS } from '../data/global';
+import type { Layer } from '../data/layers';
+import { FMT, nextYearGrowth, SOURCES, worldSeries } from '../data/sections';
 import { Sparkline, TREND_BAD, TREND_GOOD } from './Sparkline';
 
-export function GlobalOverview({ onSelect }: { onSelect: (name: string) => void }) {
+const THIS_YEAR = new Date().getUTCFullYear();
+
+interface Kpi {
+  label: string;
+  note: string;
+  fmt: (v: number) => string;
+  higherIsBetter: boolean;
+  series: { year: number; value: number }[];
+}
+
+function useKpis(): Kpi[] {
+  return useMemo(() => {
+    const defs: [string, string, boolean, (v: number) => string, boolean, string][] = [
+      ['gdpGrowth', 'World GDP growth', true, FMT.pctSigned, true, 'GDP-weighted, real'],
+      ['inflation', 'Inflation, median country', false, FMT.pct, false, 'Average consumer prices'],
+      ['debt', 'Public debt', true, FMT.pct, false, 'GDP-weighted, % of GDP'],
+      ['currentAccount', 'Current account, median', false, FMT.pctSigned, true, '% of GDP'],
+    ];
+    return defs.flatMap(([id, label, weighted, fmt, higherIsBetter, note]) => {
+      const s = worldSeries(id, weighted);
+      return s ? [{ label, note, fmt, higherIsBetter, series: s }] : [];
+    });
+  }, []);
+}
+
+export function GlobalOverview({
+  layer,
+  profiles,
+  onSelect,
+}: {
+  layer: Layer;
+  profiles: Map<string, CountryProfile>;
+  onSelect: (name: string) => void;
+}) {
+  const kpis = useKpis();
+  const ranked = useMemo(() => {
+    const rows = [...profiles.values()]
+      .map((p) => ({ name: p.name, display: p.display, v: layer.value(p) }))
+      .filter((r) => Number.isFinite(r.v))
+      .sort((a, b) => b.v - a.v);
+    return rows;
+  }, [layer, profiles]);
+  const shrinking = useMemo(
+    () => [...profiles.keys()].filter((c) => nextYearGrowth(c) < 0).length,
+    [profiles],
+  );
+
   return (
     <div className="panel-body fade-in">
       <div className="panel-head">
         <span className="eyebrow">Global overview</span>
-        <h2>The world this quarter</h2>
-        <p className="muted">Four signals that matter, with their direction of travel. Click any country on the map to go deeper.</p>
+        <h2>The world this year</h2>
+        <p className="muted">
+          Four signals from the IMF World Economic Outlook, with history. {shrinking} economies are forecast to shrink next year.
+        </p>
       </div>
 
       <div className="kpi-list">
-        {GLOBAL_KPIS.map((k) => {
-          const Arrow = k.direction === 'up' ? ArrowUpRight : ArrowDownRight;
-          const tone = k.good ? 'good' : 'bad';
+        {kpis.map((k) => {
+          const actual = k.series.filter((p) => p.year < THIS_YEAR);
+          const now = actual[actual.length - 1];
+          const prev = actual[actual.length - 2];
+          const next = k.series.find((p) => p.year === THIS_YEAR + 1);
+          const up = now.value >= prev.value;
+          const good = up === k.higherIsBetter;
+          const Arrow = up ? ArrowUpRight : ArrowDownRight;
           return (
             <div key={k.label} className="kpi-row">
               <div>
-                <div className="kpi-label">{k.label}</div>
+                <div className="kpi-label">
+                  {k.label} · {now.year}
+                </div>
                 <div className="kpi-value">
-                  {k.value}
-                  <span className={`delta ${tone}`}>
+                  {k.fmt(now.value)}
+                  <span className={`delta ${good ? 'good' : 'bad'}`}>
                     <Arrow size={13} />
-                    {k.change}
+                    {Math.abs(now.value - prev.value).toFixed(1)} pp
                   </span>
                 </div>
-                <div className="kpi-note">{k.note}</div>
+                <div className="kpi-note">
+                  {k.note}
+                  {next && ` · ${next.year} forecast ${k.fmt(next.value)}`}
+                </div>
               </div>
-              <Sparkline values={k.series} color={k.good ? TREND_GOOD : TREND_BAD} />
+              <Sparkline values={actual.map((p) => p.value)} color={good ? TREND_GOOD : TREND_BAD} />
             </div>
           );
         })}
@@ -36,22 +98,34 @@ export function GlobalOverview({ onSelect }: { onSelect: (name: string) => void 
 
       <section className="panel-section">
         <div className="section-title">
-          <h3>Developing stories</h3>
-          <span className="pill">Sources on click</span>
+          <h3>{layer.metric}</h3>
+          <span className="pill">{ranked.length} countries</span>
         </div>
-        <ul className="story-list">
-          {STORIES.map((s) => (
-            <li key={s.title}>
-              <button type="button" onClick={() => s.country && onSelect(s.country)}>
-                <span className={`status status-${s.status.toLowerCase()}`}>{s.status}</span>
-                <span className="story-title">{s.title}</span>
-                <span className="story-meta">
-                  {s.tag} · {s.region} · {s.age} ago
-                </span>
-              </button>
-            </li>
+        <div className="rank-cols">
+          {[
+            { title: 'Highest', rows: ranked.slice(0, 5) },
+            { title: 'Lowest', rows: ranked.slice(-5).reverse() },
+          ].map((col) => (
+            <div key={col.title}>
+              <div className="rank-col-title">{col.title}</div>
+              <ol className="rank-list">
+                {col.rows.map((r) => (
+                  <li key={r.name}>
+                    <button type="button" onClick={() => onSelect(r.name)}>
+                      <span className="rank-swatch" style={{ background: layer.color(r.v) }} />
+                      <span className="rank-name">{r.display}</span>
+                      <span className="rank-val">{layer.format(r.v)}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </div>
           ))}
-        </ul>
+        </div>
+        <p className="footnote">
+          <Info size={12} />
+          <span>{layer.description}</span>
+        </p>
       </section>
 
       <section className="panel-section">
@@ -72,6 +146,16 @@ export function GlobalOverview({ onSelect }: { onSelect: (name: string) => void 
           ))}
         </ul>
       </section>
+      <p className="footnote">
+        <Info size={12} />
+        <span>
+          World figures are computed from{' '}
+          <a href={SOURCES.imf?.url} target="_blank" rel="noreferrer">
+            {SOURCES.imf?.name ?? 'IMF WEO'}
+          </a>{' '}
+          country data; they differ slightly from the IMF’s own PPP-weighted aggregates.
+        </span>
+      </p>
     </div>
   );
 }

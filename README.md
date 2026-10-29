@@ -2,7 +2,7 @@
 
 A map-first command center for understanding a country's economy, its connections, and its exposure to global shocks.
 
-> **All data in this prototype is illustrative.** Every figure is a placeholder chosen for layout. It is not live, sourced, or suitable for decisions.
+Figures come from open sources fetched by scheduled GitHub Actions; every value carries its year. The News tab is still a placeholder.
 
 ![ATLAS homepage](docs/screenshots/home.png)
 
@@ -10,11 +10,21 @@ A map-first command center for understanding a country's economy, its connection
 
 ## What's here
 
-- **World intelligence map** (D3 + Natural Earth boundaries): a drag-to-spin 3D globe or a flat map you can pan, with scroll/button/keyboard zoom. Small states such as Singapore, Hong Kong and Bahrain are added from the 50m dataset (`npm run extract:small-countries`) and get clickable markers. Six layers (growth, inflation, trade dependency, financial exposure, geopolitical pressure, influence & leverage). Color always means the selected metric, and the legend updates with it. Zoom, pan, hover, click.
-- **Country intelligence panel**: opens on click or search. Tabs for Overview, Economy (with direction of travel), Connections (who supplies, buys, lends, powers it; click to jump), Risk (Exposure / Vulnerability / Resilience kept separate, plus a what-if shock explorer showing transmission pathways), and News (verified vs developing vs online sentiment).
-- **Collapsible side panel**: hide it to give the map the full width.
-- **Global overview**: four headline signals with trends, developing stories, and systemic chokepoints.
-- **Explore**: Compare, Connections, Risk & contagion, Shock scenarios.
+- **Full-width map** (D3 + Natural Earth): a drag-to-spin globe or flat map, colored by the selected subsection.
+- **Seven sections, 33 subsections.** Each topic has one home: Growth, Prices & people, Government, Trade and Money say what the number is; Influence says who has leverage over whom; Risk scores how dangerous it is and cites the numbers above. A Scorecard section ranks countries on global indices.
+- **Floating drawer.** The global overview and country views open in a translucent panel over the map's right edge (closed by default, Esc closes it). On phones it is a bottom sheet.
+- **Country view.** A tab per section; each subsection lists its indicators with year, rank and source, plus trade partners (UN Comtrade), influence (FBIC) and the resilience score breakdown. Anything not fetched yet says so.
+
+## Data
+
+| Job | Script | Writes | Sources |
+|---|---|---|---|
+| `refresh-sections.yml` (weekly) | `scripts/fetch-sections.mjs` | `src/data/sections.json` | IMF WEO (DataMapper), World Bank WDI (incl. ILO, SIPRI, UCDP, WGI, debt statistics), BIS policy rates, OWID energy, Fragile States Index, ND-GAIN |
+| `refresh-trade.yml` | `scripts/fetch-trade.mjs` | `src/data/trade.json` | UN Comtrade |
+| `refresh-fbic.yml` | `scripts/fetch-fbic.mjs` | `src/data/influence.json` | FBIC Index (Pardee) |
+| `refresh-indices.yml` | `scripts/fetch-indices.mjs` | `src/data/indices.json` | Scorecard indices |
+
+`src/data/sections.ts` defines the sections, subsections, map scales and our own measures (trade balance, commodity exports, outlook band, resilience score). Not fetched yet: FBIC's economic and political strands, sanctions lists, alliance data, BIS cross-border banking, bilateral FDI and exchange-rate moves.
 
 ## Run it
 
@@ -27,17 +37,3 @@ npm run build    # type-check + production build
 Every push to `main` builds and deploys to GitHub Pages via `.github/workflows/deploy.yml`.
 
 Press `/` to jump to search.
-
-## Structure
-
-```
-src/
-  data/countries.ts   illustrative country profiles, partners, issues
-  data/layers.ts      map layers, color scales, legends
-  data/risk.ts        explainable exposure / vulnerability / resilience + shock pathways
-  data/global.ts      global KPIs, stories, chokepoints, regions
-  geo.ts              TopoJSON → GeoJSON with arc anchors
-  components/         Header, WorldMap, LayerBar/Legend, GlobalOverview, CountryPanel, Explore
-```
-
-Replacing `src/data/*` with an API that returns the same shapes (plus source, period and timestamp per value) is the path to real data from IMF, World Bank, UN Comtrade, WITS and BIS.

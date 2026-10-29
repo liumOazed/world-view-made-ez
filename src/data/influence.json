@@ -7,7 +7,7 @@
  "retrieved": "2026-10-29",
  "countries": {
   "Afghanistan": {
-   "reach": 0.09292,
+   "reach": 0.09298,
    "over": [
     [
      "Uzbekistan",
@@ -94,7 +94,7 @@
    ]
   },
   "Albania": {
-   "reach": 0.2694,
+   "reach": 0.2703,
    "over": [
     [
      "Kosovo",
@@ -181,7 +181,7 @@
    ]
   },
   "Algeria": {
-   "reach": 0.7297,
+   "reach": 0.7349,
    "over": [
     [
      "Tunisia",
@@ -268,7 +268,7 @@
    ]
   },
   "Andorra": {
-   "reach": 0.002092,
+   "reach": 0.002093,
    "over": [
     [
      "Spain",
@@ -355,11 +355,15 @@
    ]
   },
   "Angola": {
-   "reach": 0.3558,
+   "reach": 0.4591,
    "over": [
     [
      "São Tomé and Principe",
      0.09004
+    ],
+    [
+     "Congo",
+     0.08501
     ],
     [
      "Namibia",
@@ -386,16 +390,12 @@
      0.01199
     ],
     [
+     "Dem. Rep. Congo",
+     0.01139
+    ],
+    [
      "China",
      0.01111
-    ],
-    [
-     "eSwatini",
-     0.01011
-    ],
-    [
-     "United Arab Emirates",
-     0.008041
     ]
    ],
    "by": [
@@ -442,7 +442,7 @@
    ]
   },
   "Antigua and Barb.": {
-   "reach": 0.1757,
+   "reach": 0.1758,
    "over": [
     [
      "Dominica",
@@ -529,7 +529,7 @@
    ]
   },
   "Argentina": {
-   "reach": 1.255,
+   "reach": 1.266,
    "over": [
     [
      "Paraguay",
@@ -616,7 +616,7 @@
    ]
   },
   "Armenia": {
-   "reach": 0.1992,
+   "reach": 0.2009,
    "over": [
     [
      "Russia",
@@ -703,7 +703,7 @@
    ]
   },
   "Australia": {
-   "reach": 4.205,
+   "reach": 4.307,
    "over": [
     [
      "Papua New Guinea",
@@ -772,6 +772,10 @@
      0.05977
     ],
     [
+     "South Korea",
+     0.05702
+    ],
+    [
      "New Zealand",
      0.05191
     ],
@@ -782,15 +786,11 @@
     [
      "Malaysia",
      0.04844
-    ],
-    [
-     "India",
-     0.04693
     ]
    ]
   },
   "Austria": {
-   "reach": 4.001,
+   "reach": 4.043,
    "over": [
     [
      "Czechia",
@@ -877,7 +877,7 @@
    ]
   },
   "Azerbaijan": {
-   "reach": 0.3894,
+   "reach": 0.3922,
    "over": [
     [
      "Georgia",
@@ -964,7 +964,7 @@
    ]
   },
   "Bahamas": {
-   "reach": 0.1476,
+   "reach": 0.1501,
    "over": [
     [
      "Honduras",
@@ -1051,7 +1051,7 @@
    ]
   },
   "Bahrain": {
-   "reach": 0.3467,
+   "reach": 0.3527,
    "over": [
     [
      "Saudi Arabia",
@@ -1138,7 +1138,7 @@
    ]
   },
   "Bangladesh": {
-   "reach": 0.4706,
+   "reach": 0.4745,
    "over": [
     [
      "Benin",
@@ -1312,7 +1312,7 @@
    ]
   },
   "Belarus": {
-   "reach": 1.056,
+   "reach": 1.081,
    "over": [
     [
      "Russia",
@@ -1399,7 +1399,7 @@
    ]
   },
   "Belgium": {
-   "reach": 7.341,
+   "reach": 7.46,
    "over": [
     [
      "Netherlands",
@@ -1486,7 +1486,7 @@
    ]
   },
   "Belize": {
-   "reach": 0.108,
+   "reach": 0.1081,
    "over": [
     [
      "St. Kitts and Nevis",
@@ -1573,7 +1573,7 @@
    ]
   },
   "Benin": {
-   "reach": 0.1401,
+   "reach": 0.1402,
    "over": [
     [
      "Togo",
@@ -1660,7 +1660,7 @@
    ]
   },
   "Bhutan": {
-   "reach": 0.004684,
+   "reach": 0.00469,
    "over": [
     [
      "India",
@@ -1741,13 +1741,13 @@
      0.003815
     ],
     [
-     "Italy",
-     0.003042
+     "South Korea",
+     0.00313
     ]
    ]
   },
   "Bolivia": {
-   "reach": 0.1736,
+   "reach": 0.1743,
    "over": [
     [
      "Peru",
@@ -1834,7 +1834,7 @@
    ]
   },
   "Bosnia and Herz.": {
-   "reach": 0.4132,
+   "reach": 0.4144,
    "over": [
     [
      "Croatia",
@@ -1921,7 +1921,7 @@
    ]
   },
   "Botswana": {
-   "reach": 0.3524,
+   "reach": 0.3526,
    "over": [
     [
      "Namibia",
@@ -2008,7 +2008,7 @@
    ]
   },
   "Brazil": {
-   "reach": 4.133,
+   "reach": 4.2,
    "over": [
     [
      "Uruguay",
@@ -2095,7 +2095,7 @@
    ]
   },
   "Brunei": {
-   "reach": 0.112,
+   "reach": 0.1126,
    "over": [
     [
      "Malaysia",
@@ -2182,7 +2182,7 @@
    ]
   },
   "Bulgaria": {
-   "reach": 1.708,
+   "reach": 1.757,
    "over": [
     [
      "Romania",
@@ -2269,7 +2269,7 @@
    ]
   },
   "Burkina Faso": {
-   "reach": 0.3085,
+   "reach": 0.3094,
    "over": [
     [
      "Mali",
@@ -2356,7 +2356,7 @@
    ]
   },
   "Burundi": {
-   "reach": 0.05979,
+   "reach": 0.06452,
    "over": [
     [
      "Uganda",
@@ -2373,6 +2373,10 @@
     [
      "Kenya",
      0.008077
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.004724
     ],
     [
      "Zambia",
@@ -2393,10 +2397,6 @@
     [
      "Egypt",
      0.0002472
-    ],
-    [
-     "Malta",
-     0.0002001
     ]
    ],
    "by": [
@@ -2411,6 +2411,10 @@
     [
      "Kenya",
      0.1033
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.06753
     ],
     [
      "United States of America",
@@ -2435,15 +2439,98 @@
     [
      "United Arab Emirates",
      0.03453
+    ]
+   ]
+  },
+  "Cabo Verde": {
+   "reach": 0.01333,
+   "over": [
+    [
+     "Portugal",
+     0.005163
     ],
     [
-     "South Africa",
-     0.03259
+     "Togo",
+     0.002947
+    ],
+    [
+     "Guinea-Bissau",
+     0.00134
+    ],
+    [
+     "Senegal",
+     0.0009738
+    ],
+    [
+     "Seychelles",
+     0.0004409
+    ],
+    [
+     "Spain",
+     0.0003069
+    ],
+    [
+     "United Arab Emirates",
+     0.0002873
+    ],
+    [
+     "Angola",
+     0.0002164
+    ],
+    [
+     "Kuwait",
+     0.0001749
+    ],
+    [
+     "Netherlands",
+     0.0001524
+    ]
+   ],
+   "by": [
+    [
+     "Portugal",
+     0.192
+    ],
+    [
+     "Spain",
+     0.06307
+    ],
+    [
+     "China",
+     0.03938
+    ],
+    [
+     "Netherlands",
+     0.03068
+    ],
+    [
+     "United Arab Emirates",
+     0.02786
+    ],
+    [
+     "United States of America",
+     0.0272
+    ],
+    [
+     "Italy",
+     0.02347
+    ],
+    [
+     "France",
+     0.02252
+    ],
+    [
+     "Brazil",
+     0.02034
+    ],
+    [
+     "Belgium",
+     0.01819
     ]
    ]
   },
   "Cambodia": {
-   "reach": 0.1966,
+   "reach": 0.1987,
    "over": [
     [
      "Thailand",
@@ -2524,13 +2611,13 @@
      0.04071
     ],
     [
-     "Malaysia",
-     0.03787
+     "South Korea",
+     0.038
     ]
    ]
   },
   "Cameroon": {
-   "reach": 0.347,
+   "reach": 0.3645,
    "over": [
     [
      "Central African Rep.",
@@ -2547,6 +2634,10 @@
     [
      "Gabon",
      0.05291
+    ],
+    [
+     "Congo",
+     0.01648
     ],
     [
      "Liberia",
@@ -2567,10 +2658,6 @@
     [
      "Belgium",
      0.002571
-    ],
-    [
-     "Netherlands",
-     0.002502
     ]
    ],
    "by": [
@@ -2617,7 +2704,7 @@
    ]
   },
   "Canada": {
-   "reach": 3.723,
+   "reach": 3.765,
    "over": [
     [
      "United States of America",
@@ -2704,15 +2791,23 @@
    ]
   },
   "Central African Rep.": {
-   "reach": 0.02401,
+   "reach": 0.0299,
    "over": [
     [
      "Cameroon",
      0.01767
     ],
     [
+     "Dem. Rep. Congo",
+     0.004148
+    ],
+    [
      "Chad",
      0.001919
+    ],
+    [
+     "Congo",
+     0.001662
     ],
     [
      "Gabon",
@@ -2737,14 +2832,6 @@
     [
      "United Arab Emirates",
      0.0002532
-    ],
-    [
-     "Côte d'Ivoire",
-     0.000223
-    ],
-    [
-     "Togo",
-     0.0001161
     ]
    ],
    "by": [
@@ -2755,6 +2842,10 @@
     [
      "France",
      0.09055
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.08364
     ],
     [
      "China",
@@ -2783,15 +2874,11 @@
     [
      "Germany",
      0.01601
-    ],
-    [
-     "Chad",
-     0.01509
     ]
    ]
   },
   "Chad": {
-   "reach": 0.08182,
+   "reach": 0.08205,
    "over": [
     [
      "Cameroon",
@@ -2878,7 +2965,7 @@
    ]
   },
   "Chile": {
-   "reach": 0.9789,
+   "reach": 0.9932,
    "over": [
     [
      "Ecuador",
@@ -2965,7 +3052,7 @@
    ]
   },
   "China": {
-   "reach": 22.12,
+   "reach": 22.73,
    "over": [
     [
      "Pakistan",
@@ -3052,7 +3139,7 @@
    ]
   },
   "Colombia": {
-   "reach": 1.243,
+   "reach": 1.249,
    "over": [
     [
      "Ecuador",
@@ -3105,6 +3192,10 @@
      0.156
     ],
     [
+     "South Korea",
+     0.08132
+    ],
+    [
      "Mexico",
      0.0777
     ],
@@ -3131,15 +3222,11 @@
     [
      "France",
      0.05573
-    ],
-    [
-     "Canada",
-     0.05504
     ]
    ]
   },
   "Comoros": {
-   "reach": 0.01081,
+   "reach": 0.01084,
    "over": [
     [
      "Tanzania",
@@ -3225,8 +3312,95 @@
     ]
    ]
   },
+  "Congo": {
+   "reach": 0.2819,
+   "over": [
+    [
+     "Gabon",
+     0.06112
+    ],
+    [
+     "São Tomé and Principe",
+     0.05035
+    ],
+    [
+     "Togo",
+     0.04435
+    ],
+    [
+     "Angola",
+     0.02835
+    ],
+    [
+     "Central African Rep.",
+     0.01398
+    ],
+    [
+     "Guinea",
+     0.009895
+    ],
+    [
+     "Rwanda",
+     0.008694
+    ],
+    [
+     "Cameroon",
+     0.008527
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.006108
+    ],
+    [
+     "Eq. Guinea",
+     0.00548
+    ]
+   ],
+   "by": [
+    [
+     "China",
+     0.1142
+    ],
+    [
+     "Angola",
+     0.08501
+    ],
+    [
+     "Gabon",
+     0.0723
+    ],
+    [
+     "France",
+     0.07207
+    ],
+    [
+     "Italy",
+     0.05851
+    ],
+    [
+     "United States of America",
+     0.04705
+    ],
+    [
+     "Netherlands",
+     0.04665
+    ],
+    [
+     "Togo",
+     0.04449
+    ],
+    [
+     "India",
+     0.04196
+    ],
+    [
+     "United Kingdom",
+     0.03716
+    ]
+   ]
+  },
   "Costa Rica": {
-   "reach": 0.7068,
+   "reach": 0.7074,
    "over": [
     [
      "Nicaragua",
@@ -3313,7 +3487,7 @@
    ]
   },
   "Croatia": {
-   "reach": 1.146,
+   "reach": 1.151,
    "over": [
     [
      "Bosnia and Herz.",
@@ -3400,7 +3574,7 @@
    ]
   },
   "Cuba": {
-   "reach": 0.04104,
+   "reach": 0.04131,
    "over": [
     [
      "Venezuela",
@@ -3487,7 +3661,7 @@
    ]
   },
   "Cyprus": {
-   "reach": 0.4553,
+   "reach": 0.4599,
    "over": [
     [
      "Greece",
@@ -3574,7 +3748,7 @@
    ]
   },
   "Czechia": {
-   "reach": 3.797,
+   "reach": 3.859,
    "over": [
     [
      "Slovakia",
@@ -3661,7 +3835,7 @@
    ]
   },
   "Côte d'Ivoire": {
-   "reach": 0.943,
+   "reach": 0.9487,
    "over": [
     [
      "Burkina Faso",
@@ -3747,8 +3921,95 @@
     ]
    ]
   },
+  "Dem. Rep. Congo": {
+   "reach": 0.8276,
+   "over": [
+    [
+     "Zambia",
+     0.1432
+    ],
+    [
+     "Rwanda",
+     0.1419
+    ],
+    [
+     "Central African Rep.",
+     0.08364
+    ],
+    [
+     "Burundi",
+     0.06753
+    ],
+    [
+     "Uganda",
+     0.06206
+    ],
+    [
+     "Mozambique",
+     0.04887
+    ],
+    [
+     "South Africa",
+     0.04388
+    ],
+    [
+     "Namibia",
+     0.04354
+    ],
+    [
+     "Congo",
+     0.02208
+    ],
+    [
+     "Tanzania",
+     0.02129
+    ]
+   ],
+   "by": [
+    [
+     "China",
+     0.2375
+    ],
+    [
+     "South Africa",
+     0.1642
+    ],
+    [
+     "Zambia",
+     0.09898
+    ],
+    [
+     "United States of America",
+     0.09154
+    ],
+    [
+     "United Arab Emirates",
+     0.09052
+    ],
+    [
+     "Rwanda",
+     0.056
+    ],
+    [
+     "Belgium",
+     0.04302
+    ],
+    [
+     "Uganda",
+     0.03918
+    ],
+    [
+     "Ukraine",
+     0.03095
+    ],
+    [
+     "Hong Kong",
+     0.02888
+    ]
+   ]
+  },
   "Denmark": {
-   "reach": 3.217,
+   "reach": 3.233,
    "over": [
     [
      "Sweden",
@@ -3835,7 +4096,7 @@
    ]
   },
   "Djibouti": {
-   "reach": 0.2362,
+   "reach": 0.2365,
    "over": [
     [
      "Ethiopia",
@@ -3922,7 +4183,7 @@
    ]
   },
   "Dominica": {
-   "reach": 0.1164,
+   "reach": 0.1165,
    "over": [
     [
      "St. Vin. and Gren.",
@@ -4009,7 +4270,7 @@
    ]
   },
   "Dominican Rep.": {
-   "reach": 0.597,
+   "reach": 0.5976,
    "over": [
     [
      "Haiti",
@@ -4096,7 +4357,7 @@
    ]
   },
   "Ecuador": {
-   "reach": 0.5557,
+   "reach": 0.5578,
    "over": [
     [
      "Panama",
@@ -4183,7 +4444,7 @@
    ]
   },
   "Egypt": {
-   "reach": 1.788,
+   "reach": 1.8,
    "over": [
     [
      "Sudan",
@@ -4270,7 +4531,7 @@
    ]
   },
   "El Salvador": {
-   "reach": 0.5999,
+   "reach": 0.6004,
    "over": [
     [
      "Honduras",
@@ -4357,7 +4618,7 @@
    ]
   },
   "Eq. Guinea": {
-   "reach": 0.06247,
+   "reach": 0.06679,
    "over": [
     [
      "Cameroon",
@@ -4370,6 +4631,10 @@
     [
      "São Tomé and Principe",
      0.01167
+    ],
+    [
+     "Congo",
+     0.003935
     ],
     [
      "Spain",
@@ -4394,10 +4659,6 @@
     [
      "India",
      0.0006212
-    ],
-    [
-     "Brunei",
-     0.000569
     ]
    ],
    "by": [
@@ -4438,13 +4699,13 @@
      0.02477
     ],
     [
-     "Japan",
-     0.02228
+     "South Korea",
+     0.02289
     ]
    ]
   },
   "Eritrea": {
-   "reach": 0.005794,
+   "reach": 0.005857,
    "over": [
     [
      "Mauritius",
@@ -4505,6 +4766,10 @@
      0.05188
     ],
     [
+     "South Korea",
+     0.04833
+    ],
+    [
      "United States of America",
      0.04735
     ],
@@ -4523,15 +4788,11 @@
     [
      "United Kingdom",
      0.02806
-    ],
-    [
-     "South Africa",
-     0.02689
     ]
    ]
   },
   "Estonia": {
-   "reach": 0.9478,
+   "reach": 0.9522,
    "over": [
     [
      "Latvia",
@@ -4618,7 +4879,7 @@
    ]
   },
   "Ethiopia": {
-   "reach": 0.3511,
+   "reach": 0.3519,
    "over": [
     [
      "Djibouti",
@@ -4705,7 +4966,7 @@
    ]
   },
   "Fiji": {
-   "reach": 0.2449,
+   "reach": 0.2453,
    "over": [
     [
      "Tonga",
@@ -4774,6 +5035,10 @@
      0.04529
     ],
     [
+     "South Korea",
+     0.03003
+    ],
+    [
      "Malaysia",
      0.02992
     ],
@@ -4784,15 +5049,11 @@
     [
      "Tonga",
      0.0198
-    ],
-    [
-     "Vanuatu",
-     0.01634
     ]
    ]
   },
   "Finland": {
-   "reach": 2.473,
+   "reach": 2.488,
    "over": [
     [
      "Latvia",
@@ -4879,7 +5140,7 @@
    ]
   },
   "France": {
-   "reach": 17.05,
+   "reach": 17.4,
    "over": [
     [
      "Spain",
@@ -4966,11 +5227,15 @@
    ]
   },
   "Gabon": {
-   "reach": 0.2769,
+   "reach": 0.3547,
    "over": [
     [
      "São Tomé and Principe",
      0.07802
+    ],
+    [
+     "Congo",
+     0.0723
     ],
     [
      "Cameroon",
@@ -5003,10 +5268,6 @@
     [
      "St. Vin. and Gren.",
      0.007348
-    ],
-    [
-     "Mauritania",
-     0.004307
     ]
    ],
    "by": [
@@ -5021,6 +5282,10 @@
     [
      "Spain",
      0.0888
+    ],
+    [
+     "Congo",
+     0.06112
     ],
     [
      "Cameroon",
@@ -5045,15 +5310,11 @@
     [
      "Brazil",
      0.02813
-    ],
-    [
-     "Malaysia",
-     0.02806
     ]
    ]
   },
   "Gambia": {
-   "reach": 0.1161,
+   "reach": 0.1162,
    "over": [
     [
      "Guinea-Bissau",
@@ -5140,7 +5401,7 @@
    ]
   },
   "Georgia": {
-   "reach": 0.2634,
+   "reach": 0.2678,
    "over": [
     [
      "Armenia",
@@ -5227,7 +5488,7 @@
    ]
   },
   "Germany": {
-   "reach": 21.29,
+   "reach": 21.68,
    "over": [
     [
      "Hungary",
@@ -5314,7 +5575,7 @@
    ]
   },
   "Ghana": {
-   "reach": 0.7509,
+   "reach": 0.7552,
    "over": [
     [
      "Guinea",
@@ -5401,7 +5662,7 @@
    ]
   },
   "Greece": {
-   "reach": 2.619,
+   "reach": 2.647,
    "over": [
     [
      "Cyprus",
@@ -5575,7 +5836,7 @@
    ]
   },
   "Guatemala": {
-   "reach": 0.9489,
+   "reach": 0.9497,
    "over": [
     [
      "El Salvador",
@@ -5662,7 +5923,7 @@
    ]
   },
   "Guinea": {
-   "reach": 0.2089,
+   "reach": 0.221,
    "over": [
     [
      "Ghana",
@@ -5679,6 +5940,10 @@
     [
      "Sierra Leone",
      0.01195
+    ],
+    [
+     "Congo",
+     0.01168
     ],
     [
      "Côte d'Ivoire",
@@ -5699,10 +5964,6 @@
     [
      "India",
      0.002953
-    ],
-    [
-     "United Arab Emirates",
-     0.002827
     ]
    ],
    "by": [
@@ -5749,7 +6010,7 @@
    ]
   },
   "Guinea-Bissau": {
-   "reach": 0.06572,
+   "reach": 0.06676,
    "over": [
     [
      "Gambia",
@@ -5766,6 +6027,10 @@
     [
      "Togo",
      0.001073
+    ],
+    [
+     "Cabo Verde",
+     0.0009929
     ],
     [
      "Liberia",
@@ -5786,10 +6051,6 @@
     [
      "Mauritania",
      0.000147
-    ],
-    [
-     "Guinea",
-     0.0001436
     ]
    ],
    "by": [
@@ -5836,7 +6097,7 @@
    ]
   },
   "Guyana": {
-   "reach": 0.7576,
+   "reach": 0.7639,
    "over": [
     [
      "Trinidad and Tobago",
@@ -5923,7 +6184,7 @@
    ]
   },
   "Haiti": {
-   "reach": 0.06482,
+   "reach": 0.06486,
    "over": [
     [
      "Dominican Rep.",
@@ -6010,7 +6271,7 @@
    ]
   },
   "Honduras": {
-   "reach": 0.5697,
+   "reach": 0.5701,
    "over": [
     [
      "El Salvador",
@@ -6097,7 +6358,7 @@
    ]
   },
   "Hong Kong": {
-   "reach": 1.436,
+   "reach": 1.5,
    "over": [
     [
      "Singapore",
@@ -6174,17 +6435,17 @@
      0.05727
     ],
     [
-     "Philippines",
-     0.04942
+     "South Korea",
+     0.05307
     ],
     [
-     "Switzerland",
-     0.04721
+     "Philippines",
+     0.04942
     ]
    ]
   },
   "Hungary": {
-   "reach": 3.171,
+   "reach": 3.23,
    "over": [
     [
      "Slovakia",
@@ -6271,7 +6532,7 @@
    ]
   },
   "Iceland": {
-   "reach": 0.127,
+   "reach": 0.1276,
    "over": [
     [
      "Norway",
@@ -6358,7 +6619,7 @@
    ]
   },
   "India": {
-   "reach": 7.789,
+   "reach": 8.031,
    "over": [
     [
      "Mauritius",
@@ -6427,6 +6688,10 @@
      0.09997
     ],
     [
+     "South Korea",
+     0.07979
+    ],
+    [
      "China",
      0.07957
     ],
@@ -6437,15 +6702,11 @@
     [
      "United Arab Emirates",
      0.06638
-    ],
-    [
-     "Netherlands",
-     0.04722
     ]
    ]
   },
   "Indonesia": {
-   "reach": 2.178,
+   "reach": 2.311,
    "over": [
     [
      "Philippines",
@@ -6472,6 +6733,10 @@
      0.07586
     ],
     [
+     "South Korea",
+     0.06502
+    ],
+    [
      "Senegal",
      0.05977
     ],
@@ -6480,12 +6745,8 @@
      0.05846
     ],
     [
-     "Australia",
-     0.05008
-    ],
-    [
-     "Cambodia",
-     0.04715
+     "Timor-Leste",
+     0.05842
     ]
    ],
    "by": [
@@ -6496,6 +6757,10 @@
     [
      "United States of America",
      0.2507
+    ],
+    [
+     "South Korea",
+     0.1767
     ],
     [
      "Germany",
@@ -6524,15 +6789,11 @@
     [
      "United Kingdom",
      0.07447
-    ],
-    [
-     "Malaysia",
-     0.07367
     ]
    ]
   },
   "Iran": {
-   "reach": 0.639,
+   "reach": 0.6414,
    "over": [
     [
      "Russia",
@@ -6619,7 +6880,7 @@
    ]
   },
   "Iraq": {
-   "reach": 0.5997,
+   "reach": 0.6267,
    "over": [
     [
      "Jordan",
@@ -6658,8 +6919,8 @@
      0.02809
     ],
     [
-     "Serbia",
-     0.02111
+     "South Korea",
+     0.02616
     ]
    ],
    "by": [
@@ -6670,6 +6931,10 @@
     [
      "China",
      0.2017
+    ],
+    [
+     "South Korea",
+     0.1446
     ],
     [
      "Italy",
@@ -6698,15 +6963,11 @@
     [
      "France",
      0.06316
-    ],
-    [
-     "Netherlands",
-     0.04164
     ]
    ]
   },
   "Ireland": {
-   "reach": 2.103,
+   "reach": 2.115,
    "over": [
     [
      "United Kingdom",
@@ -6793,7 +7054,7 @@
    ]
   },
   "Israel": {
-   "reach": 2.598,
+   "reach": 2.623,
    "over": [
     [
      "Azerbaijan",
@@ -6880,7 +7141,7 @@
    ]
   },
   "Italy": {
-   "reach": 13.9,
+   "reach": 14.09,
    "over": [
     [
      "Malta",
@@ -6967,7 +7228,7 @@
    ]
   },
   "Jamaica": {
-   "reach": 0.5092,
+   "reach": 0.5093,
    "over": [
     [
      "Barbados",
@@ -7054,7 +7315,7 @@
    ]
   },
   "Japan": {
-   "reach": 6.241,
+   "reach": 6.372,
    "over": [
     [
      "Philippines",
@@ -7131,17 +7392,17 @@
      0.04257
     ],
     [
-     "Malaysia",
-     0.04045
+     "South Korea",
+     0.0412
     ],
     [
-     "Vietnam",
-     0.04024
+     "Malaysia",
+     0.04045
     ]
    ]
   },
   "Jordan": {
-   "reach": 0.5917,
+   "reach": 0.5929,
    "over": [
     [
      "Palestine",
@@ -7228,7 +7489,7 @@
    ]
   },
   "Kazakhstan": {
-   "reach": 1.415,
+   "reach": 1.43,
    "over": [
     [
      "Kyrgyzstan",
@@ -7315,7 +7576,7 @@
    ]
   },
   "Kenya": {
-   "reach": 0.8873,
+   "reach": 0.9116,
    "over": [
     [
      "Uganda",
@@ -7483,13 +7744,13 @@
      0.01587
     ],
     [
-     "Philippines",
-     0.008265
+     "South Korea",
+     0.01273
     ]
    ]
   },
   "Kosovo": {
-   "reach": 0.143,
+   "reach": 0.1431,
    "over": [
     [
      "Macedonia",
@@ -7576,7 +7837,7 @@
    ]
   },
   "Kuwait": {
-   "reach": 0.6405,
+   "reach": 0.6499,
    "over": [
     [
      "Qatar",
@@ -7663,7 +7924,7 @@
    ]
   },
   "Kyrgyzstan": {
-   "reach": 0.2317,
+   "reach": 0.2347,
    "over": [
     [
      "Uzbekistan",
@@ -7736,21 +7997,21 @@
      0.05788
     ],
     [
+     "South Korea",
+     0.04069
+    ],
+    [
      "Switzerland",
      0.04022
     ],
     [
      "United Kingdom",
      0.03323
-    ],
-    [
-     "Georgia",
-     0.03229
     ]
    ]
   },
   "Laos": {
-   "reach": 0.06381,
+   "reach": 0.06405,
    "over": [
     [
      "Thailand",
@@ -7837,7 +8098,7 @@
    ]
   },
   "Latvia": {
-   "reach": 1.055,
+   "reach": 1.067,
    "over": [
     [
      "Estonia",
@@ -7924,7 +8185,7 @@
    ]
   },
   "Lebanon": {
-   "reach": 0.3229,
+   "reach": 0.331,
    "over": [
     [
      "Syria",
@@ -8011,7 +8272,7 @@
    ]
   },
   "Lesotho": {
-   "reach": 0.0547,
+   "reach": 0.05471,
    "over": [
     [
      "South Africa",
@@ -8098,7 +8359,7 @@
    ]
   },
   "Liberia": {
-   "reach": 0.07778,
+   "reach": 0.08378,
    "over": [
     [
      "Singapore",
@@ -8107,6 +8368,10 @@
     [
      "Cyprus",
      0.009274
+    ],
+    [
+     "South Korea",
+     0.005691
     ],
     [
      "Gabon",
@@ -8135,10 +8400,6 @@
     [
      "China",
      0.002763
-    ],
-    [
-     "Ghana",
-     0.002535
     ]
    ],
    "by": [
@@ -8153,6 +8414,10 @@
     [
      "Japan",
      0.1008
+    ],
+    [
+     "South Korea",
+     0.09579
     ],
     [
      "Germany",
@@ -8177,15 +8442,11 @@
     [
      "Côte d'Ivoire",
      0.03288
-    ],
-    [
-     "Switzerland",
-     0.03066
     ]
    ]
   },
   "Libya": {
-   "reach": 0.3742,
+   "reach": 0.3749,
    "over": [
     [
      "Tunisia",
@@ -8272,8 +8533,12 @@
    ]
   },
   "Liechtenstein": {
-   "reach": 0.001293,
+   "reach": 0.001593,
    "over": [
+    [
+     "Moldova",
+     0.0002951
+    ],
     [
      "Bosnia and Herz.",
      0.0002659
@@ -8309,16 +8574,12 @@
     [
      "Tanzania",
      0.00004075
-    ],
-    [
-     "Colombia",
-     0.00003781
     ]
    ],
    "by": []
   },
   "Lithuania": {
-   "reach": 1.559,
+   "reach": 1.58,
    "over": [
     [
      "Latvia",
@@ -8405,7 +8666,7 @@
    ]
   },
   "Luxembourg": {
-   "reach": 0.524,
+   "reach": 0.5349,
    "over": [
     [
      "Belgium",
@@ -8492,7 +8753,7 @@
    ]
   },
   "Macao": {
-   "reach": 0.0859,
+   "reach": 0.08596,
    "over": [
     [
      "Sudan",
@@ -8579,7 +8840,7 @@
    ]
   },
   "Macedonia": {
-   "reach": 0.3318,
+   "reach": 0.3332,
    "over": [
     [
      "Kosovo",
@@ -8666,7 +8927,7 @@
    ]
   },
   "Madagascar": {
-   "reach": 0.09523,
+   "reach": 0.09568,
    "over": [
     [
      "Mauritius",
@@ -8753,7 +9014,7 @@
    ]
   },
   "Malawi": {
-   "reach": 0.1119,
+   "reach": 0.1128,
    "over": [
     [
      "Zambia",
@@ -8840,7 +9101,7 @@
    ]
   },
   "Malaysia": {
-   "reach": 2.299,
+   "reach": 2.385,
    "over": [
     [
      "Singapore",
@@ -8875,12 +9136,12 @@
      0.06102
     ],
     [
-     "Myanmar",
-     0.05186
+     "South Korea",
+     0.05545
     ],
     [
-     "Australia",
-     0.04844
+     "Myanmar",
+     0.05186
     ]
    ],
    "by": [
@@ -8895,6 +9156,10 @@
     [
      "Singapore",
      0.177
+    ],
+    [
+     "South Korea",
+     0.156
     ],
     [
      "Japan",
@@ -8919,15 +9184,11 @@
     [
      "Indonesia",
      0.09821
-    ],
-    [
-     "India",
-     0.08056
     ]
    ]
   },
   "Maldives": {
-   "reach": 0.01804,
+   "reach": 0.01805,
    "over": [
     [
      "Sri Lanka",
@@ -9014,7 +9275,7 @@
    ]
   },
   "Mali": {
-   "reach": 0.4691,
+   "reach": 0.4694,
    "over": [
     [
      "Senegal",
@@ -9101,7 +9362,7 @@
    ]
   },
   "Malta": {
-   "reach": 0.2574,
+   "reach": 0.2615,
    "over": [
     [
      "Greece",
@@ -9188,7 +9449,7 @@
    ]
   },
   "Marshall Is.": {
-   "reach": 0.07007,
+   "reach": 0.07496,
    "over": [
     [
      "Micronesia",
@@ -9201,6 +9462,10 @@
     [
      "Cyprus",
      0.01027
+    ],
+    [
+     "South Korea",
+     0.004867
     ],
     [
      "Ghana",
@@ -9225,10 +9490,6 @@
     [
      "Japan",
      0.001191
-    ],
-    [
-     "Rwanda",
-     0.001114
     ]
    ],
    "by": [
@@ -9243,6 +9504,10 @@
     [
      "China",
      0.1348
+    ],
+    [
+     "South Korea",
+     0.1342
     ],
     [
      "United States of America",
@@ -9267,15 +9532,11 @@
     [
      "Turkey",
      0.06167
-    ],
-    [
-     "Brazil",
-     0.06041
     ]
    ]
   },
   "Mauritania": {
-   "reach": 0.09411,
+   "reach": 0.09651,
    "over": [
     [
      "Senegal",
@@ -9362,7 +9623,7 @@
    ]
   },
   "Mauritius": {
-   "reach": 0.2437,
+   "reach": 0.2447,
    "over": [
     [
      "Eritrea",
@@ -9449,7 +9710,7 @@
    ]
   },
   "Mexico": {
-   "reach": 2.365,
+   "reach": 2.389,
    "over": [
     [
      "United States of America",
@@ -9536,7 +9797,7 @@
    ]
   },
   "Micronesia": {
-   "reach": 0.02127,
+   "reach": 0.02129,
    "over": [
     [
      "Marshall Is.",
@@ -9609,21 +9870,108 @@
      0.01895
     ],
     [
+     "South Korea",
+     0.01793
+    ],
+    [
      "New Zealand",
      0.01187
     ],
     [
      "Mexico",
      0.005607
+    ]
+   ]
+  },
+  "Moldova": {
+   "reach": 0.1438,
+   "over": [
+    [
+     "Ukraine",
+     0.03947
     ],
     [
-     "Mauritius",
-     0.004956
+     "Romania",
+     0.03729
+    ],
+    [
+     "Bulgaria",
+     0.0109
+    ],
+    [
+     "Belarus",
+     0.005588
+    ],
+    [
+     "Czechia",
+     0.004081
+    ],
+    [
+     "Hungary",
+     0.00352
+    ],
+    [
+     "Latvia",
+     0.003268
+    ],
+    [
+     "Russia",
+     0.002985
+    ],
+    [
+     "Turkey",
+     0.002809
+    ],
+    [
+     "Lithuania",
+     0.002691
+    ]
+   ],
+   "by": [
+    [
+     "Romania",
+     0.1894
+    ],
+    [
+     "Germany",
+     0.1738
+    ],
+    [
+     "France",
+     0.1473
+    ],
+    [
+     "Ukraine",
+     0.1097
+    ],
+    [
+     "Italy",
+     0.08946
+    ],
+    [
+     "Poland",
+     0.08572
+    ],
+    [
+     "Russia",
+     0.08301
+    ],
+    [
+     "Turkey",
+     0.06968
+    ],
+    [
+     "Czechia",
+     0.05372
+    ],
+    [
+     "Bulgaria",
+     0.04667
     ]
    ]
   },
   "Monaco": {
-   "reach": 0.001175,
+   "reach": 0.001176,
    "over": [
     [
      "Mauritania",
@@ -9669,7 +10017,7 @@
    "by": []
   },
   "Mongolia": {
-   "reach": 0.02932,
+   "reach": 0.03021,
    "over": [
     [
      "Russia",
@@ -9696,6 +10044,10 @@
      0.0009747
     ],
     [
+     "South Korea",
+     0.0007629
+    ],
+    [
      "Kyrgyzstan",
      0.0007589
     ],
@@ -9706,10 +10058,6 @@
     [
      "Slovenia",
      0.0004997
-    ],
-    [
-     "Vietnam",
-     0.0003501
     ]
    ],
    "by": [
@@ -9742,21 +10090,21 @@
      0.03467
     ],
     [
+     "South Korea",
+     0.02903
+    ],
+    [
      "France",
      0.01924
     ],
     [
      "Italy",
      0.01558
-    ],
-    [
-     "Poland",
-     0.01337
     ]
    ]
   },
   "Montenegro": {
-   "reach": 0.1858,
+   "reach": 0.186,
    "over": [
     [
      "Serbia",
@@ -9843,7 +10191,7 @@
    ]
   },
   "Morocco": {
-   "reach": 0.8377,
+   "reach": 0.8467,
    "over": [
     [
      "Djibouti",
@@ -9930,7 +10278,7 @@
    ]
   },
   "Mozambique": {
-   "reach": 0.3784,
+   "reach": 0.408,
    "over": [
     [
      "South Africa",
@@ -9947,6 +10295,10 @@
     [
      "Malawi",
      0.02886
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.02785
     ],
     [
      "Zambia",
@@ -9967,10 +10319,6 @@
     [
      "India",
      0.007274
-    ],
-    [
-     "Mauritius",
-     0.00647
     ]
    ],
    "by": [
@@ -10007,17 +10355,17 @@
      0.05664
     ],
     [
-     "Russia",
-     0.04394
+     "Dem. Rep. Congo",
+     0.04887
     ],
     [
-     "Portugal",
-     0.0338
+     "Russia",
+     0.04394
     ]
    ]
   },
   "Myanmar": {
-   "reach": 0.1617,
+   "reach": 0.1654,
    "over": [
     [
      "Thailand",
@@ -10086,6 +10434,10 @@
      0.09316
     ],
     [
+     "South Korea",
+     0.08752
+    ],
+    [
      "Malaysia",
      0.05186
     ],
@@ -10096,15 +10448,11 @@
     [
      "Indonesia",
      0.04506
-    ],
-    [
-     "United States of America",
-     0.04342
     ]
    ]
   },
   "Namibia": {
-   "reach": 0.3649,
+   "reach": 0.383,
    "over": [
     [
      "Botswana",
@@ -10123,6 +10471,10 @@
      0.01759
     ],
     [
+     "Dem. Rep. Congo",
+     0.01488
+    ],
+    [
      "Zimbabwe",
      0.01463
     ],
@@ -10139,12 +10491,8 @@
      0.004092
     ],
     [
-     "Gabon",
-     0.002483
-    ],
-    [
-     "Bahrain",
-     0.002217
+     "Congo",
+     0.003236
     ]
    ],
    "by": [
@@ -10173,6 +10521,10 @@
      0.05361
     ],
     [
+     "Dem. Rep. Congo",
+     0.04354
+    ],
+    [
      "Angola",
      0.039
     ],
@@ -10183,15 +10535,11 @@
     [
      "France",
      0.02788
-    ],
-    [
-     "Spain",
-     0.02735
     ]
    ]
   },
   "Nauru": {
-   "reach": 0.003312,
+   "reach": 0.003322,
    "over": [
     [
      "Solomon Is.",
@@ -10230,8 +10578,8 @@
      0.00001071
     ],
     [
-     "Seychelles",
-     0.000007164
+     "South Korea",
+     0.00001032
     ]
    ],
    "by": [
@@ -10252,6 +10600,10 @@
      0.031
     ],
     [
+     "South Korea",
+     0.02449
+    ],
+    [
      "Philippines",
      0.02276
     ],
@@ -10270,15 +10622,11 @@
     [
      "Fiji",
      0.01319
-    ],
-    [
-     "United States of America",
-     0.009963
     ]
    ]
   },
   "Nepal": {
-   "reach": 0.02608,
+   "reach": 0.02614,
    "over": [
     [
      "India",
@@ -10365,7 +10713,7 @@
    ]
   },
   "Netherlands": {
-   "reach": 12.64,
+   "reach": 12.79,
    "over": [
     [
      "Belgium",
@@ -10452,7 +10800,7 @@
    ]
   },
   "New Zealand": {
-   "reach": 1.099,
+   "reach": 1.121,
    "over": [
     [
      "Samoa",
@@ -10505,6 +10853,10 @@
      0.1705
     ],
     [
+     "South Korea",
+     0.1279
+    ],
+    [
      "United Kingdom",
      0.1137
     ],
@@ -10531,15 +10883,11 @@
     [
      "Thailand",
      0.04233
-    ],
-    [
-     "Malaysia",
-     0.04178
     ]
    ]
   },
   "Nicaragua": {
-   "reach": 0.3768,
+   "reach": 0.3773,
    "over": [
     [
      "El Salvador",
@@ -10626,7 +10974,7 @@
    ]
   },
   "Niger": {
-   "reach": 0.1049,
+   "reach": 0.105,
    "over": [
     [
      "Mali",
@@ -10713,7 +11061,7 @@
    ]
   },
   "Nigeria": {
-   "reach": 0.9772,
+   "reach": 0.9865,
    "over": [
     [
      "Côte d'Ivoire",
@@ -10799,8 +11147,95 @@
     ]
    ]
   },
+  "North Korea": {
+   "reach": 0.05177,
+   "over": [
+    [
+     "Russia",
+     0.01995
+    ],
+    [
+     "Papua New Guinea",
+     0.01662
+    ],
+    [
+     "Gabon",
+     0.007461
+    ],
+    [
+     "Trinidad and Tobago",
+     0.001205
+    ],
+    [
+     "Togo",
+     0.0009231
+    ],
+    [
+     "Suriname",
+     0.0006024
+    ],
+    [
+     "China",
+     0.0005807
+    ],
+    [
+     "Samoa",
+     0.0003606
+    ],
+    [
+     "Cuba",
+     0.0003524
+    ],
+    [
+     "Zimbabwe",
+     0.0003461
+    ]
+   ],
+   "by": [
+    [
+     "Malaysia",
+     0.000005776
+    ],
+    [
+     "Algeria",
+     0.000005482
+    ],
+    [
+     "Tunisia",
+     0.000003836
+    ],
+    [
+     "France",
+     0.000002506
+    ],
+    [
+     "Lithuania",
+     5.102e-7
+    ],
+    [
+     "Taiwan",
+     5.962e-8
+    ],
+    [
+     "Antigua and Barb.",
+     4.782e-8
+    ],
+    [
+     "Solomon Is.",
+     4.484e-8
+    ],
+    [
+     "Jamaica",
+     5.597e-10
+    ],
+    [
+     "Malta",
+     1.72e-10
+    ]
+   ]
+  },
   "Norway": {
-   "reach": 1.444,
+   "reach": 1.459,
    "over": [
     [
      "Iceland",
@@ -10887,7 +11322,7 @@
    ]
   },
   "Oman": {
-   "reach": 0.8205,
+   "reach": 0.8227,
    "over": [
     [
      "United Arab Emirates",
@@ -10974,7 +11409,7 @@
    ]
   },
   "Pakistan": {
-   "reach": 0.7183,
+   "reach": 0.723,
    "over": [
     [
      "Afghanistan",
@@ -11061,7 +11496,7 @@
    ]
   },
   "Palau": {
-   "reach": 0.0005534,
+   "reach": 0.0005651,
    "over": [
     [
      "Micronesia",
@@ -11088,6 +11523,10 @@
      0.00001301
     ],
     [
+     "South Korea",
+     0.00001
+    ],
+    [
      "Philippines",
      0.000009854
     ],
@@ -11098,10 +11537,6 @@
     [
      "China",
      0.000005226
-    ],
-    [
-     "Gambia",
-     0.000004629
     ]
    ],
    "by": [
@@ -11130,6 +11565,10 @@
      0.02153
     ],
     [
+     "South Korea",
+     0.02079
+    ],
+    [
      "Taiwan",
      0.01915
     ],
@@ -11140,15 +11579,11 @@
     [
      "Philippines",
      0.00894
-    ],
-    [
-     "Malaysia",
-     0.002604
     ]
    ]
   },
   "Palestine": {
-   "reach": 0.03483,
+   "reach": 0.03486,
    "over": [
     [
      "Israel",
@@ -11235,7 +11670,7 @@
    ]
   },
   "Panama": {
-   "reach": 0.566,
+   "reach": 0.5687,
    "over": [
     [
      "Ecuador",
@@ -11322,7 +11757,7 @@
    ]
   },
   "Papua New Guinea": {
-   "reach": 0.07611,
+   "reach": 0.07632,
    "over": [
     [
      "Australia",
@@ -11409,7 +11844,7 @@
    ]
   },
   "Paraguay": {
-   "reach": 0.2456,
+   "reach": 0.2462,
    "over": [
     [
      "Argentina",
@@ -11496,7 +11931,7 @@
    ]
   },
   "Peru": {
-   "reach": 0.7823,
+   "reach": 0.7986,
    "over": [
     [
      "Bolivia",
@@ -11549,6 +11984,10 @@
      0.1598
     ],
     [
+     "South Korea",
+     0.1368
+    ],
+    [
      "Spain",
      0.135
     ],
@@ -11575,15 +12014,11 @@
     [
      "Chile",
      0.07369
-    ],
-    [
-     "Brazil",
-     0.06755
     ]
    ]
   },
   "Philippines": {
-   "reach": 0.7873,
+   "reach": 0.8359,
    "over": [
     [
      "Indonesia",
@@ -11610,6 +12045,10 @@
      0.04942
     ],
     [
+     "South Korea",
+     0.04795
+    ],
+    [
      "Vietnam",
      0.03884
     ],
@@ -11620,10 +12059,6 @@
     [
      "Nauru",
      0.02276
-    ],
-    [
-     "China",
-     0.02271
     ]
    ],
    "by": [
@@ -11634,6 +12069,10 @@
     [
      "Japan",
      0.2343
+    ],
+    [
+     "South Korea",
+     0.2278
     ],
     [
      "Indonesia",
@@ -11662,15 +12101,11 @@
     [
      "Australia",
      0.06453
-    ],
-    [
-     "Malaysia",
-     0.06225
     ]
    ]
   },
   "Poland": {
-   "reach": 6.333,
+   "reach": 6.461,
    "over": [
     [
      "Ukraine",
@@ -11747,21 +12182,25 @@
      0.1811
     ],
     [
-     "Belgium",
-     0.1446
+     "South Korea",
+     0.1559
     ],
     [
-     "Finland",
-     0.1422
+     "Belgium",
+     0.1446
     ]
    ]
   },
   "Portugal": {
-   "reach": 2.115,
+   "reach": 2.358,
    "over": [
     [
      "Spain",
      0.2484
+    ],
+    [
+     "Cabo Verde",
+     0.192
     ],
     [
      "Romania",
@@ -11794,10 +12233,6 @@
     [
      "Germany",
      0.05678
-    ],
-    [
-     "Angola",
-     0.05225
     ]
    ],
    "by": [
@@ -11844,7 +12279,7 @@
    ]
   },
   "Qatar": {
-   "reach": 1.057,
+   "reach": 1.074,
    "over": [
     [
      "Kuwait",
@@ -11931,7 +12366,7 @@
    ]
   },
   "Romania": {
-   "reach": 2.591,
+   "reach": 2.788,
    "over": [
     [
      "Bulgaria",
@@ -11940,6 +12375,10 @@
     [
      "Hungary",
      0.2063
+    ],
+    [
+     "Moldova",
+     0.1894
     ],
     [
      "Slovakia",
@@ -11968,10 +12407,6 @@
     [
      "Germany",
      0.08832
-    ],
-    [
-     "Austria",
-     0.08394
     ]
    ],
    "by": [
@@ -12018,7 +12453,7 @@
    ]
   },
   "Russia": {
-   "reach": 10.59,
+   "reach": 10.72,
    "over": [
     [
      "Belarus",
@@ -12105,8 +12540,12 @@
    ]
   },
   "Rwanda": {
-   "reach": 0.2119,
+   "reach": 0.2742,
    "over": [
+    [
+     "Dem. Rep. Congo",
+     0.056
+    ],
     [
      "Uganda",
      0.04601
@@ -12136,16 +12575,12 @@
      0.006464
     ],
     [
+     "Congo",
+     0.006322
+    ],
+    [
      "Malawi",
      0.006041
-    ],
-    [
-     "Zambia",
-     0.00524
-    ],
-    [
-     "eSwatini",
-     0.004529
     ]
    ],
    "by": [
@@ -12156,6 +12591,10 @@
     [
      "China",
      0.1428
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.1419
     ],
     [
      "Kenya",
@@ -12184,10 +12623,6 @@
     [
      "Belgium",
      0.02688
-    ],
-    [
-     "United Kingdom",
-     0.02509
     ]
    ]
   },
@@ -12366,7 +12801,7 @@
    ]
   },
   "Samoa": {
-   "reach": 0.01568,
+   "reach": 0.01571,
    "over": [
     [
      "Fiji",
@@ -12397,16 +12832,16 @@
      0.00004056
     ],
     [
+     "South Korea",
+     0.0000351
+    ],
+    [
      "Micronesia",
      0.00002702
     ],
     [
      "China",
      0.0000257
-    ],
-    [
-     "Zambia",
-     0.00002519
     ]
    ],
    "by": [
@@ -12439,21 +12874,21 @@
      0.03482
     ],
     [
+     "South Korea",
+     0.02373
+    ],
+    [
      "India",
      0.0103
     ],
     [
      "Indonesia",
      0.00958
-    ],
-    [
-     "Thailand",
-     0.008237
     ]
    ]
   },
   "San Marino": {
-   "reach": 0.003169,
+   "reach": 0.003186,
    "over": [
     [
      "Luxembourg",
@@ -12540,7 +12975,7 @@
    ]
   },
   "Saudi Arabia": {
-   "reach": 3.21,
+   "reach": 3.267,
    "over": [
     [
      "Bahrain",
@@ -12613,21 +13048,21 @@
      0.08806
     ],
     [
+     "South Korea",
+     0.08201
+    ],
+    [
      "Germany",
      0.07183
     ],
     [
      "India",
      0.06749
-    ],
-    [
-     "Oman",
-     0.06449
     ]
    ]
   },
   "Senegal": {
-   "reach": 0.7226,
+   "reach": 0.7402,
    "over": [
     [
      "Mali",
@@ -12714,7 +13149,7 @@
    ]
   },
   "Serbia": {
-   "reach": 1.034,
+   "reach": 1.044,
    "over": [
     [
      "Montenegro",
@@ -12801,7 +13236,7 @@
    ]
   },
   "Seychelles": {
-   "reach": 0.02448,
+   "reach": 0.02521,
    "over": [
     [
      "Mauritius",
@@ -12840,8 +13275,8 @@
      0.0005855
     ],
     [
-     "Belize",
-     0.0004625
+     "Cabo Verde",
+     0.0004816
     ]
    ],
    "by": [
@@ -12888,7 +13323,7 @@
    ]
   },
   "Sierra Leone": {
-   "reach": 0.03598,
+   "reach": 0.03609,
    "over": [
     [
      "Macedonia",
@@ -12975,7 +13410,7 @@
    ]
   },
   "Singapore": {
-   "reach": 3.598,
+   "reach": 3.744,
    "over": [
     [
      "Brunei",
@@ -13062,7 +13497,7 @@
    ]
   },
   "Slovakia": {
-   "reach": 2.288,
+   "reach": 2.313,
    "over": [
     [
      "Czechia",
@@ -13149,7 +13584,7 @@
    ]
   },
   "Slovenia": {
-   "reach": 1.755,
+   "reach": 1.765,
    "over": [
     [
      "Croatia",
@@ -13236,7 +13671,7 @@
    ]
   },
   "Solomon Is.": {
-   "reach": 0.02349,
+   "reach": 0.02351,
    "over": [
     [
      "Nauru",
@@ -13410,7 +13845,7 @@
    ]
   },
   "South Africa": {
-   "reach": 3.924,
+   "reach": 4.122,
    "over": [
     [
      "Mozambique",
@@ -13441,16 +13876,16 @@
      0.1955
     ],
     [
+     "Dem. Rep. Congo",
+     0.1642
+    ],
+    [
      "Malawi",
      0.1468
     ],
     [
      "Mali",
      0.1424
-    ],
-    [
-     "Mauritius",
-     0.1102
     ]
    ],
    "by": [
@@ -13496,8 +13931,95 @@
     ]
    ]
   },
+  "South Korea": {
+   "reach": 5.1,
+   "over": [
+    [
+     "Vietnam",
+     0.2522
+    ],
+    [
+     "Philippines",
+     0.2278
+    ],
+    [
+     "Indonesia",
+     0.1767
+    ],
+    [
+     "Thailand",
+     0.1716
+    ],
+    [
+     "Malaysia",
+     0.156
+    ],
+    [
+     "Poland",
+     0.1559
+    ],
+    [
+     "Iraq",
+     0.1446
+    ],
+    [
+     "Peru",
+     0.1368
+    ],
+    [
+     "Marshall Is.",
+     0.1342
+    ],
+    [
+     "New Zealand",
+     0.1279
+    ]
+   ],
+   "by": [
+    [
+     "United States of America",
+     0.4477
+    ],
+    [
+     "Germany",
+     0.1709
+    ],
+    [
+     "India",
+     0.1599
+    ],
+    [
+     "Vietnam",
+     0.135
+    ],
+    [
+     "China",
+     0.1252
+    ],
+    [
+     "France",
+     0.08574
+    ],
+    [
+     "United Kingdom",
+     0.07883
+    ],
+    [
+     "Indonesia",
+     0.06502
+    ],
+    [
+     "Singapore",
+     0.05928
+    ],
+    [
+     "Japan",
+     0.05768
+    ]
+   ]
+  },
   "Spain": {
-   "reach": 10.36,
+   "reach": 10.47,
    "over": [
     [
      "Portugal",
@@ -13584,7 +14106,7 @@
    ]
   },
   "Sri Lanka": {
-   "reach": 0.155,
+   "reach": 0.1557,
    "over": [
     [
      "Maldives",
@@ -13845,7 +14367,7 @@
    ]
   },
   "Sudan": {
-   "reach": 0.2977,
+   "reach": 0.2979,
    "over": [
     [
      "Macao",
@@ -13932,7 +14454,7 @@
    ]
   },
   "Suriname": {
-   "reach": 0.09806,
+   "reach": 0.09815,
    "over": [
     [
      "Antigua and Barb.",
@@ -14019,7 +14541,7 @@
    ]
   },
   "Sweden": {
-   "reach": 5.07,
+   "reach": 5.131,
    "over": [
     [
      "Finland",
@@ -14106,7 +14628,7 @@
    ]
   },
   "Switzerland": {
-   "reach": 4.164,
+   "reach": 4.234,
    "over": [
     [
      "Slovenia",
@@ -14193,7 +14715,7 @@
    ]
   },
   "Syria": {
-   "reach": 0.1352,
+   "reach": 0.1354,
    "over": [
     [
      "Lebanon",
@@ -14280,11 +14802,15 @@
    ]
   },
   "São Tomé and Principe": {
-   "reach": 0.007007,
+   "reach": 0.01001,
    "over": [
     [
      "Gabon",
      0.004324
+    ],
+    [
+     "Congo",
+     0.002993
     ],
     [
      "Angola",
@@ -14317,10 +14843,6 @@
     [
      "Niger",
      0.00001857
-    ],
-    [
-     "Guyana",
-     0.00001307
     ]
    ],
    "by": [
@@ -14335,6 +14857,10 @@
     [
      "Gabon",
      0.07802
+    ],
+    [
+     "Congo",
+     0.05035
     ],
     [
      "China",
@@ -14359,15 +14885,11 @@
     [
      "Belgium",
      0.009315
-    ],
-    [
-     "Singapore",
-     0.009066
     ]
    ]
   },
   "Taiwan": {
-   "reach": 1.337,
+   "reach": 1.4,
    "over": [
     [
      "Singapore",
@@ -14398,16 +14920,16 @@
      0.04344
     ],
     [
+     "South Korea",
+     0.03813
+    ],
+    [
      "Thailand",
      0.03741
     ],
     [
      "China",
      0.03671
-    ],
-    [
-     "Japan",
-     0.03457
     ]
    ],
    "by": [
@@ -14436,6 +14958,10 @@
      0.05414
     ],
     [
+     "South Korea",
+     0.053
+    ],
+    [
      "Malaysia",
      0.04079
     ],
@@ -14446,15 +14972,11 @@
     [
      "Netherlands",
      0.03304
-    ],
-    [
-     "Australia",
-     0.03172
     ]
    ]
   },
   "Tajikistan": {
-   "reach": 0.1138,
+   "reach": 0.114,
    "over": [
     [
      "Uzbekistan",
@@ -14541,7 +15063,7 @@
    ]
   },
   "Tanzania": {
-   "reach": 0.6708,
+   "reach": 0.6929,
    "over": [
     [
      "Burundi",
@@ -14628,7 +15150,7 @@
    ]
   },
   "Thailand": {
-   "reach": 2.521,
+   "reach": 2.582,
    "over": [
     [
      "Cambodia",
@@ -14685,6 +15207,10 @@
      0.1951
     ],
     [
+     "South Korea",
+     0.1716
+    ],
+    [
      "Germany",
      0.1295
     ],
@@ -14707,15 +15233,98 @@
     [
      "Indonesia",
      0.08289
+    ]
+   ]
+  },
+  "Timor-Leste": {
+   "reach": 0.001968,
+   "over": [
+    [
+     "Indonesia",
+     0.0008154
     ],
     [
-     "United Kingdom",
-     0.07312
+     "Singapore",
+     0.0002486
+    ],
+    [
+     "Taiwan",
+     0.000111
+    ],
+    [
+     "Malaysia",
+     0.0001094
+    ],
+    [
+     "Australia",
+     0.00009136
+    ],
+    [
+     "China",
+     0.0000586
+    ],
+    [
+     "Vanuatu",
+     0.00005721
+    ],
+    [
+     "Turkey",
+     0.00005353
+    ],
+    [
+     "Fiji",
+     0.00005138
+    ],
+    [
+     "Vietnam",
+     0.0000312
+    ]
+   ],
+   "by": [
+    [
+     "Indonesia",
+     0.05842
+    ],
+    [
+     "China",
+     0.05686
+    ],
+    [
+     "Australia",
+     0.04882
+    ],
+    [
+     "Japan",
+     0.02967
+    ],
+    [
+     "Singapore",
+     0.02803
+    ],
+    [
+     "United States of America",
+     0.02583
+    ],
+    [
+     "Taiwan",
+     0.01891
+    ],
+    [
+     "Malaysia",
+     0.01603
+    ],
+    [
+     "India",
+     0.01587
+    ],
+    [
+     "Turkey",
+     0.01531
     ]
    ]
   },
   "Togo": {
-   "reach": 0.313,
+   "reach": 0.3738,
    "over": [
     [
      "Burkina Faso",
@@ -14724,6 +15333,10 @@
     [
      "Benin",
      0.05019
+    ],
+    [
+     "Congo",
+     0.04449
     ],
     [
      "Niger",
@@ -14750,12 +15363,8 @@
      0.01709
     ],
     [
-     "Guinea-Bissau",
-     0.008277
-    ],
-    [
-     "Nigeria",
-     0.006173
+     "Cabo Verde",
+     0.01487
     ]
    ],
    "by": [
@@ -14889,7 +15498,7 @@
    ]
   },
   "Trinidad and Tobago": {
-   "reach": 1.345,
+   "reach": 1.346,
    "over": [
     [
      "Grenada",
@@ -14976,7 +15585,7 @@
    ]
   },
   "Tunisia": {
-   "reach": 0.3542,
+   "reach": 0.3563,
    "over": [
     [
      "Libya",
@@ -15063,7 +15672,7 @@
    ]
   },
   "Turkey": {
-   "reach": 4.845,
+   "reach": 4.979,
    "over": [
     [
      "Azerbaijan",
@@ -15150,7 +15759,7 @@
    ]
   },
   "Turkmenistan": {
-   "reach": 0.127,
+   "reach": 0.1282,
    "over": [
     [
      "Uzbekistan",
@@ -15237,7 +15846,7 @@
    ]
   },
   "Uganda": {
-   "reach": 0.6025,
+   "reach": 0.6423,
    "over": [
     [
      "S. Sudan",
@@ -15260,6 +15869,10 @@
      0.0392
     ],
     [
+     "Dem. Rep. Congo",
+     0.03918
+    ],
+    [
      "Sudan",
      0.02136
     ],
@@ -15274,10 +15887,6 @@
     [
      "Central African Rep.",
      0.008366
-    ],
-    [
-     "Zambia",
-     0.00626
     ]
    ],
    "by": [
@@ -15302,6 +15911,10 @@
      0.06562
     ],
     [
+     "Dem. Rep. Congo",
+     0.06206
+    ],
+    [
      "Tanzania",
      0.05996
     ],
@@ -15316,19 +15929,19 @@
     [
      "India",
      0.03873
-    ],
-    [
-     "Belarus",
-     0.03418
     ]
    ]
   },
   "Ukraine": {
-   "reach": 1.45,
+   "reach": 1.592,
    "over": [
     [
      "Poland",
      0.114
+    ],
+    [
+     "Moldova",
+     0.1097
     ],
     [
      "Slovakia",
@@ -15361,10 +15974,6 @@
     [
      "Czechia",
      0.0512
-    ],
-    [
-     "Hungary",
-     0.04969
     ]
    ],
    "by": [
@@ -15411,7 +16020,7 @@
    ]
   },
   "United Arab Emirates": {
-   "reach": 6.749,
+   "reach": 6.944,
    "over": [
     [
      "Yemen",
@@ -15480,6 +16089,10 @@
      0.1132
     ],
     [
+     "South Korea",
+     0.1069
+    ],
+    [
      "Russia",
      0.1032
     ],
@@ -15490,15 +16103,11 @@
     [
      "South Africa",
      0.08789
-    ],
-    [
-     "Netherlands",
-     0.08259
     ]
    ]
   },
   "United Kingdom": {
-   "reach": 11.27,
+   "reach": 11.44,
    "over": [
     [
      "Ireland",
@@ -15585,7 +16194,7 @@
    ]
   },
   "United States of America": {
-   "reach": 30.19,
+   "reach": 30.87,
    "over": [
     [
      "Mexico",
@@ -15616,16 +16225,16 @@
      0.4498
     ],
     [
+     "South Korea",
+     0.4477
+    ],
+    [
      "Costa Rica",
      0.4328
     ],
     [
      "Honduras",
      0.4258
-    ],
-    [
-     "Jamaica",
-     0.4086
     ]
    ],
    "by": [
@@ -15662,17 +16271,17 @@
      0.1082
     ],
     [
-     "Australia",
-     0.0932
+     "South Korea",
+     0.1032
     ],
     [
-     "Israel",
-     0.09071
+     "Australia",
+     0.0932
     ]
    ]
   },
   "Uruguay": {
-   "reach": 0.2186,
+   "reach": 0.2199,
    "over": [
     [
      "Paraguay",
@@ -15759,7 +16368,7 @@
    ]
   },
   "Uzbekistan": {
-   "reach": 0.7326,
+   "reach": 0.741,
    "over": [
     [
      "Kyrgyzstan",
@@ -15846,7 +16455,7 @@
    ]
   },
   "Vanuatu": {
-   "reach": 0.06244,
+   "reach": 0.06248,
    "over": [
     [
      "Kiribati",
@@ -16020,8 +16629,12 @@
    ]
   },
   "Vietnam": {
-   "reach": 1.795,
+   "reach": 1.969,
    "over": [
+    [
+     "South Korea",
+     0.135
+    ],
     [
      "Cambodia",
      0.1294
@@ -16057,16 +16670,16 @@
     [
      "China",
      0.04541
-    ],
-    [
-     "Netherlands",
-     0.04432
     ]
    ],
    "by": [
     [
      "United States of America",
      0.2732
+    ],
+    [
+     "South Korea",
+     0.2522
     ],
     [
      "China",
@@ -16099,10 +16712,6 @@
     [
      "Hong Kong",
      0.07513
-    ],
-    [
-     "Germany",
-     0.07298
     ]
    ]
   },
@@ -16194,7 +16803,7 @@
    ]
   },
   "Yemen": {
-   "reach": 0.142,
+   "reach": 0.1421,
    "over": [
     [
      "Djibouti",
@@ -16281,8 +16890,12 @@
    ]
   },
   "Zambia": {
-   "reach": 0.5347,
+   "reach": 0.6366,
    "over": [
+    [
+     "Dem. Rep. Congo",
+     0.09898
+    ],
     [
      "Namibia",
      0.08965
@@ -16318,10 +16931,6 @@
     [
      "Mozambique",
      0.01913
-    ],
-    [
-     "Rwanda",
-     0.01421
     ]
    ],
    "by": [
@@ -16332,6 +16941,10 @@
     [
      "South Africa",
      0.1955
+    ],
+    [
+     "Dem. Rep. Congo",
+     0.1432
     ],
     [
      "United States of America",
@@ -16360,15 +16973,11 @@
     [
      "Malawi",
      0.03509
-    ],
-    [
-     "United Arab Emirates",
-     0.02621
     ]
    ]
   },
   "Zimbabwe": {
-   "reach": 0.4079,
+   "reach": 0.4102,
    "over": [
     [
      "Zambia",
@@ -16455,7 +17064,7 @@
    ]
   },
   "eSwatini": {
-   "reach": 0.1815,
+   "reach": 0.1836,
    "over": [
     [
      "South Africa",

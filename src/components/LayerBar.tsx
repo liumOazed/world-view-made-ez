@@ -1,31 +1,47 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Activity, Award, ChevronDown, Flame, Gauge, Landmark, Ship, Sparkles, type LucideIcon } from 'lucide-react';
-import { LAYERS, PILLAR_LAYERS, type Layer, type LayerId } from '../data/layers';
+import {
+  Activity,
+  Award,
+  Banknote,
+  ChevronDown,
+  Flame,
+  Landmark,
+  ShieldAlert,
+  Ship,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react';
+import { layerFor, PILLAR_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { LOADED, SCORED } from '../data/scorecard';
+import { SECTIONS, type SectionId } from '../data/sections';
 
-const ICONS: Partial<Record<LayerId, LucideIcon>> = {
+const ICONS: Record<SectionId | 'scorecard', LucideIcon> = {
   growth: Activity,
-  inflation: Flame,
+  prices: Flame,
+  government: Landmark,
   trade: Ship,
-  financial: Landmark,
-  geopolitical: Gauge,
-  leverage: Sparkles,
+  money: Banknote,
+  influence: Sparkles,
+  risk: ShieldAlert,
   scorecard: Award,
 };
 
+type Tab = { id: SectionId | 'scorecard'; label: string };
+const TABS: Tab[] = [...SECTIONS.map((s) => ({ id: s.id, label: s.label })), { id: 'scorecard', label: 'Scorecard' }];
+
 const GAP = 4;
-/** Room kept for the "More" button, which shows the active layer's name when that layer is hidden. */
+/** Room kept for the "More" button, which shows the active section's name when that section is hidden. */
 const MORE_WIDTH = 96;
 const CHEVRON = 22;
 
-export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: LayerId) => void }) {
-  const isScore = layer.id === 'scorecard' || layer.id.startsWith('score-');
+export function LayerBar({ layer, onChange, coverage }: { layer: Layer; onChange: (id: LayerId) => void; coverage: string }) {
+  const section = sectionOf(layer.id) ?? 'scorecard';
   const rowRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
-  const [fit, setFit] = useState(LAYERS.length);
+  const [fit, setFit] = useState(TABS.length);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Keep the layers on one row: whatever does not fit moves into a "More" menu.
+  // Keep the sections on one row: whatever does not fit moves into a "More" menu.
   useLayoutEffect(() => {
     const row = rowRef.current;
     const measure = measureRef.current;
@@ -35,7 +51,7 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
       const avail = row.clientWidth + GAP;
       const total = widths.reduce((a, b) => a + b, 0);
       // Phones scroll the row sideways instead.
-      if (total <= avail || row.clientWidth < 560) return setFit(LAYERS.length);
+      if (total <= avail || row.clientWidth < 560) return setFit(TABS.length);
       let used = Math.max(MORE_WIDTH, ...widths.map((w) => w + CHEVRON));
       let n = 0;
       while (n < widths.length && used + widths[n] <= avail) used += widths[n++];
@@ -60,36 +76,44 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
     };
   }, [menuOpen]);
 
-  const isActive = (id: LayerId) => id === layer.id || (id === 'scorecard' && isScore);
-  const chip = (l: Layer, extra = '') => {
-    const Icon = ICONS[l.id] ?? Award;
-    const active = isActive(l.id);
+  const pick = (t: Tab) => {
+    onChange(t.id === 'scorecard' ? 'scorecard' : layerFor(t.id));
+    setMenuOpen(false);
+  };
+  const chip = (t: Tab, extra = '') => {
+    const Icon = ICONS[t.id];
+    const active = t.id === section;
     return (
       <button
-        key={l.id}
+        key={t.id}
         type="button"
         role="tab"
         aria-selected={active}
-        className={`layer-chip${active ? ' is-active' : ''}${l.id === 'scorecard' ? ' is-new' : ''}${extra}`}
-        onClick={() => {
-          onChange(l.id);
-          setMenuOpen(false);
-        }}
+        className={`layer-chip${active ? ' is-active' : ''}${extra}`}
+        onClick={() => (active ? undefined : pick(t))}
       >
         <Icon size={14} />
-        {l.label}
+        {t.label}
       </button>
     );
   };
-  const shown = LAYERS.slice(0, fit);
-  const hidden = LAYERS.slice(fit);
-  const hiddenActive = hidden.find((l) => isActive(l.id));
+  const shown = TABS.slice(0, fit);
+  const hidden = TABS.slice(fit);
+  const hiddenActive = hidden.find((t) => t.id === section);
+  const subs =
+    section === 'scorecard'
+      ? [{ id: 'scorecard' as LayerId, label: 'All pillars' }, ...PILLAR_LAYERS.map((l) => ({ id: l.id, label: l.label }))]
+      : SECTIONS.find((s) => s.id === section)!.subs.map((sub) => ({
+          id: layerFor(section, sub.id),
+          label: sub.label,
+          partial: Boolean(sub.pending),
+        }));
 
   return (
     <>
       <div className="layer-row" ref={rowRef}>
-        <div className="layer-bar" role="tablist" aria-label="Map layer">
-          {shown.map((l) => chip(l))}
+        <div className="layer-bar" role="tablist" aria-label="Section">
+          {shown.map((t) => chip(t))}
         </div>
         {hidden.length > 0 && (
           <div className="layer-more">
@@ -104,43 +128,43 @@ export function LayerBar({ layer, onChange }: { layer: Layer; onChange: (id: Lay
               <ChevronDown size={14} />
             </button>
             {menuOpen && (
-              <div className="layer-menu" role="tablist" aria-label="More map layers">
-                {hidden.map((l) => chip(l, ' in-menu'))}
+              <div className="layer-menu" role="tablist" aria-label="More sections">
+                {hidden.map((t) => chip(t, ' in-menu'))}
               </div>
             )}
           </div>
         )}
         <div className="layer-measure" ref={measureRef} aria-hidden="true">
-          {LAYERS.map((l) => {
-            const Icon = ICONS[l.id] ?? Award;
+          {TABS.map((t) => {
+            const Icon = ICONS[t.id];
             return (
-              <span key={l.id} className={`layer-chip${l.id === 'scorecard' ? ' is-new' : ''}`}>
+              <span key={t.id} className="layer-chip">
                 <Icon size={14} />
-                {l.label}
+                {t.label}
               </span>
             );
           })}
         </div>
       </div>
-      {isScore && (
-        <div className="pillar-bar" role="tablist" aria-label="Scorecard pillar">
-          {[{ id: 'scorecard' as LayerId, label: 'Overall' }, ...PILLAR_LAYERS].map((l) => (
-            <button
-              key={l.id}
-              type="button"
-              role="tab"
-              aria-selected={l.id === layer.id}
-              className={l.id === layer.id ? 'is-active' : undefined}
-              onClick={() => onChange(l.id)}
-            >
-              {l.label}
-            </button>
-          ))}
-          <span className="pillar-note">
-            {LOADED.length} of {SCORED.length} indices loaded · weights 25 / 30 / 30 / 15
-          </span>
-        </div>
-      )}
+      <div className="pillar-bar" role="tablist" aria-label="Subsection">
+        {subs.map((l) => (
+          <button
+            key={l.id}
+            type="button"
+            role="tab"
+            aria-selected={l.id === layer.id}
+            className={l.id === layer.id ? 'is-active' : undefined}
+            onClick={() => onChange(l.id)}
+            title={'partial' in l && l.partial ? 'Some of this subsection’s data is not fetched yet' : undefined}
+          >
+            {l.label}
+            {'partial' in l && l.partial && <i className="partial-dot" aria-label="partly loaded" />}
+          </button>
+        ))}
+        <span className="pillar-note">
+          {section === 'scorecard' ? `${LOADED.length} of ${SCORED.length} indices loaded · weights 25 / 30 / 30 / 15` : coverage}
+        </span>
+      </div>
     </>
   );
 }

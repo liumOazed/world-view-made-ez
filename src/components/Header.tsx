@@ -126,9 +126,9 @@ export function Header({ profiles, onSelect }: Props) {
         )}
       </div>
 
-      <div className="data-badge" title="All figures on this page are placeholders for layout, not live statistics.">
-        <span className="dot" />
-        Illustrative data
+      <div className="data-badge" title="Map and country figures come from IMF, World Bank, BIS, UN Comtrade and other open sources, with the year on every value. News is still a placeholder.">
+        <span className="dot is-live" />
+        Sourced data
       </div>
     </header>
   );

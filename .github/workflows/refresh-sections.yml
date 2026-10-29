@@ -1,0 +1,52 @@
+name: Refresh section indicators
+
+# Pulls the seven sections' indicators into src/data/sections.json. On main it opens or
+# updates a PR on the data/sections-refresh branch instead of pushing.
+on:
+  schedule:
+    - cron: '0 6 * * 1' # weekly; IMF, World Bank and BIS update on their own calendars
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['scripts/fetch-sections.mjs', '.github/workflows/refresh-sections.yml']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-sections-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-sections.mjs
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/sections.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh section indicators ($(date -u +%Y-%m-%d))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/sections-refresh
+            gh pr create --head data/sections-refresh --base main --title 'Refresh section indicators' \
+              --body 'Automated refresh of `src/data/sections.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            # Code may have been pushed while the fetch ran.
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
