@@ -12,13 +12,7 @@
  * has; see .github/workflows/refresh-trade.yml.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { createRequire } from 'node:module';
-
-const require = createRequire(import.meta.url);
-const countries = require('i18n-iso-countries');
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
-const world = require('world-atlas/countries-110m.json');
-const small = JSON.parse(readFileSync(new URL('../src/data/small-countries.json', import.meta.url), 'utf8'));
+import { isoCountries as countries, mapCountries } from './lib/map-countries.mjs';
 
 const OUT = new URL('../src/data/trade.json', import.meta.url);
 const API = 'https://comtradeapi.un.org/public/v1/preview/C/A/HS';
@@ -33,37 +27,10 @@ const STALE_DAYS = 30;
 const PRIORITY = `USA CHN DEU JPN IND GBR FRA ITA BRA CAN RUS KOR AUS ESP MEX IDN NLD SAU TUR CHE POL TWN BEL SWE
   ARG NOR AUT ARE IRL ISR THA SGP MYS VNM PHL BGD EGY NGA ZAF PAK CHL COL KEN ETH GHA LKA KAZ QAT IRN UKR`.split(/\s+/);
 
-// Map names the ISO library cannot resolve.
-const NAME_ISO = {
-  Kosovo: 'XKX',
-  Micronesia: 'FSM',
-  'Marshall Is.': 'MHL',
-  'Cayman Is.': 'CYM',
-  'São Tomé and Principe': 'STP',
-  'St. Vin. and Gren.': 'VCT',
-  'St. Kitts and Nevis': 'KNA',
-  'Fr. Polynesia': 'PYF',
-  'Cabo Verde': 'CPV',
-  'Antigua and Barb.': 'ATG',
-};
 // Where Comtrade's numeric code differs from ISO 3166 (used only if the reference file is unavailable).
 const COMTRADE_CODE = { USA: 842, FRA: 251, IND: 699, NOR: 579, CHE: 757, TWN: 490, ITA: 380 };
 // Comtrade reports Taiwan as "Other Asia, nes".
 const PARTNER_ISO = { S19: 'TWN' };
-
-/** Map name -> ISO alpha-3, for every country drawn on the map. */
-function mapCountries() {
-  const out = new Map();
-  for (const g of world.objects.countries.geometries) {
-    const iso = NAME_ISO[g.properties.name] ?? (g.id ? countries.numericToAlpha3(g.id) : undefined);
-    if (iso) out.set(g.properties.name, iso);
-  }
-  for (const f of small.features) {
-    const iso = NAME_ISO[f.properties.name] ?? countries.getAlpha3Code(f.properties.name, 'en');
-    if (iso) out.set(f.properties.name, iso);
-  }
-  return out;
-}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
