@@ -1,39 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, Sparkles, Waves } from 'lucide-react';
+import { MapPin, Search, Sparkles, Waves } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import { Flag } from './Flag';
 import { setReducedEffects, useReducedEffects } from '../effects';
+import { PLACE_INDEX, pathOf, type Place, type PlaceHit } from '../map/places';
+
+export type Route = 'map' | 'rankings' | 'explore' | 'method';
 
 interface Props {
   profiles: Map<string, CountryProfile>;
+  route: Route;
   onSelect: (name: string) => void;
+  onPlace: (p: Place) => void;
 }
 
-/** In-page sections, in reading order. */
-const NAV = [
-  { id: 'atlas-main', label: 'Map' },
+/** The site's pages; the map is home. */
+const NAV: { id: Route; label: string }[] = [
+  { id: 'map', label: 'Map' },
   { id: 'rankings', label: 'Rankings' },
   { id: 'explore', label: 'Explore' },
   { id: 'method', label: 'Method' },
 ];
+const href = (r: Route) => (r === 'map' ? '#/' : `#/${r}`);
 
-/** Highlights the nav item for the section that holds the middle of the viewport. */
-function useActiveSection() {
-  const [active, setActive] = useState(NAV[0].id);
-  useEffect(() => {
-    const els = NAV.map((n) => document.getElementById(n.id)).filter((e): e is HTMLElement => !!e);
-    if (!els.length || typeof IntersectionObserver === 'undefined') return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
-      },
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
-    els.forEach((e) => io.observe(e));
-    return () => io.disconnect();
-  }, []);
-  return active;
-}
+type Hit = { kind: 'country'; c: CountryProfile } | { kind: 'place'; p: PlaceHit };
 
 export function EffectsToggle({ compact = false }: { compact?: boolean }) {
   const reduced = useReducedEffects();
@@ -53,21 +43,28 @@ export function EffectsToggle({ compact = false }: { compact?: boolean }) {
   );
 }
 
-export function Header({ profiles, onSelect }: Props) {
+export function Header({ profiles, route, onSelect, onPlace }: Props) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const activeSection = useActiveSection();
 
   const all = useMemo(() => [...profiles.values()].sort((a, b) => b.gdp - a.gdp), [profiles]);
-  const results = useMemo(() => {
+  // Countries first, then divisions, districts and upazilas.
+  const results = useMemo((): Hit[] => {
     const q = query.trim().toLowerCase();
-    if (!q) return all.filter((c) => c.curated).slice(0, 6);
-    return all
+    if (!q) return all.filter((c) => c.curated).slice(0, 6).map((c) => ({ kind: 'country', c }));
+    const starts = (s: string) => Number(!s.toLowerCase().startsWith(q));
+    const countries = all
       .filter((c) => c.display.toLowerCase().includes(q) || c.name.toLowerCase().includes(q))
-      .sort((a, b) => Number(!a.display.toLowerCase().startsWith(q)) - Number(!b.display.toLowerCase().startsWith(q)))
-      .slice(0, 7);
+      .sort((a, b) => starts(a.display) - starts(b.display))
+      .slice(0, 5)
+      .map((c): Hit => ({ kind: 'country', c }));
+    const places = q.length < 2 ? [] : PLACE_INDEX.filter((p) => p.name.toLowerCase().includes(q))
+      .sort((a, b) => starts(a.name) - starts(b.name) || a.level - b.level)
+      .slice(0, 8 - countries.length)
+      .map((p): Hit => ({ kind: 'place', p }));
+    return [...countries, ...places];
   }, [all, query]);
 
   useEffect(() => {
@@ -81,8 +78,9 @@ export function Header({ profiles, onSelect }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const choose = (c: CountryProfile) => {
-    onSelect(c.name);
+  const choose = (h: Hit) => {
+    if (h.kind === 'country') onSelect(h.c.name);
+    else onPlace({ country: h.p.country, path: pathOf(h.p.key) });
     setQuery('');
     setOpen(false);
     inputRef.current?.blur();
@@ -91,7 +89,7 @@ export function Header({ profiles, onSelect }: Props) {
   return (
     <header className="topbar">
       <div className="topbar-inner wrap">
-        <a className="brand" href="#atlas-main" aria-label="ATLAS, back to the map">
+        <a className="brand" href="#/" aria-label="ATLAS, back to the map">
           <BrandMark />
           <span className="brand-text">
             <span className="brand-name">Atlas</span>
@@ -103,9 +101,9 @@ export function Header({ profiles, onSelect }: Props) {
           {NAV.map((n) => (
             <a
               key={n.id}
-              href={`#${n.id}`}
-              className={n.id === activeSection ? 'is-active' : undefined}
-              aria-current={n.id === activeSection ? 'location' : undefined}
+              href={href(n.id)}
+              className={n.id === route ? 'is-active' : undefined}
+              aria-current={n.id === route ? 'page' : undefined}
             >
               {n.label}
             </a>
@@ -118,8 +116,8 @@ export function Header({ profiles, onSelect }: Props) {
             <input
               ref={inputRef}
               value={query}
-              placeholder="Search countries, companies or issues…"
-              aria-label="Search countries"
+              placeholder="Search a country, division, district…"
+              aria-label="Search countries and places"
               onFocus={() => setOpen(true)}
               onBlur={() => setTimeout(() => setOpen(false), 120)}
               onChange={(e) => {
@@ -145,21 +143,31 @@ export function Header({ profiles, onSelect }: Props) {
             {open && results.length > 0 && (
               <ul className="search-results" role="listbox">
                 {!query && <li className="search-hint">Featured profiles</li>}
-                {results.map((c, i) => (
+                {results.map((h, i) => (
                   <li
-                    key={c.name}
+                    key={h.kind === 'country' ? h.c.name : h.p.country + h.p.key}
                     role="option"
                     aria-selected={i === active}
                     className={i === active ? 'is-active' : undefined}
                     onMouseEnter={() => setActive(i)}
                     onMouseDown={(e) => {
                       e.preventDefault();
-                      choose(c);
+                      choose(h);
                     }}
                   >
-                    <Flag country={c} size="sm" />
-                    <span>{c.display}</span>
-                    <small>{c.region}</small>
+                    {h.kind === 'country' ? (
+                      <>
+                        <Flag country={h.c} size="sm" />
+                        <span>{h.c.display}</span>
+                        <small>{h.c.region}</small>
+                      </>
+                    ) : (
+                      <>
+                        <MapPin size={14} className="search-pin" />
+                        <span>{h.p.name}</span>
+                        <small>{h.p.kind}</small>
+                      </>
+                    )}
                   </li>
                 ))}
               </ul>

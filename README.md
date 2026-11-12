@@ -10,14 +10,18 @@ Figures come from open sources fetched by scheduled GitHub Actions; every value 
 
 ## What's here
 
-- **Full-width map** (D3 + Natural Earth): a drag-to-spin globe or flat map, colored by the selected subsection.
+- **A real, zoomable map** (MapLibre GL on a globe). The home page is the map and little else. Click a country and the map flies in; its divisions or states become clickable, and each click goes one level down. Bangladesh opens from divisions to districts to upazilas and city areas, with roads and markets at street scale. The structure is the same for every country (`src/map/places.ts`), so more countries are a data drop. See [`public/geo/README.md`](public/geo/README.md).
+- **Moving globe.** It turns slowly until you touch it; trade and influence links draw in as great-circle arcs with light flowing along them. The reduced-effects switch stops all of it.
+- **One colour picker.** A single "Colour by" control at the bottom picks any of the subsections; its key sits in the same pill.
+- **Place card.** A small card per place: three figures, the places inside it, and a link to the full profile.
 - **Seven sections, 33 subsections.** Each topic has one home: Growth, Prices & people, Government, Trade and Money say what the number is; Influence says who has leverage over whom; Risk scores how dangerous it is and cites the numbers above. A Scorecard section ranks countries on global indices.
-- **Floating drawer.** The global overview and country views open in a translucent panel over the map's right edge (closed by default, Esc closes it). On phones it is a bottom sheet.
+- **Full profile.** The global overview and country views open in a translucent panel over the map's right edge (Esc closes it). On phones it is a bottom sheet.
+- **Pages.** Rankings, Explore and Method each have their own page (`#/rankings`, `#/explore`, `#/method`).
 - **Country view.** A tab per section; each subsection lists its indicators with year, rank and source, plus trade partners (UN Comtrade), influence (FBIC) and the resilience score breakdown. Anything not fetched yet says so.
 
 ## Design system
 
-Modern yet traditional, following the design brief: a dark navy map as the hero, ivory "paper" sections for reading (rankings, explore), and a dark footer.
+Modern yet traditional, following the design brief: a full-screen navy map as the home page, ivory "paper" pages for reading (rankings, explore, method), and a dark footer.
 
 - **Type.** EB Garamond for headlines and every key figure (lining, tabular numerals); a geometric sans for the interface, Century Gothic where installed and Poppins otherwise.
 - **Color.** Navy base, ivory text, one warm accent (brass) for brand and editorial details, azure for active controls. Data colors share one family: garnet and copper for adverse, gold for caution, steel and azure for favorable.
