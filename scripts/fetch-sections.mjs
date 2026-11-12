@@ -59,7 +59,8 @@ const WB = {
   outputPerWorker: ['SL.GDP.PCAP.EM.KD', 'GDP per person employed', 'constant 2021 PPP $', 'ilo'],
   agriculture: ['NV.AGR.TOTL.ZS', 'Agriculture, value added', '% of GDP', 'wdi'],
   industry: ['NV.IND.TOTL.ZS', 'Industry, value added', '% of GDP', 'wdi'],
-  manufacturing: ['NV.IND.MANF.ZS', 'Manufacturing, value added', '% of GDP', 'wdi'],
+  // Some oil and conflict economies last reported manufacturing long ago; an old figure still tells them from factory economies.
+  manufacturing: ['NV.IND.MANF.ZS', 'Manufacturing, value added', '% of GDP', 'wdi', 25],
   services: ['NV.SRV.TOTL.ZS', 'Services, value added', '% of GDP', 'wdi'],
   techShare: ['NV.MNF.TECH.ZS.UN', 'Medium and high-tech manufacturing', '% of manufacturing value added', 'wdi'],
   unemployment: ['SL.UEM.TOTL.ZS', 'Unemployment', '% of labour force', 'ilo'],
@@ -166,7 +167,7 @@ async function imf(codes) {
 }
 
 /** Most recent non-empty value per country from the World Bank API; tries each code in turn. */
-async function worldBank(codes) {
+async function worldBank(codes, oldest = OLDEST_YEAR) {
   for (const code of [codes].flat()) {
     const url = `https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&mrnev=1`;
     let body;
@@ -185,7 +186,7 @@ async function worldBank(codes) {
     for (const r of rows) {
       const iso = r.countryiso3code;
       const y = Number(r.date);
-      if (!iso || r.value === null || y < OLDEST_YEAR) continue;
+      if (!iso || r.value === null || y < oldest) continue;
       if (!out[iso] || y > out[iso].value[1]) out[iso] = { value: [round(r.value), y] };
     }
     return out;
@@ -397,9 +398,9 @@ const INDICATORS = {
     ]),
   ),
   ...Object.fromEntries(
-    Object.entries(WB).map(([id, [code, label, unit, source]]) => [
+    Object.entries(WB).map(([id, [code, label, unit, source, span]]) => [
       id,
-      { label, unit, source, code: [code].flat()[0], fetch: () => worldBank(code) },
+      { label, unit, source, code: [code].flat()[0], fetch: () => worldBank(code, span ? THIS_YEAR - span : OLDEST_YEAR) },
     ]),
   ),
   // The same sector shares about a decade earlier, to show which way an economy is moving.
