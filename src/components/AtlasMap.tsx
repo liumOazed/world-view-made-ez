@@ -13,7 +13,7 @@ import { geoInterpolate } from 'd3-geo';
 import { feature } from 'topojson-client';
 import type { Feature, FeatureCollection, LineString, MultiPolygon, Point, Polygon } from 'geojson';
 import type { GeometryCollection, Topology } from 'topojson-specification';
-import { Globe2, Minus, Plus } from 'lucide-react';
+import { Globe2, Map as MapIcon, Minus, Plus } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
@@ -72,6 +72,20 @@ type WorldFeature = Feature<Polygon | MultiPolygon, { name: string }>;
 const EMPTY_FC: FeatureCollection = { type: 'FeatureCollection', features: [] };
 
 /** Zoom at which the whole globe fits the viewport with a little room around it. */
+/** The flat map's world view: the whole width of the world, a little cropped at the poles. */
+function flatZoom(w: number, h: number) {
+  return Math.max(Math.log2(w / 512), Math.log2(h / 360)) + 0.05;
+}
+const FLAT_CENTER: [number, number] = [12, 24];
+
+function readFlat() {
+  try {
+    return localStorage.getItem('atlas-projection') === 'flat';
+  } catch {
+    return false;
+  }
+}
+
 function worldZoom(w: number, h: number, lat = 18) {
   const r = Math.min(w, h) * (w < 720 ? 0.46 : 0.4);
   return Math.log2((r * 2 * Math.PI * Math.cos((lat * Math.PI) / 180)) / 512);
@@ -382,6 +396,9 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
   const reduced = useReducedEffects();
   const wrapRef = useRef<HTMLDivElement>(null);
   const shadeRef = useRef<HTMLDivElement>(null);
+  const [flat, setFlat] = useState(readFlat);
+  const flatRef = useRef(flat);
+  flatRef.current = flat;
   const mapRef = useRef<MLMap | null>(null);
   const [ready, setReady] = useState(false);
   const [tip, setTip] = useState<Tip | null>(null);
@@ -480,7 +497,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       const s = shadeRef.current;
       if (!s) return;
       const z = map.getZoom();
-      const op = Math.max(0, Math.min(1, (5 - z) / 2));
+      const op = flatRef.current ? 0 : Math.max(0, Math.min(1, (5 - z) / 2));
       s.style.opacity = String(op);
       if (!op) return;
       const r = globeRadiusPx(map);
@@ -760,9 +777,10 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       map.fitBounds(target.bounds, { padding: pad, duration, maxZoom: MAX_FLY_ZOOM, essential: true });
     } else {
       const a = place.country ? anchors.get(place.country) : undefined;
-      const z = worldZoom(W, H) - (a ? 0.15 : 0);
+      const fl = flatRef.current;
+      const z = fl ? flatZoom(W, H) + (a ? 0.6 : 0) : worldZoom(W, H) - (a ? 0.15 : 0);
       map.flyTo({
-        center: a ? [a[0] + (ins.right ? 18 : 0), Math.max(-30, Math.min(40, a[1]))] : [map.getCenter().lng, 18],
+        center: a ? [a[0] + (ins.right ? 18 : 0), Math.max(-30, Math.min(40, a[1]))] : fl ? FLAT_CENTER : [map.getCenter().lng, 18],
         zoom: z,
         duration,
         essential: true,
@@ -832,7 +850,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       last = t;
       const { place: p, reduced: rd, active: on } = live.current;
       if (!on) return;
-      if (!rd && !p.country && t > pauseUntil.current && !map.isMoving()) {
+      if (!rd && !flatRef.current && !p.country && t > pauseUntil.current && !map.isMoving()) {
         const c = map.getCenter();
         map.jumpTo({ center: [c.lng - SPIN_DEG_PER_MS * dt, c.lat] });
       }
@@ -873,6 +891,28 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     return () => cancelAnimationFrame(raf);
   }, [ready, links]);
 
+  /* ----- globe or flat map ----- */
+  useEffect(() => {
+    try {
+      localStorage.setItem('atlas-projection', flat ? 'flat' : 'globe');
+    } catch {
+      /* private window: the choice just isn't remembered */
+    }
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    const el = map.getContainer();
+    const W = el.clientWidth;
+    const H = el.clientHeight;
+    map.setProjection({ type: flat ? 'mercator' : 'globe' });
+    map.setMinZoom(flat ? flatZoom(W, H) - 0.4 : 0.6);
+    // Keep the open place in view; the world view gets the projection's own framing.
+    if (!live.current.place.country) {
+      pauseUntil.current = performance.now() + 1500;
+      map.jumpTo(flat ? { center: FLAT_CENTER, zoom: flatZoom(W, H) } : { center: [map.getCenter().lng, 18], zoom: worldZoom(W, H) });
+    }
+    map.fire('move');
+  }, [ready, flat]);
+
   const zoomBy = (dz: number) => {
     const map = mapRef.current;
     if (!map) return;
@@ -893,6 +933,14 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
           </span>
         </div>
       )}
+      <div className="view-toggle" role="radiogroup" aria-label="Map view">
+        <button type="button" role="radio" aria-checked={!flat} className={!flat ? 'is-active' : undefined} onClick={() => setFlat(false)}>
+          <Globe2 size={14} /> Globe
+        </button>
+        <button type="button" role="radio" aria-checked={flat} className={flat ? 'is-active' : undefined} onClick={() => setFlat(true)}>
+          <MapIcon size={14} /> Flat
+        </button>
+      </div>
       <div className="map-ctrls" role="group" aria-label="Map controls">
         <button type="button" aria-label="Zoom in" onClick={() => zoomBy(1)}>
           <Plus size={16} />
