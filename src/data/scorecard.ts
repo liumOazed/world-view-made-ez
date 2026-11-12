@@ -20,10 +20,10 @@ export interface Pillar {
 }
 
 export const PILLARS: Pillar[] = [
-  { id: 'economy', label: 'Economy & prosperity', short: 'Economy', weight: 25, color: '#38bdf8', emoji: '🏦' },
-  { id: 'human', label: 'Human development & quality of life', short: 'Human', weight: 30, color: '#5eead4', emoji: '👨‍👩‍👧' },
-  { id: 'institutions', label: 'Institutions & freedom', short: 'Institutions', weight: 30, color: '#a78bfa', emoji: '🏛️' },
-  { id: 'stability', label: 'Stability & security', short: 'Stability', weight: 15, color: '#fbbf24', emoji: '🛡️' },
+  { id: 'economy', label: 'Economy & prosperity', short: 'Economy', weight: 25, color: '#5b93d1', emoji: '🏦' },
+  { id: 'human', label: 'Human development & quality of life', short: 'Human', weight: 30, color: '#5fae9e', emoji: '👨‍👩‍👧' },
+  { id: 'institutions', label: 'Institutions & freedom', short: 'Institutions', weight: 30, color: '#8b7cc8', emoji: '🏛️' },
+  { id: 'stability', label: 'Stability & security', short: 'Stability', weight: 15, color: '#c9a052', emoji: '🛡️' },
 ];
 
 export type Licence = 'open' | 'free' | 'restricted';
@@ -206,7 +206,7 @@ export function scorecardOf(name: string): Scorecard | undefined {
 }
 
 export const LICENCE_META: Record<Licence, { label: string; color: string }> = {
-  open: { label: 'Open licence', color: '#5eead4' },
-  free: { label: 'Free, with terms', color: '#fbbf24' },
-  restricted: { label: 'Restricted', color: '#fb7185' },
+  open: { label: 'Open licence', color: '#5fae9e' },
+  free: { label: 'Free, with terms', color: '#c9a052' },
+  restricted: { label: 'Restricted', color: '#c96b6b' },
 };

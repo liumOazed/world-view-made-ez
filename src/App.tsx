@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Globe2, PanelRightClose, PanelRightOpen, Sparkles, Waypoints, X } from 'lucide-react';
+import { ArrowUp, Globe2, PanelRightClose, PanelRightOpen, Sparkles, Waypoints, X } from 'lucide-react';
 import { buildProfiles, LINK_META } from './data/countries';
 import { INFLUENCE_COLOR, influenceLinks, supplyLinks, tradeLinks } from './data/connections';
 import { LAYER_BY_ID, layerFor, sectionOf, type LayerId } from './data/layers';
 import { findSub, SECTION_BY_ID, type SectionId } from './data/sections';
 import { buildScorecards } from './data/scorecard';
 import { COUNTRY_FEATURES } from './geo';
-import { Header } from './components/Header';
+import { BrandMark, EffectsToggle, Header } from './components/Header';
 import { WorldMap, type MapLink } from './components/WorldMap';
 import { LayerBar, Legend, type LegendKey } from './components/LayerBar';
 import { GlobalOverview } from './components/GlobalOverview';
@@ -120,15 +120,17 @@ export default function App() {
       <div className="bg-aurora" aria-hidden="true" />
       <Header profiles={profiles} onSelect={select} />
 
-      <main id="atlas-main" className={`main${drawerOpen ? ' drawer-open' : ''}`}>
+      <main id="atlas-main" className={`main wrap${drawerOpen ? ' drawer-open' : ''}`}>
         <section className="stage" aria-label="World intelligence map">
           <div className="stage-head">
-            <h1>
-              Global insights. <span className="grad">In seconds.</span>
-            </h1>
-            <p className="muted">
-              {layer.question} <span className="stage-hint">Click any country to explore.</span>
-            </p>
+            <div className="stage-title">
+              <h1>
+                Global insights, <em className="grad">in seconds.</em>
+              </h1>
+              <p className="muted">
+                {layer.question} <span className="stage-hint">Click any country to explore.</span>
+              </p>
+            </div>
             <button
               type="button"
               className={`drawer-toggle${drawerOpen ? ' is-active' : ''}`}
@@ -202,27 +204,80 @@ export default function App() {
         </Drawer>
       </main>
 
-      <Rankings
-        profiles={profiles}
-        onSelect={(n) => {
-          select(n);
-          setTab('scorecard');
-          setLayerId('scorecard');
-          document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
+      {/* Light "paper" band: reading sections sit on ivory below the dark map. */}
+      <div className="paper">
+        <div className="wrap">
+          <Rankings
+            profiles={profiles}
+            onSelect={(n) => {
+              select(n);
+              setTab('scorecard');
+              setLayerId('scorecard');
+              document.getElementById('atlas-main')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
 
-      <Explore onAction={onExplore} />
+          <Explore onAction={onExplore} />
+        </div>
+      </div>
 
-      <footer className="footer">
-        <p>
-          <strong>About the data.</strong> The seven sections draw on the IMF World Economic Outlook, World Bank (with ILO, SIPRI,
-          UCDP and debt statistics), BIS, Our World in Data, the Fragile States Index, the ND-GAIN climate index, UN Comtrade and the
-          FBIC Index, refreshed by scheduled jobs. Every value shows its year, and anything not fetched yet says so. The News
-          tab and the developing-story text are still illustrative.
-        </p>
-        <p className="muted small">ATLAS prototype · Boundaries from Natural Earth via world-atlas.</p>
+      <footer className="footer" id="method">
+        <div className="wrap footer-grid">
+          <div className="footer-brand">
+            <BrandMark size={34} />
+            <div>
+              <div className="footer-name">Atlas</div>
+              <p className="muted small">The world, in context.</p>
+            </div>
+          </div>
+          <div className="footer-about">
+            <h2 className="footer-title">About the data</h2>
+            <p>
+              The seven sections draw on the IMF World Economic Outlook, World Bank (with ILO, SIPRI, UCDP and debt statistics),
+              BIS, Our World in Data, the Fragile States Index, the ND-GAIN climate index, UN Comtrade and the FBIC Index, refreshed
+              by scheduled jobs. Every value shows its year, and anything not fetched yet says so. The News tab and the
+              developing-story text are still illustrative.
+            </p>
+          </div>
+          <div className="footer-side">
+            <EffectsToggle />
+            <a className="footer-top" href="#atlas-main">
+              <ArrowUp size={14} aria-hidden="true" /> Back to top
+            </a>
+          </div>
+        </div>
+        <div className="wrap footer-base">
+          <span>Atlas prototype</span>
+          <span aria-hidden="true">·</span>
+          <span>Boundaries from Natural Earth via world-atlas</span>
+        </div>
       </footer>
+
+      <ScrollTop hidden={drawerOpen} />
     </div>
+  );
+}
+
+/** Floating "Top" button, shown once the map has scrolled out of view. */
+function ScrollTop({ hidden }: { hidden: boolean }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const visible = show && !hidden;
+  return (
+    <button
+      type="button"
+      className={`scroll-top${visible ? ' is-visible' : ''}`}
+      aria-hidden={!visible}
+      tabIndex={visible ? 0 : -1}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
+      <ArrowUp size={15} aria-hidden="true" />
+      <span>Top</span>
+    </button>
   );
 }

@@ -1,9 +1,9 @@
 import { useId } from 'react';
 
 /** Trend colors follow meaning: green favorable, red adverse, blue-gray neutral. */
-export const TREND_GOOD = '#5fd39a';
-export const TREND_BAD = '#ef7f86';
-export const TREND_NEUTRAL = '#8a9dba';
+export const TREND_GOOD = '#6fc39c';
+export const TREND_BAD = '#e48a87';
+export const TREND_NEUTRAL = '#8b98ae';
 
 interface Props {
   values: number[];
