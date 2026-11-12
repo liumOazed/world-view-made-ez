@@ -193,7 +193,9 @@ export default function App() {
             onProfile={() => setDrawerOpen(true)}
           />
         )}
-        {place.path.length === 0 && !(phone && (showCard || drawerOpen)) && <LensPicker layer={layer} onChange={changeLayer} note={coverageNote} />}
+        {!(phone && (showCard || drawerOpen)) && (
+          <LensPicker layer={layer} onChange={changeLayer} note={place.path.length ? 'regions show the national value until regional figures are in' : coverageNote} />
+        )}
 
         <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title={country ? country.display : 'Global overview'}>
           {country ? (
@@ -274,15 +276,17 @@ function Method() {
           <h3>The map</h3>
           <p>
             Country outlines come from Natural Earth (1:50m) via world-atlas. Below the country level, boundaries come from geoBoundaries
-            (CC BY 4.0): Bangladesh opens into its 8 divisions, 64 districts and 544 upazilas and city areas, with more countries to follow.
+            (CC BY 4.0): 194 countries open into their states or provinces, 170 of them into districts too, and Bangladesh down to its 544
+            upazilas and city areas.
             Main roads and markets are © OpenStreetMap contributors (ODbL); town sizes come from GeoNames.
           </p>
         </div>
         <div>
           <h3>What is not here yet</h3>
           <p>
-            Figures below the country level (population, income, services) are the next step. Until they arrive, division, district and
-            upazila cards show only what the boundaries and GeoNames can say for sure: area, what is inside, and the largest towns.
+            Figures below the country level (population, income, services) are the next step. Until they arrive, regions take their country's colour on the map
+            (marked "national"), and their cards show only what the boundaries and GeoNames can say for sure: area, what is inside, and the
+            largest towns.
           </p>
         </div>
       </div>

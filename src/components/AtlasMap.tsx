@@ -141,7 +141,7 @@ const anchors = new Map(COUNTRY_FEATURES.map((f) => [f.properties.name, f.anchor
 
 function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection): StyleSpecification {
   const geo = (data: FeatureCollection = EMPTY_FC) => ({ type: 'geojson' as const, data });
-  const hoverOr = (on: number, off: number | ExpressionSpecification): ExpressionSpecification => [
+  const hoverOr = (on: number | string, off: number | string | ExpressionSpecification): ExpressionSpecification => [
     'case',
     ['boolean', ['feature-state', 'hover'], false],
     on,
@@ -153,7 +153,7 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
       type: 'fill',
       source: `lv${L}`,
       layout: { visibility: 'none' },
-      paint: { 'fill-color': C.land2, 'fill-opacity': hoverOr(0.55, 0) },
+      paint: { 'fill-color': hoverOr('#f3efe6', C.space), 'fill-opacity': hoverOr(0.2, 0) },
     },
   ]);
   const levelLines: LayerSpecification[] = [
@@ -553,7 +553,6 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       map.getCanvas().style.cursor = f ? 'pointer' : '';
       if (!f) return setTip(null);
       const { layer: L, profiles: P, detail: d } = live.current;
-      const { activeLevel } = levelState();
       let title = String(f.properties.name);
       let sub = '';
       let swatch: string | undefined;
@@ -567,7 +566,10 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       } else if (d) {
         const lvl = Number(f.layer.id[2]);
         const spec = d.spec.levels[lvl - 1];
-        sub = lvl === activeLevel && lvl < d.levels.length ? `${spec.singular} · click to zoom in` : `${spec.singular} · click to open`;
+        const cp = live.current.place.country ? P.get(live.current.place.country) : undefined;
+        const v = cp ? L.value(cp) : NaN;
+        swatch = Number.isFinite(v) ? L.color(v) : undefined;
+        sub = `${spec.singular} · ${L.metric}: ${Number.isFinite(v) ? `${L.format(v)} (national)` : 'no data'}`;
       }
       const r = wrapRef.current!.getBoundingClientRect();
       setTip({ x: e.point.x, y: e.point.y, title, sub, swatch, ...(e.point.x > r.width - 240 ? { x: e.point.x - 250 } : {}) });
@@ -643,7 +645,8 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     const vis = (id: string, on: boolean) => map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none');
     const country = place.country ?? '';
 
-    vis('world-data', depth === 0);
+    // The chosen measure stays on at every level; regions show their country's value.
+    vis('world-data', true);
     map.setPaintProperty('world-dim', 'fill-opacity', depth === 0 ? 0.55 : 0.62);
     map.setFilter('sel-line', ['==', ['get', 'name'], country]);
     map.setFilter('sel-glow', ['==', ['get', 'name'], depth === 0 ? country : '']);
@@ -658,12 +661,13 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       if (!exists) continue;
       const isActive = L === activeLevel;
       map.setFilter(`lv${L}-fill`, isActive ? ['==', ['get', 'parent'], parentKey] : null);
-      // Clickable units are lifted a little so they read as buttons; the one you are in is not.
-      const base: ExpressionSpecification | number = isActive && depth > 0 ? ['case', ['==', ['get', 'key'], cur], 0, 0.45] : 0;
+      // Colours show through where you are; the rest of the country steps back.
+      const here = isActive ? (depth === n ? cur : '') : place.path[L - 1];
+      const base: ExpressionSpecification | number = here ? ['case', ['==', ['get', 'key'], here], 0, isActive ? 0.3 : 0.5] : 0;
       map.setPaintProperty(`lv${L}-fill`, 'fill-opacity', [
         'case',
         ['boolean', ['feature-state', 'hover'], false],
-        isActive ? 0.6 : 0.12,
+        isActive ? 0.2 : 0.1,
         base,
       ] as ExpressionSpecification);
       map.setFilter(
@@ -712,7 +716,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     if (target.bounds) {
       const pad = {
         top: Math.min(80, H * 0.12),
-        bottom: Math.min(H * 0.6, 40 + ins.bottom + (place.path.length ? 0 : 76)),
+        bottom: Math.min(H * 0.6, 116 + ins.bottom),
         left: Math.min(64, W * 0.08),
         right: Math.min(W * 0.55, 56 + ins.right),
       };

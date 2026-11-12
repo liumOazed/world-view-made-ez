@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import type { Feature, FeatureCollection, LineString, MultiLineString, MultiPolygon, Point, Polygon } from 'geojson';
+import { feature } from 'topojson-client';
+import type { Topology } from 'topojson-specification';
 import INDEX from '../data/places.json';
+import MANIFEST from '../data/subnational.json';
 
 /**
- * Places below the country level. Each country that has its own boundaries
- * lists its levels here, top down; the shapes live in public/geo/<ISO3>/ and
- * load only when someone opens that country. Adding a country is adding its
- * files and one entry below: the map, card, breadcrumb and search follow.
+ * Places below the country level. Every country with published boundaries
+ * lists its levels here, top down. Most come from one TopoJSON file per
+ * country in public/geo/admin/<ISO3>.json (states, then districts), listed in
+ * src/data/subnational.json; Bangladesh has its own folder with a third level
+ * and street-scale extras. Files load only when someone opens that country.
  */
 
 export interface AdminLevel {
   singular: string;
   plural: string;
-  /** File name in public/geo/<ISO3>/, without .json. */
+  /** File name in public/geo/<ISO3>/, without .json; empty for a TopoJSON country. */
   file: string;
 }
 
@@ -22,9 +26,25 @@ export interface Subnational {
   /** Street-scale extras shown from the district level down. */
   extras: ('roads' | 'markets' | 'rivers')[];
   credit: string;
+  /** All levels in one TopoJSON file at public/geo/admin/<ISO3>.json. */
+  topo?: boolean;
 }
 
+const GENERATED: Record<string, Subnational> = Object.fromEntries(
+  Object.entries(MANIFEST as unknown as Record<string, { iso3: string; levels: [string, string][] }>).map(([name, m]) => [
+    name,
+    {
+      iso3: m.iso3,
+      levels: m.levels.map(([singular, plural]) => ({ singular, plural, file: '' })),
+      extras: [],
+      credit: 'geoBoundaries (CC BY 4.0)',
+      topo: true,
+    },
+  ]),
+);
+
 export const SUBNATIONAL: Record<string, Subnational> = {
+  ...GENERATED,
   Bangladesh: {
     iso3: 'BGD',
     levels: [
@@ -80,12 +100,12 @@ export function loadDetail(country: string): Promise<Detail> | null {
   let p = cache.get(country);
   if (!p) {
     const dir = spec.iso3 + '/';
-    p = Promise.all([
+    p = (spec.topo ? loadTopo(spec) : Promise.all([
       getJson<FeatureCollection<Polygon | MultiPolygon>>(dir + 'outline.json').catch(() => null),
       Promise.all(spec.levels.map((l) => getJson<FeatureCollection<Polygon | MultiPolygon, UnitProps>>(dir + l.file + '.json'))),
       getJson<Detail['labels']>(dir + 'labels.json'),
       Promise.all(spec.extras.map((e) => getJson<Lines>(dir + e + '.json').then((d) => [e, d] as const))),
-    ]).then(([outline, levels, labels, extras]) => {
+    ])).then(([outline, levels, labels, extras]) => {
       const byKey = new Map<string, { unit: Unit; level: number }>();
       const children = new Map<string, Unit[]>();
       let id = 1;
@@ -114,6 +134,27 @@ export function loadDetail(country: string): Promise<Detail> | null {
     cache.set(country, p);
   }
   return p;
+}
+
+type Loaded = [
+  FeatureCollection<Polygon | MultiPolygon> | null,
+  FeatureCollection<Polygon | MultiPolygon, UnitProps>[],
+  Detail['labels'],
+  (readonly [string, Lines])[],
+];
+
+/** One TopoJSON file holds every level, the outline and the label points. */
+async function loadTopo(spec: Subnational): Promise<Loaded> {
+  const topo = await getJson<Topology>(`admin/${spec.iso3}.json`);
+  const fc = <T,>(name: string) => (topo.objects[name] ? (feature(topo, topo.objects[name]) as unknown as T) : null);
+  const levels = spec.levels.map((_, i) => fc<FeatureCollection<Polygon | MultiPolygon, UnitProps>>(`adm${i + 1}`)!);
+  for (const l of levels) l.features = l.features.filter((f) => f.geometry);
+  return [
+    fc<FeatureCollection<Polygon | MultiPolygon>>('outline'),
+    levels,
+    fc<Detail['labels']>('labels') ?? { type: 'FeatureCollection', features: [] },
+    [],
+  ];
 }
 
 /** The loaded boundaries for a country, or null while they load (or when it has none yet). */

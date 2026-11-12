@@ -1,0 +1,2428 @@
+{
+"Afghanistan": {
+"iso3": "AFG",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Angola": {
+"iso3": "AGO",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Albania": {
+"iso3": "ALB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Andorra": {
+"iso3": "AND",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"United Arab Emirates": {
+"iso3": "ARE",
+"levels": [
+[
+"Emirate",
+"emirates"
+]
+]
+},
+"Argentina": {
+"iso3": "ARG",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Department",
+"departments"
+]
+]
+},
+"Armenia": {
+"iso3": "ARM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Antigua and Barb.": {
+"iso3": "ATG",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Australia": {
+"iso3": "AUS",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Local area",
+"local areas"
+]
+]
+},
+"Austria": {
+"iso3": "AUT",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Azerbaijan": {
+"iso3": "AZE",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Burundi": {
+"iso3": "BDI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Belgium": {
+"iso3": "BEL",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Benin": {
+"iso3": "BEN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Burkina Faso": {
+"iso3": "BFA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Bulgaria": {
+"iso3": "BGR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Bahrain": {
+"iso3": "BHR",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Bahamas": {
+"iso3": "BHS",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Bosnia and Herz.": {
+"iso3": "BIH",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Belarus": {
+"iso3": "BLR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Belize": {
+"iso3": "BLZ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Bolivia": {
+"iso3": "BOL",
+"levels": [
+[
+"Department",
+"departments"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Brazil": {
+"iso3": "BRA",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Barbados": {
+"iso3": "BRB",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Brunei": {
+"iso3": "BRN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Bhutan": {
+"iso3": "BTN",
+"levels": [
+[
+"District",
+"districts"
+],
+[
+"Gewog",
+"gewogs"
+]
+]
+},
+"Botswana": {
+"iso3": "BWA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Central African Rep.": {
+"iso3": "CAF",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Canada": {
+"iso3": "CAN",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Census division",
+"census divisions"
+]
+]
+},
+"Switzerland": {
+"iso3": "CHE",
+"levels": [
+[
+"Canton",
+"cantons"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Chile": {
+"iso3": "CHL",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"China": {
+"iso3": "CHN",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Prefecture",
+"prefectures"
+]
+]
+},
+"Côte d'Ivoire": {
+"iso3": "CIV",
+"levels": [
+[
+"District",
+"districts"
+],
+[
+"Region",
+"regions"
+]
+]
+},
+"Cameroon": {
+"iso3": "CMR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Department",
+"departments"
+]
+]
+},
+"Dem. Rep. Congo": {
+"iso3": "COD",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Congo": {
+"iso3": "COG",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Colombia": {
+"iso3": "COL",
+"levels": [
+[
+"Department",
+"departments"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Comoros": {
+"iso3": "COM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Cabo Verde": {
+"iso3": "CPV",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Costa Rica": {
+"iso3": "CRI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Cuba": {
+"iso3": "CUB",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Cyprus": {
+"iso3": "CYP",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Czechia": {
+"iso3": "CZE",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Germany": {
+"iso3": "DEU",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Djibouti": {
+"iso3": "DJI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Dominica": {
+"iso3": "DMA",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Denmark": {
+"iso3": "DNK",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Dominican Rep.": {
+"iso3": "DOM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Algeria": {
+"iso3": "DZA",
+"levels": [
+[
+"Province",
+"provinces"
+]
+]
+},
+"Ecuador": {
+"iso3": "ECU",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Canton",
+"cantons"
+]
+]
+},
+"Egypt": {
+"iso3": "EGY",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Eritrea": {
+"iso3": "ERI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Spain": {
+"iso3": "ESP",
+"levels": [
+[
+"Autonomous community",
+"autonomous communities"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Estonia": {
+"iso3": "EST",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Ethiopia": {
+"iso3": "ETH",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Zone",
+"zones"
+]
+]
+},
+"Finland": {
+"iso3": "FIN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Fiji": {
+"iso3": "FJI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"France": {
+"iso3": "FRA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Department",
+"departments"
+]
+]
+},
+"Micronesia": {
+"iso3": "FSM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Gabon": {
+"iso3": "GAB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"United Kingdom": {
+"iso3": "GBR",
+"levels": [
+[
+"Nation",
+"nations"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Georgia": {
+"iso3": "GEO",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Ghana": {
+"iso3": "GHA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Guinea": {
+"iso3": "GIN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Gambia": {
+"iso3": "GMB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Guinea-Bissau": {
+"iso3": "GNB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Eq. Guinea": {
+"iso3": "GNQ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Greece": {
+"iso3": "GRC",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Regional unit",
+"regional units"
+]
+]
+},
+"Grenada": {
+"iso3": "GRD",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Greenland": {
+"iso3": "GRL",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Guatemala": {
+"iso3": "GTM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Guyana": {
+"iso3": "GUY",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Honduras": {
+"iso3": "HND",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Croatia": {
+"iso3": "HRV",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Haiti": {
+"iso3": "HTI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Hungary": {
+"iso3": "HUN",
+"levels": [
+[
+"County",
+"counties"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Indonesia": {
+"iso3": "IDN",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Regency",
+"regencies and cities"
+]
+]
+},
+"India": {
+"iso3": "IND",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Ireland": {
+"iso3": "IRL",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"County",
+"counties"
+]
+]
+},
+"Iran": {
+"iso3": "IRN",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"County",
+"counties"
+]
+]
+},
+"Iraq": {
+"iso3": "IRQ",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Iceland": {
+"iso3": "ISL",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Israel": {
+"iso3": "ISR",
+"levels": [
+[
+"District",
+"districts"
+],
+[
+"Subdistrict",
+"subdistricts"
+]
+]
+},
+"Italy": {
+"iso3": "ITA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Jamaica": {
+"iso3": "JAM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Jordan": {
+"iso3": "JOR",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Japan": {
+"iso3": "JPN",
+"levels": [
+[
+"Prefecture",
+"prefectures"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Kazakhstan": {
+"iso3": "KAZ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Kenya": {
+"iso3": "KEN",
+"levels": [
+[
+"County",
+"counties"
+],
+[
+"Sub-county",
+"sub-counties"
+]
+]
+},
+"Kyrgyzstan": {
+"iso3": "KGZ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Cambodia": {
+"iso3": "KHM",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Kiribati": {
+"iso3": "KIR",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"St. Kitts and Nevis": {
+"iso3": "KNA",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"South Korea": {
+"iso3": "KOR",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Kuwait": {
+"iso3": "KWT",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"Area",
+"areas"
+]
+]
+},
+"Laos": {
+"iso3": "LAO",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Lebanon": {
+"iso3": "LBN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Liberia": {
+"iso3": "LBR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Libya": {
+"iso3": "LBY",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Saint Lucia": {
+"iso3": "LCA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Liechtenstein": {
+"iso3": "LIE",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Sri Lanka": {
+"iso3": "LKA",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Lesotho": {
+"iso3": "LSO",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Lithuania": {
+"iso3": "LTU",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Luxembourg": {
+"iso3": "LUX",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Latvia": {
+"iso3": "LVA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Morocco": {
+"iso3": "MAR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Moldova": {
+"iso3": "MDA",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Madagascar": {
+"iso3": "MDG",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Maldives": {
+"iso3": "MDV",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Mexico": {
+"iso3": "MEX",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Marshall Is.": {
+"iso3": "MHL",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Macedonia": {
+"iso3": "MKD",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Mali": {
+"iso3": "MLI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Malta": {
+"iso3": "MLT",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Myanmar": {
+"iso3": "MMR",
+"levels": [
+[
+"State or region",
+"states and regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Montenegro": {
+"iso3": "MNE",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Mongolia": {
+"iso3": "MNG",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Mozambique": {
+"iso3": "MOZ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Mauritania": {
+"iso3": "MRT",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Mauritius": {
+"iso3": "MUS",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Malawi": {
+"iso3": "MWI",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Malaysia": {
+"iso3": "MYS",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Namibia": {
+"iso3": "NAM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Niger": {
+"iso3": "NER",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Nigeria": {
+"iso3": "NGA",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Local government area",
+"local government areas"
+]
+]
+},
+"Nicaragua": {
+"iso3": "NIC",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Netherlands": {
+"iso3": "NLD",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Norway": {
+"iso3": "NOR",
+"levels": [
+[
+"County",
+"counties"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Nepal": {
+"iso3": "NPL",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Nauru": {
+"iso3": "NRU",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"New Zealand": {
+"iso3": "NZL",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Oman": {
+"iso3": "OMN",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Pakistan": {
+"iso3": "PAK",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Panama": {
+"iso3": "PAN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Peru": {
+"iso3": "PER",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Philippines": {
+"iso3": "PHL",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Province",
+"provinces"
+]
+]
+},
+"Palau": {
+"iso3": "PLW",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Papua New Guinea": {
+"iso3": "PNG",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Poland": {
+"iso3": "POL",
+"levels": [
+[
+"Voivodeship",
+"voivodeships"
+],
+[
+"County",
+"counties"
+]
+]
+},
+"North Korea": {
+"iso3": "PRK",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Portugal": {
+"iso3": "PRT",
+"levels": [
+[
+"District",
+"districts"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Paraguay": {
+"iso3": "PRY",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Palestine": {
+"iso3": "PSE",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Qatar": {
+"iso3": "QAT",
+"levels": [
+[
+"Municipality",
+"municipalities"
+],
+[
+"Zone",
+"zones"
+]
+]
+},
+"Romania": {
+"iso3": "ROU",
+"levels": [
+[
+"County",
+"counties"
+],
+[
+"Commune",
+"communes"
+]
+]
+},
+"Russia": {
+"iso3": "RUS",
+"levels": [
+[
+"Federal subject",
+"federal subjects"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Rwanda": {
+"iso3": "RWA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Saudi Arabia": {
+"iso3": "SAU",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"Governorate",
+"governorates"
+]
+]
+},
+"Sudan": {
+"iso3": "SDN",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Locality",
+"localities"
+]
+]
+},
+"Senegal": {
+"iso3": "SEN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Singapore": {
+"iso3": "SGP",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Solomon Is.": {
+"iso3": "SLB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Sierra Leone": {
+"iso3": "SLE",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"El Salvador": {
+"iso3": "SLV",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"San Marino": {
+"iso3": "SMR",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Somalia": {
+"iso3": "SOM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Serbia": {
+"iso3": "SRB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"S. Sudan": {
+"iso3": "SSD",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"São Tomé and Principe": {
+"iso3": "STP",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Suriname": {
+"iso3": "SUR",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Slovakia": {
+"iso3": "SVK",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Slovenia": {
+"iso3": "SVN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Sweden": {
+"iso3": "SWE",
+"levels": [
+[
+"County",
+"counties"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"eSwatini": {
+"iso3": "SWZ",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Seychelles": {
+"iso3": "SYC",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Syria": {
+"iso3": "SYR",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Chad": {
+"iso3": "TCD",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Togo": {
+"iso3": "TGO",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Thailand": {
+"iso3": "THA",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Tajikistan": {
+"iso3": "TJK",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Turkmenistan": {
+"iso3": "TKM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Timor-Leste": {
+"iso3": "TLS",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Tonga": {
+"iso3": "TON",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Trinidad and Tobago": {
+"iso3": "TTO",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Tunisia": {
+"iso3": "TUN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Turkey": {
+"iso3": "TUR",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Taiwan": {
+"iso3": "TWN",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Tanzania": {
+"iso3": "TZA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Uganda": {
+"iso3": "UGA",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Ukraine": {
+"iso3": "UKR",
+"levels": [
+[
+"Oblast",
+"oblasts"
+],
+[
+"Raion",
+"raions"
+]
+]
+},
+"Uruguay": {
+"iso3": "URY",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"United States of America": {
+"iso3": "USA",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"County",
+"counties"
+]
+]
+},
+"Uzbekistan": {
+"iso3": "UZB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"St. Vin. and Gren.": {
+"iso3": "VCT",
+"levels": [
+[
+"Region",
+"regions"
+]
+]
+},
+"Venezuela": {
+"iso3": "VEN",
+"levels": [
+[
+"State",
+"states"
+],
+[
+"Municipality",
+"municipalities"
+]
+]
+},
+"Vietnam": {
+"iso3": "VNM",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Vanuatu": {
+"iso3": "VUT",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Samoa": {
+"iso3": "WSM",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Kosovo": {
+"iso3": "XKX",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Yemen": {
+"iso3": "YEM",
+"levels": [
+[
+"Governorate",
+"governorates"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"South Africa": {
+"iso3": "ZAF",
+"levels": [
+[
+"Province",
+"provinces"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Zambia": {
+"iso3": "ZMB",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+},
+"Zimbabwe": {
+"iso3": "ZWE",
+"levels": [
+[
+"Region",
+"regions"
+],
+[
+"District",
+"districts"
+]
+]
+}
+}

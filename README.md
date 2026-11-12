@@ -10,7 +10,7 @@ Figures come from open sources fetched by scheduled GitHub Actions; every value 
 
 ## What's here
 
-- **A real, zoomable map** (MapLibre GL on a globe). The home page is the map and little else. Click a country and the map flies in; its divisions or states become clickable, and each click goes one level down. Bangladesh opens from divisions to districts to upazilas and city areas, with roads and markets at street scale. The structure is the same for every country (`src/map/places.ts`), so more countries are a data drop. See [`public/geo/README.md`](public/geo/README.md).
+- **A real, zoomable map** (MapLibre GL on a globe). The home page is the map and little else. Click a country and the map flies in; its divisions or states become clickable, and each click goes one level down. Every country with published boundaries (194 of them) opens into its states or provinces and then its districts; Bangladesh goes one level further to upazilas and city areas, with roads and markets at street scale. The colour you pick stays on at every level: regions show their country's value, marked "national", until regional figures are added. See [`public/geo/README.md`](public/geo/README.md).
 - **Moving globe.** It turns slowly until you touch it; trade and influence links draw in as great-circle arcs with light flowing along them. The reduced-effects switch stops all of it.
 - **One colour picker.** A single "Colour by" control at the bottom picks any of the subsections; its key sits in the same pill.
 - **Place card.** A small card per place: three figures, the places inside it, and a link to the full profile.
