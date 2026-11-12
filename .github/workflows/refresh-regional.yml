@@ -1,0 +1,52 @@
+name: Refresh regional human development
+
+# Pulls Global Data Lab's regional human development figures into src/data/regional.json
+# (and the raw latest-year snapshot into scripts/data/shdi-latest.json). On main it opens or
+# updates a PR on the data/regional-refresh branch instead of pushing.
+on:
+  schedule:
+    - cron: '0 5 1 * *' # monthly; GDL releases a new SHDI version about once a year
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['scripts/fetch-regional.mjs', 'scripts/regional-groups.mjs', '.github/workflows/refresh-regional.yml']
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-regional-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-regional.mjs
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/regional.json scripts/data/shdi-latest.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh regional human development ($(date -u +%Y-%m-%d))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/regional-refresh
+            gh pr create --head data/regional-refresh --base main --title 'Refresh regional human development' \
+              --body 'Automated refresh of `src/data/regional.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            # Code may have been pushed while the fetch ran.
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
