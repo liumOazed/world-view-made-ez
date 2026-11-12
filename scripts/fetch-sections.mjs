@@ -192,6 +192,22 @@ async function worldBank(codes) {
   throw new Error('No rows from any World Bank code');
 }
 
+/** A World Bank value from about ten years back: the latest year in a four-year window. */
+async function worldBankPast(code) {
+  const url = `https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${THIS_YEAR - 13}:${THIS_YEAR - 10}`;
+  const body = await get(url, 'json');
+  const rows = Array.isArray(body) ? body[1] ?? [] : [];
+  if (!rows.length) throw new Error(`No past rows for ${code}`);
+  const out = {};
+  for (const r of rows) {
+    const iso = r.countryiso3code;
+    const y = Number(r.date);
+    if (!iso || r.value === null) continue;
+    if (!out[iso] || y > out[iso].value[1]) out[iso] = { value: [round(r.value), y] };
+  }
+  return out;
+}
+
 // Euro area members share the ECB policy rate (BIS reports it as XM).
 const EURO = ['AUT', 'BEL', 'HRV', 'CYP', 'EST', 'FIN', 'FRA', 'DEU', 'GRC', 'IRL', 'ITA', 'LVA', 'LTU', 'LUX', 'MLT', 'NLD', 'PRT', 'SVK', 'SVN', 'ESP'];
 
@@ -364,6 +380,13 @@ const INDICATORS = {
     Object.entries(WB).map(([id, [code, label, unit, source]]) => [
       id,
       { label, unit, source, code: [code].flat()[0], fetch: () => worldBank(code) },
+    ]),
+  ),
+  // The same sector shares about a decade earlier, to show which way an economy is moving.
+  ...Object.fromEntries(
+    ['agriculture', 'industry', 'services'].map((id) => [
+      `${id}Past`,
+      { label: `${WB[id][1]}, a decade earlier`, unit: '% of GDP', source: 'wdi', code: WB[id][0], fetch: () => worldBankPast(WB[id][0]) },
     ]),
   ),
   policyRate: { label: 'Central bank policy rate', unit: '%', source: 'bis', code: 'WS_CBPOL', fetch: bisPolicyRates },
