@@ -16,7 +16,7 @@ import { Explore, RegionStrip, type ExploreAction } from './components/Explore';
 import { Rankings } from './components/Scorecard';
 import { Drawer } from './components/Drawer';
 import { placeId, useDetail, WORLD, type Place } from './map/places';
-import { hasRegional, regionalYear } from './data/regional';
+import { CONFLICT_YEARS, regionalYear } from './data/regional';
 
 const DEFAULT_LAYER: LayerId = 'growth.gdp';
 
@@ -85,10 +85,10 @@ export default function App() {
   }, [layer, profiles, sub]);
 
   const regionNote = layer.regional
-    ? place.country && hasRegional(place.country)
-      ? `by region, ${regionalYear(place.country)}`
+    ? place.country && layer.hasRegional?.(place.country)
+      ? `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
       : 'no regional figures for this country, so regions show the national value'
-    : 'regions show the national value; human development measures are coloured region by region';
+    : 'regions show the national value; measures marked “by region” colour each region';
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {
@@ -294,8 +294,11 @@ function Method() {
             The human development measures (HDI, income per person, life expectancy and schooling) are coloured state by state, from the
             Global Data Lab's Subnational Human Development Database (Radboud University, SHDI v8.1, latest year 2022), matched to the map's
             states and provinces by name. Where the Lab reports a group of provinces as one region, each province takes the group's figure;
-            districts take their state's, except in Bangladesh, where the Lab's district groups give districts their own. Every other
-            measure is national only, so regions take their country's colour (marked "national").
+            districts take their state's, except in Bangladesh, where the Lab's district groups give districts their own. The same file
+            gives income growth (average over five years), the gender development index and population, which is spread over each
+            region's land for density. Conflict deaths are UCDP's geocoded events (GED, CC BY 4.0) from the last five years, counted in
+            the state and district where each happened. Every other measure is national only, so regions take their country's colour
+            (marked "national").
           </p>
         </div>
       </div>

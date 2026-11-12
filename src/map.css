@@ -850,3 +850,43 @@ html[data-effects='reduced'] .place-card {
   font-size: 10.5px;
   color: var(--faint);
 }
+
+/* Globe or flat map, beside the zoom buttons. */
+.atlas-map .view-toggle {
+  top: auto;
+  right: calc(var(--edge) + 48px);
+  bottom: 28px;
+  z-index: 4;
+  border-color: var(--line-strong);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: var(--blur);
+}
+.has-drawer .atlas-map .view-toggle {
+  right: calc(var(--drawer-w) + 92px);
+}
+@media (max-width: 1100px) {
+  .has-card .atlas-map .view-toggle {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .atlas-map .view-toggle {
+    top: 62px;
+    right: var(--edge);
+    bottom: auto;
+  }
+  .has-card .atlas-map .view-toggle {
+    display: none;
+  }
+}
+.by-region {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
-import { HD_LAYERS, layerFor, PILLAR_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
+import { HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { SECTIONS, type SectionId } from '../data/sections';
 
 type Group = SectionId | 'scorecard' | 'hd';
@@ -17,11 +17,15 @@ const ICONS: Record<Group, LucideIcon> = {
   hd: HeartPulse,
 };
 
-const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; partial?: boolean }[] }[] = [
+const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; partial?: boolean; regional?: boolean }[] }[] = [
   ...SECTIONS.map((s) => ({
     id: s.id,
     label: s.label,
-    subs: s.subs.map((sub) => ({ id: layerFor(s.id, sub.id), label: sub.label, partial: Boolean(sub.pending) })),
+    subs: [
+      ...s.subs.map((sub) => ({ id: layerFor(s.id, sub.id), label: sub.label, partial: Boolean(sub.pending) })),
+      // Measures that colour each state or province, not only the country.
+      ...REGION_LAYERS.filter((l) => l.id.startsWith(`${s.id}.`)).map((l) => ({ id: l.id, label: l.label, regional: true })),
+    ],
   })),
   {
     id: 'scorecard' as const,
@@ -29,7 +33,7 @@ const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; pa
     subs: [{ id: 'scorecard' as LayerId, label: 'All pillars' }, ...PILLAR_LAYERS.map((l) => ({ id: l.id, label: l.label }))],
   },
   // Coloured state by state, not only by country.
-  { id: 'hd', label: 'Human development', subs: HD_LAYERS.map((l) => ({ id: l.id, label: l.label })) },
+  { id: 'hd', label: 'Human development', subs: HD_LAYERS.map((l) => ({ id: l.id, label: l.label, regional: true })) },
 ];
 
 /**
@@ -92,6 +96,11 @@ export function LensPicker({ layer, onChange, note }: { layer: Layer; onChange: 
                 >
                   {s.label}
                   {s.partial && <i className="partial-dot" title="Some of this data is not fetched yet" />}
+                  {s.regional && (
+                    <span className="by-region" title="Coloured state by state when you zoom in">
+                      by region
+                    </span>
+                  )}
                 </button>
               </li>
             ))}

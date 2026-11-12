@@ -1,7 +1,8 @@
 name: Refresh regional human development
 
 # Pulls Global Data Lab's regional human development figures into src/data/regional.json
-# (and the raw latest-year snapshot into scripts/data/shdi-latest.json). On main it opens or
+# (and the raw latest-year snapshot into scripts/data/shdi-latest.json), and UCDP's
+# conflict deaths by region into src/data/conflict-regional.json. On main it opens or
 # updates a PR on the data/regional-refresh branch instead of pushing.
 on:
   schedule:
@@ -9,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches: ['claude/**']
-    paths: ['scripts/fetch-regional.mjs', 'scripts/regional-groups.mjs', '.github/workflows/refresh-regional.yml']
+    paths: ['scripts/fetch-regional.mjs', 'scripts/regional-groups.mjs', 'scripts/fetch-conflict.mjs', '.github/workflows/refresh-regional.yml']
 
 permissions:
   contents: write
@@ -31,13 +32,20 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node scripts/fetch-regional.mjs
+      - name: Conflict deaths by region (UCDP GED, latest release)
+        run: |
+          v=$(curl -sL https://ucdp.uu.se/downloads/ | grep -oE 'ged[0-9]+-csv\.zip' | sort -V | tail -1)
+          echo "UCDP file: ${v:-ged251-csv.zip}"
+          curl -sfL -o ged.zip "https://ucdp.uu.se/downloads/ged/${v:-ged251-csv.zip}"
+          unzip -o -q ged.zip -d ged
+          node scripts/fetch-conflict.mjs "$(ls ged/*.csv | head -1)"
       - name: Commit the snapshot
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/data/regional.json scripts/data/shdi-latest.json
+          git add src/data/regional.json src/data/conflict-regional.json scripts/data/shdi-latest.json
           if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
           git commit -m "Refresh regional human development ($(date -u +%Y-%m-%d))"
           if [ "$GITHUB_REF_NAME" = "main" ]; then
