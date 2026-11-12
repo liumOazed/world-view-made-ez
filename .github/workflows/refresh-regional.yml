@@ -1,6 +1,7 @@
 name: Refresh regional human development
 
-# Pulls the seven sections' indicators into src/data/regional.json. On main it opens or
+# Pulls Global Data Lab's regional human development figures into src/data/regional.json
+# (and the raw latest-year snapshot into scripts/data/shdi-latest.json). On main it opens or
 # updates a PR on the data/regional-refresh branch instead of pushing.
 on:
   schedule:
@@ -36,7 +37,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/data/regional.json
+          git add src/data/regional.json scripts/data/shdi-latest.json
           if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
           git commit -m "Refresh regional human development ($(date -u +%Y-%m-%d))"
           if [ "$GITHUB_REF_NAME" = "main" ]; then

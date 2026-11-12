@@ -9,7 +9,7 @@
  * GDL regions are sometimes groups of provinces ("North (Kano, Kaduna, ...)");
  * every province named in a group gets the group's values.
  */
-import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 
 const SRC =
   process.env.SHDI_URL ??
@@ -57,41 +57,40 @@ function parseCsv(text) {
   return rows;
 }
 
-const res = await fetch(SRC);
-if (!res.ok) throw new Error(`SHDI download failed: ${res.status}`);
-const rows = parseCsv(await res.text()).filter((r) => r.length > 3);
-const head = rows.shift().map((h) => h.trim().toLowerCase());
-console.log('columns:', head.join(', '));
-const col = (n) => head.indexOf(n);
-const C = {
-  iso: col('iso_code'),
-  year: col('year'),
-  code: col('gdlcode'),
-  level: col('level'),
-  region: col('region'),
-  shdi: col('shdi'),
-  gnic: col('gnic'),
-  lifexp: col('lifexp'),
-  msch: col('msch'),
-  esch: col('esch'),
-  pop: col('pop'),
-};
-for (const [k, v] of Object.entries(C)) if (v < 0) console.warn(`missing column ${k}`);
-
+const SNAP = new URL('scripts/data/shdi-latest.json', root);
+const FIELDS = ['iso', 'year', 'code', 'level', 'region', 'shdi', 'gnic', 'lifexp', 'msch', 'esch', 'pop'];
 const num = (s) => {
   const v = Number(s);
-  return s === '' || !Number.isFinite(v) ? null : v;
+  return s === '' || s == null || !Number.isFinite(v) ? null : v;
 };
 
-// Latest year per region with an HDI value.
-const latest = new Map();
-for (const r of rows) {
-  const key = r[C.code];
-  const y = Number(r[C.year]);
-  if (num(r[C.shdi]) === null) continue;
-  const cur = latest.get(key);
-  if (!cur || y > Number(cur[C.year])) latest.set(key, r);
+/** Latest year per GDL region with an HDI value, as rows in FIELDS order. */
+let latest;
+if (process.env.SHDI_OFFLINE) {
+  latest = JSON.parse(readFileSync(SNAP, 'utf8')).rows;
+} else {
+  const res = await fetch(SRC);
+  if (!res.ok) throw new Error(`SHDI download failed: ${res.status}`);
+  const rows = parseCsv(await res.text()).filter((r) => r.length > 3);
+  const head = rows.shift().map((h) => h.trim().toLowerCase());
+  console.log('columns:', head.join(', '));
+  const at = Object.fromEntries(
+    FIELDS.map((f) => [f, head.indexOf({ iso: 'iso_code', code: 'gdlcode' }[f] ?? f)]),
+  );
+  for (const [k, v] of Object.entries(at)) if (v < 0) console.warn(`missing column ${k}`);
+  const best = new Map();
+  for (const r of rows) {
+    if (num(r[at.shdi]) === null) continue;
+    const cur = best.get(r[at.code]);
+    if (!cur || Number(r[at.year]) > Number(cur[at.year])) best.set(r[at.code], r);
+  }
+  latest = [...best.values()].map((r) =>
+    FIELDS.map((f) => (['iso', 'code', 'level', 'region'].includes(f) ? r[at[f]].trim() : num(r[at[f]]))),
+  );
+  mkdirSync(new URL('scripts/data/', root), { recursive: true });
+  writeFileSync(SNAP, JSON.stringify({ source: SRC, fields: FIELDS, rows: latest }) + '\n');
 }
+const C = Object.fromEntries(FIELDS.map((f, i) => [f, i]));
 
 /* ---------- name matching ---------- */
 
@@ -136,8 +135,8 @@ let matchedTotal = 0;
 let unitsTotal = 0;
 const report = [];
 for (const [iso, { country, units }] of ours) {
-  const regions = [...latest.values()].filter((r) => r[C.iso] === iso && !/national/i.test(r[C.level] ?? ''));
-  const national = [...latest.values()].find((r) => r[C.iso] === iso && /national/i.test(r[C.level] ?? ''));
+  const regions = latest.filter((r) => r[C.iso] === iso && !/national/i.test(r[C.level] ?? ''));
+  const national = latest.find((r) => r[C.iso] === iso && /national/i.test(r[C.level] ?? ''));
   if (!regions.length && !national) continue;
   const cands = regions.map((r) => ({ r, n: names(r[C.region]) }));
   const pick = (u) => {
@@ -160,7 +159,7 @@ for (const [iso, { country, units }] of ours) {
     matched++;
     const r = c.r;
     if (!idx.has(r[C.code])) idx.set(r[C.code], regionNames.push(r[C.region]) - 1);
-    units2[u.key] = [num(r[C.shdi]), num(r[C.gnic]), num(r[C.lifexp]), num(r[C.msch]), num(r[C.esch]), num(r[C.pop]), idx.get(r[C.code])];
+    units2[u.key] = [(r[C.shdi]), (r[C.gnic]), (r[C.lifexp]), (r[C.msch]), (r[C.esch]), (r[C.pop]), idx.get(r[C.code])];
   }
   matchedTotal += matched;
   unitsTotal += units.length;
@@ -176,7 +175,7 @@ for (const [iso, { country, units }] of ours) {
         .slice(0, 14)
         .join(' | ')}`,
     );
-  const nat = national ? [num(national[C.shdi]), num(national[C.gnic]), num(national[C.lifexp]), num(national[C.msch]), num(national[C.esch]), num(national[C.pop])] : null;
+  const nat = national ? [(national[C.shdi]), (national[C.gnic]), (national[C.lifexp]), (national[C.msch]), (national[C.esch]), (national[C.pop])] : null;
   const year = Number((regions[0] ?? national)[C.year]);
   out[country] = { year, national: nat, regions: regionNames, units: units2 };
 }
