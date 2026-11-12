@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Activity, Award, Banknote, ChevronDown, Flame, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
-import { layerFor, PILLAR_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
+import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
+import { HD_LAYERS, layerFor, PILLAR_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { SECTIONS, type SectionId } from '../data/sections';
 
-const ICONS: Record<SectionId | 'scorecard', LucideIcon> = {
+type Group = SectionId | 'scorecard' | 'hd';
+
+const ICONS: Record<Group, LucideIcon> = {
   growth: Activity,
   prices: Flame,
   government: Landmark,
@@ -12,9 +14,10 @@ const ICONS: Record<SectionId | 'scorecard', LucideIcon> = {
   influence: Sparkles,
   risk: ShieldAlert,
   scorecard: Award,
+  hd: HeartPulse,
 };
 
-const GROUPS: { id: SectionId | 'scorecard'; label: string; subs: { id: LayerId; label: string; partial?: boolean }[] }[] = [
+const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; partial?: boolean }[] }[] = [
   ...SECTIONS.map((s) => ({
     id: s.id,
     label: s.label,
@@ -25,6 +28,8 @@ const GROUPS: { id: SectionId | 'scorecard'; label: string; subs: { id: LayerId;
     label: 'Scorecard',
     subs: [{ id: 'scorecard' as LayerId, label: 'All pillars' }, ...PILLAR_LAYERS.map((l) => ({ id: l.id, label: l.label }))],
   },
+  // Coloured state by state, not only by country.
+  { id: 'hd', label: 'Human development', subs: HD_LAYERS.map((l) => ({ id: l.id, label: l.label })) },
 ];
 
 /**
@@ -34,8 +39,8 @@ const GROUPS: { id: SectionId | 'scorecard'; label: string; subs: { id: LayerId;
 export function LensPicker({ layer, onChange, note }: { layer: Layer; onChange: (id: LayerId) => void; note: string }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const section = sectionOf(layer.id) ?? 'scorecard';
-  const [group, setGroup] = useState<SectionId | 'scorecard'>(section);
+  const section: Group = layer.id.startsWith('hd.') ? 'hd' : (sectionOf(layer.id) ?? 'scorecard');
+  const [group, setGroup] = useState<Group>(section);
   const Icon = ICONS[section];
 
   useEffect(() => setGroup(section), [section]);

@@ -17,6 +17,7 @@ import { Globe2, Minus, Plus } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
+import { hasRegional, regionalMeta } from '../data/regional';
 import { COUNTRY_FEATURES } from '../geo';
 import { useReducedEffects } from '../effects';
 import { loadCities, mainBounds, pathOf, placeId, type Bounds, type Detail, type Place } from '../map/places';
@@ -148,6 +149,8 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
     off,
   ];
   const levelLayers = [1, 2, 3].flatMap((L): LayerSpecification[] => [
+    // Region-by-region colours, where the measure has regional figures.
+    { id: `lv${L}-data`, type: 'fill', source: `lv${L}`, layout: { visibility: 'none' }, paint: { 'fill-color': 'rgba(0,0,0,0)', 'fill-opacity': 0.94 } },
     {
       id: `lv${L}-fill`,
       type: 'fill',
@@ -567,9 +570,13 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         const lvl = Number(f.layer.id[2]);
         const spec = d.spec.levels[lvl - 1];
         const cp = live.current.place.country ? P.get(live.current.place.country) : undefined;
-        const v = cp ? L.value(cp) : NaN;
+        const key = String(f.properties.key);
+        const rv = L.regional && d.country ? L.regional(d.country, key) : NaN;
+        const v = Number.isFinite(rv) ? rv : cp ? L.value(cp) : NaN;
         swatch = Number.isFinite(v) ? L.color(v) : undefined;
-        sub = `${spec.singular} · ${L.metric}: ${Number.isFinite(v) ? `${L.format(v)} (national)` : 'no data'}`;
+        const meta = Number.isFinite(rv) ? regionalMeta(d.country, key) : null;
+        const tag = !Number.isFinite(rv) ? ' (national)' : meta && !meta.own ? ` (${d.spec.levels[0].singular.toLowerCase()})` : '';
+        sub = `${spec.singular} · ${L.metric}: ${Number.isFinite(v) ? `${L.format(v)}${tag}` : 'no data'}`;
       }
       const r = wrapRef.current!.getBoundingClientRect();
       setTip({ x: e.point.x, y: e.point.y, title, sub, swatch, ...(e.point.x > r.width - 240 ? { x: e.point.x - 250 } : {}) });
@@ -614,6 +621,37 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     map.setPaintProperty('world-data', 'fill-color', expr);
   }, [ready, layer, profiles]);
 
+  /* ----- regional colours for the open country ----- */
+  const pid = placeId(place);
+  const regional = !!(layer.regional && detail && hasRegional(detail.country));
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !detail) return;
+    detail.levels.forEach((fc, i) => {
+      const pairs: string[] = [];
+      if (regional) {
+        for (const f of fc.features) {
+          const key = String(f.properties?.key);
+          const v = layer.regional!(detail.country, key);
+          if (Number.isFinite(v)) pairs.push(key, layer.color(v));
+        }
+      }
+      const expr = (pairs.length ? ['match', ['get', 'key'], ...pairs, 'rgba(0,0,0,0)'] : 'rgba(0,0,0,0)') as unknown as ExpressionSpecification;
+      map.setPaintProperty(`lv${i + 1}-data`, 'fill-color', expr);
+    });
+  }, [ready, detail, layer, regional]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    const { n, activeLevel, parentKey } = levelState();
+    for (let L = 1; L <= 3; L++) {
+      const on = regional && L <= n && L <= activeLevel;
+      map.setLayoutProperty(`lv${L}-data`, 'visibility', on ? 'visible' : 'none');
+      if (on) map.setFilter(`lv${L}-data`, L === activeLevel ? ['==', ['get', 'parent'], parentKey] : null);
+    }
+  }, [ready, pid, detail, regional, levelState]);
+
   /* ----- boundaries for the open country ----- */
   useEffect(() => {
     const map = mapRef.current;
@@ -637,7 +675,6 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
   }, [ready, detail]);
 
   /* ----- per-level visibility, filters and the fly-in ----- */
-  const pid = placeId(place);
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;

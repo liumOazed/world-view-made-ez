@@ -10,7 +10,7 @@ Figures come from open sources fetched by scheduled GitHub Actions; every value 
 
 ## What's here
 
-- **A real, zoomable map** (MapLibre GL on a globe). The home page is the map and little else. Click a country and the map flies in; its divisions or states become clickable, and each click goes one level down. Every country with published boundaries (194 of them) opens into its states or provinces and then its districts; Bangladesh goes one level further to upazilas and city areas, with roads and markets at street scale. The colour you pick stays on at every level: regions show their country's value, marked "national", until regional figures are added. See [`public/geo/README.md`](public/geo/README.md).
+- **A real, zoomable map** (MapLibre GL on a globe). The home page is the map and little else. Click a country and the map flies in; its divisions or states become clickable, and each click goes one level down. Every country with published boundaries (194 of them) opens into its states or provinces and then its districts; Bangladesh goes one level further to upazilas and city areas, with roads and markets at street scale. The colour you pick stays on at every level. The four human development measures (HDI, income per person, life expectancy, schooling) colour each state or province with its own figure from the Global Data Lab; other measures show the country's value there, marked "national". See [`public/geo/README.md`](public/geo/README.md).
 - **Moving globe.** It turns slowly until you touch it; trade and influence links draw in as great-circle arcs with light flowing along them. The reduced-effects switch stops all of it.
 - **One colour picker.** A single "Colour by" control at the bottom picks any of the subsections; its key sits in the same pill.
 - **Place card.** A small card per place: three figures, the places inside it, and a link to the full profile.
@@ -37,6 +37,7 @@ Modern yet traditional, following the design brief: a full-screen navy map as th
 | `refresh-trade.yml` | `scripts/fetch-trade.mjs` | `src/data/trade.json` | UN Comtrade |
 | `refresh-fbic.yml` | `scripts/fetch-fbic.mjs` | `src/data/influence.json` | FBIC Index (Pardee) |
 | `refresh-indices.yml` | `scripts/fetch-indices.mjs` | `src/data/indices.json` | Scorecard indices |
+| `refresh-regional.yml` (monthly) | `scripts/fetch-regional.mjs` | `src/data/regional.json` | Global Data Lab Subnational HDI (SHDI v8.1, via its PRIO mirror), matched to the map's regions by name plus the hand-made table in `scripts/regional-groups.mjs` |
 
 `src/data/sections.ts` defines the sections, subsections, map scales and our own measures (trade balance, commodity exports, outlook band, resilience score). Not fetched yet: FBIC's economic and political strands, sanctions lists, alliance data, BIS cross-border banking, bilateral FDI and exchange-rate moves.
 

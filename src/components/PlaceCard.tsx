@@ -3,6 +3,7 @@ import { ArrowRight, Hand, MapPin, Sparkles, Waypoints, X } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import type { Layer } from '../data/layers';
 import { META, valueOf } from '../data/sections';
+import { regionalMeta } from '../data/regional';
 import { areaKm2, contains, loadCities, nameOf, pathOf, SUBNATIONAL, type City, type Detail, type Place } from '../map/places';
 import { Flag } from './Flag';
 
@@ -141,11 +142,7 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           />
           <Fig label="Largest town" value={biggest ? fmtPop(biggest.pop) : '—'} note={biggest ? biggest.name : 'none listed'} />
         </div>
-        <p className="pc-lens">
-          <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
-          {layer.metric}: <b>{Number.isFinite(v) ? layer.format(v) : 'no data'}</b>
-          <span className="pc-tag">national</span>
-        </p>
+        <RegionLens layer={layer} country={place.country} unitKey={key} national={v} stateWord={spec!.levels[0].singular.toLowerCase()} />
         {childLevel ? (
           <>
             <div className="pc-hint">
@@ -168,8 +165,8 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           </>
         )}
         <p className="pc-note">
-          Population, income and services for each {lvl.singular.toLowerCase()} are next. Boundaries from {spec!.credit.split(' · ')[0]}; town
-          sizes from GeoNames.
+          Human development figures by region from the Global Data Lab (pick them under Colour by). Boundaries from{' '}
+          {spec!.credit.split(' · ')[0]}; town sizes from GeoNames.
         </p>
       </>
     );
@@ -227,5 +224,27 @@ export function Crumbs({ place, profiles, onPlace }: { place: Place; profiles: M
         </span>
       ))}
     </nav>
+  );
+}
+
+/** The colour-by measure for a region: its own figure where Global Data Lab has one, else the country's. */
+function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: Layer; country: string; unitKey: string; national: number; stateWord: string }) {
+  const rv = layer.regional ? layer.regional(country, unitKey) : NaN;
+  const own = Number.isFinite(rv);
+  const v = own ? rv : national;
+  const meta = own ? regionalMeta(country, unitKey) : null;
+  const tag = !own ? 'national' : meta && !meta.own ? stateWord : 'regional';
+  const named = meta && !/^\d+ regions$/.test(meta.region) ? meta.region : null;
+  return (
+    <p className="pc-lens">
+      <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
+      {layer.metric}: <b>{Number.isFinite(v) ? layer.format(v) : 'no data'}</b>
+      <span className="pc-tag">{tag}</span>
+      {meta && (
+        <span className="pc-src">
+          {named ? `Global Data Lab region: ${named}` : 'Global Data Lab'} · {meta.year}
+        </span>
+      )}
+    </p>
   );
 }

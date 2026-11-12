@@ -16,6 +16,7 @@ import { Explore, RegionStrip, type ExploreAction } from './components/Explore';
 import { Rankings } from './components/Scorecard';
 import { Drawer } from './components/Drawer';
 import { placeId, useDetail, WORLD, type Place } from './map/places';
+import { hasRegional, regionalYear } from './data/regional';
 
 const DEFAULT_LAYER: LayerId = 'growth.gdp';
 
@@ -82,6 +83,12 @@ export default function App() {
     const n = [...profiles.values()].filter((p) => Number.isFinite(layer.value(p))).length;
     return `${n} countries${sub?.pending ? ' · partly loaded' : ''}${sub?.ours ? ' · our measure' : ''}`;
   }, [layer, profiles, sub]);
+
+  const regionNote = layer.regional
+    ? place.country && hasRegional(place.country)
+      ? `by region, ${regionalYear(place.country)}`
+      : 'no regional figures for this country, so regions show the national value'
+    : 'regions show the national value; human development measures are coloured region by region';
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {
@@ -194,7 +201,7 @@ export default function App() {
           />
         )}
         {!(phone && (showCard || drawerOpen)) && (
-          <LensPicker layer={layer} onChange={changeLayer} note={place.path.length ? 'regions show the national value until regional figures are in' : coverageNote} />
+          <LensPicker layer={layer} onChange={changeLayer} note={place.path.length || (place.country && layer.regional) ? regionNote : coverageNote} />
         )}
 
         <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title={country ? country.display : 'Global overview'}>
@@ -282,11 +289,13 @@ function Method() {
           </p>
         </div>
         <div>
-          <h3>What is not here yet</h3>
+          <h3>Regions</h3>
           <p>
-            Figures below the country level (population, income, services) are the next step. Until they arrive, regions take their country's colour on the map
-            (marked "national"), and their cards show only what the boundaries and GeoNames can say for sure: area, what is inside, and the
-            largest towns.
+            The human development measures (HDI, income per person, life expectancy and schooling) are coloured state by state, from the
+            Global Data Lab's Subnational Human Development Database (Radboud University, SHDI v8.1, latest year 2022), matched to the map's
+            states and provinces by name. Where the Lab reports a group of provinces as one region, each province takes the group's figure;
+            districts take their state's, except in Bangladesh, where the Lab's district groups give districts their own. Every other
+            measure is national only, so regions take their country's colour (marked "national").
           </p>
         </div>
       </div>
@@ -308,7 +317,8 @@ function Footer() {
         <div className="footer-about">
           <h2 className="footer-title">About the data</h2>
           <p>
-            IMF, World Bank, BIS, Our World in Data, UN Comtrade and more, refreshed on a schedule, with the year on every value. Map
+            IMF, World Bank, BIS, Our World in Data, UN Comtrade and more, refreshed on a schedule, with the year on every value. Regional
+            human development from the Global Data Lab. Map
             boundaries from Natural Earth and geoBoundaries; roads and markets from OpenStreetMap; towns from GeoNames.{' '}
             <a href="#/method">Read the method</a>.
           </p>
