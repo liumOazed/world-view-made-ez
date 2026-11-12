@@ -61,6 +61,7 @@ const WB = {
   industry: ['NV.IND.TOTL.ZS', 'Industry, value added', '% of GDP', 'wdi'],
   manufacturing: ['NV.IND.MANF.ZS', 'Manufacturing, value added', '% of GDP', 'wdi'],
   services: ['NV.SRV.TOTL.ZS', 'Services, value added', '% of GDP', 'wdi'],
+  techShare: ['NV.MNF.TECH.ZS.UN', 'Medium and high-tech manufacturing', '% of manufacturing value added', 'wdi'],
   unemployment: ['SL.UEM.TOTL.ZS', 'Unemployment', '% of labour force', 'ilo'],
   youthUnemployment: ['SL.UEM.1524.ZS', 'Youth unemployment (15–24)', '% of youth labour force', 'ilo'],
   participation: ['SL.TLF.CACT.ZS', 'Labour force participation', '% of population 15+', 'ilo'],
@@ -204,6 +205,25 @@ async function worldBankPast(code) {
     const y = Number(r.date);
     if (!iso || r.value === null) continue;
     if (!out[iso] || y > out[iso].value[1]) out[iso] = { value: [round(r.value), y] };
+  }
+  return out;
+}
+
+/** One World Bank series divided by another, for the latest year both report. */
+async function worldBankRatio(top, bottom) {
+  const grab = async (code) => {
+    const body = await get(`https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${OLDEST_YEAR}:${THIS_YEAR}`, 'json');
+    const rows = Array.isArray(body) ? body[1] ?? [] : [];
+    if (!rows.length) throw new Error(`No rows for ${code}`);
+    const out = {};
+    for (const r of rows) if (r.countryiso3code && r.value !== null) (out[r.countryiso3code] ??= {})[Number(r.date)] = r.value;
+    return out;
+  };
+  const [a, b] = [await grab(top), await grab(bottom)];
+  const out = {};
+  for (const [iso, years] of Object.entries(a)) {
+    const y = Math.max(...Object.keys(years).map(Number).filter((y) => b[iso]?.[y] > 0));
+    if (Number.isFinite(y)) out[iso] = { value: [round(years[y] / b[iso][y]), y] };
   }
   return out;
 }
@@ -384,11 +404,12 @@ const INDICATORS = {
   ),
   // The same sector shares about a decade earlier, to show which way an economy is moving.
   ...Object.fromEntries(
-    ['agriculture', 'industry', 'services'].map((id) => [
+    ['agriculture', 'industry', 'manufacturing', 'services'].map((id) => [
       `${id}Past`,
       { label: `${WB[id][1]}, a decade earlier`, unit: '% of GDP', source: 'wdi', code: WB[id][0], fetch: () => worldBankPast(WB[id][0]) },
     ]),
   ),
+  manufacturingPc: { label: 'Manufacturing value added per person', unit: 'current US$', source: 'wdi', code: 'NV.IND.MANF.CD', fetch: () => worldBankRatio('NV.IND.MANF.CD', 'SP.POP.TOTL') },
   policyRate: { label: 'Central bank policy rate', unit: '%', source: 'bis', code: 'WS_CBPOL', fetch: bisPolicyRates },
   fossilShare: { label: 'Fossil fuels in primary energy', unit: '%', source: 'owid', code: 'fossil_share_energy', fetch: () => owidEnergy('fossil_share_energy') },
   renewablesShare: { label: 'Renewables in primary energy', unit: '%', source: 'owid', code: 'renewables_share_energy', fetch: () => owidEnergy('renewables_share_energy') },
