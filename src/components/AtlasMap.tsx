@@ -17,7 +17,7 @@ import { Globe2, Map as MapIcon, Minus, Plus } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
-import { hasRegional, regionalMeta } from '../data/regional';
+import { regionalMeta } from '../data/regional';
 import { COUNTRY_FEATURES } from '../geo';
 import { useReducedEffects } from '../effects';
 import { loadCities, mainBounds, pathOf, placeId, type Bounds, type Detail, type Place } from '../map/places';
@@ -591,7 +591,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         const rv = L.regional && d.country ? L.regional(d.country, key) : NaN;
         const v = Number.isFinite(rv) ? rv : cp ? L.value(cp) : NaN;
         swatch = Number.isFinite(v) ? L.color(v) : undefined;
-        const meta = Number.isFinite(rv) ? regionalMeta(d.country, key) : null;
+        const meta = Number.isFinite(rv) && L.regionSource === 'gdl' ? regionalMeta(d.country, key) : null;
         const tag = !Number.isFinite(rv) ? ' (national)' : meta && !meta.own ? ` (${d.spec.levels[0].singular.toLowerCase()})` : '';
         sub = `${spec.singular} · ${L.metric}: ${Number.isFinite(v) ? `${L.format(v)}${tag}` : 'no data'}`;
       }
@@ -640,7 +640,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
 
   /* ----- regional colours for the open country ----- */
   const pid = placeId(place);
-  const regional = !!(layer.regional && detail && hasRegional(detail.country));
+  const regional = !!(layer.regional && detail && layer.hasRegional?.(detail.country));
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready || !detail) return;

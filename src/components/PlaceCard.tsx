@@ -3,7 +3,7 @@ import { ArrowRight, Hand, MapPin, Sparkles, Waypoints, X } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import type { Layer } from '../data/layers';
 import { META, valueOf } from '../data/sections';
-import { regionalMeta } from '../data/regional';
+import { CONFLICT_YEARS, regionalMeta } from '../data/regional';
 import { areaKm2, contains, loadCities, nameOf, pathOf, SUBNATIONAL, type City, type Detail, type Place } from '../map/places';
 import { Flag } from './Flag';
 
@@ -165,7 +165,7 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           </>
         )}
         <p className="pc-note">
-          Human development figures by region from the Global Data Lab (pick them under Colour by). Boundaries from{' '}
+          Measures marked “by region” under Colour by have figures for each region (Global Data Lab, UCDP). Boundaries from{' '}
           {spec!.credit.split(' · ')[0]}; town sizes from GeoNames.
         </p>
       </>
@@ -232,7 +232,7 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
   const rv = layer.regional ? layer.regional(country, unitKey) : NaN;
   const own = Number.isFinite(rv);
   const v = own ? rv : national;
-  const meta = own ? regionalMeta(country, unitKey) : null;
+  const meta = own && layer.regionSource === 'gdl' ? regionalMeta(country, unitKey) : null;
   const tag = !own ? 'national' : meta && !meta.own ? stateWord : 'regional';
   const named = meta && !/^\d+ regions$/.test(meta.region) ? meta.region : null;
   return (
@@ -243,6 +243,11 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
       {meta && (
         <span className="pc-src">
           {named ? `Global Data Lab region: ${named}` : 'Global Data Lab'} · {meta.year}
+        </span>
+      )}
+      {own && layer.regionSource === 'events' && (
+        <span className="pc-src">
+          UCDP events in this area · {CONFLICT_YEARS[0]}–{CONFLICT_YEARS[1]}
         </span>
       )}
     </p>
