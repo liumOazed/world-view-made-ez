@@ -10,6 +10,7 @@ import '@fontsource/poppins/latin-500.css';
 import '@fontsource/poppins/latin-600.css';
 import './effects';
 import './styles.css';
+import './map.css';
 import App from './App';
 
 createRoot(document.getElementById('root')!).render(
