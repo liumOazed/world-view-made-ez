@@ -194,11 +194,25 @@ async function worldBank(codes, oldest = OLDEST_YEAR) {
   throw new Error('No rows from any World Bank code');
 }
 
+/** World Bank rows for a span of years; asks year by year when the whole span will not come at once. */
+async function wbRange(code, from, to) {
+  const page = async (date) => {
+    const body = await get(`https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${date}`, 'json');
+    return Array.isArray(body) ? body[1] ?? [] : [];
+  };
+  try {
+    return await page(`${from}:${to}`);
+  } catch (e) {
+    console.warn(`  ${e.message}; asking year by year`);
+    const rows = [];
+    for (let y = from; y <= to; y++) rows.push(...(await page(y).catch((e) => (console.warn(`  ${e.message}`), []))));
+    return rows;
+  }
+}
+
 /** A World Bank value from about ten years back: the latest year in a four-year window. */
 async function worldBankPast(code) {
-  const url = `https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${THIS_YEAR - 13}:${THIS_YEAR - 10}`;
-  const body = await get(url, 'json');
-  const rows = Array.isArray(body) ? body[1] ?? [] : [];
+  const rows = await wbRange(code, THIS_YEAR - 13, THIS_YEAR - 10);
   if (!rows.length) throw new Error(`No past rows for ${code}`);
   const out = {};
   for (const r of rows) {
@@ -213,8 +227,7 @@ async function worldBankPast(code) {
 /** One World Bank series divided by another, for the latest year both report. */
 async function worldBankRatio(top, bottom) {
   const grab = async (code) => {
-    const body = await get(`https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${OLDEST_YEAR}:${THIS_YEAR}`, 'json');
-    const rows = Array.isArray(body) ? body[1] ?? [] : [];
+    const rows = await wbRange(code, OLDEST_YEAR, THIS_YEAR);
     if (!rows.length) throw new Error(`No rows for ${code}`);
     const out = {};
     for (const r of rows) if (r.countryiso3code && r.value !== null) (out[r.countryiso3code] ??= {})[Number(r.date)] = r.value;
