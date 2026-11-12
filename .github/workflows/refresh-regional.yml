@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
   push:
     branches: ['claude/**']
-    paths: ['scripts/fetch-regional.mjs', '.github/workflows/refresh-regional.yml']
+    paths: ['scripts/fetch-regional.mjs', 'scripts/regional-groups.mjs', '.github/workflows/refresh-regional.yml']
 
 permissions:
   contents: write
