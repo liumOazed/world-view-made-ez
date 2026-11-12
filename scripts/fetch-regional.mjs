@@ -11,6 +11,8 @@
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { GROUPS, MERGE } from './regional-groups.mjs';
+import { feature } from 'topojson-client';
+import { geoArea } from 'd3-geo';
 
 const SRC =
   process.env.SHDI_URL ??
@@ -22,8 +24,25 @@ const read = (p) => JSON.parse(readFileSync(new URL(p, root), 'utf8'));
 
 const manifest = read('src/data/subnational.json');
 const ours = new Map(); // iso3 -> { country, units: [{ key, name }] }
+/** Land area of every map region, km², by key. */
+const AREA = new Map();
+const R2 = 6371 ** 2;
+const addAreas = (fc) => {
+  for (const f of fc.features) {
+    // A ring wound the wrong way measures the rest of the sphere, so measure each part on its own.
+    const g = f.geometry;
+    const parts = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates];
+    const a = parts.reduce((sum, c) => {
+      const x = geoArea({ type: 'Polygon', coordinates: c });
+      return sum + Math.min(x, 4 * Math.PI - x);
+    }, 0);
+    AREA.set(f.properties.key, a * R2);
+  }
+};
 for (const [country, m] of Object.entries(manifest)) {
   const topo = read(`public/geo/admin/${m.iso3}.json`);
+  addAreas(feature(topo, topo.objects.adm1));
+  if (topo.objects.adm2) addAreas(feature(topo, topo.objects.adm2));
   ours.set(m.iso3, {
     country,
     units: topo.objects.adm1.geometries.map((g) => g.properties),
@@ -33,6 +52,8 @@ for (const [country, m] of Object.entries(manifest)) {
 if (existsSync(new URL('public/geo/BGD/adm1.json', root))) {
   const bd = read('public/geo/BGD/adm1.json');
   const bd2 = read('public/geo/BGD/adm2.json');
+  addAreas(bd);
+  addAreas(bd2);
   ours.set('BGD', { country: 'Bangladesh', units: bd.features.map((f) => f.properties), subs: bd2.features.map((f) => f.properties) });
 }
 
@@ -64,7 +85,9 @@ function parseCsv(text) {
 }
 
 const SNAP = new URL('scripts/data/shdi-latest.json', root);
-const FIELDS = ['iso', 'year', 'code', 'level', 'region', 'shdi', 'gnic', 'lifexp', 'msch', 'esch', 'pop'];
+let FIELDS = ['iso', 'year', 'code', 'level', 'region', 'shdi', 'gnic', 'lifexp', 'msch', 'esch', 'pop', 'sgdi'];
+/** Average yearly growth of income per person is measured over this many years. */
+const SPAN = 5;
 const num = (s) => {
   const v = Number(s);
   return s === '' || s == null || !Number.isFinite(v) ? null : v;
@@ -73,7 +96,9 @@ const num = (s) => {
 /** Latest year per GDL region with an HDI value, as rows in FIELDS order. */
 let latest;
 if (process.env.SHDI_OFFLINE) {
-  latest = JSON.parse(readFileSync(SNAP, 'utf8')).rows;
+  const snap = JSON.parse(readFileSync(SNAP, 'utf8'));
+  latest = snap.rows;
+  FIELDS = snap.fields;
 } else {
   const res = await fetch(SRC);
   if (!res.ok) throw new Error(`SHDI download failed: ${res.status}`);
@@ -90,9 +115,14 @@ if (process.env.SHDI_OFFLINE) {
     const cur = best.get(r[at.code]);
     if (!cur || Number(r[at.year]) > Number(cur[at.year])) best.set(r[at.code], r);
   }
-  latest = [...best.values()].map((r) =>
-    FIELDS.map((f) => (['iso', 'code', 'level', 'region'].includes(f) ? r[at[f]].trim() : num(r[at[f]]))),
-  );
+  const gnicAt = new Map(rows.map((r) => [`${r[at.code]}|${r[at.year]}`, num(r[at.gnic])]));
+  latest = [...best.values()].map((r) => {
+    const g0 = gnicAt.get(`${r[at.code]}|${Number(r[at.year]) - SPAN}`);
+    const g1 = num(r[at.gnic]);
+    const growth = g0 && g1 ? Math.round(((g1 / g0) ** (1 / SPAN) - 1) * 1000) / 10 : null;
+    return [...FIELDS.map((f) => (['iso', 'code', 'level', 'region'].includes(f) ? r[at[f]].trim() : num(r[at[f]]))), growth];
+  });
+  FIELDS = [...FIELDS, 'growth'];
   mkdirSync(new URL('scripts/data/', root), { recursive: true });
   writeFileSync(SNAP, JSON.stringify({ source: SRC, fields: FIELDS, rows: latest }) + '\n');
 }
@@ -188,12 +218,13 @@ const sameRegion = (label, region) => {
   return a === tight(norm(region)) || a === b[0] || (a.length >= 4 && (b[0] ?? '').startsWith(a));
 };
 
-const FIELDS_OUT = [C.shdi, C.gnic, C.lifexp, C.msch, C.esch, C.pop];
+const FIELDS_OUT = [C.shdi, C.gnic, C.lifexp, C.msch, C.esch, C.pop, C.sgdi, C.growth];
 /** Population-weighted mean of several GDL rows (for map regions larger than GDL's). */
 function blend(rs) {
   const w = rs.map((r) => r[C.pop] ?? 1);
   return FIELDS_OUT.map((f, i) => {
-    if (f === C.pop) return rs.reduce((s, r) => s + (r[C.pop] ?? 0), 0) || null;
+    if (f === undefined) return null;
+    if (f === C.pop) return Math.round(rs.reduce((s, r) => s + (r[C.pop] ?? 0), 0) * 1000) / 1000 || null;
     let s = 0;
     let ws = 0;
     rs.forEach((r, k) => {
@@ -267,7 +298,7 @@ for (const [iso, { country, units, subs }] of ours) {
     matched++;
     const label = rs.map((r) => r[C.region]).join(' + ');
     if (!idx.has(label)) idx.set(label, regionNames.push(label) - 1);
-    const v = rs.length === 1 ? FIELDS_OUT.map((f) => rs[0][f]) : blend(rs);
+    const v = rs.length === 1 ? FIELDS_OUT.map((f) => (f === undefined ? null : rs[0][f])) : blend(rs);
     units2[u.key] = [...v, idx.get(label)];
   }
 
@@ -281,7 +312,7 @@ for (const [iso, { country, units, subs }] of ours) {
       if (!c) continue;
       const label = c.r[C.region];
       if (!idx.has(label)) idx.set(label, regionNames.push(label) - 1);
-      units2[u.key] = [...FIELDS_OUT.map((f) => c.r[f]), idx.get(label)];
+      units2[u.key] = [...FIELDS_OUT.map((f) => (f === undefined ? null : c.r[f])), idx.get(label)];
       if (!within.has(u.parent)) within.set(u.parent, new Set());
       within.get(u.parent).add(c.r);
     }
@@ -291,7 +322,7 @@ for (const [iso, { country, units, subs }] of ours) {
       if (!units2[u.key]) matched++;
       const label = `${rs.length} regions`;
       if (!idx.has(label)) idx.set(label, regionNames.push(label) - 1);
-      units2[u.key] = [...(rs.length === 1 ? FIELDS_OUT.map((f) => rs[0][f]) : blend(rs)), idx.get(label)];
+      units2[u.key] = [...(rs.length === 1 ? FIELDS_OUT.map((f) => (f === undefined ? null : rs[0][f])) : blend(rs)), idx.get(label)];
     }
   }
   matchedTotal += matched;
@@ -308,7 +339,26 @@ for (const [iso, { country, units, subs }] of ours) {
         .slice(0, 14)
         .join(' | ')}`,
     );
-  const nat = national ? FIELDS_OUT.map((f) => national[f]) : null;
+
+  // People per km²: a GDL region's population over the land of every map region it covers.
+  const ownArea = new Set(Object.keys(units2).filter((k) => /^\d+ regions$|\+/.test(regionNames[units2[k].at(-1)])));
+  const groupArea = new Map();
+  for (const [k, row] of Object.entries(units2)) {
+    const g = `${k.split('/').length}:${row.at(-1)}`;
+    if (!ownArea.has(k)) groupArea.set(g, (groupArea.get(g) ?? 0) + (AREA.get(k) ?? 0));
+  }
+  for (const [k, row] of Object.entries(units2)) {
+    const a = ownArea.has(k) ? AREA.get(k) : groupArea.get(`${k.split('/').length}:${row.at(-1)}`);
+    const pop = row[5];
+    // Small islands lose most of their land to simplification, so their density would be invented.
+    const dens = pop != null && a >= 100 ? Math.round(((pop * 1000) / a) * 10) / 10 : null;
+    units2[k] = [...row.slice(0, -1).map((v) => (v == null ? null : v)), dens, row.at(-1)];
+  }
+  const land = units.reduce((s, u) => s + (AREA.get(u.key) ?? 0), 0);
+  const natPop = national?.[C.pop];
+  const nat = national
+    ? [...FIELDS_OUT.map((f) => (f === undefined ? null : national[f])), natPop != null && land ? Math.round(((natPop * 1000) / land) * 10) / 10 : null]
+    : null;
   const year = Number((regions[0] ?? national)[C.year]);
   out[country] = { year, national: nat, regions: regionNames, units: units2 };
 }
@@ -322,7 +372,7 @@ writeFileSync(
       source: 'Global Data Lab, Subnational Human Development Database (SHDI)',
       url: 'https://globaldatalab.org/shdi',
       retrieved: new Date().toISOString().slice(0, 10),
-      fields: ['shdi', 'gnic', 'lifexp', 'msch', 'esch', 'pop', 'region'],
+      fields: ['shdi', 'gnic', 'lifexp', 'msch', 'esch', 'pop', 'sgdi', 'growth', 'density', 'region'],
       countries: out,
     },
     null,
