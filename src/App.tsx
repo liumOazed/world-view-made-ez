@@ -289,6 +289,16 @@ function Method() {
           </p>
         </div>
         <div>
+          <h3>Sectors</h3>
+          <p>
+            Services, industry (with manufacturing inside it) and agriculture are World Bank value added as a share of GDP. The sector
+            mix blends three colours by how far each share runs above a typical economy (services 55%, industry 26%, agriculture 9%),
+            because services is the largest sector almost everywhere; the leading sector is the one furthest above that. The shift
+            compares the latest shares with those of about ten years earlier. Sector figures are national: no open worldwide source
+            splits them by state, so regions show their country's mix.
+          </p>
+        </div>
+        <div>
           <h3>Regions</h3>
           <p>
             The human development measures (HDI, income per person, life expectancy and schooling) are coloured state by state, from the

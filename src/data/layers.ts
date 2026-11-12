@@ -2,11 +2,12 @@ import { scaleLinear, scaleLog, scaleSqrt, scaleSymlog } from 'd3-scale';
 import { interpolateRgbBasis } from 'd3-interpolate';
 import type { CountryProfile } from './countries';
 import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
-import { colorOf, SECTIONS, type SectionId } from './sections';
+import { colorOf, SECTIONS, valueOf, type SectionId } from './sections';
+import { blend, leader, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 
 /** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
-export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}`;
+export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}` | `sectors.${string}`;
 
 export interface Layer {
   id: LayerId;
@@ -26,6 +27,12 @@ export interface Layer {
   ticks: string[];
   /** Value for a state, province or district, where regional figures exist. */
   regional?: (country: string, key: string) => number;
+  /** A colour that isn't a function of one number (the sector blend). */
+  paint?: (country: string) => string | null;
+  /** Tooltip text in place of the formatted value. */
+  tip?: (country: string) => string | null;
+  /** Named colours for the key, in place of the ramp. */
+  legend?: { color: string; label: string }[];
   /** Whether this country has regional figures for the layer. */
   hasRegional?: (country: string) => boolean;
   /** Where the regional figures come from: Global Data Lab regions, or events counted on the map. */
@@ -43,7 +50,7 @@ const SCORE = ['#b4424a', '#d9824f', '#e0bb6a', '#6fae9c', '#5f9bd3', '#d0e0ee']
 /** One map layer per subsection. */
 export const SECTION_LAYERS: Layer[] = SECTIONS.flatMap((s) =>
   s.subs.map((sub) => ({
-    id: `${s.id}.${sub.id}` as LayerId,
+    id: `${s.id}.${sub.id}`,
     label: sub.label,
     metric: sub.map.metric,
     unit: sub.map.unit,
@@ -64,7 +71,11 @@ export const LAYERS: Layer[] = [...SECTION_LAYERS];
 const SECTION_IDS = new Set<string>(SECTIONS.map((s) => s.id));
 export const sectionOf = (id: LayerId) =>
   id.includes('.') && SECTION_IDS.has(id.split('.')[0]) ? (id.split('.')[0] as SectionId) : null;
-export const layerFor = (section: SectionId, sub?: string) => `${section}.${sub ?? SECTIONS.find((s) => s.id === section)!.subs[0].id}` as LayerId;
+// The sector breakdown has its own group on the map.
+export const layerFor = (section: SectionId, sub?: string) =>
+  section === 'growth' && sub === 'sectors'
+    ? ('sectors.mix' as LayerId)
+    : (`${section}.${sub ?? SECTIONS.find((s) => s.id === section)!.subs[0].id}` as LayerId);
 
 const score = (v: number) => (Number.isNaN(v) ? 'Not enough data' : `${Math.round(v)} / 100`);
 
@@ -87,7 +98,7 @@ LAYERS.push({
 /** One layer per pillar, reached from the scorecard layer's sub-switcher. */
 export const PILLAR_LAYERS: Layer[] = PILLARS.map((p) => ({
   ...LAYERS[LAYERS.length - 1],
-  id: `score-${p.id}` as LayerId,
+  id: `score-${p.id}`,
   label: p.short,
   metric: p.label,
   unit: `scorecard pillar, 0–100 · ${p.weight}% of overall`,
@@ -231,7 +242,7 @@ export const REGION_LAYERS: Layer[] = [
     ticks: ['0.60', '0.90', '1.02'],
   }),
   {
-    id: 'risk.r-conflict' as LayerId,
+    id: 'risk.r-conflict',
     label: 'Conflict deaths',
     metric: 'Deaths in organised violence',
     unit: `${CONFLICT_YEARS[0]}–${CONFLICT_YEARS[1]}, UCDP`,
@@ -250,7 +261,103 @@ export const REGION_LAYERS: Layer[] = [
   },
 ];
 
-export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS].map((l) => [l.id, l])) as Record<
+/* ---------- sectors: what each economy lives on ---------- */
+
+const pct = (v: number) => `${v.toFixed(1)}%`;
+const SECTOR_LEGEND = SECTORS.map((k) => ({ color: SECTOR_COLORS[k], label: SECTOR_LABEL[k] }));
+const MIX_RAMP = [SECTOR_COLORS.agriculture, SECTOR_COLORS.industry, SECTOR_COLORS.services];
+const sectorBase = { unit: '% of GDP, World Bank', format: pct, low: '', high: '' };
+const one = (k: Sector | 'manufacturing', label: string, hue: string, max: number, note = ''): Layer => ({
+  ...sectorBase,
+  id: `sectors.${k}`,
+  label,
+  metric: `${label}, value added`,
+  question: `How big is ${label.toLowerCase()} in each economy?`,
+  description: `${label} value added as a share of GDP.${note}`,
+  value: (c) => valueOf(k, c.name)?.[0] ?? NaN,
+  color: stops(['#1b2740', hue, '#f2f6fb'], [0, max * 0.6, max]),
+  ramp: ['#1b2740', hue, '#f2f6fb'],
+  low: 'Small',
+  high: 'Large',
+  ticks: ['0%', `${max / 2}%`, `${max}%+`],
+});
+const painted = (o: Pick<Layer, 'id' | 'label' | 'metric' | 'question' | 'description' | 'value' | 'paint' | 'tip'> & Partial<Layer>): Layer => ({
+  ...sectorBase,
+  color: () => '#888',
+  ramp: MIX_RAMP,
+  ticks: ['Farming', 'Industry', 'Services'],
+  legend: SECTOR_LEGEND,
+  ...o,
+});
+export const SECTOR_LAYERS: Layer[] = [
+  painted({
+    id: 'sectors.mix',
+    label: 'Sector mix',
+    metric: 'Sector mix',
+    question: 'What does each economy live on?',
+    description:
+      'Each country is a blend of three colours: services, industry and agriculture. The more of a sector it has compared with a typical economy, the more of that colour.',
+    value: (c) => {
+      const s = sharesOf(c.name);
+      return s ? s[leader(s)] : NaN;
+    },
+    paint: (country) => {
+      const s = sharesOf(country);
+      return s ? blend(s) : null;
+    },
+    tip: (country) => {
+      const s = sharesOf(country);
+      return s ? mixText(s) : null;
+    },
+  }),
+  painted({
+    id: 'sectors.lead',
+    label: 'Leading sector',
+    metric: 'Leans on',
+    question: 'Which sector does each economy lean on more than most?',
+    description:
+      'The sector whose share runs furthest above a typical economy (services 55%, industry 26%, agriculture 9%). Services is the largest sector almost everywhere, so the plain largest would say little.',
+    value: (c) => {
+      const s = sharesOf(c.name);
+      return s ? s[leader(s)] : NaN;
+    },
+    paint: (country) => {
+      const s = sharesOf(country);
+      return s ? SECTOR_COLORS[leader(s)] : null;
+    },
+    tip: (country) => {
+      const s = sharesOf(country);
+      return s ? `${SECTOR_LABEL[leader(s)]} · ${mixText(s)}` : null;
+    },
+  }),
+  painted({
+    id: 'sectors.shift',
+    label: 'Shift over a decade',
+    metric: 'Sector gaining share',
+    unit: 'points of GDP, World Bank',
+    question: 'Which way is each economy moving?',
+    description: 'The sector that gained the most share of GDP over about ten years; stronger colour means a bigger gain.',
+    value: (c) => {
+      const s = shiftOf(c.name);
+      return s ? s.d[s.gainer] : NaN;
+    },
+    format: (v) => `+${v.toFixed(1)} pts`,
+    paint: (country) => {
+      const s = shiftOf(country);
+      return s ? shiftColor(s) : null;
+    },
+    tip: (country) => {
+      const s = shiftOf(country);
+      return s ? shiftText(s) : null;
+    },
+  }),
+  one('services', 'Services', SECTOR_COLORS.services, 80),
+  one('industry', 'Industry', SECTOR_COLORS.industry, 60, ' Industry includes mining, construction, utilities and manufacturing.'),
+  one('manufacturing', 'Manufacturing', '#c06fb0', 30, ' Manufacturing is the part of industry that makes goods.'),
+  one('agriculture', 'Agriculture', SECTOR_COLORS.agriculture, 40),
+];
+
+export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS].map((l) => [l.id, l])) as Record<
   LayerId,
   Layer
 >;
