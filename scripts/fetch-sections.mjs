@@ -224,24 +224,6 @@ async function worldBankPast(code) {
   return out;
 }
 
-/** One World Bank series divided by another, for the latest year both report. */
-async function worldBankRatio(top, bottom) {
-  const grab = async (code) => {
-    const rows = await wbRange(code, OLDEST_YEAR, THIS_YEAR);
-    if (!rows.length) throw new Error(`No rows for ${code}`);
-    const out = {};
-    for (const r of rows) if (r.countryiso3code && r.value !== null) (out[r.countryiso3code] ??= {})[Number(r.date)] = r.value;
-    return out;
-  };
-  const [a, b] = [await grab(top), await grab(bottom)];
-  const out = {};
-  for (const [iso, years] of Object.entries(a)) {
-    const y = Math.max(...Object.keys(years).map(Number).filter((y) => b[iso]?.[y] > 0));
-    if (Number.isFinite(y)) out[iso] = { value: [round(years[y] / b[iso][y]), y] };
-  }
-  return out;
-}
-
 // Euro area members share the ECB policy rate (BIS reports it as XM).
 const EURO = ['AUT', 'BEL', 'HRV', 'CYP', 'EST', 'FIN', 'FRA', 'DEU', 'GRC', 'IRL', 'ITA', 'LVA', 'LTU', 'LUX', 'MLT', 'NLD', 'PRT', 'SVK', 'SVN', 'ESP'];
 
@@ -423,7 +405,6 @@ const INDICATORS = {
       { label: `${WB[id][1]}, a decade earlier`, unit: '% of GDP', source: 'wdi', code: WB[id][0], fetch: () => worldBankPast(WB[id][0]) },
     ]),
   ),
-  manufacturingPc: { label: 'Manufacturing value added per person', unit: 'current US$', source: 'wdi', code: 'NV.IND.MANF.CD', fetch: () => worldBankRatio('NV.IND.MANF.CD', 'SP.POP.TOTL') },
   policyRate: { label: 'Central bank policy rate', unit: '%', source: 'bis', code: 'WS_CBPOL', fetch: bisPolicyRates },
   fossilShare: { label: 'Fossil fuels in primary energy', unit: '%', source: 'owid', code: 'fossil_share_energy', fetch: () => owidEnergy('fossil_share_energy') },
   renewablesShare: { label: 'Renewables in primary energy', unit: '%', source: 'owid', code: 'renewables_share_energy', fetch: () => owidEnergy('renewables_share_energy') },
