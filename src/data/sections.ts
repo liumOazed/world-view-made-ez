@@ -89,6 +89,7 @@ export const META: Record<string, MetricMeta> = {
   agriculture: { fmt: FMT.pct, higherIsBetter: null },
   industry: { fmt: FMT.pct, higherIsBetter: null },
   manufacturing: { fmt: FMT.pct, higherIsBetter: null },
+  techShare: { fmt: FMT.pct, higherIsBetter: true, label: 'Medium & high-tech share of manufacturing' },
   services: { fmt: FMT.pct, higherIsBetter: null },
   inflation: { fmt: FMT.pct, higherIsBetter: false },
   unemployment: { fmt: FMT.pct, higherIsBetter: false },
@@ -382,7 +383,7 @@ export const SECTIONS: Section[] = [
           ticks: ['0%', '15%', '30%+'],
           description: 'Manufacturing value added as a share of GDP. The country view shows all four sectors.',
         }),
-        metrics: ['services', 'industry', 'manufacturing', 'agriculture'],
+        metrics: ['services', 'industry', 'manufacturing', 'techShare', 'agriculture'],
       },
       {
         id: 'outlook',

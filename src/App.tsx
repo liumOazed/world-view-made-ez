@@ -293,10 +293,13 @@ function Method() {
         <div>
           <h3>Sectors</h3>
           <p>
-            Services, industry (with manufacturing inside it) and agriculture are World Bank value added as a share of GDP. The sector
-            mix blends three colours by how far each share runs above a typical economy (services 55%, industry 26%, agriculture 9%),
-            because services is the largest sector almost everywhere; the leading sector is the one furthest above that. The shift
-            compares the latest shares with those of about ten years earlier. Sector figures are national: no open worldwide source
+            Services, industry, manufacturing and agriculture are World Bank value added as a share of GDP. Industry is split in two:
+            manufacturing, and the rest of it (oil, gas, mining, construction and utilities), shown as extraction and construction, so
+            a petrostate does not read as a factory economy. The sector mix blends four colours by how far each share runs above a
+            typical economy (services 55%, manufacturing 13%, extraction and construction 13%, agriculture 9%), because services is
+            the largest sector almost everywhere; the leading sector is the one furthest above that. The shift compares the latest
+            shares with those of about ten years earlier. Manufacturing per person applies the manufacturing share of GDP to
+            the IMF's GDP per person in current US dollars; the medium and high-tech share is UNIDO data published by the World Bank. Sector figures are national: no open worldwide source
             splits them by state, so regions show their country's mix.
           </p>
         </div>

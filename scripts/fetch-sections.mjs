@@ -59,8 +59,10 @@ const WB = {
   outputPerWorker: ['SL.GDP.PCAP.EM.KD', 'GDP per person employed', 'constant 2021 PPP $', 'ilo'],
   agriculture: ['NV.AGR.TOTL.ZS', 'Agriculture, value added', '% of GDP', 'wdi'],
   industry: ['NV.IND.TOTL.ZS', 'Industry, value added', '% of GDP', 'wdi'],
-  manufacturing: ['NV.IND.MANF.ZS', 'Manufacturing, value added', '% of GDP', 'wdi'],
+  // Some oil and conflict economies last reported manufacturing long ago; an old figure still tells them from factory economies.
+  manufacturing: ['NV.IND.MANF.ZS', 'Manufacturing, value added', '% of GDP', 'wdi', 25],
   services: ['NV.SRV.TOTL.ZS', 'Services, value added', '% of GDP', 'wdi'],
+  techShare: ['NV.MNF.TECH.ZS.UN', 'Medium and high-tech manufacturing', '% of manufacturing value added', 'wdi'],
   unemployment: ['SL.UEM.TOTL.ZS', 'Unemployment', '% of labour force', 'ilo'],
   youthUnemployment: ['SL.UEM.1524.ZS', 'Youth unemployment (15–24)', '% of youth labour force', 'ilo'],
   participation: ['SL.TLF.CACT.ZS', 'Labour force participation', '% of population 15+', 'ilo'],
@@ -165,7 +167,7 @@ async function imf(codes) {
 }
 
 /** Most recent non-empty value per country from the World Bank API; tries each code in turn. */
-async function worldBank(codes) {
+async function worldBank(codes, oldest = OLDEST_YEAR) {
   for (const code of [codes].flat()) {
     const url = `https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&mrnev=1`;
     let body;
@@ -184,7 +186,7 @@ async function worldBank(codes) {
     for (const r of rows) {
       const iso = r.countryiso3code;
       const y = Number(r.date);
-      if (!iso || r.value === null || y < OLDEST_YEAR) continue;
+      if (!iso || r.value === null || y < oldest) continue;
       if (!out[iso] || y > out[iso].value[1]) out[iso] = { value: [round(r.value), y] };
     }
     return out;
@@ -192,11 +194,25 @@ async function worldBank(codes) {
   throw new Error('No rows from any World Bank code');
 }
 
+/** World Bank rows for a span of years; asks year by year when the whole span will not come at once. */
+async function wbRange(code, from, to) {
+  const page = async (date) => {
+    const body = await get(`https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${date}`, 'json');
+    return Array.isArray(body) ? body[1] ?? [] : [];
+  };
+  try {
+    return await page(`${from}:${to}`);
+  } catch (e) {
+    console.warn(`  ${e.message}; asking year by year`);
+    const rows = [];
+    for (let y = from; y <= to; y++) rows.push(...(await page(y).catch((e) => (console.warn(`  ${e.message}`), []))));
+    return rows;
+  }
+}
+
 /** A World Bank value from about ten years back: the latest year in a four-year window. */
 async function worldBankPast(code) {
-  const url = `https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&per_page=20000&date=${THIS_YEAR - 13}:${THIS_YEAR - 10}`;
-  const body = await get(url, 'json');
-  const rows = Array.isArray(body) ? body[1] ?? [] : [];
+  const rows = await wbRange(code, THIS_YEAR - 13, THIS_YEAR - 10);
   if (!rows.length) throw new Error(`No past rows for ${code}`);
   const out = {};
   for (const r of rows) {
@@ -377,14 +393,14 @@ const INDICATORS = {
     ]),
   ),
   ...Object.fromEntries(
-    Object.entries(WB).map(([id, [code, label, unit, source]]) => [
+    Object.entries(WB).map(([id, [code, label, unit, source, span]]) => [
       id,
-      { label, unit, source, code: [code].flat()[0], fetch: () => worldBank(code) },
+      { label, unit, source, code: [code].flat()[0], fetch: () => worldBank(code, span ? THIS_YEAR - span : OLDEST_YEAR) },
     ]),
   ),
   // The same sector shares about a decade earlier, to show which way an economy is moving.
   ...Object.fromEntries(
-    ['agriculture', 'industry', 'services'].map((id) => [
+    ['agriculture', 'industry', 'manufacturing', 'services'].map((id) => [
       `${id}Past`,
       { label: `${WB[id][1]}, a decade earlier`, unit: '% of GDP', source: 'wdi', code: WB[id][0], fetch: () => worldBankPast(WB[id][0]) },
     ]),
