@@ -88,7 +88,9 @@ export default function App() {
     ? place.country && layer.hasRegional?.(place.country)
       ? `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
       : 'no regional figures for this country, so regions show the national value'
-    : 'regions show the national value; measures marked “by region” colour each region';
+    : layer.paint
+      ? 'regions show the national mix'
+      : 'regions show the national value; measures marked “by region” colour each region';
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {

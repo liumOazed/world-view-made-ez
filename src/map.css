@@ -916,3 +916,6 @@ html[data-effects='reduced'] .place-card {
   height: 8px;
   border-radius: 2px;
 }
+.lens-key:has(.lens-chips) {
+  width: auto;
+}
