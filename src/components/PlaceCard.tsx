@@ -4,6 +4,7 @@ import type { CountryProfile } from '../data/countries';
 import type { Layer } from '../data/layers';
 import { META, valueOf } from '../data/sections';
 import { CONFLICT_YEARS, regionalMeta } from '../data/regional';
+import { SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftOf, shiftText, type Shares } from '../data/sectors';
 import { areaKm2, contains, loadCities, nameOf, pathOf, SUBNATIONAL, type City, type Detail, type Place } from '../map/places';
 import { Flag } from './Flag';
 
@@ -88,7 +89,10 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           {countryFig('gdpGrowth', 'Growth', country.name)}
           {countryFig('inflation', 'Inflation', country.name)}
         </div>
-        <p className="pc-lens">
+        {String(layer.id).startsWith('sectors.') && sharesOf(country.name) ? (
+          <SectorBar shares={sharesOf(country.name)!} country={country.name} shift={layer.id === 'sectors.shift'} />
+        ) : null}
+        <p className="pc-lens" hidden={!!layer.paint && !!sharesOf(country.name)}>
           <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
           {layer.metric}: <b>{Number.isFinite(v) ? layer.format(v) : 'no data'}</b>
         </p>
@@ -235,6 +239,10 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
   const meta = own && layer.regionSource === 'gdl' ? regionalMeta(country, unitKey) : null;
   const tag = !own ? 'national' : meta && !meta.own ? stateWord : 'regional';
   const named = meta && !/^\d+ regions$/.test(meta.region) ? meta.region : null;
+  if (layer.paint) {
+    const s = sharesOf(country);
+    if (s) return <SectorBar shares={s} tag="national" country={country} shift={layer.id === 'sectors.shift'} />;
+  }
   return (
     <p className="pc-lens">
       <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
@@ -251,5 +259,34 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
         </span>
       )}
     </p>
+  );
+}
+
+/** The three sectors as one bar, largest first. */
+function SectorBar({ shares, tag, country, shift }: { shares: Shares; tag?: string; country: string; shift?: boolean }) {
+  const keys = [...SECTORS].sort((a, b) => shares[b] - shares[a]);
+  const total = keys.reduce((s, k) => s + shares[k], 0);
+  const moved = shift ? shiftOf(country) : null;
+  return (
+    <div className="pc-sectors">
+      <div className="pc-sectors-head">
+        <span>Sector mix, % of GDP</span>
+        {tag && <span className="pc-tag">{tag}</span>}
+      </div>
+      <div className="pc-sectors-bar" role="img" aria-label={keys.map((k) => `${SECTOR_LABEL[k]} ${Math.round(shares[k])}%`).join(', ')}>
+        {keys.map((k) => (
+          <i key={k} style={{ width: `${(shares[k] / total) * 100}%`, background: SECTOR_COLORS[k] }} />
+        ))}
+      </div>
+      <div className="pc-sectors-key">
+        {keys.map((k) => (
+          <span key={k}>
+            <i style={{ background: SECTOR_COLORS[k] }} />
+            {SECTOR_LABEL[k]} <b>{Math.round(shares[k])}%</b>
+          </span>
+        ))}
+      </div>
+      {moved && <div className="pc-src">{shiftText(moved)}</div>}
+    </div>
   );
 }

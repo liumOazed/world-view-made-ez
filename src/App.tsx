@@ -88,7 +88,9 @@ export default function App() {
     ? place.country && layer.hasRegional?.(place.country)
       ? `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
       : 'no regional figures for this country, so regions show the national value'
-    : 'regions show the national value; measures marked “by region” colour each region';
+    : layer.paint
+      ? 'regions show the national mix'
+      : 'regions show the national value; measures marked “by region” colour each region';
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {
@@ -286,6 +288,16 @@ function Method() {
             (CC BY 4.0): 194 countries open into their states or provinces, 170 of them into districts too, and Bangladesh down to its 544
             upazilas and city areas.
             Main roads and markets are © OpenStreetMap contributors (ODbL); town sizes come from GeoNames.
+          </p>
+        </div>
+        <div>
+          <h3>Sectors</h3>
+          <p>
+            Services, industry (with manufacturing inside it) and agriculture are World Bank value added as a share of GDP. The sector
+            mix blends three colours by how far each share runs above a typical economy (services 55%, industry 26%, agriculture 9%),
+            because services is the largest sector almost everywhere; the leading sector is the one furthest above that. The shift
+            compares the latest shares with those of about ten years earlier. Sector figures are national: no open worldwide source
+            splits them by state, so regions show their country's mix.
           </p>
         </div>
         <div>

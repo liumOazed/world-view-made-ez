@@ -581,8 +581,8 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         const p = P.get(title);
         title = p?.display ?? title;
         const v = p ? L.value(p) : NaN;
-        sub = Number.isFinite(v) ? `${L.metric}: ${L.format(v)}` : `${L.metric}: no data`;
-        swatch = Number.isFinite(v) ? L.color(v) : undefined;
+        sub = Number.isFinite(v) ? (L.tip?.(String(f.properties.name)) ?? `${L.metric}: ${L.format(v)}`) : `${L.metric}: no data`;
+        swatch = Number.isFinite(v) ? (L.paint?.(String(f.properties.name)) ?? L.color(v)) : undefined;
       } else if (d) {
         const lvl = Number(f.layer.id[2]);
         const spec = d.spec.levels[lvl - 1];
@@ -590,10 +590,11 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         const key = String(f.properties.key);
         const rv = L.regional && d.country ? L.regional(d.country, key) : NaN;
         const v = Number.isFinite(rv) ? rv : cp ? L.value(cp) : NaN;
-        swatch = Number.isFinite(v) ? L.color(v) : undefined;
+        swatch = Number.isFinite(v) ? ((Number.isFinite(rv) ? null : L.paint?.(d.country)) ?? L.color(v)) : undefined;
         const meta = Number.isFinite(rv) && L.regionSource === 'gdl' ? regionalMeta(d.country, key) : null;
         const tag = !Number.isFinite(rv) ? ' (national)' : meta && !meta.own ? ` (${d.spec.levels[0].singular.toLowerCase()})` : '';
-        sub = `${spec.singular} · ${L.metric}: ${Number.isFinite(v) ? `${L.format(v)}${tag}` : 'no data'}`;
+        const natTip = !Number.isFinite(rv) && Number.isFinite(v) ? L.tip?.(d.country) : null;
+        sub = `${spec.singular} · ${natTip ? `${natTip} (national)` : `${L.metric}: ${Number.isFinite(v) ? `${L.format(v)}${tag}` : 'no data'}`}`;
       }
       const r = wrapRef.current!.getBoundingClientRect();
       setTip({ x: e.point.x, y: e.point.y, title, sub, swatch, ...(e.point.x > r.width - 240 ? { x: e.point.x - 250 } : {}) });
@@ -632,7 +633,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     const pairs: string[] = [];
     for (const [name, p] of profiles) {
       const v = layer.value(p);
-      if (Number.isFinite(v)) pairs.push(name, layer.color(v));
+      if (Number.isFinite(v)) pairs.push(name, layer.paint?.(name) ?? layer.color(v));
     }
     const expr = (pairs.length ? ['match', ['get', 'name'], ...pairs, C.empty] : C.empty) as unknown as ExpressionSpecification;
     map.setPaintProperty('world-data', 'fill-color', expr);

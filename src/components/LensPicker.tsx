@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
-import { HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
+import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Factory, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
+import { SECTOR_LAYERS, HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { SECTIONS, type SectionId } from '../data/sections';
 
-type Group = SectionId | 'scorecard' | 'hd';
+type Group = SectionId | 'scorecard' | 'hd' | 'sectors';
 
 const ICONS: Record<Group, LucideIcon> = {
   growth: Activity,
@@ -15,14 +15,19 @@ const ICONS: Record<Group, LucideIcon> = {
   risk: ShieldAlert,
   scorecard: Award,
   hd: HeartPulse,
+  sectors: Factory,
 };
 
-const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; partial?: boolean; regional?: boolean }[] }[] = [
+type GroupSpec = { id: Group; label: string; subs: { id: LayerId; label: string; partial?: boolean; regional?: boolean }[] };
+const BASE_GROUPS: GroupSpec[] = [
   ...SECTIONS.map((s) => ({
     id: s.id,
     label: s.label,
     subs: [
-      ...s.subs.map((sub) => ({ id: layerFor(s.id, sub.id), label: sub.label, partial: Boolean(sub.pending) })),
+      // Sectors have their own group, right below Growth.
+      ...s.subs
+        .filter((sub) => !(s.id === 'growth' && sub.id === 'sectors'))
+        .map((sub) => ({ id: layerFor(s.id, sub.id), label: sub.label, partial: Boolean(sub.pending) })),
       // Measures that colour each state or province, not only the country.
       ...REGION_LAYERS.filter((l) => l.id.startsWith(`${s.id}.`)).map((l) => ({ id: l.id, label: l.label, regional: true })),
     ],
@@ -36,6 +41,9 @@ const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; pa
   { id: 'hd', label: 'Human development', subs: HD_LAYERS.map((l) => ({ id: l.id, label: l.label, regional: true })) },
 ];
 
+const SECTOR_GROUP: GroupSpec = { id: 'sectors', label: 'Sectors', subs: SECTOR_LAYERS.map((l) => ({ id: l.id, label: l.label })) };
+const GROUPS = BASE_GROUPS.flatMap((g) => (g.id === 'growth' ? [g, SECTOR_GROUP] : [g]));
+
 /**
  * One control for what the map is coloured by: a pill with the current
  * measure and its colour key, opening a menu of every section and measure.
@@ -43,7 +51,7 @@ const GROUPS: { id: Group; label: string; subs: { id: LayerId; label: string; pa
 export function LensPicker({ layer, onChange, note }: { layer: Layer; onChange: (id: LayerId) => void; note: string }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const section: Group = layer.id.startsWith('hd.') ? 'hd' : (sectionOf(layer.id) ?? 'scorecard');
+  const section: Group = layer.id.startsWith('sectors.') ? 'sectors' : layer.id.startsWith('hd.') ? 'hd' : (sectionOf(layer.id) ?? 'scorecard');
   const [group, setGroup] = useState<Group>(section);
   const Icon = ICONS[section];
 
@@ -114,11 +122,24 @@ export function LensPicker({ layer, onChange, note }: { layer: Layer; onChange: 
           <span>{layer.label}</span>
         </span>
         <span className="lens-key" aria-hidden="true">
-          <span className="lens-ramp" style={{ background: `linear-gradient(90deg, ${layer.ramp.join(', ')})` }} />
-          <span className="lens-ends">
-            <span>{layer.ticks[0]}</span>
-            <span>{layer.ticks[layer.ticks.length - 1]}</span>
-          </span>
+          {layer.legend ? (
+            <span className="lens-chips">
+              {layer.legend.map((l) => (
+                <span key={l.label}>
+                  <i style={{ background: l.color }} />
+                  {l.label}
+                </span>
+              ))}
+            </span>
+          ) : (
+            <>
+              <span className="lens-ramp" style={{ background: `linear-gradient(90deg, ${layer.ramp.join(', ')})` }} />
+              <span className="lens-ends">
+                <span>{layer.ticks[0]}</span>
+                <span>{layer.ticks[layer.ticks.length - 1]}</span>
+              </span>
+            </>
+          )}
         </span>
         <ChevronDown size={15} className="lens-chev" />
       </button>
