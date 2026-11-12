@@ -112,7 +112,7 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           )
         ) : (
           <p className="pc-note">
-            States and provinces for {country.display} are on the way. Bangladesh already opens down to its upazilas.
+            Our boundary source doesn't publish regions for {country.display} yet, so the map stops at the country here.
           </p>
         )}
       </>
@@ -141,6 +141,11 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           />
           <Fig label="Largest town" value={biggest ? fmtPop(biggest.pop) : '—'} note={biggest ? biggest.name : 'none listed'} />
         </div>
+        <p className="pc-lens">
+          <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
+          {layer.metric}: <b>{Number.isFinite(v) ? layer.format(v) : 'no data'}</b>
+          <span className="pc-tag">national</span>
+        </p>
         {childLevel ? (
           <>
             <div className="pc-hint">

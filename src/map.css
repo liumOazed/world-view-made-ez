@@ -831,3 +831,13 @@ html[data-effects='reduced'] .place-card {
 .page .wrap > :first-child {
   border-top: 0;
 }
+.pc-tag {
+  margin-left: auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
