@@ -1,21 +1,15 @@
 // Temporary: checks which regional data sources the runner can reach.
-const tryUrl = async (u, n = 600) => {
+const get = (u) => fetch(u, { redirect: 'follow' }).then(async (r) => ({ s: r.status, t: await r.text() })).catch((e) => ({ s: 'ERR', t: e.message }));
+for (const q of ['DOSE subnational', 'Database of Subnational Economic output', 'Wenz Kotz subnational GDP']) {
+  const { s, t } = await get(`https://zenodo.org/api/records?q=${encodeURIComponent(q)}&size=6`);
+  console.log('\nZENODO', q, s, t.length);
   try {
-    const r = await fetch(u, { redirect: 'follow' });
-    const t = r.headers.get('content-type') ?? '';
-    const body = /json|text|html/.test(t) ? (await r.text()).slice(0, n) : `[${r.headers.get('content-length')} bytes]`;
-    console.log(`\n== ${u}\n${r.status} ${t}\n${body.replace(/\s+/g, ' ')}`);
-  } catch (e) {
-    console.log(`\n== ${u}\nERR ${e.message}`);
+    for (const h of JSON.parse(t).hits.hits) console.log(' ', h.id, h.metadata?.title, '|', h.metadata?.version, '|', (h.files ?? []).map((f) => `${f.key} ${f.size} ${f.links?.self}`).join(' ; '));
+  } catch {
+    console.log(t.slice(0, 300));
   }
-};
-const z = await fetch('https://zenodo.org/api/records?q=%22DOSE%22%20subnational%20economic%20output&size=5').then((r) => r.json()).catch((e) => ({ e: e.message }));
-for (const h of z.hits?.hits ?? []) console.log('ZENODO', h.id, h.metadata?.title, h.metadata?.version, (h.files ?? []).map((f) => `${f.key} ${f.size} ${f.links?.self}`).join(' | '));
-for (const u of [
-  'https://ucdp.uu.se/downloads/ged/ged251-csv.zip',
-  'https://ucdp.uu.se/downloads/ged/ged241-csv.zip',
-  'https://ucdp.uu.se/downloads/',
-  'https://globaldatalab.org/areadata/',
-  'https://globaldatalab.org/areadata/table/iwi/',
-  'https://cdn.cloud.prio.org/files/831b54bf-9efd-4be6-a618-9794109790c1/SHDI-SGDI-Total%2080.csv?inline=true',
-]) await tryUrl(u);
+}
+const a = await get('https://globaldatalab.org/areadata/table/iwi/');
+console.log('\nAREADATA links', [...new Set([...a.t.matchAll(/href="([^"]*(download|csv|export)[^"]*)"/gi)].map((m) => m[1]))].slice(0, 30).join('\n'));
+const b = await get('https://globaldatalab.org/areadata/');
+console.log('\nAREADATA indicators', [...new Set([...b.t.matchAll(/href="(\/areadata\/[^"]+)"/gi)].map((m) => m[1]))].slice(0, 80).join(' '));
