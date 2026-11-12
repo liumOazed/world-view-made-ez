@@ -6,6 +6,10 @@ import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import type { CountryFeature } from '../geo';
 import { Flag } from './Flag';
+import { useReducedEffects } from '../effects';
+
+/** Countries with no data: a quiet slate that sits back from the data colors. */
+const EMPTY_FILL = '#26324a';
 
 interface Props {
   features: CountryFeature[];
@@ -79,10 +83,7 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
   const animRef = useRef(0);
   const frameRef = useRef(0);
   const pendingRef = useRef<View | null>(null);
-  const reduceMotion = useMemo(
-    () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
-    [],
-  );
+  const reduceMotion = useReducedEffects();
 
   useLayoutEffect(() => {
     const el = wrapRef.current;
@@ -389,9 +390,9 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
 
   const fillOf = (name: string) => {
     const p = profiles.get(name);
-    if (!p) return '#1e293b';
+    if (!p) return EMPTY_FILL;
     const v = layer.value(p);
-    return Number.isNaN(v) ? '#1e293b' : layer.color(v);
+    return Number.isNaN(v) ? EMPTY_FILL : layer.color(v);
   };
 
   const hovered = hover ? profiles.get(hover.name) : undefined;
@@ -424,27 +425,27 @@ export function WorldMap({ features, profiles, layer, selected, onSelect, links 
       >
         <defs>
           <radialGradient id="ocean" cx="50%" cy="45%" r="70%">
-            <stop offset="0%" stopColor="#0b2240" stopOpacity="0.9" />
-            <stop offset="60%" stopColor="#071629" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#040b16" stopOpacity="0" />
+            <stop offset="0%" stopColor="#10223f" stopOpacity="0.9" />
+            <stop offset="60%" stopColor="#0a1730" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#070f1f" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="globeSea" cx="38%" cy="32%" r="75%">
-            <stop offset="0%" stopColor="#123a66" />
-            <stop offset="55%" stopColor="#0a1f3d" />
-            <stop offset="100%" stopColor="#050d1d" />
+            <stop offset="0%" stopColor="#1a3560" />
+            <stop offset="55%" stopColor="#0d1d3a" />
+            <stop offset="100%" stopColor="#060d1c" />
           </radialGradient>
           <radialGradient id="globeShade" cx="36%" cy="30%" r="72%">
-            <stop offset="0%" stopColor="#bfe9ff" stopOpacity="0.12" />
+            <stop offset="0%" stopColor="#f4ecdc" stopOpacity="0.14" />
             <stop offset="45%" stopColor="#000" stopOpacity="0" />
             <stop offset="88%" stopColor="#000" stopOpacity="0.35" />
             <stop offset="100%" stopColor="#000" stopOpacity="0.6" />
           </radialGradient>
           {/* Soft halo: strongest just outside the rim, fading well beyond it. */}
           <radialGradient id="atmosphere" cx="50%" cy="50%" r="50%">
-            <stop offset={`${(100 / 1.22) - 1}%`} stopColor="#67e8f9" stopOpacity="0" />
-            <stop offset={`${100 / 1.22}%`} stopColor="#67e8f9" stopOpacity="0.16" />
-            <stop offset="90%" stopColor="#38bdf8" stopOpacity="0.05" />
-            <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+            <stop offset={`${(100 / 1.22) - 1}%`} stopColor="#a9c4ec" stopOpacity="0" />
+            <stop offset={`${100 / 1.22}%`} stopColor="#a9c4ec" stopOpacity="0.13" />
+            <stop offset="90%" stopColor="#7f9fd0" stopOpacity="0.04" />
+            <stop offset="100%" stopColor="#7f9fd0" stopOpacity="0" />
           </radialGradient>
           <filter id="selGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="2.5" result="b" />

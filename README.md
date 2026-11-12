@@ -15,6 +15,16 @@ Figures come from open sources fetched by scheduled GitHub Actions; every value 
 - **Floating drawer.** The global overview and country views open in a translucent panel over the map's right edge (closed by default, Esc closes it). On phones it is a bottom sheet.
 - **Country view.** A tab per section; each subsection lists its indicators with year, rank and source, plus trade partners (UN Comtrade), influence (FBIC) and the resilience score breakdown. Anything not fetched yet says so.
 
+## Design system
+
+Modern yet traditional, following the design brief: a dark navy map as the hero, ivory "paper" sections for reading (rankings, explore), and a dark footer.
+
+- **Type.** EB Garamond for headlines and every key figure (lining, tabular numerals); a geometric sans for the interface, Century Gothic where installed and Poppins otherwise.
+- **Color.** Navy base, ivory text, one warm accent (brass) for brand and editorial details, azure for active controls. Data colors share one family: garnet and copper for adverse, gold for caution, steel and azure for favorable.
+- **Depth.** Soft gradients and shadows only on buttons, cards and the globe; content stays flat.
+- **Tokens.** Everything reads CSS variables at the top of `src/styles.css`; `.paper` redefines them for light sections, so new sections just pick a surface.
+- **Reduced effects.** A header switch (also in the footer) turns off the globe's spin, arc motion and glass blur. It follows the system's reduced-motion setting until changed (`src/effects.ts`).
+
 ## Data
 
 | Job | Script | Writes | Sources |

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ExternalLink, Info } from 'lucide-react';
+import { ArrowDownRight, Globe2, HeartPulse, Info, Landmark, ShieldCheck, TrendingUp, type LucideIcon } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import {
   CONTEXT,
@@ -15,27 +15,40 @@ import {
 } from '../data/scorecard';
 import { Flag } from './Flag';
 
+/** Line icons in place of emoji, so pillars read in the interface's own voice. */
+const PILLAR_ICON: Record<PillarId, LucideIcon> = {
+  economy: TrendingUp,
+  human: HeartPulse,
+  institutions: Landmark,
+  stability: ShieldCheck,
+};
+
+function PillarIcon({ id, size = 15 }: { id: PillarId; size?: number }) {
+  const Icon = PILLAR_ICON[id];
+  return <Icon size={size} aria-hidden="true" />;
+}
+
+/** Score bands as CSS colors, so they adapt to dark and light sections. */
 const band = (v: number | null) =>
-  v === null ? '#5b6f8e' : v >= 75 ? '#5fd39a' : v >= 55 ? '#9fb3cf' : v >= 40 ? '#f2b84b' : '#ef7f86';
+  v === null ? 'var(--faint)' : v >= 75 ? 'var(--good)' : v >= 55 ? 'var(--band-mid)' : v >= 40 ? 'var(--warn)' : 'var(--bad)';
 
 function Ring({ value, size = 92 }: { value: number | null; size?: number }) {
-  const r = size / 2 - 7;
+  const r = size / 2 - 5;
   const len = 2 * Math.PI * r;
   const v = value ?? 0;
   return (
     <svg width={size} height={size} className="score-ring" aria-hidden="true">
-      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(148,197,255,0.1)" strokeWidth={7} fill="none" />
+      <circle cx={size / 2} cy={size / 2} r={r} style={{ stroke: 'var(--fill)' }} strokeWidth={5} fill="none" />
       <circle
         cx={size / 2}
         cy={size / 2}
         r={r}
-        stroke={band(value)}
-        strokeWidth={7}
+        style={{ stroke: band(value) }}
+        strokeWidth={5}
         fill="none"
         strokeLinecap="round"
         strokeDasharray={`${(len * v) / 100} ${len}`}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{ filter: `drop-shadow(0 0 6px ${band(value)})` }}
       />
       <text x="50%" y="50%" dy="0.1em" textAnchor="middle" className="score-ring-num">
         {value === null ? '—' : Math.round(value)}
@@ -128,7 +141,9 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
           return (
             <div key={p.id} className={`pillar${isOpen ? ' is-open' : ''}`}>
               <button type="button" className="pillar-head" onClick={() => setOpen(isOpen ? null : p.id)} aria-expanded={isOpen}>
-                <span className="pillar-emoji">{p.emoji}</span>
+                <span className="pillar-emoji" style={{ color: p.color }}>
+                  <PillarIcon id={p.id} />
+                </span>
                 <span className="pillar-name">
                   {p.label}
                   <span className="muted small"> · {p.weight}%</span>
@@ -177,8 +192,8 @@ export function ScorecardTab({ c }: { c: CountryProfile }) {
             <span className="licence-dot" style={{ background: l.color }} /> {l.label}
           </span>
         ))}
-        <a className="link" href="#method">
-          Method & sources <ExternalLink size={11} />
+        <a className="link" href="#rankings">
+          How the score works <ArrowDownRight size={11} />
         </a>
       </div>
     </div>
@@ -210,14 +225,14 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
   }, [profiles, weights]);
 
   return (
-    <section className="rankings" aria-labelledby="rankings-title" id="method">
+    <section className="rankings" aria-labelledby="rankings-title" id="rankings">
       <div className="rankings-head">
         <div>
           <span className="eyebrow">
             Country scorecard{LOADED.length < SCORED.length ? ` · provisional, ${LOADED.length} of ${SCORED.length} indices loaded` : ''}
           </span>
           <h2 id="rankings-title">
-            17 global indices. <span className="grad">One honest score.</span>
+            17 global indices. <em className="grad">One honest score.</em>
           </h2>
           <p className="muted">
             Each index is turned into a 0–100 percentile, averaged inside its pillar, then weighted. Perception rankings are
@@ -293,10 +308,13 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
           {PILLARS.map((p) => (
             <div key={p.id} className="weights-pillar">
               <div className="weights-head">
-                <span>
-                  {p.emoji} {p.label}
+                <span className="weights-label">
+                  <span style={{ color: p.color }}>
+                    <PillarIcon id={p.id} size={14} />
+                  </span>
+                  {p.label}
                 </span>
-                <strong style={{ color: p.color }}>{p.weight}</strong>
+                <strong>{p.weight}</strong>
               </div>
               <div className="weights-bars">
                 {SCORED.filter((d) => d.pillar === p.id).map((d) => (
@@ -317,7 +335,12 @@ export function Rankings({ profiles, onSelect }: { profiles: Map<string, Country
           ))}
           <div className="weights-pillar">
             <div className="weights-head">
-              <span>🌍 Perception & reputation</span>
+              <span className="weights-label">
+                <span className="muted">
+                  <Globe2 size={14} aria-hidden="true" />
+                </span>
+                Perception & reputation
+              </span>
               <strong className="muted">0</strong>
             </div>
             <div className="weights-names muted small">U.S. News Best Countries · Good Country · IMD Competitiveness (context only)</div>

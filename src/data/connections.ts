@@ -291,7 +291,7 @@ export const INFLUENCE_LABEL: Record<InfluenceLink['kind'], string> = {
   ties: 'Combined ties',
 };
 
-export const INFLUENCE_COLOR = '#e879f9';
+export const INFLUENCE_COLOR = '#c9a2e0';
 
 /**
  * Where a country buys its energy, food and chips, from UN Comtrade. Shares are

@@ -15,21 +15,21 @@ const CARDS: { id: ExploreAction; title: string; body: string; tags: string; ico
 
 export function Explore({ onAction }: { onAction: (a: ExploreAction) => void }) {
   return (
-    <section className="explore" aria-labelledby="explore-title">
+    <section className="explore" id="explore" aria-labelledby="explore-title">
       <div className="explore-intro">
         <span className="eyebrow">Explore deeper</span>
         <h2 id="explore-title">
           Show the world.
           <br />
-          <span className="grad">Explain the connections.</span>
+          <em className="grad">Explain the connections.</em>
         </h2>
         <p className="muted">Four ways to go beyond the map.</p>
       </div>
       <div className="explore-cards">
         {CARDS.map((c) => (
           <button key={c.id} type="button" className="explore-card" onClick={() => onAction(c.id)}>
-            <span className="explore-icon">
-              <c.icon size={20} />
+            <span className="explore-icon" aria-hidden="true">
+              <c.icon size={20} strokeWidth={1.6} />
             </span>
             <span className="explore-title">{c.title}</span>
             <span className="explore-body">{c.body}</span>

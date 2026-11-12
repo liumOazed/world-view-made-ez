@@ -504,9 +504,9 @@ function SubExtra({
 }
 
 const SECTOR_COLORS: Record<string, string> = {
-  services: '#38bdf8',
-  industry: '#a78bfa',
-  agriculture: '#5fd39a',
+  services: '#5f9bd3',
+  industry: '#8b7cc8',
+  agriculture: '#6fae9c',
 };
 function SectorBar({ c }: { c: string }) {
   const parts = (['services', 'industry', 'agriculture'] as const).map((id) => ({ id, v: valueOf(id, c)?.[0] ?? 0 }));

@@ -584,11 +584,11 @@ export function flagEmoji(iso2?: string): string | null {
 }
 
 export const LINK_META: Record<LinkKind, { label: string; color: string; verb: string }> = {
-  exports: { label: 'Export market', color: '#5eead4', verb: 'buys its exports' },
-  imports: { label: 'Key supplier', color: '#38bdf8', verb: 'supplies goods' },
-  energy: { label: 'Energy', color: '#fbbf24', verb: 'supplies energy' },
-  food: { label: 'Food', color: '#a3e635', verb: 'supplies food' },
-  tech: { label: 'Semiconductors', color: '#c084fc', verb: 'supplies chips' },
-  capital: { label: 'Capital & credit', color: '#f472b6', verb: 'lends or invests' },
-  people: { label: 'Remittances & tourism', color: '#fb923c', verb: 'sends remittances' },
+  exports: { label: 'Export market', color: '#86c5b6', verb: 'buys its exports' },
+  imports: { label: 'Key supplier', color: '#7ea9e4', verb: 'supplies goods' },
+  energy: { label: 'Energy', color: '#e2b866', verb: 'supplies energy' },
+  food: { label: 'Food', color: '#a8c483', verb: 'supplies food' },
+  tech: { label: 'Semiconductors', color: '#ab98dd', verb: 'supplies chips' },
+  capital: { label: 'Capital & credit', color: '#dd9fb0', verb: 'lends or invests' },
+  people: { label: 'Remittances & tourism', color: '#df9363', verb: 'sends remittances' },
 };

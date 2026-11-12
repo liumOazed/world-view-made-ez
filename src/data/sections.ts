@@ -232,13 +232,15 @@ export function resilience(c: string, countries?: string[]) {
 
 /* ---------- map scales ---------- */
 
-const RED_BLUE = ['#e11d48', '#f97316', '#1e40af', '#0ea5e9', '#2dd4bf', '#bbf7d0'];
-const HEAT = ['#1d4ed8', '#0ea5e9', '#facc15', '#f97316', '#ef4444'];
-const COOL = ['#172554', '#1d4ed8', '#06b6d4', '#a7f3d0'];
-const WARM = ['#0f2a3f', '#0e7490', '#eab308', '#f97316', '#e11d48'];
-const VIOLET = ['#0f1e3a', '#3b2a7a', '#7c3aed', '#c084fc', '#f5d0fe'];
-const GOOD = ['#e11d48', '#f97316', '#eab308', '#2dd4bf', '#38bdf8', '#e0f2fe'];
-const DIVERGE = ['#e11d48', '#f97316', '#334155', '#0ea5e9', '#5eead4'];
+/* One family across every layer: garnet and copper for adverse, gold for
+   caution, steel and azure for favorable, a muted slate in the middle. */
+const RED_BLUE = ['#b4424a', '#d9824f', '#2b4c86', '#4b88cc', '#86bfe0', '#d2e2ea'];
+const HEAT = ['#24477e', '#4f88c6', '#e0bb6a', '#d9824f', '#b4424a'];
+const COOL = ['#1a2c55', '#2f5b9c', '#5f9bd3', '#c4d9ec'];
+const WARM = ['#16294a', '#2f6f8f', '#d2ab5c', '#d9824f', '#b4424a'];
+const VIOLET = ['#18203f', '#3b3b78', '#6b5fae', '#a898d8', '#e9e1f7'];
+const GOOD = ['#b4424a', '#d9824f', '#e0bb6a', '#6fae9c', '#5f9bd3', '#d0e0ee'];
+const DIVERGE = ['#b4424a', '#d9824f', '#36435c', '#4b88cc', '#8cc7d9'];
 
 export interface MapSpec {
   metric: string;
@@ -703,7 +705,7 @@ export const SECTIONS: Section[] = [
         question: 'Who depends on imported energy?',
         map: ind('energyImports', {
           metric: 'Net energy imports',
-          ramp: ['#2dd4bf', '#0ea5e9', '#334155', '#f97316', '#e11d48'],
+          ramp: [...DIVERGE].reverse(),
           domain: [-200, -20, 0, 50, 100],
           low: 'Exporter',
           high: 'Importer',

@@ -31,7 +31,7 @@ function ramp(colors: string[], domain: [number, number], sqrt = false) {
   return (v: number) => interp(s(v));
 }
 
-const SCORE = ['#e11d48', '#f97316', '#eab308', '#2dd4bf', '#38bdf8', '#e0f2fe'];
+const SCORE = ['#b4424a', '#d9824f', '#e0bb6a', '#6fae9c', '#5f9bd3', '#d0e0ee'];
 
 /** One map layer per subsection. */
 export const SECTION_LAYERS: Layer[] = SECTIONS.flatMap((s) =>
