@@ -262,7 +262,7 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
   );
 }
 
-/** The three sectors as one bar, largest first. */
+/** The sectors as one bar, largest first. */
 function SectorBar({ shares, tag, country, shift }: { shares: Shares; tag?: string; country: string; shift?: boolean }) {
   const keys = [...SECTORS].sort((a, b) => shares[b] - shares[a]);
   const total = keys.reduce((s, k) => s + shares[k], 0);

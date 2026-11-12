@@ -3,7 +3,7 @@ import { interpolateRgbBasis } from 'd3-interpolate';
 import type { CountryProfile } from './countries';
 import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
 import { colorOf, SECTIONS, valueOf, type SectionId } from './sections';
-import { blend, leader, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
+import { blend, leader, manufacturingPerPerson, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 
 /** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
@@ -265,16 +265,16 @@ export const REGION_LAYERS: Layer[] = [
 
 const pct = (v: number) => `${v.toFixed(1)}%`;
 const SECTOR_LEGEND = SECTORS.map((k) => ({ color: SECTOR_COLORS[k], label: SECTOR_LABEL[k] }));
-const MIX_RAMP = [SECTOR_COLORS.agriculture, SECTOR_COLORS.industry, SECTOR_COLORS.services];
+const MIX_RAMP = [SECTOR_COLORS.agriculture, SECTOR_COLORS.extraction, SECTOR_COLORS.manufacturing, SECTOR_COLORS.services];
 const sectorBase = { unit: '% of GDP, World Bank', format: pct, low: '', high: '' };
-const one = (k: Sector | 'manufacturing', label: string, hue: string, max: number, note = ''): Layer => ({
+const one = (k: Sector | 'industry', label: string, hue: string, max: number, note = ''): Layer => ({
   ...sectorBase,
   id: `sectors.${k}`,
   label,
   metric: `${label}, value added`,
   question: `How big is ${label.toLowerCase()} in each economy?`,
   description: `${label} value added as a share of GDP.${note}`,
-  value: (c) => valueOf(k, c.name)?.[0] ?? NaN,
+  value: (c) => (k === 'extraction' ? (sharesOf(c.name)?.extraction ?? NaN) : (valueOf(k, c.name)?.[0] ?? NaN)),
   color: stops(['#1b2740', hue, '#f2f6fb'], [0, max * 0.6, max]),
   ramp: ['#1b2740', hue, '#f2f6fb'],
   low: 'Small',
@@ -285,7 +285,7 @@ const painted = (o: Pick<Layer, 'id' | 'label' | 'metric' | 'question' | 'descri
   ...sectorBase,
   color: () => '#888',
   ramp: MIX_RAMP,
-  ticks: ['Farming', 'Industry', 'Services'],
+  ticks: ['Farming', 'Making', 'Services'],
   legend: SECTOR_LEGEND,
   ...o,
 });
@@ -296,7 +296,7 @@ export const SECTOR_LAYERS: Layer[] = [
     metric: 'Sector mix',
     question: 'What does each economy live on?',
     description:
-      'Each country is a blend of three colours: services, industry and agriculture. The more of a sector it has compared with a typical economy, the more of that colour.',
+      'Each country is a blend of four colours: services, manufacturing, extraction and construction, and agriculture. The more of a sector it has compared with a typical economy, the more of that colour. Oil and mining economies turn amber, factory economies violet.',
     value: (c) => {
       const s = sharesOf(c.name);
       return s ? s[leader(s)] : NaN;
@@ -316,7 +316,7 @@ export const SECTOR_LAYERS: Layer[] = [
     metric: 'Leans on',
     question: 'Which sector does each economy lean on more than most?',
     description:
-      'The sector whose share runs furthest above a typical economy (services 55%, industry 26%, agriculture 9%). Services is the largest sector almost everywhere, so the plain largest would say little.',
+      'The sector whose share runs furthest above a typical economy (services 55%, manufacturing 13%, extraction and construction 13%, agriculture 9%). Services is the largest sector almost everywhere, so the plain largest would say little.',
     value: (c) => {
       const s = sharesOf(c.name);
       return s ? s[leader(s)] : NaN;
@@ -352,8 +352,42 @@ export const SECTOR_LAYERS: Layer[] = [
     },
   }),
   one('services', 'Services', SECTOR_COLORS.services, 80),
-  one('industry', 'Industry', SECTOR_COLORS.industry, 60, ' Industry includes mining, construction, utilities and manufacturing.'),
-  one('manufacturing', 'Manufacturing', '#c06fb0', 30, ' Manufacturing is the part of industry that makes goods.'),
+  one('manufacturing', 'Manufacturing', SECTOR_COLORS.manufacturing, 30, ' Manufacturing is the part of industry that makes goods, without oil, mining or construction.'),
+  {
+    ...sectorBase,
+    id: 'sectors.manufacturingPc',
+    label: 'Manufacturing per person',
+    metric: 'Manufacturing per person',
+    unit: 'US$ a year, World Bank and IMF',
+    question: 'How much does each country manufacture for every person in it?',
+    description:
+      'The manufacturing share of GDP applied to GDP per person, in current US dollars. A share of GDP can look high in a poor economy; this shows how much factory output there really is.',
+    value: (c) => manufacturingPerPerson(c.name),
+    format: (v) => `$${Math.round(v).toLocaleString('en')}`,
+    color: stops(['#1b2740', '#5a4a8a', SECTOR_COLORS.manufacturing, '#f2f6fb'], [30, 300, 3000, 12000], Math.log10),
+    ramp: ['#1b2740', '#5a4a8a', SECTOR_COLORS.manufacturing, '#f2f6fb'],
+    low: 'Little',
+    high: 'A lot',
+    ticks: ['$30', '$600', '$12k+'],
+  },
+  {
+    ...sectorBase,
+    id: 'sectors.techShare',
+    label: 'Medium & high-tech share',
+    metric: 'Medium and high-tech manufacturing',
+    unit: '% of manufacturing, UNIDO via World Bank',
+    question: 'How advanced is what each country makes?',
+    description:
+      'The share of manufacturing value added that comes from medium and high-tech goods such as machinery, vehicles, chemicals and electronics. Fewer countries report it and it lags a few years.',
+    value: (c) => valueOf('techShare', c.name)?.[0] ?? NaN,
+    color: stops(['#1b2740', '#3f8f9c', '#f2f6fb'], [0, 35, 65]),
+    ramp: ['#1b2740', '#3f8f9c', '#f2f6fb'],
+    low: 'Basic',
+    high: 'Advanced',
+    ticks: ['0%', '30%', '65%+'],
+  },
+  one('extraction', 'Extraction & construction', SECTOR_COLORS.extraction, 50, ' This is industry without manufacturing: oil, gas, mining, construction and utilities.'),
+  one('industry', 'All industry', '#b08a8a', 60, ' Industry adds manufacturing to oil, gas, mining, construction and utilities, so it flatters resource economies.'),
   one('agriculture', 'Agriculture', SECTOR_COLORS.agriculture, 40),
 ];
 

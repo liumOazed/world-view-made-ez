@@ -1,4 +1,5 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Globe2, Info, Map as MapIcon, MoveRight } from 'lucide-react';
+import { SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf } from '../data/sectors';
 import { LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
 import {
   INFLUENCE_COLOR,
@@ -503,13 +504,10 @@ function SubExtra({
   return null;
 }
 
-const SECTOR_COLORS: Record<string, string> = {
-  services: '#5f9bd3',
-  industry: '#8b7cc8',
-  agriculture: '#6fae9c',
-};
 function SectorBar({ c }: { c: string }) {
-  const parts = (['services', 'industry', 'agriculture'] as const).map((id) => ({ id, v: valueOf(id, c)?.[0] ?? 0 }));
+  const shares = sharesOf(c);
+  if (!shares) return null;
+  const parts = SECTORS.map((id) => ({ id, v: shares[id] }));
   const total = parts.reduce((s, p) => s + p.v, 0);
   if (total <= 0) return null;
   return (
@@ -523,7 +521,7 @@ function SectorBar({ c }: { c: string }) {
         {parts.map((p) => (
           <span key={p.id}>
             <i style={{ background: SECTOR_COLORS[p.id] }} />
-            {indicator(p.id)?.label.split(',')[0]} {Math.round(p.v)}%
+            {SECTOR_LABEL[p.id]} {Math.round(p.v)}%
           </span>
         ))}
       </div>
