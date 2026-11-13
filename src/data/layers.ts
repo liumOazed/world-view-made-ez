@@ -4,6 +4,7 @@ import type { CountryProfile } from './countries';
 import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
 import { colorOf, SECTIONS, valueOf, type SectionId } from './sections';
 import { blend, leader, manufacturingPerPerson, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
+import { CATEGORIES, CATEGORY, goodsSummary, hasGoods, headlineGood, regionGood } from './goods';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 
 /** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
@@ -35,8 +36,10 @@ export interface Layer {
   legend?: { color: string; label: string }[];
   /** Whether this country has regional figures for the layer. */
   hasRegional?: (country: string) => boolean;
-  /** Where the regional figures come from: Global Data Lab regions, or events counted on the map. */
-  regionSource?: 'gdl' | 'events';
+  /** Where the regional figures come from: Global Data Lab regions, events counted on the map, or our curated goods. */
+  regionSource?: 'gdl' | 'events' | 'goods';
+  /** Tooltip text for a region, in place of the formatted value. */
+  regionTip?: (country: string, key: string) => string | null;
 }
 
 function ramp(colors: string[], domain: [number, number], sqrt = false) {
@@ -180,6 +183,13 @@ export const HD_LAYERS: Layer[] = [
 
 /* ---------- region-by-region measures inside the sections ---------- */
 
+/** Region fills for the goods map: each category's colour, toned down so the icons stand out. */
+const GOODS_FILL = CATEGORIES.map((k) => {
+  const a = [0x1d, 0x2a, 0x45];
+  const b = [1, 3, 5].map((i) => parseInt(CATEGORY[k].color.slice(i, i + 2), 16));
+  return `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * 0.5)).join(',')})`;
+});
+
 /** Colours placed at given values (for diverging and log scales). */
 function stops(colors: string[], at: number[], scale: (v: number) => number = (v) => v) {
   const s = scaleLinear<string>().domain(at.map(scale)).range(colors).clamp(true);
@@ -241,6 +251,45 @@ export const REGION_LAYERS: Layer[] = [
     high: 'Parity',
     ticks: ['0.60', '0.90', '1.02'],
   }),
+  {
+    id: 'trade.goods',
+    label: 'Tradable goods',
+    metric: 'Main tradable good',
+    unit: 'one good per state or province',
+    question: 'What does each region produce and sell?',
+    description:
+      'The good each state or province is best known for, drawn as an icon over it, and each country’s largest export by value. Curated from national statistics for seven countries so far.',
+    // Countries with goods data take their headline good's colour; regions take their own good's.
+    value: (c) => {
+      const h = headlineGood(c.name);
+      return h ? CATEGORIES.indexOf(h.good.category) : NaN;
+    },
+    regional: (country, key) => {
+      const g = regionGood(country, key);
+      return g ? CATEGORIES.indexOf(g.good.category) : NaN;
+    },
+    hasRegional: hasGoods,
+    regionSource: 'goods',
+    format: (v) => CATEGORY[CATEGORIES[v]]?.label ?? '',
+    color: (v) => GOODS_FILL[v] ?? '#2a3650',
+    tip: (country) => {
+      const h = headlineGood(country);
+      if (!h) return null;
+      const top = goodsSummary(country)
+        .slice(0, 3)
+        .map((g) => g.good.label.toLowerCase());
+      return `Top export: ${h.good.label} · regions known for ${top.join(', ')}`;
+    },
+    regionTip: (country, key) => {
+      const g = regionGood(country, key);
+      return g ? `${g.good.label}${g.note ? ` · ${g.note}` : ''}` : null;
+    },
+    legend: CATEGORIES.map((k) => ({ color: CATEGORY[k].color, label: CATEGORY[k].label })),
+    ramp: CATEGORIES.map((k) => CATEGORY[k].color),
+    low: '',
+    high: '',
+    ticks: ['Crops', 'Made'],
+  },
   {
     id: 'risk.r-conflict',
     label: 'Conflict deaths',

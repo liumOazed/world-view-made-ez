@@ -69,6 +69,8 @@ export default function App() {
   const layer = LAYER_BY_ID[layerId];
   const sub = useMemo(() => {
     const s = sectionOf(layerId);
+    // The goods map sits in Trade but is not one of its subsections (no partner arcs).
+    if (LAYER_BY_ID[layerId]?.regionSource === 'goods') return null;
     return s ? findSub(s, layerId.split('.')[1]) : null;
   }, [layerId]);
   const country = selected ? profiles.get(selected) : undefined;
@@ -86,8 +88,12 @@ export default function App() {
 
   const regionNote = layer.regional
     ? place.country && layer.hasRegional?.(place.country)
-      ? `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
-      : 'no regional figures for this country, so regions show the national value'
+      ? layer.regionSource === 'goods'
+        ? 'curated from national statistics'
+        : `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
+      : layer.regionSource === 'goods'
+        ? 'goods are listed for 7 countries so far; this one is not yet'
+        : 'no regional figures for this country, so regions show the national value'
     : layer.paint
       ? 'regions show the national mix'
       : 'regions show the national value; measures marked “by region” colour each region';
@@ -177,7 +183,7 @@ export default function App() {
           links={links}
           detail={detail}
           inset={inset}
-          showChokepoints={layerId.startsWith('influence.') || layerId.startsWith('trade.') || layerId.startsWith('risk.')}
+          showChokepoints={(layerId.startsWith('influence.') || layerId.startsWith('trade.') || layerId.startsWith('risk.')) && layer.regionSource !== 'goods'}
           active={route === 'map'}
         />
         <h1 className="sr-only">Atlas: the world, in context</h1>
@@ -301,6 +307,17 @@ function Method() {
             shares with those of about ten years earlier. Manufacturing per person applies the manufacturing share of GDP to
             the IMF's GDP per person in current US dollars; the medium and high-tech share is UNIDO data published by the World Bank. Sector figures are national: no open worldwide source
             splits them by state, so regions show their country's mix.
+          </p>
+        </div>
+        <div>
+          <h3>Tradable goods</h3>
+          <p>
+            The goods map, under Trade, gives each state or province one icon: the good it is best known for producing and selling, by
+            value or by its share of the country's output. Most regions make many things, so this is a guide, not a measure. The picks
+            are curated by hand from national statistics (Thailand's Office of Agricultural Economics, India's agriculture ministry and
+            Bureau of Mines, the Bangladesh Bureau of Statistics, Destatis, USDA, EIA and USGS, IBGE and CONAB, and China's National
+            Bureau of Statistics) for seven countries so far: Thailand, India, Bangladesh, Germany, the United States, Brazil and China.
+            Each country's own icon is its largest export by value in UN Comtrade (2023). Districts take their state's good.
           </p>
         </div>
         <div>
