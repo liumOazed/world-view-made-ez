@@ -95,7 +95,7 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
           <SectorBar shares={sharesOf(country.name)!} country={country.name} shift={layer.id === 'sectors.shift'} />
         ) : null}
         {layer.regionSource === 'goods' ? (
-          <GoodLine g={headlineGood(country.name)} tag="top export" empty="No goods listed for this country yet" />
+          <GoodLine g={headlineGood(country.name)} tag="main export" empty="No goods listed for this country yet" />
         ) : null}
         <p className="pc-lens" hidden={(!!layer.paint && !!sharesOf(country.name)) || layer.regionSource === 'goods'}>
           <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
@@ -249,7 +249,7 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
     return (
       <GoodLine
         g={g ?? headlineGood(country)}
-        tag={g ? (unitKey.includes('/') ? stateWord : 'regional') : 'national top export'}
+        tag={g ? (unitKey.includes('/') ? stateWord : 'regional') : 'national main export'}
         empty="No goods listed for this country yet"
       />
     );

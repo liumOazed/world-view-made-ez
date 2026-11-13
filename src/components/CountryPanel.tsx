@@ -32,7 +32,7 @@ import {
 } from '../data/sections';
 import { Flag } from './Flag';
 import { GoodBadge } from './GoodIcon';
-import { goodsSummary, GOODS_COUNTRIES, GOODS_SOURCE, headlineGood } from '../data/goods';
+import { goodsSummary, GOODS_SOURCE, headlineGood, REGIONAL_GOODS_COUNTRIES } from '../data/goods';
 import { SUBNATIONAL } from '../map/places';
 import { ScorecardTab } from './Scorecard';
 import { Sparkline, TREND_BAD, TREND_GOOD, TREND_NEUTRAL } from './Sparkline';
@@ -709,7 +709,7 @@ function News({ c }: { c: CountryProfile }) {
 }
 
 
-/** What each state or province is known for producing and selling. */
+/** A country's main export, and what each state or province is known for producing and selling. */
 function GoodsCard({ c, on, onLayer }: { c: CountryProfile; on: boolean; onLayer: (id: LayerId) => void }) {
   const head = headlineGood(c.name);
   const list = goodsSummary(c.name);
@@ -730,15 +730,19 @@ function GoodsCard({ c, on, onLayer }: { c: CountryProfile; on: boolean; onLayer
         </button>
       </div>
       {head ? (
-        <>
-          <div className="goods-head">
-            <GoodBadge id={head.id} size={30} />
-            <div>
-              <div className="goods-kicker">Largest export by value</div>
-              <div className="goods-name">{head.good.label}</div>
-              <div className="muted small">{head.note}</div>
-            </div>
+        <div className="goods-head">
+          <GoodBadge id={head.id} size={30} />
+          <div>
+            <div className="goods-kicker">Main export</div>
+            <div className="goods-name">{head.good.label}</div>
+            {head.note && <div className="muted small">{head.note}</div>}
           </div>
+        </div>
+      ) : (
+        <Note tone="warn">No main export is listed for {c.display} yet.</Note>
+      )}
+      {list.length ? (
+        <>
           <div className="sub-links-title">What its {regionWord} are known for</div>
           <ul className="goods-list">
             {list.map((g) => (
@@ -755,10 +759,12 @@ function GoodsCard({ c, on, onLayer }: { c: CountryProfile; on: boolean; onLayer
           <Note>One good per {regionWord.replace(/s$/, '')}: the one it is best known for, not all it makes. {GOODS_SOURCE}</Note>
         </>
       ) : (
-        <Note tone="warn">
-          Region-by-region goods are listed for {GOODS_COUNTRIES.length} countries so far ({GOODS_COUNTRIES.map((n) => (n === 'United States of America' ? 'the US' : n)).join(', ')}).{' '}
-          {c.display} is not yet.
-        </Note>
+        head && (
+          <Note>
+            Goods are listed {regionWord.replace(/s$/, '')} by {regionWord.replace(/s$/, '')} for {REGIONAL_GOODS_COUNTRIES.length} larger countries;{' '}
+            {c.display}’s {regionWord} show its main export for now. {GOODS_SOURCE}
+          </Note>
+        )
       )}
     </section>
   );

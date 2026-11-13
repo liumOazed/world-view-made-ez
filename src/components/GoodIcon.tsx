@@ -2,6 +2,20 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import {
   Anvil,
   Apple,
+  Banana,
+  Nut,
+  Diamond,
+  Cuboid,
+  Shovel,
+  Magnet,
+  Zap,
+  BatteryFull,
+  Footprints,
+  Sun,
+  Droplets,
+  BottleWine,
+  Sofa,
+
   Atom,
   Bean,
   Beef,
@@ -48,8 +62,22 @@ import {
 } from 'lucide-react';
 import { CATEGORY, GOODS, type GoodIcon, type GoodId } from '../data/goods';
 
-const LUCIDE: Record<Exclude<GoodIcon, 'paddy' | 'maize' | 'cane'>, LucideIcon> = {
+const LUCIDE: Record<Exclude<GoodIcon, CustomIcon>, LucideIcon> = {
   Anvil,
+  Banana,
+  Nut,
+  Diamond,
+  Cuboid,
+  Shovel,
+  Magnet,
+  Zap,
+  BatteryFull,
+  Footprints,
+  Sun,
+  Droplets,
+  BottleWine,
+  Sofa,
+
   Apple,
   Atom,
   Bean,
@@ -95,8 +123,9 @@ const LUCIDE: Record<Exclude<GoodIcon, 'paddy' | 'maize' | 'cane'>, LucideIcon> 
   Wheat,
 };
 
-/** Our own drawings, in Lucide's 24-unit stroke style, for crops Lucide lacks. */
-const CUSTOM: Record<'paddy' | 'maize' | 'cane', string[]> = {
+/** Our own drawings, in Lucide's 24-unit stroke style, for goods Lucide lacks. */
+type CustomIcon = 'paddy' | 'maize' | 'cane' | 'pod' | 'sheep';
+const CUSTOM: Record<CustomIcon, string[]> = {
   // Rice plants standing in a flooded paddy, the tallest bending under its grain.
   paddy: [
     'M12 17V6',
@@ -116,12 +145,29 @@ const CUSTOM: Record<'paddy' | 'maize' | 'cane', string[]> = {
     'M12 21.5c3.6-.2 6.6-3.2 7-8.5',
   ],
   // Two jointed canes with a leaf.
+  // A ridged cocoa pod on its stalk.
+  pod: [
+    'M12 3.5c3.6 0 6 3.8 6 8.5s-2.4 8.5-6 8.5-6-3.8-6-8.5 2.4-8.5 6-8.5Z',
+    'M12 3.6v16.8',
+    'M9 5.2c-1 2-1.4 4.3-1.4 6.8s.4 4.8 1.4 6.8',
+    'M15 5.2c1 2 1.4 4.3 1.4 6.8s-.4 4.8-1.4 6.8',
+    'M12 3.5V1.5',
+  ],
+  // A sheep: a woolly body, a head and four legs.
+  sheep: [
+    'M7 9.5a2.6 2.6 0 0 1 4.6-1.6 2.6 2.6 0 0 1 4.4.6 2.6 2.6 0 0 1 1.6 4.6 2.6 2.6 0 0 1-2.8 3H8.4a2.6 2.6 0 0 1-2.2-3.8A2.6 2.6 0 0 1 7 9.5Z',
+    'M6.4 11.2H4.2c-1 0-1.7-.8-1.5-1.8l.3-1.2',
+    'M8.6 16.1V20',
+    'M11.4 16.1V20',
+    'M13.8 16.1V20',
+    'M16.4 16.1V20',
+  ],
   cane: ['M9 22V4', 'M15 22V7', 'M7.5 9.5h3', 'M7.5 15.5h3', 'M13.5 12.5h3', 'M13.5 18.5h3', 'M9 6c2.5-.3 4.6-1.6 6-4', 'M15 9c2-1 3.6-.8 5 .5'],
 };
 
 /** Just the glyph, sized for text. */
 export function GoodGlyph({ icon, size = 14, strokeWidth = 2 }: { icon: GoodIcon; size?: number; strokeWidth?: number }) {
-  if (icon === 'paddy' || icon === 'maize' || icon === 'cane')
+  if (icon in CUSTOM)
     return (
       <svg
         width={size}
@@ -134,12 +180,12 @@ export function GoodGlyph({ icon, size = 14, strokeWidth = 2 }: { icon: GoodIcon
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        {CUSTOM[icon].map((d) => (
+        {CUSTOM[icon as CustomIcon].map((d) => (
           <path key={d} d={d} />
         ))}
       </svg>
     );
-  const I = LUCIDE[icon];
+  const I = LUCIDE[icon as Exclude<GoodIcon, CustomIcon>];
   return <I size={size} strokeWidth={strokeWidth} aria-hidden="true" />;
 }
 

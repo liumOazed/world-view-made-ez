@@ -18,7 +18,7 @@ import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import { regionalMeta } from '../data/regional';
-import { GOOD_IDS, GOODS_COUNTRIES, headlineGood, regionGood } from '../data/goods';
+import { GOOD_IDS, GOODS_COUNTRIES, hasRegionalGoods, headlineGood, regionGood } from '../data/goods';
 import { badgeSvg } from './GoodIcon';
 import { COUNTRY_FEATURES } from '../geo';
 import { useReducedEffects } from '../effects';
@@ -236,6 +236,7 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
       markets: geo(),
       cities: geo(),
       goods: geo(),
+      'goods-world': geo(),
       arcs: { ...geo(), lineMetrics: true },
       'arc-ends': geo(),
       flow: geo(),
@@ -379,7 +380,23 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
           'icon-ignore-placement': true,
           'symbol-sort-key': ['get', 'rank'],
         },
-        paint: { 'icon-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.96] },
+        paint: { 'icon-opacity': 0.96 },
+      },
+      // One coin per country for its main export; where they crowd, the larger economies win.
+      {
+        id: 'goods-world',
+        type: 'symbol',
+        source: 'goods-world',
+        layout: {
+          visibility: 'none',
+          'icon-image': ['concat', 'good-', ['get', 'good']],
+          'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.6, 4, 0.74, 7, 0.95],
+          'icon-anchor': 'bottom',
+          'icon-offset': [0, -6],
+          'icon-padding': 2,
+          'symbol-sort-key': ['get', 'rank'],
+        },
+        paint: { 'icon-opacity': 0.96 },
       },
       {
         id: 'city-labels',
@@ -709,6 +726,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       }
     }
     const pts: Feature<Point>[] = [];
+    const world: Feature<Point>[] = [];
     if (goodsOn) {
       const open = place.country && detail?.country === place.country ? detail : null;
       // The open country's regions, at its first level.
@@ -718,19 +736,26 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
           const g = regionGood(open.country, f.properties.key);
           if (g) pts.push({ type: 'Feature', properties: { good: g.id, key: f.properties.key, rank: 1 }, geometry: f.geometry });
         }
-      // Every other country with goods data shows its largest export.
+      // Every country shows its main export, except one whose regions are drawn.
+      const rank = new Map(
+        [...profiles.values()].sort((a, b) => (b.gdp ?? 0) - (a.gdp ?? 0)).map((p, i) => [p.name, i] as [string, number]),
+      );
       for (const name of GOODS_COUNTRIES) {
-        if (name === place.country) continue;
+        if (name === place.country && open && hasRegionalGoods(name)) continue;
         const a = anchors.get(name);
         const h = headlineGood(name);
-        if (a && h) pts.push({ type: 'Feature', properties: { good: h.id, country: name, rank: 0 }, geometry: { type: 'Point', coordinates: a } });
+        // The open country always shows, ahead of its neighbours.
+        const r = name === place.country ? -1 : (rank.get(name) ?? 999);
+        if (a && h) world.push({ type: 'Feature', properties: { good: h.id, country: name, rank: r }, geometry: { type: 'Point', coordinates: a } });
       }
     }
     (map.getSource('goods') as GeoJSONSource | undefined)?.setData({ type: 'FeatureCollection', features: pts });
+    (map.getSource('goods-world') as GeoJSONSource | undefined)?.setData({ type: 'FeatureCollection', features: world });
     map.setLayoutProperty('goods-icons', 'visibility', goodsOn ? 'visible' : 'none');
+    map.setLayoutProperty('goods-world', 'visibility', goodsOn ? 'visible' : 'none');
     // Like a strategy-game map, the icons stand in for the state names (hover still names them).
     map.setPaintProperty('lv1-labels', 'text-opacity', goodsOn ? 0 : 1);
-  }, [ready, goodsOn, detail, place.country]);
+  }, [ready, goodsOn, detail, place.country, profiles]);
 
   /* ----- boundaries for the open country ----- */
   useEffect(() => {

@@ -92,7 +92,7 @@ export default function App() {
         ? 'curated from national statistics'
         : `by region, ${layer.regionSource === 'events' ? CONFLICT_YEARS.join('–') : regionalYear(place.country)}`
       : layer.regionSource === 'goods'
-        ? 'goods are listed for 7 countries so far; this one is not yet'
+        ? 'regions here show the country’s main export'
         : 'no regional figures for this country, so regions show the national value'
     : layer.paint
       ? 'regions show the national mix'
@@ -312,12 +312,12 @@ function Method() {
         <div>
           <h3>Tradable goods</h3>
           <p>
-            The goods map, under Trade, gives each state or province one icon: the good it is best known for producing and selling, by
-            value or by its share of the country's output. Most regions make many things, so this is a guide, not a measure. The picks
-            are curated by hand from national statistics (Thailand's Office of Agricultural Economics, India's agriculture ministry and
-            Bureau of Mines, the Bangladesh Bureau of Statistics, Destatis, USDA, EIA and USGS, IBGE and CONAB, and China's National
-            Bureau of Statistics) for seven countries so far: Thailand, India, Bangladesh, Germany, the United States, Brazil and China.
-            Each country's own icon is its largest export by value in UN Comtrade (2023). Districts take their state's good.
+            The goods map, under Trade, gives every country an icon for its main export (UN Comtrade, around 2023, leaving out
+            re-exports through trading hubs). For 54 of the larger, more varied countries, each state or province also gets the good it is
+            best known for producing and selling, by value or by its share of the country's output; elsewhere the regions show the
+            country's main export, marked national. Most places make many things, so this is a guide, not a measure. The picks are
+            curated by hand from national agriculture, mining and industry statistics, USGS mineral yearbooks and FAO production figures.
+            Districts take their state's good.
           </p>
         </div>
         <div>
