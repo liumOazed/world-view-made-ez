@@ -7,6 +7,8 @@ import { CONFLICT_YEARS, regionalMeta } from '../data/regional';
 import { SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftOf, shiftText, type Shares } from '../data/sectors';
 import { areaKm2, contains, loadCities, nameOf, pathOf, SUBNATIONAL, type City, type Detail, type Place } from '../map/places';
 import { Flag } from './Flag';
+import { GoodBadge } from './GoodIcon';
+import { headlineGood, regionGood, type RegionGood } from '../data/goods';
 
 export type LinksMode = 'trade' | 'influence' | null;
 
@@ -92,7 +94,10 @@ export function PlaceCard({ place, detail, profiles, layer, linksMode, onLinks, 
         {String(layer.id).startsWith('sectors.') && sharesOf(country.name) ? (
           <SectorBar shares={sharesOf(country.name)!} country={country.name} shift={layer.id === 'sectors.shift'} />
         ) : null}
-        <p className="pc-lens" hidden={!!layer.paint && !!sharesOf(country.name)}>
+        {layer.regionSource === 'goods' ? (
+          <GoodLine g={headlineGood(country.name)} tag="top export" empty="No goods listed for this country yet" />
+        ) : null}
+        <p className="pc-lens" hidden={(!!layer.paint && !!sharesOf(country.name)) || layer.regionSource === 'goods'}>
           <i style={{ background: Number.isFinite(v) ? layer.color(v) : 'var(--line-strong)' }} />
           {layer.metric}: <b>{Number.isFinite(v) ? layer.format(v) : 'no data'}</b>
         </p>
@@ -239,6 +244,16 @@ function RegionLens({ layer, country, unitKey, national, stateWord }: { layer: L
   const meta = own && layer.regionSource === 'gdl' ? regionalMeta(country, unitKey) : null;
   const tag = !own ? 'national' : meta && !meta.own ? stateWord : 'regional';
   const named = meta && !/^\d+ regions$/.test(meta.region) ? meta.region : null;
+  if (layer.regionSource === 'goods') {
+    const g = regionGood(country, unitKey);
+    return (
+      <GoodLine
+        g={g ?? headlineGood(country)}
+        tag={g ? (unitKey.includes('/') ? stateWord : 'regional') : 'national top export'}
+        empty="No goods listed for this country yet"
+      />
+    );
+  }
   if (layer.paint) {
     const s = sharesOf(country);
     if (s) return <SectorBar shares={s} tag="national" country={country} shift={layer.id === 'sectors.shift'} />;
@@ -288,5 +303,20 @@ function SectorBar({ shares, tag, country, shift }: { shares: Shares; tag?: stri
       </div>
       {moved && <div className="pc-src">{shiftText(moved)}</div>}
     </div>
+  );
+}
+
+/** A tradable good with its badge and why the region is known for it. */
+function GoodLine({ g, tag, empty }: { g: RegionGood | null; tag: string; empty: string }) {
+  if (!g) return <p className="pc-lens muted">{empty}</p>;
+  return (
+    <p className="pc-lens pc-good">
+      <GoodBadge id={g.id} size={22} />
+      <span className="pc-good-text">
+        Known for <b>{g.good.label}</b>
+        <span className="pc-tag">{tag}</span>
+        {g.note && <span className="pc-src">{g.note} · curated</span>}
+      </span>
+    </p>
   );
 }

@@ -18,6 +18,8 @@ import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import { regionalMeta } from '../data/regional';
+import { GOOD_IDS, GOODS_COUNTRIES, headlineGood, regionGood } from '../data/goods';
+import { badgeSvg } from './GoodIcon';
 import { COUNTRY_FEATURES } from '../geo';
 import { useReducedEffects } from '../effects';
 import { loadCities, mainBounds, pathOf, placeId, type Bounds, type Detail, type Place } from '../map/places';
@@ -233,6 +235,7 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
       roads: geo(),
       markets: geo(),
       cities: geo(),
+      goods: geo(),
       arcs: { ...geo(), lineMetrics: true },
       'arc-ends': geo(),
       flow: geo(),
@@ -361,6 +364,23 @@ function buildStyle(world: FeatureCollection, countryLabels: FeatureCollection):
         paint: { 'text-color': 'rgba(232, 236, 244, 0.78)', 'text-halo-color': 'rgba(7, 14, 28, 0.7)', 'text-halo-width': 1, 'text-halo-blur': 0.6 },
       },
       ...unitLabels,
+      // Tradable goods: a coin per region (or per country at world scale), above its name.
+      {
+        id: 'goods-icons',
+        type: 'symbol',
+        source: 'goods',
+        layout: {
+          visibility: 'none',
+          'icon-image': ['concat', 'good-', ['get', 'good']],
+          'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.62, 4, 0.72, 7, 0.95, 10, 1.1],
+          'icon-anchor': 'bottom',
+          'icon-offset': [0, -4],
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
+          'symbol-sort-key': ['get', 'rank'],
+        },
+        paint: { 'icon-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.96] },
+      },
       {
         id: 'city-labels',
         type: 'symbol',
@@ -595,6 +615,11 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         const tag = !Number.isFinite(rv) ? ' (national)' : meta && !meta.own ? ` (${d.spec.levels[0].singular.toLowerCase()})` : '';
         const natTip = !Number.isFinite(rv) && Number.isFinite(v) ? L.tip?.(d.country) : null;
         sub = `${spec.singular} · ${natTip ? `${natTip} (national)` : `${L.metric}: ${Number.isFinite(v) ? `${L.format(v)}${tag}` : 'no data'}`}`;
+        if (L.regionTip) {
+          const t = L.regionTip(d.country, key);
+          sub = `${spec.singular} · ${t ?? 'no main good listed'}${t && lvl > 1 ? ` (${d.spec.levels[0].singular.toLowerCase()})` : ''}`;
+          if (!t) swatch = undefined;
+        }
       }
       const r = wrapRef.current!.getBoundingClientRect();
       setTip({ x: e.point.x, y: e.point.y, title, sub, swatch, ...(e.point.x > r.width - 240 ? { x: e.point.x - 250 } : {}) });
@@ -669,6 +694,43 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
       if (on) map.setFilter(`lv${L}-data`, L === activeLevel ? ['==', ['get', 'parent'], parentKey] : null);
     }
   }, [ready, pid, detail, regional, levelState]);
+
+  /* ----- tradable goods: icons over regions, or over countries at world scale ----- */
+  const goodsOn = !!layer.regionTip;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    // The badges are drawn once, from SVG, into the map's sprite.
+    if (goodsOn && !map.hasImage(`good-${GOOD_IDS[0]}`)) {
+      for (const id of GOOD_IDS) {
+        const img = new Image(64, 64);
+        img.onload = () => !map.hasImage(`good-${id}`) && map.addImage(`good-${id}`, img, { pixelRatio: 2 });
+        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(badgeSvg(id))}`;
+      }
+    }
+    const pts: Feature<Point>[] = [];
+    if (goodsOn) {
+      const open = place.country && detail?.country === place.country ? detail : null;
+      // The open country's regions, at its first level.
+      if (open)
+        for (const f of open.labels.features) {
+          if (f.properties.lvl !== 1) continue;
+          const g = regionGood(open.country, f.properties.key);
+          if (g) pts.push({ type: 'Feature', properties: { good: g.id, key: f.properties.key, rank: 1 }, geometry: f.geometry });
+        }
+      // Every other country with goods data shows its largest export.
+      for (const name of GOODS_COUNTRIES) {
+        if (name === place.country) continue;
+        const a = anchors.get(name);
+        const h = headlineGood(name);
+        if (a && h) pts.push({ type: 'Feature', properties: { good: h.id, country: name, rank: 0 }, geometry: { type: 'Point', coordinates: a } });
+      }
+    }
+    (map.getSource('goods') as GeoJSONSource | undefined)?.setData({ type: 'FeatureCollection', features: pts });
+    map.setLayoutProperty('goods-icons', 'visibility', goodsOn ? 'visible' : 'none');
+    // Like a strategy-game map, the icons stand in for the state names (hover still names them).
+    map.setPaintProperty('lv1-labels', 'text-opacity', goodsOn ? 0 : 1);
+  }, [ready, goodsOn, detail, place.country]);
 
   /* ----- boundaries for the open country ----- */
   useEffect(() => {

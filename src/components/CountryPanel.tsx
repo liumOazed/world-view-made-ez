@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Globe2, Info, Map as MapIcon, MoveRight } from 'lucide-react';
 import { SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf } from '../data/sectors';
 import { LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
@@ -30,6 +31,9 @@ import {
   type Subsection,
 } from '../data/sections';
 import { Flag } from './Flag';
+import { GoodBadge } from './GoodIcon';
+import { goodsSummary, GOODS_COUNTRIES, GOODS_SOURCE, headlineGood } from '../data/goods';
+import { SUBNATIONAL } from '../map/places';
 import { ScorecardTab } from './Scorecard';
 import { Sparkline, TREND_BAD, TREND_GOOD, TREND_NEUTRAL } from './Sparkline';
 
@@ -342,10 +346,12 @@ function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props
   return (
     <>
       <p className="muted small section-blurb">{section.blurb}</p>
-      {section.subs.map((sub) => {
+      {section.subs.map((sub, i) => {
         const lid = layerFor(id, sub.id);
         return (
-          <section key={sub.id} className={`sub-card${layerId === lid ? ' is-on-map' : ''}`}>
+          <Fragment key={sub.id}>
+          {id === 'trade' && i === 1 && <GoodsCard c={c} on={layerId === 'trade.goods'} onLayer={onLayer} />}
+          <section className={`sub-card${layerId === lid ? ' is-on-map' : ''}`}>
             <div className="sub-head">
               <h3>{sub.label}</h3>
               <button
@@ -383,6 +389,7 @@ function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props
               </div>
             )}
           </section>
+          </Fragment>
         );
       })}
       <p className="footnote sources">
@@ -701,3 +708,58 @@ function News({ c }: { c: CountryProfile }) {
   );
 }
 
+
+/** What each state or province is known for producing and selling. */
+function GoodsCard({ c, on, onLayer }: { c: CountryProfile; on: boolean; onLayer: (id: LayerId) => void }) {
+  const head = headlineGood(c.name);
+  const list = goodsSummary(c.name);
+  const regionWord = SUBNATIONAL[c.name]?.levels[0]?.plural ?? 'regions';
+  return (
+    <section className={`sub-card${on ? ' is-on-map' : ''}`}>
+      <div className="sub-head">
+        <h3>Tradable goods</h3>
+        <button
+          type="button"
+          className="sub-map"
+          aria-pressed={on}
+          onClick={() => onLayer('trade.goods' as LayerId)}
+          title="Show each region’s main good on the map"
+        >
+          <MapIcon size={12} />
+          {on ? 'On map' : 'Map'}
+        </button>
+      </div>
+      {head ? (
+        <>
+          <div className="goods-head">
+            <GoodBadge id={head.id} size={30} />
+            <div>
+              <div className="goods-kicker">Largest export by value</div>
+              <div className="goods-name">{head.good.label}</div>
+              <div className="muted small">{head.note}</div>
+            </div>
+          </div>
+          <div className="sub-links-title">What its {regionWord} are known for</div>
+          <ul className="goods-list">
+            {list.map((g) => (
+              <li key={g.id}>
+                <GoodBadge id={g.id} size={20} />
+                <span className="goods-label">{g.good.label}</span>
+                <span className="goods-regions" title={g.regions.join(', ')}>
+                  {g.regions.slice(0, 4).join(', ')}
+                  {g.regions.length > 4 ? ` +${g.regions.length - 4}` : ''}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <Note>One good per {regionWord.replace(/s$/, '')}: the one it is best known for, not all it makes. {GOODS_SOURCE}</Note>
+        </>
+      ) : (
+        <Note tone="warn">
+          Region-by-region goods are listed for {GOODS_COUNTRIES.length} countries so far ({GOODS_COUNTRIES.map((n) => (n === 'United States of America' ? 'the US' : n)).join(', ')}).{' '}
+          {c.display} is not yet.
+        </Note>
+      )}
+    </section>
+  );
+}
