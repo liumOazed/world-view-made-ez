@@ -4,7 +4,7 @@ import type { CountryProfile } from './countries';
 import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard';
 import { colorOf, SECTIONS, valueOf, type SectionId } from './sections';
 import { blend, leader, manufacturingPerPerson, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
-import { CATEGORIES, CATEGORY, goodsSummary, hasGoods, headlineGood, regionGood } from './goods';
+import { CATEGORIES, CATEGORY, goodsSummary, hasRegionalGoods, headlineGood, REGIONAL_GOODS_COUNTRIES, regionGood } from './goods';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 
 /** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
@@ -258,7 +258,7 @@ export const REGION_LAYERS: Layer[] = [
     unit: 'one good per state or province',
     question: 'What does each region produce and sell?',
     description:
-      'The good each state or province is best known for, drawn as an icon over it, and each country’s largest export by value. Curated from national statistics for seven countries so far.',
+      `Each country’s main export, and for ${REGIONAL_GOODS_COUNTRIES.length} larger countries the good each state or province is best known for, drawn as an icon over it. Curated from national statistics.`,
     // Countries with goods data take their headline good's colour; regions take their own good's.
     value: (c) => {
       const h = headlineGood(c.name);
@@ -268,7 +268,7 @@ export const REGION_LAYERS: Layer[] = [
       const g = regionGood(country, key);
       return g ? CATEGORIES.indexOf(g.good.category) : NaN;
     },
-    hasRegional: hasGoods,
+    hasRegional: hasRegionalGoods,
     regionSource: 'goods',
     format: (v) => CATEGORY[CATEGORIES[v]]?.label ?? '',
     color: (v) => GOODS_FILL[v] ?? '#2a3650',
@@ -278,11 +278,13 @@ export const REGION_LAYERS: Layer[] = [
       const top = goodsSummary(country)
         .slice(0, 3)
         .map((g) => g.good.label.toLowerCase());
-      return `Top export: ${h.good.label} · regions known for ${top.join(', ')}`;
+      return `Main export: ${h.good.label}${top.length ? ` · regions known for ${top.join(', ')}` : h.note ? ` · ${h.note}` : ''}`;
     },
     regionTip: (country, key) => {
       const g = regionGood(country, key);
-      return g ? `${g.good.label}${g.note ? ` · ${g.note}` : ''}` : null;
+      if (g) return `${g.good.label}${g.note ? ` · ${g.note}` : ''}`;
+      const h = headlineGood(country);
+      return h ? `${h.good.label} (the country’s main export)` : null;
     },
     legend: CATEGORIES.map((k) => ({ color: CATEGORY[k].color, label: CATEGORY[k].label })),
     ramp: CATEGORIES.map((k) => CATEGORY[k].color),
