@@ -7,9 +7,9 @@
  * most regions make many things, and the map shows the one that sets each
  * apart (by value, or by its share of the country's output).
  *
- * Every country gets its main export (one good, at world scale), and the
- * larger, more varied countries get a good for each state or province too;
- * elsewhere the regions show the country's main export, marked national.
+ * Every country gets its main export (one good, at world scale), and every
+ * country with a region map gets a good for each state or province too;
+ * a region without a pick shows the country's main export, marked national.
  * The picks are hand-curated from public statistics, not fetched: national
  * agriculture, mining and industry statistics, USGS mineral yearbooks and
  * FAO production figures, with main exports from UN Comtrade (around 2023).

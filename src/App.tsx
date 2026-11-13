@@ -313,9 +313,10 @@ function Method() {
           <h3>Tradable goods</h3>
           <p>
             The goods map, under Trade, gives every country an icon for its main export (UN Comtrade, around 2023, leaving out
-            re-exports through trading hubs). For 54 of the larger, more varied countries, each state or province also gets the good it is
-            best known for producing and selling, by value or by its share of the country's output; elsewhere the regions show the
-            country's main export, marked national. Most places make many things, so this is a guide, not a measure. The picks are
+            re-exports through trading hubs). Every country with a map of its regions (195 of them) also gives
+            each state or province the good it is best known for producing and selling, by value or by its share of the country's
+            output; a region without a pick shows the country's main export, marked national. In very small states, many regions share
+            one good. Most places make many things, so this is a guide, not a measure. The picks are
             curated by hand from national agriculture, mining and industry statistics, USGS mineral yearbooks and FAO production figures.
             Districts take their state's good.
           </p>
