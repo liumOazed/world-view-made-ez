@@ -3560,3 +3560,82 @@ html[data-effects='reduced'] .arc {
 .pc-good .pc-src {
   padding-left: 0;
 }
+
+/* ---------- diplomacy ---------- */
+.diplo-group {
+  margin-top: 12px;
+}
+.diplo-row {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  column-gap: 10px;
+  align-items: baseline;
+  width: calc(100% + 20px);
+  margin: 0 -10px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+}
+.diplo-row:hover {
+  background: var(--hover);
+}
+.diplo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  align-self: center;
+}
+.diplo-note {
+  grid-column: 2;
+  font-size: 11px;
+  color: var(--faint);
+}
+.diplo-via {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.diplo-via-label {
+  color: var(--faint);
+}
+.link-inline {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.18);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link-inline:hover {
+  color: var(--text, #f3efe6);
+  text-decoration-color: currentColor;
+}
+.bloc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.bloc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  font-size: 12px;
+}
+.bloc-chip i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid;
+}

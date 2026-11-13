@@ -66,11 +66,16 @@ export default function App() {
 
   const selected = place.country;
   const detail = useDetail(selected);
-  const layer = LAYER_BY_ID[layerId];
+  const baseLayer = LAYER_BY_ID[layerId];
+  const layer = useMemo(
+    () => (baseLayer.relative ? baseLayer.relative(selected ?? null, [...profiles.keys()], (n) => profiles.get(n)?.display ?? n) : baseLayer),
+    [baseLayer, selected, profiles],
+  );
   const sub = useMemo(() => {
     const s = sectionOf(layerId);
     // The goods map sits in Trade but is not one of its subsections (no partner arcs).
-    if (LAYER_BY_ID[layerId]?.regionSource === 'goods') return null;
+    // Nor are the maps coloured around the open country (friends, rivals, alliances).
+    if (LAYER_BY_ID[layerId]?.regionSource === 'goods' || LAYER_BY_ID[layerId]?.relative) return null;
     return s ? findSub(s, layerId.split('.')[1]) : null;
   }, [layerId]);
   const country = selected ? profiles.get(selected) : undefined;
@@ -183,14 +188,14 @@ export default function App() {
           links={links}
           detail={detail}
           inset={inset}
-          showChokepoints={(layerId.startsWith('influence.') || layerId.startsWith('trade.') || layerId.startsWith('risk.')) && layer.regionSource !== 'goods'}
+          showChokepoints={(layerId.startsWith('influence.') || layerId.startsWith('trade.') || layerId.startsWith('risk.')) && layer.regionSource !== 'goods' && !layer.relative}
           active={route === 'map'}
         />
         <h1 className="sr-only">Atlas: the world, in context</h1>
         <Crumbs place={place} profiles={profiles} onPlace={goPlace} />
         {!country && (
           <div className="map-toast">
-            <Hand size={14} /> <span>Click any country to zoom in. Try Bangladesh.</span>
+            <Hand size={14} /> <span>{layer.relative ? 'Click any country to colour the map around it. Try India.' : 'Click any country to zoom in. Try Bangladesh.'}</span>
             <button type="button" onClick={() => setDrawerOpen((o) => !o)} aria-expanded={drawerOpen} aria-controls="drawer">
               <LayoutList size={13} /> World overview
             </button>
@@ -319,6 +324,17 @@ function Method() {
             one good. Most places make many things, so this is a guide, not a measure. The picks are
             curated by hand from national agriculture, mining and industry statistics, USGS mineral yearbooks and FAO production figures.
             Districts take their state's good.
+          </p>
+        </div>
+        <div>
+          <h3>Diplomacy</h3>
+          <p>
+            Friends &amp; rivals and Military alliances, under Diplomacy, colour the map around the country you open. Relations run on
+            five steps, from close allies to hostile, and are curated by hand from alliances, arms ties, open disputes and recent
+            conflicts, as of early 2026; members of NATO, the EU, the CSTO, the GCC or Five Eyes count as close unless a pair is listed
+            otherwise, and pairs not listed count as neutral. Treaty allies are bound by a mutual-defence treaty or bloc; security
+            partners share bases, troops, intelligence or major arms deals, or a grouping such as the Quad, AUKUS or the SCO, without
+            that pledge. Both are a judgement, not a measurement.
           </p>
         </div>
         <div>

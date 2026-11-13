@@ -832,7 +832,7 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     map.setFilter('city-labels', cityFilter);
 
     /* fly */
-    const { reduced: rd, inset: ins, links: lk } = live.current;
+    const { reduced: rd, inset: ins, links: lk, layer: ly } = live.current;
     let target: { id: string; bounds?: Bounds } = { id: 'world' };
     if (place.country) {
       const unit = d ? [...place.path].reverse().map((k) => d.byKey.get(k)).find(Boolean) : undefined;
@@ -842,7 +842,8 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
         if (f) target = { id: place.country, bounds: mainBounds(f.geometry) };
       }
       // With connections showing, step back far enough to see where they go.
-      if (!place.path.length && lk.length) target = { id: `${place.country}+links` };
+      // The same for a map coloured around the open country (friends, rivals, allies).
+      if (!place.path.length && (lk.length || ly.keep)) target = { id: `${place.country}+links` };
     }
     if (target.id === flownRef.current) return;
     flownRef.current = target.id;
@@ -876,15 +877,15 @@ export function AtlasMap({ profiles, layer, place, onPlace, links, detail, inset
     }
     // pid stands in for place; the rest are read from refs on purpose.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, pid, detail, links.length > 0, profiles, levelState]);
+  }, [ready, pid, detail, links.length > 0, !!layer.keep, profiles, levelState]);
 
   /* ----- focus: everything but the open country (and its partners) steps back ----- */
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    const keep = place.country ? [place.country, ...(place.path.length ? [] : links.map((l) => l.name))] : [];
+    const keep = place.country ? [place.country, ...(place.path.length ? [] : [...links.map((l) => l.name), ...(layer.keep ?? [])])] : [];
     map.setFilter('world-dim', keep.length ? ['!', ['in', ['get', 'name'], ['literal', keep]]] : ['==', ['get', 'name'], '']);
-  }, [ready, place.country, place.path.length, links]);
+  }, [ready, place.country, place.path.length, links, layer.keep]);
 
   /* ----- chokepoints ----- */
   useEffect(() => {

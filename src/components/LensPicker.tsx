@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Factory, Landmark, ShieldAlert, Ship, Sparkles, type LucideIcon } from 'lucide-react';
-import { SECTOR_LAYERS, HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
+import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Factory, Landmark, ShieldAlert, Ship, Handshake, type LucideIcon } from 'lucide-react';
+import { DIPLOMACY_LAYERS, SECTOR_LAYERS, HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { SECTIONS, type SectionId } from '../data/sections';
 
 type Group = SectionId | 'scorecard' | 'hd' | 'sectors';
@@ -11,7 +11,7 @@ const ICONS: Record<Group, LucideIcon> = {
   government: Landmark,
   trade: Ship,
   money: Banknote,
-  influence: Sparkles,
+  influence: Handshake,
   risk: ShieldAlert,
   scorecard: Award,
   hd: HeartPulse,
@@ -24,6 +24,8 @@ const BASE_GROUPS: GroupSpec[] = [
     id: s.id,
     label: s.label,
     subs: [
+      // Friends, rivals and alliances lead the Diplomacy group.
+      ...(s.id === 'influence' ? DIPLOMACY_LAYERS.map((l) => ({ id: l.id, label: l.label })) : []),
       // Sectors have their own group, right below Growth.
       ...s.subs
         .filter((sub) => !(s.id === 'growth' && sub.id === 'sectors'))
