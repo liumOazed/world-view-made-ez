@@ -5,6 +5,7 @@ import { LOADED, PILLARS, SCORED, scorecardOf, type PillarId } from './scorecard
 import { colorOf, SECTIONS, valueOf, type SectionId } from './sections';
 import { blend, leader, manufacturingPerPerson, mixText, SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf, shiftColor, shiftOf, shiftText, type Sector } from './sectors';
 import { CATEGORIES, CATEGORY, goodsSummary, hasRegionalGoods, headlineGood, REGIONAL_GOODS_COUNTRIES, regionGood } from './goods';
+import { alignment, BLOCS, blocOf, FOCUS_COLOR, LEVEL, LEVELS, STANCE, tie, type Level } from './diplomacy';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 
 /** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
@@ -40,6 +41,10 @@ export interface Layer {
   regionSource?: 'gdl' | 'events' | 'goods';
   /** Tooltip text for a region, in place of the formatted value. */
   regionTip?: (country: string, key: string) => string | null;
+  /** A map coloured around the open country: builds the layer for that country (or none). */
+  relative?: (focus: string | null, names: string[], display: (n: string) => string) => Layer;
+  /** Countries that stay lit when one is open (set by a relative layer). */
+  keep?: string[];
 }
 
 function ramp(colors: string[], domain: [number, number], sqrt = false) {
@@ -442,7 +447,98 @@ export const SECTOR_LAYERS: Layer[] = [
   one('agriculture', 'Agriculture', SECTOR_COLORS.agriculture, 40),
 ];
 
-export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS].map((l) => [l.id, l])) as Record<
+/* ---------- diplomacy: coloured around the open country ---------- */
+
+const NEUTRAL = LEVEL[0].color;
+const levelRamp = [LEVEL[-2].color, LEVEL[-1].color, NEUTRAL, LEVEL[1].color, LEVEL[2].color];
+const diploBase = {
+  unit: 'hand-curated, early 2026',
+  format: (v: number) => LEVEL[Math.round(v) as Level]?.label ?? '',
+  color: () => NEUTRAL,
+  low: 'Hostile',
+  high: 'Allied',
+};
+const RELATIONS: Layer = {
+  ...diploBase,
+  id: 'influence.relations',
+  label: 'Friends & rivals',
+  metric: 'Relations',
+  question: 'Who gets on with whom?',
+  description:
+    'How each country gets on with the one you open, from close allies in green to hostile in red. Curated from alliances, arms ties, open disputes and recent conflicts; countries not listed count as neutral.',
+  value: () => 0,
+  ramp: levelRamp,
+  ticks: ['Hostile', 'Neutral', 'Allied'],
+  legend: [...LEVELS.map((l) => ({ color: LEVEL[l].color, label: LEVEL[l].label }))],
+  tip: () => 'Click a country to see its friends and rivals',
+  relative: (focus, names, display) => {
+    if (!focus) return { ...RELATIONS, keep: undefined };
+    const ties = new Map(names.map((n) => [n, tie(focus, n)]));
+    return {
+      ...RELATIONS,
+      metric: `Relations with ${display(focus)}`,
+      value: (c) => (c.name === focus ? 2 : (ties.get(c.name)?.level ?? 0)),
+      paint: (n) => (n === focus ? FOCUS_COLOR : LEVEL[ties.get(n)?.level ?? 0].color),
+      tip: (n) => {
+        if (n === focus) return `${display(focus)}: the country you opened`;
+        const t = ties.get(n);
+        if (!t || t.level === 0) return `Neutral with ${display(focus)}`;
+        return `${LEVEL[t.level].label} with ${display(focus)}${t.note ? ` · ${t.note}` : ''}`;
+      },
+      keep: names.filter((n) => (ties.get(n)?.level ?? 0) !== 0),
+    };
+  },
+};
+
+const DEFENCE = BLOCS.filter((b) => b.kind === 'defence');
+const ALLIANCES: Layer = {
+  ...diploBase,
+  id: 'influence.alliances',
+  label: 'Military alliances',
+  metric: 'Mutual-defence bloc',
+  question: 'Who is pledged to defend whom?',
+  description:
+    'Mutual-defence alliances such as NATO, the CSTO and the US treaties in the Pacific. Open a country to see its treaty allies, its looser security partners (the Quad, AUKUS, the SCO and others) and its military rivals.',
+  value: () => 0,
+  format: (v) => (v > 0 ? 'In a defence pact' : 'No defence pact'),
+  ramp: DEFENCE.map((b) => b.color!),
+  ticks: ['', ''],
+  low: '',
+  high: '',
+  legend: DEFENCE.map((b) => ({ color: b.color!, label: b.short })),
+  paint: (n) => blocOf(n)?.color ?? NEUTRAL,
+  tip: (n) => {
+    const b = blocOf(n);
+    if (!b) return 'In no mutual-defence alliance';
+    const c = b.caveat?.[n];
+    return `${b.short} · ${c ?? b.about}`;
+  },
+  relative: (focus, names, display) => {
+    if (!focus) return { ...ALLIANCES, keep: undefined };
+    const al = new Map(names.map((n) => [n, alignment(focus, n)]));
+    return {
+      ...ALLIANCES,
+      metric: `Military ties of ${display(focus)}`,
+      legend: (['treaty', 'partner', 'rival'] as const).map((k) => ({ color: STANCE[k].color, label: STANCE[k].label })),
+      paint: (n) => {
+        const s = al.get(n)?.stance;
+        return s === 'self' ? FOCUS_COLOR : s && s !== 'none' ? STANCE[s].color : NEUTRAL;
+      },
+      tip: (n) => {
+        const a = al.get(n);
+        if (!a || a.stance === 'self') return `${display(focus)}: the country you opened`;
+        if (a.stance === 'none') return `No military tie to ${display(focus)}`;
+        return `${STANCE[a.stance].label} of ${display(focus)}${a.why ? ` · ${a.why}` : ''}`;
+      },
+      keep: names.filter((n) => (al.get(n)?.stance ?? 'none') !== 'none'),
+    };
+  },
+};
+
+/** Listed first under Diplomacy. */
+export const DIPLOMACY_LAYERS: Layer[] = [RELATIONS, ALLIANCES];
+
+export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS, ...DIPLOMACY_LAYERS].map((l) => [l.id, l])) as Record<
   LayerId,
   Layer
 >;

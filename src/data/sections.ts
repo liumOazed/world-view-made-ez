@@ -663,9 +663,9 @@ export const SECTIONS: Section[] = [
   },
   {
     id: 'influence',
-    label: 'Influence',
-    short: 'Influence',
-    blurb: 'Who has leverage over whom.',
+    label: 'Diplomacy',
+    short: 'Diplomacy',
+    blurb: 'Who gets on with whom, who is pledged to defend whom, and who has leverage.',
     subs: [
       {
         id: 'network',
@@ -686,7 +686,7 @@ export const SECTIONS: Section[] = [
       },
       {
         id: 'security',
-        label: 'Security & alliances',
+        label: 'Defence spending',
         question: 'Who spends the most on defence?',
         map: ind('militarySpend', {
           ramp: VIOLET,
@@ -698,7 +698,7 @@ export const SECTIONS: Section[] = [
           description: 'Military expenditure as a share of GDP (SIPRI via World Bank).',
         }),
         metrics: ['militarySpend'],
-        pending: 'Alliance membership and arms transfers are not fetched yet.',
+        pending: 'Arms transfers are not fetched yet; alliances have their own map.',
       },
       {
         id: 'energy',
@@ -718,7 +718,7 @@ export const SECTIONS: Section[] = [
       },
       {
         id: 'diplomacy',
-        label: 'Diplomacy & institutions',
+        label: 'Political ties & institutions',
         question: 'Who has the widest political ties?',
         map: influenceSpec,
         metrics: [],

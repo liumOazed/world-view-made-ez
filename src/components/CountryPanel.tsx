@@ -13,6 +13,7 @@ import {
   type TradeLink,
 } from '../data/connections';
 import { layerFor, type LayerId } from '../data/layers';
+import { alignmentsOf, blocsFor, DIPLOMACY_SOURCE, LEVEL, LEVELS, STANCE, tiesOf, type Stance } from '../data/diplomacy';
 import { indexSource } from '../data/scorecard';
 import {
   FMT,
@@ -287,7 +288,7 @@ function Overview({ country: c, profiles, onTab, onSelect }: Props) {
         <div className="section-title">
           <h3>Who influences {c.display}?</h3>
           <button type="button" className="link" onClick={() => onTab('influence')}>
-            Influence <ArrowRight size={13} />
+            Diplomacy <ArrowRight size={13} />
           </button>
         </div>
         {by ? (
@@ -351,6 +352,12 @@ function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props
         return (
           <Fragment key={sub.id}>
           {id === 'trade' && i === 1 && <GoodsCard c={c} on={layerId === 'trade.goods'} onLayer={onLayer} />}
+          {id === 'influence' && i === 0 && (
+            <>
+              <RelationsCard c={c} profiles={rest.profiles} onSelect={rest.onSelect} on={layerId === 'influence.relations'} onLayer={onLayer} />
+              <AlliancesCard c={c} profiles={rest.profiles} onSelect={rest.onSelect} on={layerId === 'influence.alliances'} onLayer={onLayer} />
+            </>
+          )}
           <section className={`sub-card${layerId === lid ? ' is-on-map' : ''}`}>
             <div className="sub-head">
               <h3>{sub.label}</h3>
@@ -766,6 +773,142 @@ function GoodsCard({ c, on, onLayer }: { c: CountryProfile; on: boolean; onLayer
           </Note>
         )
       )}
+    </section>
+  );
+}
+
+/* ---------- diplomacy ---------- */
+
+type DiploProps = {
+  c: CountryProfile;
+  profiles: Map<string, CountryProfile>;
+  onSelect: (n: string) => void;
+  on: boolean;
+  onLayer: (id: LayerId) => void;
+};
+
+function MapToggle({ on, id, onLayer, title }: { on: boolean; id: string; onLayer: (id: LayerId) => void; title: string }) {
+  return (
+    <button type="button" className="sub-map" aria-pressed={on} onClick={() => onLayer(id as LayerId)} title={title}>
+      <MapIcon size={12} />
+      {on ? 'On map' : 'Map'}
+    </button>
+  );
+}
+
+/** Names grouped by what links them, as one line each. */
+function ViaLines({ items, display, onSelect }: { items: { name: string; via: string }[]; display: (n: string) => string; onSelect: (n: string) => void }) {
+  const by = new Map<string, string[]>();
+  for (const x of items) by.set(x.via, [...(by.get(x.via) ?? []), x.name]);
+  return (
+    <>
+      {[...by.entries()].map(([via, names]) => (
+        <p key={via} className="diplo-via">
+          <span className="diplo-via-label">{via}:</span>{' '}
+          {names.map((n, i) => (
+            <Fragment key={n}>
+              {i > 0 && ', '}
+              <button type="button" className="link-inline" onClick={() => onSelect(n)}>
+                {display(n)}
+              </button>
+            </Fragment>
+          ))}
+        </p>
+      ))}
+    </>
+  );
+}
+
+/** Who the country gets on with, from close allies to hostile. */
+function RelationsCard({ c, profiles, onSelect, on, onLayer }: DiploProps) {
+  const display = nameOf(profiles);
+  const ties = tiesOf(c.name, [...profiles.keys()]);
+  return (
+    <section className={`sub-card${on ? ' is-on-map' : ''}`}>
+      <div className="sub-head">
+        <h3>Friends & rivals</h3>
+        <MapToggle on={on} id="influence.relations" onLayer={onLayer} title="Colour the map by how each country gets on with this one" />
+      </div>
+      {ties.length ? (
+        LEVELS.map((lv) => {
+          const at = ties.filter((t) => t.tie.level === lv);
+          if (!at.length) return null;
+          const listed = at.filter((t) => t.tie.from === 'listed' || t.tie.from === 'pact');
+          const via = at.filter((t) => !listed.includes(t)).map((t) => ({ name: t.name, via: t.tie.note ?? 'Other' }));
+          return (
+            <div key={lv} className="diplo-group">
+              <div className="conn-kind" style={{ color: LEVEL[lv].color }}>
+                {LEVEL[lv].label} · {at.length}
+              </div>
+              {listed.map((t) => (
+                <button key={t.name} type="button" className="diplo-row" onClick={() => onSelect(t.name)}>
+                  <i className="diplo-dot" style={{ background: LEVEL[lv].color }} />
+                  <span className="conn-name">{display(t.name)}</span>
+                  {t.tie.note && <span className="diplo-note">{t.tie.note}</span>}
+                </button>
+              ))}
+              <ViaLines items={via} display={display} onSelect={onSelect} />
+            </div>
+          );
+        })
+      ) : (
+        <Note>No close or troubled ties are listed for {c.display}; it gets on with most countries in the ordinary way.</Note>
+      )}
+      <Note>Countries not listed count as neutral. {DIPLOMACY_SOURCE}</Note>
+    </section>
+  );
+}
+
+/** The country's alliances and security groupings, treaty allies, partners and military rivals. */
+function AlliancesCard({ c, profiles, onSelect, on, onLayer }: DiploProps) {
+  const display = nameOf(profiles);
+  const blocs = blocsFor(c.name);
+  const al = alignmentsOf(c.name, [...profiles.keys()]);
+  const groups: Exclude<Stance, 'none' | 'self'>[] = ['treaty', 'partner', 'rival'];
+  return (
+    <section className={`sub-card${on ? ' is-on-map' : ''}`}>
+      <div className="sub-head">
+        <h3>Military alliances</h3>
+        <MapToggle on={on} id="influence.alliances" onLayer={onLayer} title="Show alliances and this country's allies on the map" />
+      </div>
+      {blocs.length ? (
+        <ul className="bloc-chips">
+          {blocs.map((b) => (
+            <li key={b.id} className="bloc-chip" title={`${b.name} (${b.since}). ${b.about}`}>
+              <i style={{ background: b.color ?? 'transparent', borderColor: b.color ?? 'var(--faint)' }} />
+              <span>{b.short}</span>
+              {b.caveat?.[c.name] && <span className="muted small"> · {b.caveat[c.name]}</span>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="muted small">{c.display} is in no alliance or security grouping we track.</p>
+      )}
+      {groups.map((g) => {
+        const at = al.filter((x) => x.a.stance === g);
+        if (!at.length) return null;
+        return (
+          <div key={g} className="diplo-group">
+            <div className="conn-kind" style={{ color: STANCE[g].color }}>
+              {STANCE[g].label}s · {at.length}
+            </div>
+            {g === 'rival' ? (
+              at.map((x) => (
+                <button key={x.name} type="button" className="diplo-row" onClick={() => onSelect(x.name)}>
+                  <i className="diplo-dot" style={{ background: STANCE[g].color }} />
+                  <span className="conn-name">{display(x.name)}</span>
+                  {x.a.why && <span className="diplo-note">{x.a.why}</span>}
+                </button>
+              ))
+            ) : (
+              <ViaLines items={at.map((x) => ({ name: x.name, via: x.a.why ?? 'Other' }))} display={display} onSelect={onSelect} />
+            )}
+          </div>
+        );
+      })}
+      <Note>
+        Treaty allies are pledged to defend each other; security partners train, share intelligence or buy arms together without that pledge. {DIPLOMACY_SOURCE}
+      </Note>
     </section>
   );
 }
