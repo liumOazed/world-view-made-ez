@@ -123,28 +123,32 @@ function isoDateDaysAgo(days, fromMs = Date.now()) {
   return d.toISOString().slice(0, 10);
 }
 
+const median = (xs) => {
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
+
 /**
- * Filter single-day feed spikes: a point that deviates >12% from BOTH its immediate
- * previous and next trading day (while those two neighbours are within 5% of each other)
- * is treated as a feed glitch and skipped.
+ * Drop isolated bad prints: an interior point that sits more than 4% away from the
+ * median of its two neighbours on each side, while those neighbours agree with each
+ * other to within 3%, is treated as a feed glitch and skipped.
  */
 function cleanSeries(dates, ratesByDate, ccy) {
   const raw = dates
     .map((d) => ({ date: d, ms: Date.parse(`${d}T00:00:00Z`), rate: ratesByDate[d]?.[ccy] }))
     .filter((p) => typeof p.rate === 'number' && Number.isFinite(p.rate) && p.rate > 0);
 
-  if (raw.length < 3) return raw;
+  if (raw.length < 5) return raw;
   const cleaned = [];
   for (let i = 0; i < raw.length; i++) {
     const cur = raw[i];
     if (i > 0 && i < raw.length - 1) {
-      const prev = raw[i - 1].rate;
-      const next = raw[i + 1].rate;
-      const devPrev = Math.abs(cur.rate - prev) / prev;
-      const devNext = Math.abs(cur.rate - next) / next;
-      const neighDiff = Math.abs(next - prev) / prev;
-      if (devPrev > 0.12 && devNext > 0.12 && neighDiff < 0.05) {
-        console.warn(`Skipping FX outlier for ${ccy} on ${cur.date}: ${cur.rate} (neighbours ${prev}, ${next})`);
+      const neigh = raw.slice(Math.max(0, i - 2), i).concat(raw.slice(i + 1, i + 3)).map((p) => p.rate);
+      const m = median(neigh);
+      const spread = (Math.max(...neigh) - Math.min(...neigh)) / m;
+      if (Math.abs(cur.rate - m) / m > 0.04 && spread < 0.03) {
+        console.warn(`Skipping FX outlier for ${ccy} on ${cur.date}: ${cur.rate} (neighbour median ${m.toFixed(4)})`);
         continue;
       }
     }
@@ -153,8 +157,14 @@ function cleanSeries(dates, ratesByDate, ccy) {
   return cleaned;
 }
 
-/** Find the trading day closest to `targetMs` within ±4 days. */
-function findClosest(series, targetMs) {
+/**
+ * Reference rate around `targetMs`: the median of trading days within ±2 days,
+ * so one stray print at the anchor date cannot drive the 7d / 30d move.
+ * Falls back to the closest trading day within ±4 days.
+ */
+function anchorRate(series, targetMs) {
+  const near = series.filter((p) => Math.abs(p.ms - targetMs) <= 2 * 86_400_000);
+  if (near.length) return { rate: median(near.map((p) => p.rate)), dates: near.map((p) => p.date) };
   let best = null;
   let bestDiff = Infinity;
   for (const p of series) {
@@ -164,7 +174,7 @@ function findClosest(series, targetMs) {
       best = p;
     }
   }
-  return best && bestDiff <= 4 * 86_400_000 ? best : null;
+  return best && bestDiff <= 4 * 86_400_000 ? { rate: best.rate, dates: [best.date] } : null;
 }
 
 async function fetchFx() {
@@ -197,8 +207,11 @@ async function fetchFx() {
     const series = cleanSeries(dates, data.rates, ccy);
     if (series.length < 2) continue;
     const latest = series[series.length - 1];
-    const p7 = findClosest(series, target7Ms);
-    const p30 = findClosest(series, target30Ms);
+    const p7 = anchorRate(series, target7Ms);
+    const p30 = anchorRate(series, target30Ms);
+    console.log(
+      `${ccy}: ${latest.date} ${latest.rate} · 7d ref ${p7 ? `${p7.rate} (${p7.dates.join(',')})` : 'n/a'} · 30d ref ${p30 ? `${p30.rate} (${p30.dates.join(',')})` : 'n/a'}`,
+    );
     const rec = {
       currency: ccy,
       perUsd: latest.rate >= 100 ? Math.round(latest.rate * 10) / 10 : Math.round(latest.rate * 1000) / 1000,
