@@ -1,0 +1,48 @@
+name: Refresh prediction markets & live FX
+
+# Pulls active geopolitical/macro odds from Polymarket and daily FX moves
+# from Frankfurter (ECB) into src/data/nowcast.json.
+on:
+  schedule:
+    - cron: '30 */6 * * *' # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-nowcast-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-nowcast.mjs
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/nowcast.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh prediction markets & live FX ($(date -u +%Y-%m-%dT%H:%MZ))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/nowcast-refresh
+            gh pr create --head data/nowcast-refresh --base main --title 'Refresh prediction markets & live FX' \
+              --body 'Automated refresh of `src/data/nowcast.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
