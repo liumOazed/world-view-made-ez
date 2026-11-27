@@ -66,7 +66,7 @@ const DROP_TITLE_RE = /\b(rental price|h100|h200|b200|b300|a100|gpu|tweet|tweets
 // Strict country matchers run against the market title (not noisy Polymarket tags).
 const COUNTRY_HINTS = {
   'United States of America': [
-    /\b(U\.S\.|US|FOMC)\b/,
+    /(?:\bU\.S\.(?!\w)|\b(?:US|FOMC)\b)/,
     /\b(United States|Federal Reserve|Fed Decision|Fed Chair|White House|US President|Democratic Presidential|Republican Presidential|Powell|Warsh)\b/i,
   ],
   China: [/\b(China|Chinese|Beijing|Xi Jinping|PBOC|yuan|Taiwan Strait)\b/i],
@@ -76,7 +76,7 @@ const COUNTRY_HINTS = {
   Israel: [/\b(Israel|Israeli|Netanyahu|Gaza|IDF)\b/i],
   Iran: [/\b(Iran|Iranian|Tehran|Hormuz|Khamenei)\b/i],
   'United Kingdom': [
-    /\b(U\.K\.|UK)\b/,
+    /(?:\bU\.K\.(?!\w)|\bUK\b)/,
     /\b(United Kingdom|Britain|British|Bank of England|Keir Starmer|Downing Street)\b/i,
   ],
   Germany: [/\b(Germany|German|Berlin|Bundestag)\b/i],

@@ -6,9 +6,6 @@ on:
   schedule:
     - cron: '30 */6 * * *' # every 6 hours
   workflow_dispatch:
-  push:
-    branches: ['claude/**', 'feat/**']
-    paths: ['scripts/fetch-nowcast.mjs', '.github/workflows/refresh-nowcast.yml']
 
 permissions:
   contents: write
