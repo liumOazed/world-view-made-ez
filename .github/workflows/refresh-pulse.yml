@@ -1,0 +1,48 @@
+name: Refresh live news & sentiment pulse
+
+# Pulls global & country news from open RSS wires, runs the ATLAS sentiment
+# & economic-channel engine, and writes src/data/pulse.json.
+on:
+  schedule:
+    - cron: '0 */6 * * *' # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-pulse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-pulse.mjs
+      - run: npm run build
+      - name: Commit the snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/pulse.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m "Refresh live news & sentiment pulse ($(date -u +%Y-%m-%dT%H:%MZ))"
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            git push --force origin HEAD:refs/heads/data/pulse-refresh
+            gh pr create --head data/pulse-refresh --base main --title 'Refresh live news & sentiment pulse' \
+              --body 'Automated refresh of `src/data/pulse.json`.' \
+              || echo 'PR already open, or Actions may not open PRs here; the branch is pushed.'
+          else
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

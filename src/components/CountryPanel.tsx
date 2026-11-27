@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Globe2, Info, Map as MapIcon, MoveRight } from 'lucide-react';
+import { Fragment, useState } from 'react';
+import { ArrowDownRight, ArrowRight, ArrowUpRight, ExternalLink, Globe2, Info, Map as MapIcon, MoveRight, Radio } from 'lucide-react';
 import { SECTOR_COLORS, SECTOR_LABEL, SECTORS, sharesOf } from '../data/sectors';
 import { LINK_META, type CountryProfile, type LinkKind } from '../data/countries';
 import {
@@ -31,6 +31,16 @@ import {
   type SectionId,
   type Subsection,
 } from '../data/sections';
+import {
+  divergenceVerdict,
+  fmtSentiment,
+  formatSnapshotTime,
+  PULSE_RETRIEVED,
+  PULSE_SOURCE,
+  pulseOf,
+  relativeTime,
+  toneLabel,
+} from '../data/pulse';
 import { Flag } from './Flag';
 import { GoodBadge } from './GoodIcon';
 import { goodsSummary, GOODS_SOURCE, headlineGood, REGIONAL_GOODS_COUNTRIES } from '../data/goods';
@@ -93,7 +103,7 @@ export function CountryPanel(props: Props) {
       <div className="tab-body" key={tab}>
         {tab === 'overview' && <Overview {...props} />}
         {tab === 'scorecard' && <ScorecardTab c={country} />}
-        {tab === 'news' && <News c={country} />}
+        {tab === 'news' && <News c={country} layerId={props.layerId} onLayer={props.onLayer} />}
         {tab in SECTION_BY_ID && <SectionView id={tab as SectionId} {...props} />}
       </div>
     </div>
@@ -689,28 +699,138 @@ function ResilienceBreakdown({ c, profiles }: { c: CountryProfile; profiles: Map
   );
 }
 
-/* ---------- news (illustrative) ---------- */
+/* ---------- live news & sentiment pulse ---------- */
 
-function News({ c }: { c: CountryProfile }) {
+function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; onLayer: (id: LayerId) => void }) {
+  const [channel, setChannel] = useState<string | null>(null);
+  const pulse = pulseOf(c.name);
+  const verdict = divergenceVerdict(c.name);
+  const onMap = layerId.startsWith('pulse.');
+
+  const toneClass = (v: number) => (v <= -15 ? 'tone-bad' : v >= 15 ? 'tone-good' : 'tone-mid');
+
+  if (!pulse) {
+    return (
+      <section className="sub-card">
+        <div className="sub-head">
+          <div>
+            <h3>Live pulse</h3>
+            <p className="muted small">Updated {formatSnapshotTime(PULSE_RETRIEVED)}</p>
+          </div>
+          <button
+            type="button"
+            className={`map-btn${onMap ? ' is-on' : ''}`}
+            onClick={() => onLayer('pulse.sentiment')}
+          >
+            <MapIcon size={12} /> {onMap ? 'On map' : 'Map sentiment'}
+          </button>
+        </div>
+        <p className="muted small">
+          No recent wire reports matched {c.display} in this snapshot. News snapshots are refreshed periodically via scheduled GitHub Actions.
+        </p>
+      </section>
+    );
+  }
+
+  const presentChannels = new Set(pulse.articles.map((a) => a.channel));
+  const channels = Object.entries(pulse.channels)
+    .filter(([name]) => presentChannels.has(name))
+    .sort((a, b) => b[1].count - a[1].count);
+  const visible = channel ? pulse.articles.filter((a) => a.channel === channel) : pulse.articles;
+
   return (
     <>
-      <div className="illustrative-note">
-        <Info size={12} /> Illustrative placeholder · no news feed is connected yet
-      </div>
+      <section className={`sub-card pulse-hero${onMap ? ' is-on-map' : ''}`}>
+        <div className="sub-head">
+          <div>
+            <h3>
+              <Radio size={13} className="pulse-icon" /> Live pulse
+            </h3>
+            <p className="muted small">Updated {formatSnapshotTime(PULSE_RETRIEVED)}</p>
+          </div>
+          <button
+            type="button"
+            className={`map-btn${onMap ? ' is-on' : ''}`}
+            onClick={() => onLayer(onMap ? 'pulse.divergence' : 'pulse.sentiment')}
+            title="Colour the globe by live news sentiment"
+          >
+            <MapIcon size={12} /> {onMap ? 'On map' : 'Map sentiment'}
+          </button>
+        </div>
+
+        <div className="pulse-metrics">
+          <div className="pulse-stat">
+            <span className="eyebrow">Sentiment</span>
+            <strong className={`pulse-score ${toneClass(pulse.sentiment)}`}>{fmtSentiment(pulse.sentiment)}</strong>
+            <span className="muted small">{toneLabel(pulse.sentiment)}</span>
+          </div>
+          <div className="pulse-stat">
+            <span className="eyebrow">Coverage</span>
+            <strong className="pulse-score">{pulse.volume}</strong>
+            <span className="muted small">recent reports</span>
+          </div>
+          <div className="pulse-stat">
+            <span className="eyebrow">Lead channel</span>
+            <strong className="pulse-channel">{pulse.dominantChannel}</strong>
+            <span className={`sev-label sev-text-${pulse.severity.toLowerCase()}`}>{pulse.severity} impact</span>
+          </div>
+        </div>
+
+        <p className="pulse-brief">{pulse.brief}</p>
+
+        {verdict && (
+          <div className={`pulse-verdict verdict-${verdict.tone}`}>
+            <span className="verdict-pill">{verdict.label}</span>
+            <span>{verdict.note}</span>
+          </div>
+        )}
+
+        <div className="pulse-channels" role="group" aria-label="Filter headlines by economic channel">
+          <button
+            type="button"
+            className={`channel-chip${channel === null ? ' is-active' : ''}`}
+            onClick={() => setChannel(null)}
+          >
+            All ({pulse.articles.length})
+          </button>
+          {channels.map(([name, stat]) => (
+            <button
+              key={name}
+              type="button"
+              className={`channel-chip${channel === name ? ' is-active' : ''}`}
+              onClick={() => setChannel((cur) => (cur === name ? null : name))}
+            >
+              <span>{name}</span>
+              <em className={toneClass(stat.sentiment)}>{fmtSentiment(stat.sentiment)}</em>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <ul className="news-list">
-        {c.issues.map((i) => (
-          <li key={i.title}>
+        {visible.map((a) => (
+          <li key={a.url || a.title}>
             <div className="news-top">
-              <span className={`status status-${i.status.split(' ')[0].toLowerCase()}`}>{i.status}</span>
-              <span className={`sev-label sev-text-${i.severity.toLowerCase()}`}>{i.severity} impact</span>
+              <span className={`pulse-tone-pill ${toneClass(a.sentiment)}`}>
+                {fmtSentiment(a.sentiment)} · {a.channel}
+              </span>
+              <span className={`sev-label sev-text-${a.severity.toLowerCase()}`}>{a.severity} impact</span>
             </div>
-            <div className="issue-title">{i.title}</div>
+            <a className="issue-title news-link" href={a.url} target="_blank" rel="noopener noreferrer">
+              {a.title} <ExternalLink size={11} className="news-ext" />
+            </a>
             <div className="issue-meta">
-              Economic channel: <strong>{i.channel}</strong>
+              <span>{a.source}</span>
+              <span>·</span>
+              <span>{relativeTime(a.publishedAt)}</span>
             </div>
           </li>
         ))}
       </ul>
+
+      <div className="source-row">
+        <span className="source-chip">{PULSE_SOURCE}</span>
+      </div>
     </>
   );
 }
