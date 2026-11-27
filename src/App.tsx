@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ArrowUp, Hand, LayoutList } from 'lucide-react';
 import { buildProfiles, LINK_META } from './data/countries';
 import { INFLUENCE_COLOR, influenceLinks, supplyLinks, tradeLinks } from './data/connections';
-import { LAYER_BY_ID, layerFor, sectionOf, type LayerId } from './data/layers';
+import { computeRipples, type ShockChannel } from './data/ripple';
+import { LAYER_BY_ID, layerFor, sectionOf, shockRippleFor, type LayerId } from './data/layers';
 import { findSub, SECTION_BY_ID, type SectionId } from './data/sections';
 import { buildScorecards } from './data/scorecard';
 import { COUNTRY_FEATURES } from './geo';
@@ -58,6 +59,7 @@ export default function App() {
   }, []);
   const [route, goRoute] = useRoute();
   const [layerId, setLayerId] = useState<LayerId>(DEFAULT_LAYER);
+  const [rippleChannel, setRippleChannel] = useState<ShockChannel>('all');
   const [place, setPlace] = useState<Place>(WORLD);
   const [tab, setTab] = useState<CountryTab>('overview');
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -67,10 +69,12 @@ export default function App() {
   const selected = place.country;
   const detail = useDetail(selected);
   const baseLayer = LAYER_BY_ID[layerId];
-  const layer = useMemo(
-    () => (baseLayer.relative ? baseLayer.relative(selected ?? null, [...profiles.keys()], (n) => profiles.get(n)?.display ?? n) : baseLayer),
-    [baseLayer, selected, profiles],
-  );
+  const layer = useMemo(() => {
+    const names = [...profiles.keys()];
+    const display = (n: string) => profiles.get(n)?.display ?? n;
+    if (layerId === 'risk.ripple') return shockRippleFor(rippleChannel, selected ?? null, names, display);
+    return baseLayer.relative ? baseLayer.relative(selected ?? null, names, display) : baseLayer;
+  }, [baseLayer, layerId, rippleChannel, selected, profiles]);
   const sub = useMemo(() => {
     const s = sectionOf(layerId);
     // The goods map sits in Trade but is not one of its subsections (no partner arcs).
@@ -105,11 +109,20 @@ export default function App() {
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {
+    if (layerId === 'risk.ripple' && country) {
+      return computeRipples(country.name, rippleChannel)
+        .top.slice(0, 10)
+        .map((h) => ({
+          name: h.name,
+          color: h.hop === 1 ? '#e48a87' : '#e3ad5a',
+          weight: Math.max(8, h.score),
+        }));
+    }
     if (sub?.arcs === 'trade') return trade.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share }));
     if (sub?.arcs === 'energy') return supply.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share }));
     if (sub?.arcs === 'influence') return influence.map((l) => ({ name: l.name, color: INFLUENCE_COLOR, weight: l.score }));
     return [];
-  }, [sub, trade, supply, influence]);
+  }, [layerId, rippleChannel, country, sub, trade, supply, influence]);
   const linksMode: LinksMode = sub?.arcs === 'trade' ? 'trade' : sub?.arcs === 'influence' ? 'influence' : null;
 
   const goPlace = useCallback((p: Place) => {
@@ -231,6 +244,8 @@ export default function App() {
               onClose={() => setDrawerOpen(false)}
               layerId={layerId}
               onLayer={changeLayer}
+              rippleChannel={rippleChannel}
+              onRippleChannel={setRippleChannel}
             />
           ) : (
             <GlobalOverview layer={layer} profiles={profiles} onSelect={(n) => (goPlace({ country: n, path: [] }), setDrawerOpen(false))} />

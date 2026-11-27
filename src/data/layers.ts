@@ -9,6 +9,7 @@ import { alignment, BLOCS, blocOf, FOCUS_COLOR, LEVEL, LEVELS, STANCE, tie, type
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 import { attentionOf, divergenceOf, divergenceVerdict, fmtSentiment, pulseOf, sentimentOf, toneLabel } from './pulse';
 import { fmtFxMove, fxMove30dOf, fxOf } from './nowcast';
+import { computeRipples, RIPPLE_COVERAGE, SHOCK_CHANNELS, type ShockChannel } from './ripple';
 
 /** `section.sub` for the seven sections, a scorecard layer, human development, sectors, or live pulse. */
 export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}` | `sectors.${string}` | `pulse.${string}`;
@@ -631,6 +632,73 @@ export const PULSE_LAYERS: Layer[] = [
   },
 ];
 
+/* ---------- shock ripple: 1st & 2nd-order contagion around the open country ---------- */
+
+const RIPPLE_RAMP = ['#273552', '#c9a96e', '#d9824f', '#b4424a'];
+const rippleColor = stops(RIPPLE_RAMP, [10, 28, 50, 75]);
+
+export function shockRippleFor(
+  channel: ShockChannel,
+  focus: string | null,
+  names: string[],
+  display: (n: string) => string,
+): Layer {
+  if (!focus) return { ...SHOCK_RIPPLE_LAYER, keep: undefined };
+  const chLabel = SHOCK_CHANNELS.find((c) => c.id === channel)?.label;
+  const suffix = channel === 'all' ? '' : ` · ${chLabel}`;
+  const { covered, byCountry } = computeRipples(focus, channel);
+  if (!covered) {
+    return {
+      ...SHOCK_RIPPLE_LAYER,
+      metric: `Shock ripple · ${display(focus)} not in UN Comtrade (${RIPPLE_COVERAGE} covered)`,
+      value: (c) => (c.name === focus ? 100 : 0),
+      paint: (n) => (n === focus ? FOCUS_COLOR : NEUTRAL),
+      tip: (n) =>
+        n === focus
+          ? `${display(focus)}: bilateral trade flows not yet loaded`
+          : `Bilateral trade data not loaded for ${display(focus)}`,
+      keep: [focus],
+    };
+  }
+  return {
+    ...SHOCK_RIPPLE_LAYER,
+    metric: `Shock ripple from ${display(focus)}${suffix}`,
+    value: (c) => (c.name === focus ? 100 : (byCountry.get(c.name)?.score ?? 0)),
+    paint: (n) => {
+      if (n === focus) return FOCUS_COLOR;
+      const h = byCountry.get(n);
+      return h ? rippleColor(h.score) : NEUTRAL;
+    },
+    tip: (n) => {
+      if (n === focus) return `${display(focus)}: shock origin${suffix}`;
+      const h = byCountry.get(n);
+      if (!h) return `Minimal ${channel === 'all' ? 'bilateral' : (chLabel?.toLowerCase() ?? '')} exposure to ${display(focus)}`;
+      const via = h.via ? ` via ${display(h.via)}` : '';
+      return `${h.tier} exposure (${h.score}/100) · ${h.channel}${via}`;
+    },
+    keep: names.filter((n) => byCountry.has(n)),
+  };
+}
+
+export const SHOCK_RIPPLE_LAYER: Layer = {
+  id: 'risk.ripple',
+  label: 'Shock ripple',
+  metric: 'Contagion exposure',
+  unit: `0–100 · UN Comtrade (${RIPPLE_COVERAGE} economies) + resilience`,
+  question: 'If a shock hits one country, who feels it next?',
+  description:
+    'Models 1st-order and 2nd-order economic spillovers from the open country across UN Comtrade trade, energy, chip and food flows, adjusted by each partner’s structural resilience.',
+  value: () => 0,
+  format: (v) => (v > 0 ? `${Math.round(v)} / 100` : 'Minimal'),
+  color: rippleColor,
+  ramp: RIPPLE_RAMP,
+  low: 'Mild',
+  high: 'Severe',
+  ticks: ['10', '45', '75+'],
+  tip: () => 'Click any country to simulate a shock ripple from it',
+  relative: (focus, names, display) => shockRippleFor('all', focus, names, display),
+};
+
 export const LAYER_BY_ID = Object.fromEntries(
-  [...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS, ...DIPLOMACY_LAYERS, ...PULSE_LAYERS].map((l) => [l.id, l]),
+  [...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS, ...DIPLOMACY_LAYERS, ...PULSE_LAYERS, SHOCK_RIPPLE_LAYER].map((l) => [l.id, l]),
 ) as Record<LayerId, Layer>;
