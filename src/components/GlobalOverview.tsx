@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
-import { Anchor, ArrowDownRight, ArrowRight, ArrowUpRight, Info } from 'lucide-react';
+import { Anchor, ArrowDownRight, ArrowRight, ArrowUpRight, ExternalLink, Info, Radio } from 'lucide-react';
 import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
+import { fmtSentiment, formatSnapshotTime, PULSE_GLOBAL, PULSE_MOVERS, PULSE_RETRIEVED, relativeTime } from '../data/pulse';
 import { FMT, nextYearGrowth, SOURCES, worldSeries } from '../data/sections';
 import { Sparkline, TREND_BAD, TREND_GOOD } from './Sparkline';
 
@@ -126,6 +127,47 @@ export function GlobalOverview({
           <Info size={12} />
           <span>{layer.description}</span>
         </p>
+      </section>
+
+      <section className="panel-section">
+        <div className="section-title">
+          <h3>
+            <Radio size={13} className="pulse-icon" /> Live global pulse
+          </h3>
+          <span className="pill">{formatSnapshotTime(PULSE_RETRIEVED)}</span>
+        </div>
+        <div className="mover-strip">
+          {PULSE_MOVERS.slice(0, 6).map((m) => {
+            const tone = m.sentiment <= -15 ? 'tone-bad' : m.sentiment >= 15 ? 'tone-good' : 'tone-mid';
+            const display = profiles.get(m.name)?.display ?? m.name;
+            return (
+              <button key={m.name} type="button" className="mover-chip" onClick={() => onSelect(m.name)}>
+                <span className="mover-name">{display}</span>
+                <span className={`mover-score ${tone}`}>{fmtSentiment(m.sentiment)}</span>
+                <span className="mover-ch">{m.dominantChannel}</span>
+              </button>
+            );
+          })}
+        </div>
+        <ul className="news-list global-news">
+          {PULSE_GLOBAL.slice(0, 4).map((a) => {
+            const tone = a.sentiment <= -15 ? 'tone-bad' : a.sentiment >= 15 ? 'tone-good' : 'tone-mid';
+            return (
+              <li key={a.url || a.title}>
+                <div className="news-top">
+                  <span className={`pulse-tone-pill ${tone}`}>
+                    {fmtSentiment(a.sentiment)} · {a.channel}
+                  </span>
+                  <span className="muted small">{relativeTime(a.publishedAt)}</span>
+                </div>
+                <a className="issue-title news-link" href={a.url} target="_blank" rel="noopener noreferrer">
+                  {a.title} <ExternalLink size={11} className="news-ext" />
+                </a>
+                <div className="issue-meta">{a.source}</div>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <section className="panel-section">

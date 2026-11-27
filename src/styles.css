@@ -1993,6 +1993,194 @@ span.level-high {
   padding: 2px 8px;
 }
 
+/* ---------- live news & sentiment pulse ---------- */
+
+.pulse-icon {
+  color: var(--brass);
+  vertical-align: -1px;
+  margin-right: 4px;
+}
+.pulse-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.pulse-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.pulse-score {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--text);
+}
+.pulse-channel {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+}
+.tone-good {
+  color: var(--good);
+}
+.tone-bad {
+  color: var(--bad);
+}
+.tone-mid {
+  color: var(--brass-2);
+}
+.pulse-brief {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0 0 10px;
+}
+.pulse-verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-2);
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.pulse-verdict.verdict-bad {
+  background: var(--bad-soft);
+  border-color: rgba(228, 138, 135, 0.28);
+}
+.pulse-verdict.verdict-warn {
+  background: var(--warn-wash);
+  border-color: var(--warn-line);
+}
+.pulse-verdict.verdict-good {
+  background: var(--good-soft);
+  border-color: rgba(111, 195, 156, 0.28);
+}
+.verdict-pill {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.pulse-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.channel-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.channel-chip:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.channel-chip.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--text);
+}
+.channel-chip em {
+  font-style: normal;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.pulse-tone-pill {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.news-link {
+  display: inline-block;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.15s var(--ease);
+}
+.news-link:hover {
+  color: var(--accent);
+}
+.news-ext {
+  display: inline;
+  vertical-align: -1px;
+  margin-left: 3px;
+  opacity: 0.65;
+}
+.news-list .issue-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.mover-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.mover-chip {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  align-items: baseline;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.mover-chip:hover {
+  border-color: var(--accent-line);
+  background: var(--surface-2);
+}
+.mover-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mover-score {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.mover-ch {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--muted);
+}
+.global-news li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 /* ---------- explore ---------- */
 
 .explore {

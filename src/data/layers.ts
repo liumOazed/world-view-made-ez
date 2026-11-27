@@ -7,9 +7,10 @@ import { blend, leader, manufacturingPerPerson, mixText, SECTOR_COLORS, SECTOR_L
 import { CATEGORIES, CATEGORY, goodsSummary, hasRegionalGoods, headlineGood, REGIONAL_GOODS_COUNTRIES, regionGood } from './goods';
 import { alignment, BLOCS, blocOf, FOCUS_COLOR, LEVEL, LEVELS, STANCE, tie, type Level } from './diplomacy';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
+import { attentionOf, divergenceOf, divergenceVerdict, fmtSentiment, pulseOf, sentimentOf, toneLabel } from './pulse';
 
-/** `section.sub` for the seven sections, a scorecard layer, or a human development layer. */
-export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}` | `sectors.${string}`;
+/** `section.sub` for the seven sections, a scorecard layer, human development, sectors, or live pulse. */
+export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}` | `sectors.${string}` | `pulse.${string}`;
 
 export interface Layer {
   id: LayerId;
@@ -538,7 +539,76 @@ const ALLIANCES: Layer = {
 /** Listed first under Diplomacy. */
 export const DIPLOMACY_LAYERS: Layer[] = [RELATIONS, ALLIANCES];
 
-export const LAYER_BY_ID = Object.fromEntries([...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS, ...DIPLOMACY_LAYERS].map((l) => [l.id, l])) as Record<
-  LayerId,
-  Layer
->;
+/* ---------- live pulse: real-time news sentiment & attention ---------- */
+
+const SENTIMENT_RAMP = ['#b4424a', '#d9824f', '#c9a96e', '#6fae9c', '#5f9bd3'];
+const ATTENTION_RAMP = ['#1b2740', '#4f6d9a', '#c9a96e', '#d9824f', '#e48a87'];
+
+export const PULSE_LAYERS: Layer[] = [
+  {
+    id: 'pulse.sentiment',
+    label: 'News sentiment',
+    metric: 'Live news tone',
+    unit: '-100 to +100 · open global wires',
+    question: 'Where is live economic and geopolitical coverage turning positive or adverse?',
+    description:
+      'Tone of recent headlines across open global news wires, scored by ATLAS’s macro & geopolitical sentiment engine from -100 (sharply adverse) to +100 (strongly positive).',
+    value: (c) => sentimentOf(c.name),
+    format: (v) => (Number.isNaN(v) ? 'No recent coverage' : `${fmtSentiment(v)} · ${toneLabel(v)}`),
+    color: stops(SENTIMENT_RAMP, [-60, -25, 0, 25, 60]),
+    ramp: SENTIMENT_RAMP,
+    low: 'Adverse',
+    high: 'Positive',
+    ticks: ['-60', '0', '+60'],
+    tip: (n) => {
+      const p = pulseOf(n);
+      if (!p) return null;
+      return `${fmtSentiment(p.sentiment)} (${toneLabel(p.sentiment)}) · ${p.volume} reports · ${p.dominantChannel}`;
+    },
+  },
+  {
+    id: 'pulse.attention',
+    label: 'News attention',
+    metric: 'Coverage volume',
+    unit: 'recent reports · open global wires',
+    question: 'Which countries are drawing the most global media attention right now?',
+    description:
+      'Count of matched recent headlines per country across global and targeted economic feeds. Highlights active hotspots and market-moving economies.',
+    value: (c) => attentionOf(c.name),
+    format: (v) => (Number.isNaN(v) ? 'Quiet' : `${Math.round(v)} reports`),
+    color: stops(ATTENTION_RAMP, [1, 4, 10, 18, 30], Math.sqrt),
+    ramp: ATTENTION_RAMP,
+    low: 'Quiet',
+    high: 'Spotlight',
+    ticks: ['1', '10', '30+'],
+    tip: (n) => {
+      const p = pulseOf(n);
+      if (!p) return null;
+      return `${p.volume} recent reports · ${p.dominantChannel} (${fmtSentiment(p.sentiment)})`;
+    },
+  },
+  {
+    id: 'pulse.divergence',
+    label: 'Signal vs. resilience',
+    metric: 'Stress-adjusted pulse',
+    unit: 'live sentiment × structural resilience',
+    question: 'Where is negative live news colliding with structural fragility?',
+    description:
+      'Compares each country’s live news tone against its structural resilience score. Highlights economies where adverse headlines meet thinner buffers.',
+    value: (c) => divergenceOf(c.name),
+    format: (v) => (Number.isNaN(v) ? 'No recent coverage' : fmtSentiment(v)),
+    color: stops(SENTIMENT_RAMP, [-70, -30, 0, 25, 60]),
+    ramp: SENTIMENT_RAMP,
+    low: 'Fragile & hit',
+    high: 'Resilient tailwind',
+    ticks: ['Alert', 'Steady', 'Tailwind'],
+    tip: (n) => {
+      const v = divergenceVerdict(n);
+      return v ? `${v.label} · ${v.note}` : null;
+    },
+  },
+];
+
+export const LAYER_BY_ID = Object.fromEntries(
+  [...LAYERS, ...PILLAR_LAYERS, ...HD_LAYERS, ...REGION_LAYERS, ...SECTOR_LAYERS, ...DIPLOMACY_LAYERS, ...PULSE_LAYERS].map((l) => [l.id, l]),
+) as Record<LayerId, Layer>;

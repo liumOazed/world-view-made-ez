@@ -177,7 +177,7 @@ export function Header({ profiles, route, onSelect, onPlace }: Props) {
           <EffectsToggle />
           <div
             className="data-badge"
-            title="Map and country figures come from IMF, World Bank, BIS, UN Comtrade and other open sources, with the year on every value. News is still a placeholder."
+            title="Map and country figures come from IMF, World Bank, BIS, UN Comtrade and other open sources, with the year on every value. Live news and sentiment refresh every 6 hours from open global wires."
           >
             <span className="dot is-live" />
             Sourced data
