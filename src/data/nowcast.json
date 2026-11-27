@@ -1,5 +1,5 @@
 {
-  "retrieved": "2026-11-27T17:58:08.266Z",
+  "retrieved": "2026-11-27T18:09:13.082Z",
   "fxSource": "Frankfurter · European Central Bank reference rates",
   "fxDate": "2026-11-27",
   "fxCountries": {
@@ -7,217 +7,217 @@
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "France": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Italy": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Spain": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Netherlands": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Belgium": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Austria": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Portugal": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Finland": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Ireland": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Greece": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Slovakia": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Slovenia": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Lithuania": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Latvia": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Estonia": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Croatia": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Luxembourg": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Cyprus": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Malta": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Bulgaria": {
       "currency": "EUR",
       "perUsd": 0.913,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "United Kingdom": {
       "currency": "GBP",
       "perUsd": 0.762,
-      "move7d": 0,
-      "move30d": -1.3
+      "move7d": -0.2,
+      "move30d": -1.5
     },
     "Japan": {
       "currency": "JPY",
       "perUsd": 159.5,
-      "move7d": -0.6,
-      "move30d": -1
+      "move7d": -0.1,
+      "move30d": -1.1
     },
     "China": {
       "currency": "CNY",
       "perUsd": 6.654,
-      "move7d": 0.4,
+      "move7d": 0.2,
       "move30d": 0.2
     },
     "India": {
       "currency": "INR",
       "perUsd": 93,
-      "move7d": -0.3,
-      "move30d": 2.4
+      "move7d": 0.3,
+      "move30d": 2.3
     },
     "Canada": {
       "currency": "CAD",
       "perUsd": 1.425,
       "move7d": 0.4,
-      "move30d": -1.4
+      "move30d": -1.6
     },
     "Australia": {
       "currency": "AUD",
       "perUsd": 1.5,
-      "move7d": 0,
-      "move30d": -5.2
+      "move7d": -0.6,
+      "move30d": -5.1
     },
     "New Zealand": {
       "currency": "NZD",
       "perUsd": 1.824,
       "move7d": -0.4,
-      "move30d": -2.4
+      "move30d": -2.7
     },
     "Switzerland": {
       "currency": "CHF",
       "perUsd": 0.836,
-      "move7d": 0.4,
-      "move30d": -0.6
+      "move7d": 0.8,
+      "move30d": -0.9
     },
     "Sweden": {
       "currency": "SEK",
       "perUsd": 10.229,
-      "move7d": -0.3,
+      "move7d": -0.7,
       "move30d": -2.9
     },
     "Norway": {
       "currency": "NOK",
       "perUsd": 9.752,
-      "move7d": 0,
+      "move7d": -0.7,
       "move30d": -4.7
     },
     "Denmark": {
       "currency": "DKK",
       "perUsd": 6.821,
       "move7d": -0.3,
-      "move30d": -1.6
+      "move30d": -1.7
     },
     "Poland": {
       "currency": "PLN",
       "perUsd": 4.078,
-      "move7d": -0.5,
-      "move30d": -3
+      "move7d": -1.4,
+      "move30d": -3.2
     },
     "Czechia": {
       "currency": "CZK",
       "perUsd": 22.301,
-      "move7d": -0.2,
-      "move30d": -1.9
+      "move7d": -0.3,
+      "move30d": -2.1
     },
     "Hungary": {
       "currency": "HUF",
       "perUsd": 337.4,
-      "move7d": 0.7,
-      "move30d": -2.3
+      "move7d": -0.4,
+      "move30d": -2.6
     },
     "Romania": {
       "currency": "RON",
       "perUsd": 4.877,
       "move7d": -0.2,
-      "move30d": -1.4
+      "move30d": -1.6
     },
     "Iceland": {
       "currency": "ISK",
@@ -228,50 +228,50 @@
     "Turkey": {
       "currency": "TRY",
       "perUsd": 50.787,
-      "move7d": -0.4,
+      "move7d": -0.6,
       "move30d": -1.9
     },
     "Brazil": {
       "currency": "BRL",
       "perUsd": 5.498,
-      "move7d": 8,
-      "move30d": -3.1
+      "move7d": 7.2,
+      "move30d": -2.7
     },
     "Mexico": {
       "currency": "MXN",
       "perUsd": 19.512,
-      "move7d": -2.3,
+      "move7d": -3,
       "move30d": -4.5
     },
     "South Africa": {
       "currency": "ZAR",
       "perUsd": 17.336,
-      "move7d": 0.8,
+      "move7d": -0.3,
       "move30d": -4
     },
     "South Korea": {
       "currency": "KRW",
       "perUsd": 1334.9,
-      "move7d": 0.3,
-      "move30d": 0.4
+      "move7d": -0.2,
+      "move30d": 0
     },
     "Singapore": {
       "currency": "SGD",
       "perUsd": 1.29,
-      "move7d": -0.1,
-      "move30d": -0.6
+      "move7d": 0,
+      "move30d": -0.7
     },
     "Hong Kong": {
       "currency": "HKD",
       "perUsd": 7.828,
-      "move7d": 0.1,
+      "move7d": 0.2,
       "move30d": 0.2
     },
     "Indonesia": {
       "currency": "IDR",
       "perUsd": 18378,
       "move7d": -0.6,
-      "move30d": -1.1
+      "move30d": -1.3
     },
     "Malaysia": {
       "currency": "MYR",
@@ -282,8 +282,8 @@
     "Philippines": {
       "currency": "PHP",
       "perUsd": 63.729,
-      "move7d": 0.1,
-      "move30d": 0.4
+      "move7d": -0.1,
+      "move30d": 0.3
     },
     "Thailand": {
       "currency": "THB",
@@ -294,8 +294,8 @@
     "Israel": {
       "currency": "ILS",
       "perUsd": 3.309,
-      "move7d": 1,
-      "move30d": -5.5
+      "move7d": -0.6,
+      "move30d": -5.8
     }
   },
   "marketsSource": "Polymarket (open live odds)",
@@ -315,8 +315,8 @@
     {
       "title": "Taipei Mayor Election Winner",
       "outcome": "Chiang Wan-an",
-      "prob": 56,
-      "change24h": -6,
+      "prob": 59,
+      "change24h": -3,
       "volume24h": 1249004,
       "category": "Elections",
       "url": "https://polymarket.com/event/taipei-mayor-election-winner-20260813125857100",
@@ -328,7 +328,7 @@
       "title": "Democratic Presidential Nominee 2028",
       "outcome": "Jon Ossoff",
       "prob": 24,
-      "change24h": 2.4,
+      "change24h": 2.3,
       "volume24h": 1113471,
       "category": "Elections",
       "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
@@ -364,7 +364,7 @@
       "title": "Prime Minister of Israel after the next election?",
       "outcome": "Gadi Eizenkot",
       "prob": 78,
-      "change24h": -1.5,
+      "change24h": 0.7,
       "volume24h": 506165,
       "category": "Elections",
       "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
@@ -376,7 +376,7 @@
       "title": "Next Prime Minister of Sweden",
       "outcome": "Ulf Kristersson",
       "prob": 84,
-      "change24h": -3.8,
+      "change24h": -3.6,
       "volume24h": 259693,
       "category": "Elections",
       "url": "https://polymarket.com/event/next-prime-minister-of-sweden",
@@ -425,7 +425,7 @@
       "title": "What technical failure caused the FAA's nationwide ground stop?",
       "outcome": "Software or configuration error",
       "prob": 22,
-      "change24h": -56.8,
+      "change24h": -63.3,
       "volume24h": 215366,
       "category": "Policy",
       "url": "https://polymarket.com/event/what-technical-failure-caused-the-faas-nationwide-ground-stop",
@@ -462,7 +462,7 @@
         "title": "Democratic Presidential Nominee 2028",
         "outcome": "Jon Ossoff",
         "prob": 24,
-        "change24h": 2.4,
+        "change24h": 2.3,
         "volume24h": 1113471,
         "category": "Elections",
         "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
@@ -512,8 +512,8 @@
       {
         "title": "Taipei Mayor Election Winner",
         "outcome": "Chiang Wan-an",
-        "prob": 56,
-        "change24h": -6,
+        "prob": 59,
+        "change24h": -3,
         "volume24h": 1249004,
         "category": "Elections",
         "url": "https://polymarket.com/event/taipei-mayor-election-winner-20260813125857100",
@@ -591,7 +591,7 @@
         "title": "Prime Minister of Israel after the next election?",
         "outcome": "Gadi Eizenkot",
         "prob": 78,
-        "change24h": -1.5,
+        "change24h": 0.7,
         "volume24h": 506165,
         "category": "Elections",
         "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
@@ -615,8 +615,8 @@
       {
         "title": "Netanyahu out by...?",
         "outcome": "December 31",
-        "prob": 74,
-        "change24h": -4,
+        "prob": 72,
+        "change24h": -13,
         "volume24h": 48684,
         "category": "Elections",
         "url": "https://polymarket.com/event/netanyahu-out-before-2027",
@@ -630,7 +630,7 @@
         "title": "Next Prime Minister of Sweden",
         "outcome": "Ulf Kristersson",
         "prob": 84,
-        "change24h": -3.8,
+        "change24h": -3.6,
         "volume24h": 259693,
         "category": "Elections",
         "url": "https://polymarket.com/event/next-prime-minister-of-sweden",
@@ -642,7 +642,7 @@
         "title": "Which coalition will form the next Swedish government?",
         "outcome": "M + KD + L + C",
         "prob": 77,
-        "change24h": -5.8,
+        "change24h": -4.8,
         "volume24h": 53173,
         "category": "Policy",
         "url": "https://polymarket.com/event/which-coalition-will-form-the-next-swedish-government",
@@ -746,8 +746,8 @@
       {
         "title": "Next Prime Minister of Serbia?",
         "outcome": "Dejan Šoškić",
-        "prob": 53,
-        "change24h": -5,
+        "prob": 46,
+        "change24h": -15.6,
         "volume24h": 66659,
         "category": "Elections",
         "url": "https://polymarket.com/event/next-prime-minister-of-serbia-20260629223938642",
@@ -817,7 +817,7 @@
         "title": "Canadian unwrought aluminum duty rate on December 31, 2027?",
         "outcome": "0%",
         "prob": 9,
-        "change24h": 0.7,
+        "change24h": 0.4,
         "volume24h": 44753,
         "category": "Macro & Rates",
         "url": "https://polymarket.com/event/section-232-rate-on-canadian-primary-aluminum",
