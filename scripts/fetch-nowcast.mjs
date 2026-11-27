@@ -10,10 +10,12 @@ import { mapCountries } from './lib/map-countries.mjs';
 const OUT = new URL('../src/data/nowcast.json', import.meta.url);
 const TIMEOUT_MS = 12_000;
 
+// Bulgaria adopted the euro on January 1, 2026.
 const EUROZONE = [
   'Germany', 'France', 'Italy', 'Spain', 'Netherlands', 'Belgium', 'Austria',
   'Portugal', 'Finland', 'Ireland', 'Greece', 'Slovakia', 'Slovenia',
   'Lithuania', 'Latvia', 'Estonia', 'Croatia', 'Luxembourg', 'Cyprus', 'Malta',
+  'Bulgaria',
 ];
 
 const CURRENCY_COUNTRIES = {
@@ -33,7 +35,6 @@ const CURRENCY_COUNTRIES = {
   CZK: ['Czechia'],
   HUF: ['Hungary'],
   RON: ['Romania'],
-  BGN: ['Bulgaria'],
   ISK: ['Iceland'],
   TRY: ['Turkey'],
   BRL: ['Brazil'],
@@ -58,36 +59,46 @@ const KEEP_TAGS = new Set([
 const DROP_TAGS = new Set([
   'sports', 'esports', 'nba', 'nfl', 'nhl', 'mlb', 'soccer', 'football', 'tennis',
   'ufc', 'mma', 'games', 'gaming', 'crypto', 'crypto-prices', 'pop-culture',
-  'entertainment', 'movies', 'music', 'celebrities', 'weather',
+  'entertainment', 'movies', 'music', 'celebrities', 'weather', 'ai-compute', 'gpu',
 ]);
+const DROP_TITLE_RE = /\b(rental price|h100|h200|b200|b300|a100|gpu|tweet|tweets|box office|spotify|youtube|mrbeast|oscar|grammy|gta\s*vi)\b/i;
 
+// Strict country matchers run against the market title (not noisy Polymarket tags).
 const COUNTRY_HINTS = {
-  'United States of America': /\b(united states|u\.s\.|us\b|fed\b|fomc|federal reserve|trump|white house|congress|senate|american|powell|warsh)\b/i,
-  China: /\b(china|chinese|beijing|xi jinping|pboc|yuan|taiwan strait)\b/i,
-  Taiwan: /\b(taiwan|taipei|tsmc|taiwan strait)\b/i,
-  Russia: /\b(russia|russian|moscow|putin|kremlin)\b/i,
-  Ukraine: /\b(ukraine|ukrainian|kyiv|zelensky)\b/i,
-  Israel: /\b(israel|israeli|gaza|netanyahu|idf)\b/i,
-  Iran: /\b(iran|iranian|tehran|hormuz)\b/i,
-  'United Kingdom': /\b(uk\b|u\.k\.|britain|british|bank of england|starmer|london)\b/i,
-  Germany: /\b(germany|german|berlin|bundestag)\b/i,
-  France: /\b(france|french|paris|macron)\b/i,
-  Japan: /\b(japan|japanese|tokyo|bank of japan|boj|yen)\b/i,
-  India: /\b(india|indian|modi|rbi|new delhi)\b/i,
-  Canada: /\b(canada|canadian|ottawa|bank of canada)\b/i,
-  Mexico: /\b(mexico|mexican|sheinbaum)\b/i,
-  Brazil: /\b(brazil|brazilian|lula)\b/i,
-  Argentina: /\b(argentina|argentine|milei)\b/i,
-  Turkey: /\b(turkey|türkiye|turkish|erdogan)\b/i,
-  'South Korea': /\b(south korea|korean|seoul)\b/i,
-  'North Korea': /\b(north korea|pyongyang|kim jong)\b/i,
-  'Saudi Arabia': /\b(saudi|riyadh|opec)\b/i,
-  Venezuela: /\b(venezuela|maduro|caracas)\b/i,
-  Australia: /\b(australia|australian|rba)\b/i,
-  Poland: /\b(poland|polish|warsaw)\b/i,
-  Italy: /\b(italy|italian|meloni)\b/i,
-  Spain: /\b(spain|spanish|madrid)\b/i,
-  Netherlands: /\b(netherlands|dutch)\b/i,
+  'United States of America': [
+    /\b(U\.S\.|US|FOMC)\b/,
+    /\b(United States|Federal Reserve|Fed Decision|Fed Chair|White House|US President|Democratic Presidential|Republican Presidential|Powell|Warsh)\b/i,
+  ],
+  China: [/\b(China|Chinese|Beijing|Xi Jinping|PBOC|yuan|Taiwan Strait)\b/i],
+  Taiwan: [/\b(Taiwan|Taipei|TSMC|Taiwan Strait)\b/i],
+  Russia: [/\b(Russia|Russian|Moscow|Putin|Kremlin)\b/i],
+  Ukraine: [/\b(Ukraine|Ukrainian|Kyiv|Zelensky)\b/i],
+  Israel: [/\b(Israel|Israeli|Netanyahu|Gaza|IDF)\b/i],
+  Iran: [/\b(Iran|Iranian|Tehran|Hormuz|Khamenei)\b/i],
+  'United Kingdom': [
+    /\b(U\.K\.|UK)\b/,
+    /\b(United Kingdom|Britain|British|Bank of England|Keir Starmer|Downing Street)\b/i,
+  ],
+  Germany: [/\b(Germany|German|Berlin|Bundestag)\b/i],
+  France: [/\b(France|French|Paris|Macron|Le Pen)\b/i],
+  Japan: [/\b(Japan|Japanese|Tokyo|Bank of Japan|BOJ|yen)\b/i],
+  India: [/\b(India|Indian|Modi|RBI|New Delhi)\b/i],
+  Canada: [/\b(Canada|Canadian|Ottawa|Bank of Canada)\b/i],
+  Mexico: [/\b(Mexico|Mexican|Sheinbaum)\b/i],
+  Brazil: [/\b(Brazil|Brazilian|Lula)\b/i],
+  Argentina: [/\b(Argentina|Argentine|Milei)\b/i],
+  Turkey: [/\b(Turkey|Türkiye|Turkish|Erdogan)\b/i],
+  'South Korea': [/\b(South Korea|South Korean|Seoul)\b/i],
+  'North Korea': [/\b(North Korea|North Korean|Pyongyang|Kim Jong)\b/i],
+  'Saudi Arabia': [/\b(Saudi Arabia|Saudi|Riyadh|OPEC)\b/i],
+  Venezuela: [/\b(Venezuela|Maduro|Caracas)\b/i],
+  Australia: [/\b(Australia|Australian|RBA)\b/i],
+  Poland: [/\b(Poland|Polish|Warsaw)\b/i],
+  Italy: [/\b(Italy|Italian|Meloni)\b/i],
+  Spain: [/\b(Spain|Spanish|Madrid)\b/i],
+  Netherlands: [/\b(Netherlands|Dutch)\b/i],
+  Sweden: [/\b(Sweden|Swedish|Stockholm)\b/i],
+  Norway: [/\b(Norway|Norwegian|Oslo)\b/i],
 };
 
 async function fetchJson(url) {
@@ -107,13 +118,57 @@ async function fetchJson(url) {
   }
 }
 
-function isoDateDaysAgo(days) {
-  const d = new Date(Date.now() - days * 86_400_000);
+function isoDateDaysAgo(days, fromMs = Date.now()) {
+  const d = new Date(fromMs - days * 86_400_000);
   return d.toISOString().slice(0, 10);
 }
 
+/**
+ * Filter single-day feed spikes: a point that deviates >12% from BOTH its immediate
+ * previous and next trading day (while those two neighbours are within 5% of each other)
+ * is treated as a feed glitch and skipped.
+ */
+function cleanSeries(dates, ratesByDate, ccy) {
+  const raw = dates
+    .map((d) => ({ date: d, ms: Date.parse(`${d}T00:00:00Z`), rate: ratesByDate[d]?.[ccy] }))
+    .filter((p) => typeof p.rate === 'number' && Number.isFinite(p.rate) && p.rate > 0);
+
+  if (raw.length < 3) return raw;
+  const cleaned = [];
+  for (let i = 0; i < raw.length; i++) {
+    const cur = raw[i];
+    if (i > 0 && i < raw.length - 1) {
+      const prev = raw[i - 1].rate;
+      const next = raw[i + 1].rate;
+      const devPrev = Math.abs(cur.rate - prev) / prev;
+      const devNext = Math.abs(cur.rate - next) / next;
+      const neighDiff = Math.abs(next - prev) / prev;
+      if (devPrev > 0.12 && devNext > 0.12 && neighDiff < 0.05) {
+        console.warn(`Skipping FX outlier for ${ccy} on ${cur.date}: ${cur.rate} (neighbours ${prev}, ${next})`);
+        continue;
+      }
+    }
+    cleaned.push(cur);
+  }
+  return cleaned;
+}
+
+/** Find the trading day closest to `targetMs` within ±4 days. */
+function findClosest(series, targetMs) {
+  let best = null;
+  let bestDiff = Infinity;
+  for (const p of series) {
+    const diff = Math.abs(p.ms - targetMs);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      best = p;
+    }
+  }
+  return best && bestDiff <= 4 * 86_400_000 ? best : null;
+}
+
 async function fetchFx() {
-  const start = isoDateDaysAgo(35);
+  const start = isoDateDaysAgo(37);
   const data = await fetchJson(`https://api.frankfurter.dev/v1/${start}..?base=USD`);
   if (!data?.rates) return { date: null, countries: {} };
 
@@ -121,29 +176,34 @@ async function fetchFx() {
   if (dates.length < 2) return { date: null, countries: {} };
 
   const latestDate = dates[dates.length - 1];
-  const latest = data.rates[latestDate];
-  const d7Idx = Math.max(0, dates.length - 6); // ~5 trading days
-  const d30Idx = 0; // ~30 calendar days ago
-  const prev7 = data.rates[dates[d7Idx]];
-  const prev30 = data.rates[dates[d30Idx]];
+  const latestMs = Date.parse(`${latestDate}T00:00:00Z`);
+  const target7Ms = latestMs - 7 * 86_400_000;
+  const target30Ms = latestMs - 30 * 86_400_000;
 
-  // Note: Frankfurter returns local currency units per 1 USD (e.g. JPY=150).
-  // When units per USD go UP, the local currency DEPRECIATED vs USD.
-  // So local currency % move vs USD = ((prev / latest) - 1) * 100.
-  const pctMove = (oldRate, newRate) => {
+  // Frankfurter returns local currency units per 1 USD (e.g. JPY=150).
+  // Local currency % move vs USD = ((oldRate / newRate) - 1) * 100.
+  const pctMove = (oldRate, newRate, maxAbs = 35) => {
     if (!oldRate || !newRate) return null;
-    return Math.round(((oldRate / newRate) - 1) * 1000) / 10;
+    const pct = Math.round(((oldRate / newRate) - 1) * 1000) / 10;
+    if (Math.abs(pct) > maxAbs) {
+      console.warn(`Rejecting implausible FX move: ${pct}% (${oldRate} -> ${newRate})`);
+      return null;
+    }
+    return pct;
   };
 
   const countries = {};
   for (const [ccy, list] of Object.entries(CURRENCY_COUNTRIES)) {
-    const rate = latest[ccy];
-    if (!rate) continue;
+    const series = cleanSeries(dates, data.rates, ccy);
+    if (series.length < 2) continue;
+    const latest = series[series.length - 1];
+    const p7 = findClosest(series, target7Ms);
+    const p30 = findClosest(series, target30Ms);
     const rec = {
       currency: ccy,
-      perUsd: rate >= 100 ? Math.round(rate * 10) / 10 : Math.round(rate * 1000) / 1000,
-      move7d: pctMove(prev7?.[ccy], rate),
-      move30d: pctMove(prev30?.[ccy], rate),
+      perUsd: latest.rate >= 100 ? Math.round(latest.rate * 10) / 10 : Math.round(latest.rate * 1000) / 1000,
+      move7d: pctMove(p7?.rate, latest.rate, 25),
+      move30d: pctMove(p30?.rate, latest.rate, 40),
     };
     for (const country of list) {
       countries[country] = rec;
@@ -165,11 +225,47 @@ function parseJsonArr(v) {
 }
 
 function pickCategory(tags, title) {
-  const t = `${tags.join(' ')} ${title}`.toLowerCase();
-  if (/\b(fed|fomc|rate|ecb|boj|inflation|cpi|recession|gdp|economy|tariff|trade)\b/.test(t)) return 'Macro & Rates';
-  if (/\b(election|nominee|president|prime minister|mayor|parliament|senate|vote)\b/.test(t)) return 'Elections';
-  if (/\b(war|ceasefire|strike|invade|invasion|nuclear|nato|conflict|military|missile)\b/.test(t)) return 'Geopolitics';
-  return 'Policy';
+  const titleLow = String(title || '').toLowerCase();
+  const tagLow = tags.join(' ').toLowerCase();
+
+  // Classify primarily by title, checking Geopolitics & Macro before Elections.
+  const check = (s) => {
+    if (/\b(war|ceasefire|strike|invad\w*|invasion|nuclear|nato|conflict|military|missile|strait|peace\s+deal|annex|sanctions?|blockade)\b/.test(s)) {
+      return 'Geopolitics';
+    }
+    if (/\b(fed\b|fomc|rate\s+cut|rate\s+hike|interest\s+rate|ecb|boj|inflation|cpi|recession|gdp|economy|tariff|dut(?:y|ies)|trade|oil|default|currency)\b/.test(s)) {
+      return 'Macro & Rates';
+    }
+    if (/\b(election|nominee|president|prime\s+minister|chancellor|mayor|parliament|senate|vote|out\s+of\s+power)\b/.test(s)) {
+      return 'Elections';
+    }
+    return null;
+  };
+
+  return check(titleLow) ?? check(tagLow) ?? 'Policy';
+}
+
+const MONTH_RE = /\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+(\d{1,2})(?:,?\s*(\d{4}))?/i;
+const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+
+/** Parse a deadline date from a "by date" market label/question, or null if not date-based. */
+function parseDeadlineMs(label, question, nowMs) {
+  const text = `${label} ${question}`;
+  const m = MONTH_RE.exec(text);
+  if (m) {
+    const mon = MONTHS[m[1].slice(0, 3).toLowerCase()];
+    const day = Number(m[2]);
+    let year = m[3] ? Number(m[3]) : new Date(nowMs).getUTCFullYear();
+    let ms = Date.UTC(year, mon, day);
+    // If no year was written and that month/day already passed this year, it refers to next year.
+    if (!m[3] && ms < nowMs - 14 * 86_400_000) {
+      ms = Date.UTC(year + 1, mon, day);
+    }
+    return ms;
+  }
+  const yOnly = /\bby\s+(?:end\s+of\s+)?(202\d)\b/i.exec(text) ?? /\b(202\d)\b/.exec(label);
+  if (yOnly) return Date.UTC(Number(yOnly[1]), 11, 31);
+  return null;
 }
 
 async function fetchMarkets(allMapNames) {
@@ -180,24 +276,28 @@ async function fetchMarkets(allMapNames) {
   const events = pages.flat().filter(Boolean);
 
   const nameMatchers = allMapNames
-    .filter((n) => n.length >= 4 && !COUNTRY_HINTS[n])
+    .filter((n) => n.length >= 4 && !COUNTRY_HINTS[n] && n !== 'Guinea' && n !== 'Congo' && n !== 'Sudan')
     .map((n) => [n, new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')]);
 
+  const nowMs = Date.now();
   const parsed = [];
+
   for (const e of events) {
+    const title = String(e.title ?? '').trim();
+    if (!title || DROP_TITLE_RE.test(title)) continue;
+
     const tags = (e.tags ?? []).map((t) => String(t.slug ?? '').toLowerCase());
     if (tags.some((t) => DROP_TAGS.has(t))) continue;
     const vol24 = Number(e.volume24hr ?? 0);
     if (vol24 < 5000) continue;
 
-    const keep = tags.some((t) => KEEP_TAGS.has(t)) || /\b(fed|rate|tariff|recession|election|ceasefire|war|oil|gdp|inflation)\b/i.test(e.title ?? '');
+    const keep = tags.some((t) => KEEP_TAGS.has(t)) || /\b(fed|rate|tariff|recession|election|ceasefire|war|oil|gdp|inflation)\b/i.test(title);
     if (!keep) continue;
 
     const markets = (e.markets ?? []).filter((m) => m.active !== false && m.closed !== true);
     if (!markets.length) continue;
 
-    // Pick the leading active market inside the event (highest Yes probability or volume)
-    let best = null;
+    const candidates = [];
     for (const m of markets) {
       const outcomes = parseJsonArr(m.outcomes);
       const prices = parseJsonArr(m.outcomePrices).map(Number);
@@ -205,32 +305,45 @@ async function fetchMarkets(allMapNames) {
       const yesIdx = outcomes.findIndex((o) => String(o).toLowerCase() === 'yes');
       const idx = yesIdx >= 0 ? yesIdx : 0;
       const prob = Math.round((prices[idx] ?? 0) * 100);
-      if (prob <= 1 || prob >= 99) continue; // skip settled/tail noise
+      if (prob <= 1 || prob >= 99) continue;
       const chg = typeof m.oneDayPriceChange === 'number' ? Math.round(m.oneDayPriceChange * 1000) / 10 : null;
-      const label = markets.length > 1 ? (m.groupItemTitle || m.question || e.title) : e.title;
-      const mVol = Number(m.volume24hr ?? vol24);
-      if (!best || prob > best.prob || (prob === best.prob && mVol > best.vol)) {
-        best = { label: String(label), question: String(m.question ?? e.title), prob, change24h: chg, vol: mVol };
-      }
+      const label = markets.length > 1 ? String(m.groupItemTitle || m.question || title) : title;
+      const question = String(m.question ?? title);
+      const deadlineMs = markets.length > 1 ? parseDeadlineMs(label, question, nowMs) : null;
+      candidates.push({ label, question, prob, change24h: chg, vol: Number(m.volume24hr ?? vol24), deadlineMs });
     }
-    if (!best) continue;
+    if (!candidates.length) continue;
 
-    const text = `${e.title} ${best.question} ${tags.join(' ')}`;
+    // For cumulative "by date" markets (e.g. ceasefire by Dec 2026 / Mar 2027 / Dec 2027),
+    // pick the nearest upcoming deadline rather than the furthest date (which trivially has highest prob).
+    const dated = candidates.filter((c) => c.deadlineMs !== null && c.deadlineMs >= nowMs - 86_400_000);
+    const isDateSeries = dated.length >= 2 && dated.length >= candidates.length * 0.6;
+
+    let best;
+    if (isDateSeries) {
+      dated.sort((a, b) => a.deadlineMs - b.deadlineMs);
+      best = dated.find((c) => c.prob >= 5 && c.prob <= 95) ?? dated[0];
+    } else {
+      candidates.sort((a, b) => b.prob - a.prob || b.vol - a.vol);
+      best = candidates[0];
+    }
+
+    // Tag countries strictly from the event title (avoids noisy Polymarket tags and generic multi-country lists).
     const matched = new Set();
-    for (const [country, re] of Object.entries(COUNTRY_HINTS)) {
-      if (re.test(text)) matched.add(country);
+    for (const [country, regexes] of Object.entries(COUNTRY_HINTS)) {
+      if (regexes.some((re) => re.test(title))) matched.add(country);
     }
     for (const [country, re] of nameMatchers) {
-      if (re.test(e.title ?? '')) matched.add(country);
+      if (re.test(title)) matched.add(country);
     }
 
     parsed.push({
-      title: String(e.title),
-      outcome: best.label !== e.title ? best.label : null,
+      title,
+      outcome: best.label !== title ? best.label : null,
       prob: best.prob,
       change24h: best.change24h,
       volume24h: Math.round(vol24),
-      category: pickCategory(tags, e.title),
+      category: pickCategory(tags, title),
       url: `https://polymarket.com/event/${e.slug}`,
       countries: [...matched].slice(0, 3),
     });
