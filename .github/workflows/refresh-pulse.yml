@@ -6,9 +6,6 @@ on:
   schedule:
     - cron: '0 */6 * * *' # every 6 hours
   workflow_dispatch:
-  push:
-    branches: ['claude/**', 'feat/**']
-    paths: ['scripts/fetch-pulse.mjs', 'scripts/lib/sentiment.mjs', '.github/workflows/refresh-pulse.yml']
 
 permissions:
   contents: write

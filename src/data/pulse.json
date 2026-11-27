@@ -1,8 +1,8 @@
 {
   "source": "Open global wires (Google News, BBC, Al Jazeera, France 24, DW) · ATLAS sentiment engine",
-  "retrieved": "2026-11-27T17:30:22.845Z",
-  "countryCount": 73,
-  "articleCount": 605,
+  "retrieved": "2026-11-27T17:57:16.744Z",
+  "countryCount": 71,
+  "articleCount": 608,
   "global": [
     {
       "title": "Nigeria: Political violence and attacks on candidates raise fears ahead of January elections",
@@ -17,15 +17,15 @@
       ]
     },
     {
-      "title": "Kuwait: Two Italians killed in drone attack",
-      "source": "France 24",
-      "url": "https://www.france24.com/en/video/20261127-kuwait-two-italians-killed-in-drone-attack",
-      "publishedAt": "2026-11-27T11:45:48.000Z",
-      "sentiment": -78,
-      "channel": "Security & Conflict",
+      "title": "Egypt tanker explosion kills 31 people as driver crashes into fuel truck in fiery highway crash",
+      "source": "CBS News",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNcTJtLVRTTmczWXpYalJuY0hOeVNBWTFsU2xGVVc3TnhDVUFldHhCRU1lNEl6dFp2V0ROTTluYjQ4aFBUU0Y4SWF3NnNqWTkzQlg0NEFxMzI2RW9ibF9DTGVvZGVzVjFSX0lmem1ZR0V3Qm5kaGFFZHJxem9JbXJ0QQ?oc=5",
+      "publishedAt": "2026-11-26T11:27:25.000Z",
+      "sentiment": -79,
+      "channel": "Energy & Supply",
       "severity": "High",
       "countries": [
-        "Kuwait"
+        "Egypt"
       ]
     },
     {
@@ -78,6 +78,32 @@
       ]
     },
     {
+      "title": "Ukrainian forces strike ballistic missile fuel production plant in Russia's Tula Oblast, military confirms",
+      "source": "The Kyiv Independent",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQTDhsVl9zYjladkpJZk5sV1g5UjFrWjdxUFlIc0htd3dzeDVxeks0ZV9hVVM1eVZvN3ZKZ0FFOUY3a3lMSzhSblVRR0w3V0RONVJFU1VpS2hOYmg4aEhKcXUtMHZERjV4QU5lNG5wS0ZxUXU0a0FmR00wX0pGOUVDV2V2aDR3ZFZabW1jVktFVHdMSWJBeG9BRzRVLUM0TkhDTkthREZNUzY3YjdRV0lmcFVaOFNJTGlaNHJTZkpwU0ZLeC1vYjRRSWV0UHd1Z2c?oc=5",
+      "publishedAt": "2026-11-27T04:03:16.000Z",
+      "sentiment": -61,
+      "channel": "Security & Conflict",
+      "severity": "High",
+      "countries": [
+        "Russia",
+        "Ukraine"
+      ]
+    },
+    {
+      "title": "Two Italians Killed in Iranian Drone Attack on Kuwait, Officials Say",
+      "source": "The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQzFiWi01aU5HaTlZaHd0THlxMFB6RTdtR1hpUGh1RHVuclpWOGxwNVJEdXFDXzN1LWpBOUpuWmEzR3c5VGp0SGYwajFLYm90eU9OM29VVkFWWlUtQWh4eUZiUHJQN2s4STBELUZfNVhOZHVfRVltRjZsVDloTFdwVUlTU0QyVmFBTHVfQzBBYV80aXhxREh0MzVydXcydw?oc=5",
+      "publishedAt": "2026-11-26T19:33:06.000Z",
+      "sentiment": -61,
+      "channel": "Security & Conflict",
+      "severity": "High",
+      "countries": [
+        "Kuwait",
+        "Iran"
+      ]
+    },
+    {
       "title": "ICC judge Kimberly Prost tries war crimes. She’s a target of US sanctions",
       "source": "Al Jazeera",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPQWdYMTZKOS1KOXVpdXRLUkVDeGNhaVJOZGhZbVIyRDh2dnA1WUZNM1ZMNVFXMTU3UllPNE5SanBGZW1TX3NyMnM0OHVlalJhZmt1U184Y0wzNUhPa2N4b1FHeldLRTBhb09XVlZwemF6VTVwY0w0eEstMG5yNzdCSzI1WWFKOUNSVHNZcHdDRG9OQ2JUYzFDcHNJWW5NVHIyUHV5RkRHa0NEUEk4ay1FQmd1VdIBuAFBVV95cUxOa0I5N0VOM1ZmRWVnekJDbnA4WENieml4SEFGR3lOLTRBWWZTWjJkeC04SWJLWDRBRldjMi0tUmVyTHBCWjhzb2dqZWo2eVN3OVFac293ckVOYmVKS3loTmw5ZldMdVVscmg2cUpwNDVqamtCaWFKOEFsVnhvU3BUR0VRdnhqY0NKV05JSXF0Um5GZ0UzbGFYVV8wZUoyTldNODdSemwzWTJkVlpqdElfOU9ZRzR3VWl1?oc=5",
@@ -90,82 +116,51 @@
       ]
     },
     {
-      "title": "Zelenskyy warns of major Russian attack as Trump urges Putin to ‘pull back’",
+      "title": "Italians killed in Kuwait: Why is Iran denying responsibility?",
       "source": "Al Jazeera",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNUWhTZEtvSHh2TnVxc2VyZHdvaTFta0F0WGI4TTc3aHhIZzk0dV9iZXJSSGk0VEFDd3JQZ2puU3dERnlzc0h2TEdFcVVSaXhOZXVrTlN3MDBmZmZXUlFrQno0MDNWQ1dCU1hsTnVWYzBFOUlXRjQzd21CX3ExWmR1T1JDNEkyTm9yU2JZeW8waFFCTDI1cHB3cmFWXzNuemkyR3NRZ1hnMDdUZHVTOGpjN3U3MDA1QdIBuwFBVV95cUxOd242M2lqRVpQSGdGdEEyMk4wQWZzZjFPTnJBWXoxaURLaFdhUnZHQUpubzlVVTJzYWp2SUtRTVNKS1FhWG5TMGNLSlltVmdFZXNNdUEyUmx0THZ5aTdhQ1ZzTlFQaFJ1TThZY1B0MHpObS1YeGFxeFk4czg3aVZpRElDcVVnYTJjRDB4SjRXYlY4QzkxZ0V1SWNQZ3hnOXRaNWRLam5HdkxZRTF0NzFkWmxicmNEbWNodkxj?oc=5",
-      "publishedAt": "2026-11-27T02:20:43.000Z",
+      "url": "https://www.aljazeera.com/news/2026/11/27/italians-killed-in-kuwait-why-is-iran-denying-responsibility?traffic_source=rss",
+      "publishedAt": "2026-11-27T11:51:26.000Z",
       "sentiment": -59,
-      "channel": "World & Society",
-      "severity": "High",
-      "countries": [
-        "Russia"
-      ]
-    },
-    {
-      "title": "EU-Indonesia trade deal opens new markets, but challenges remain",
-      "source": "DW Business",
-      "url": "https://www.dw.com/en/eu-indonesia-trade-deal-opens-new-markets-but-challenges-remain/a-80059568?maca=en-rss-en-bus-2091-xml-mrss",
-      "publishedAt": "2026-11-26T13:41:00.000Z",
-      "sentiment": 59,
-      "channel": "Growth & Markets",
-      "severity": "High",
-      "countries": [
-        "Indonesia"
-      ]
-    },
-    {
-      "title": "Ukrainian forces strike ballistic missile fuel production plant in Russia's Tula Oblast, military confirms",
-      "source": "The Kyiv Independent",
-      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQTDhsVl9zYjladkpJZk5sV1g5UjFrWjdxUFlIc0htd3dzeDVxeks0ZV9hVVM1eVZvN3ZKZ0FFOUY3a3lMSzhSblVRR0w3V0RONVJFU1VpS2hOYmg4aEhKcXUtMHZERjV4QU5lNG5wS0ZxUXU0a0FmR00wX0pGOUVDV2V2aDR3ZFZabW1jVktFVHdMSWJBeG9BRzRVLUM0TkhDTkthREZNUzY3YjdRV0lmcFVaOFNJTGlaNHJTZkpwU0ZLeC1vYjRRSWV0UHd1Z2c?oc=5",
-      "publishedAt": "2026-11-27T04:03:16.000Z",
-      "sentiment": -53,
       "channel": "Security & Conflict",
       "severity": "High",
       "countries": [
-        "Russia",
-        "Ukraine"
+        "Kuwait",
+        "Iran"
       ]
     }
   ],
   "movers": [
     {
       "name": "Russia",
-      "sentiment": -31,
+      "sentiment": -22,
       "volume": 28,
-      "dominantChannel": "Trade & Tariffs",
+      "dominantChannel": "Security & Conflict",
       "severity": "High"
     },
     {
       "name": "Ukraine",
-      "sentiment": -25,
-      "volume": 23,
+      "sentiment": -21,
+      "volume": 22,
       "dominantChannel": "Security & Conflict",
       "severity": "High"
     },
     {
       "name": "United States of America",
-      "sentiment": -19,
-      "volume": 23,
+      "sentiment": -14,
+      "volume": 24,
       "dominantChannel": "Trade & Tariffs",
       "severity": "High"
     },
     {
-      "name": "China",
-      "sentiment": 9,
-      "volume": 24,
-      "dominantChannel": "Growth & Markets",
-      "severity": "Low"
-    },
-    {
       "name": "Iran",
-      "sentiment": -32,
-      "volume": 15,
+      "sentiment": -33,
+      "volume": 16,
       "dominantChannel": "Security & Conflict",
       "severity": "High"
     },
     {
       "name": "Saudi Arabia",
-      "sentiment": -30,
+      "sentiment": -33,
       "volume": 15,
       "dominantChannel": "Energy & Supply",
       "severity": "High"
@@ -173,13 +168,20 @@
     {
       "name": "France",
       "sentiment": -14,
-      "volume": 19,
+      "volume": 20,
       "dominantChannel": "Politics & Policy",
       "severity": "Medium"
     },
     {
+      "name": "China",
+      "sentiment": 2,
+      "volume": 23,
+      "dominantChannel": "Growth & Markets",
+      "severity": "Low"
+    },
+    {
       "name": "Germany",
-      "sentiment": -6,
+      "sentiment": -3,
       "volume": 20,
       "dominantChannel": "World & Society",
       "severity": "Low"
@@ -187,17 +189,17 @@
   ],
   "countries": {
     "Spain": {
-      "sentiment": -9,
-      "volume": 16,
-      "severity": "Medium",
+      "sentiment": -5,
+      "volume": 15,
+      "severity": "Low",
       "dominantChannel": "Politics & Policy",
       "channels": {
         "Politics & Policy": {
-          "count": 5,
-          "sentiment": -6
+          "count": 4,
+          "sentiment": 1
         },
         "World & Society": {
-          "count": 2,
+          "count": 3,
           "sentiment": 0
         },
         "Inflation & Rates": {
@@ -205,8 +207,17 @@
           "sentiment": -44
         }
       },
-      "brief": "Coverage is mixed across 16 recent reports, led by politics & policy. Top story: “With Spain’s far right on the cusp of power, can women bail Sanchez out once again?”.",
+      "brief": "Coverage is mixed across 8 latest reports (15 matched), led by politics & policy. Top story: “Spain’s Pedro Sanchez bets on left-wing voting surge to defy election polls”.",
       "articles": [
+        {
+          "title": "Spain’s Pedro Sanchez bets on left-wing voting surge to defy election polls",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/spains-pedro-sanchez-bets-on-left-wing-voting-surge-to-defy-election-polls?traffic_source=rss",
+          "publishedAt": "2026-11-27T17:15:35.000Z",
+          "sentiment": 0,
+          "channel": "Politics & Policy",
+          "severity": "Medium"
+        },
         {
           "title": "With Spain’s far right on the cusp of power, can women bail Sanchez out once again?",
           "source": "France 24",
@@ -253,24 +264,6 @@
           "severity": "Medium"
         },
         {
-          "title": "Spain election: Housing crisis and immigration dominate final campaign debate",
-          "source": "France 24",
-          "url": "https://www.france24.com/en/video/20261127-spain-election-housing-crisis-and-immigration-dominate-final-campaign-debate",
-          "publishedAt": "2026-11-27T11:51:07.000Z",
-          "sentiment": -34,
-          "channel": "Politics & Policy",
-          "severity": "High"
-        },
-        {
-          "title": "What Spain’s election means for Morocco",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/opinions/2026/11/27/what-spains-election-means-for-morocco?traffic_source=rss",
-          "publishedAt": "2026-11-27T11:33:17.000Z",
-          "sentiment": 0,
-          "channel": "Politics & Policy",
-          "severity": "Medium"
-        },
-        {
           "title": "Inflation Slides in France, Spain on Declining Fuel Prices",
           "source": "WSJ",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNeGpEN2JPdlI4eGUzUDcwbkJ4WTZRVEFTeldXU0lkWkwzZkFpOVE1QWxrcEhRRTM3c2t3aTc0OHdkT3daTTd1UTRQZzJpcE15algtU085UTdSWk5UY2xYdUlkRm5mWHFCRWpTV0U5ckMzYmljaDBCR2h3XzdITGJnUUcwVHUtdWJPMnlhS3l6YURldw?oc=5",
@@ -278,15 +271,28 @@
           "sentiment": -44,
           "channel": "Inflation & Rates",
           "severity": "Medium"
+        },
+        {
+          "title": "Spain’s Sánchez stood up against Trump. His own voters may be about to bring him down",
+          "source": "CNN",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNcHByb0VWZ1U5THlzUnR2Q3l3alZ2bXJ0MkE0STJoZGQ5OF9LY3ZNb0pDb181RmJ6SEo3UFFld1FlMzVvY1FMRnVxamNpU2h4T29wR2VXSmYzbXhKRjBMdjNaM0xpdmFmbkdwS2ZvUFdGelRKV205OXRjWXhiMEJOenhlYS00MVdzeUZIY2VubVd5eHBPXzZkVS1WbFBzNzlQUEZWazJISFF2bVlHRDlWS3VubVVLb0I0RzRXTA?oc=5",
+          "publishedAt": "2026-11-27T11:00:15.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
         }
       ]
     },
     "China": {
-      "sentiment": 9,
-      "volume": 24,
+      "sentiment": 2,
+      "volume": 23,
       "severity": "Low",
       "dominantChannel": "Growth & Markets",
       "channels": {
+        "Growth & Markets": {
+          "count": 4,
+          "sentiment": 15
+        },
         "Trade & Tariffs": {
           "count": 2,
           "sentiment": -11
@@ -295,17 +301,31 @@
           "count": 1,
           "sentiment": 16
         },
-        "Growth & Markets": {
-          "count": 4,
-          "sentiment": 21
-        },
         "Security & Conflict": {
           "count": 1,
-          "sentiment": 0
+          "sentiment": -34
         }
       },
-      "brief": "Coverage is mixed across 24 recent reports, led by growth & markets. Top story: “Trump embraced Xi, then slapped new tariffs on China: What’s his game plan?”.",
+      "brief": "Coverage is mixed across 8 latest reports (23 matched), led by growth & markets. Top story: “Gold and Silver Jump as Beijing Vows to Support China's Stock Market”.",
       "articles": [
+        {
+          "title": "Gold and Silver Jump as Beijing Vows to Support China's Stock Market",
+          "source": "BullionVault",
+          "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNU3QtQ1Q0VTFYTUJFQW81NW5aY3gyYkNPLXNaVVBjWkdZb3MydlIyZzUwT2Z6MFZzem95WDdpcmRIeV9id0p6OThfWUVYc3NSRXMtU3BwT1dkd2FEeHF6YlBoRlhLMEdPeEU4aG8wRzRvTUhjcFBJb19HUlZHRzFjQnQwZkdRVVVZQ3NpY21BUnVWVnYt?oc=5",
+          "publishedAt": "2026-11-27T15:55:13.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Nvidia Blackwell Chips Turn Up at China Site Tied to Alice Huang",
+          "source": "Bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOajRDYnpkT2kwWEdlR2REeG93cnBZdkdsYmo3dTFmaVp3enZYN3Jid0RYVWZwNXJvcE00OG5FNjdwd0MzQXpFV1gzeUxkdnhxTVNoaGVNRmpnRllMTGY4emNtNW9VYnc4RWZVX0I2WExQNy1Ha21aV0FNWWVUb0FacnFLM01rUWRudjBCdGJpbGxCVUx3dl9KMEtZb0pyYURCTG1iWW5xUmNpaDlnc0lsMVpldmV6QQ?oc=5",
+          "publishedAt": "2026-11-27T14:53:32.000Z",
+          "sentiment": 0,
+          "channel": "Trade & Tariffs",
+          "severity": "Low"
+        },
         {
           "title": "Trump embraced Xi, then slapped new tariffs on China: What’s his game plan?",
           "source": "Al Jazeera",
@@ -322,15 +342,6 @@
           "publishedAt": "2026-11-27T12:31:46.000Z",
           "sentiment": 16,
           "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "Nvidia Blackwell Chips Turn Up at China Site Tied to Alice Huang",
-          "source": "Bloomberg.com",
-          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOajRDYnpkT2kwWEdlR2REeG93cnBZdkdsYmo3dTFmaVp3enZYN3Jid0RYVWZwNXJvcE00OG5FNjdwd0MzQXpFV1gzeUxkdnhxTVNoaGVNRmpnRllMTGY4emNtNW9VYnc4RWZVX0I2WExQNy1Ha21aV0FNWWVUb0FacnFLM01rUWRudjBCdGJpbGxCVUx3dl9KMEtZb0pyYURCTG1iWW5xUmNpaDlnc0lsMVpldmV6QQ?oc=5",
-          "publishedAt": "2026-11-27T11:45:46.000Z",
-          "sentiment": 0,
-          "channel": "Trade & Tariffs",
           "severity": "Low"
         },
         {
@@ -356,9 +367,9 @@
           "source": "Reuters",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRHU2ODhzTFRNUi1YM1VpRVZEZlg4MXFpaGxIZU5SZ2xxNVZFTWlFWHlITkJLNXhSendCb3RYckhpQkhqcDRVeDdRdVJWRl9WWnJWYlZvV2tMM1VaalU2SlRQQTRYNVZzc0Y2SVp0WmJKai1kN3NtSEU1MkxLSkhGN0M2TW9JOHFianYwZEtrNTE2NW81aGlLTWRpc18xd2hwUmI1XzdQVGxON0dJREhldE5R?oc=5",
           "publishedAt": "2026-11-27T04:36:00.000Z",
-          "sentiment": 0,
+          "sentiment": -34,
           "channel": "Security & Conflict",
-          "severity": "Low"
+          "severity": "Medium"
         },
         {
           "title": "China’s Industrial Profits Jump at Fastest Pace in Five Months",
@@ -368,15 +379,6 @@
           "sentiment": 0,
           "channel": "Growth & Markets",
           "severity": "Low"
-        },
-        {
-          "title": "China’s factories are growing profits again, but the AI boom is picking the winners",
-          "source": "CNBC",
-          "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1JQ0RmSWNUQ3pzR1BOZGJwRUVKOTdiUExRcC16V2dWclhwQ1JKbU8zN3JveDhkek40SktWN2FjSXFyNEtabldSeHN1NFM0bTVDTkxHNWNZVVR0VlhJMGh0b1dNcURqVzg2OHg3UVJDVnBQeUwxa3h6RQ?oc=5",
-          "publishedAt": "2026-11-27T01:38:00.000Z",
-          "sentiment": 36,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
         }
       ]
     },
@@ -404,244 +406,9 @@
         }
       ]
     },
-    "Kuwait": {
-      "sentiment": -56,
-      "volume": 2,
-      "severity": "High",
-      "dominantChannel": "Security & Conflict",
-      "channels": {
-        "Security & Conflict": {
-          "count": 2,
-          "sentiment": -56
-        }
-      },
-      "brief": "Coverage is sharply negative across 2 recent reports, led by security & conflict. Top story: “Italians killed in Kuwait: Why is Iran denying responsibility?”.",
-      "articles": [
-        {
-          "title": "Italians killed in Kuwait: Why is Iran denying responsibility?",
-          "source": "Al Jazeera",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQM3JrUmVYMExlMzNxaTY5VU1YWXctcThoZUJmU2FBN1lhbElJVGFrcTBnQWZUTVBtVUpaOTlKcUFwcUZkbTR4UHp1aS1mTUtZYUtmZjZFTGdRdzN3RXduVzZLZTJMLVlTc0tKMGRzTUM1UG9sMDF1dEZHZVZXak5HZnd2dFhkY1RxTFQyTVNpVTJnMU5Vd1NBOU9rYzNmbFlWUE1jQ9IBqgFBVV95cUxONkE1UFBtWXZSQnl0eGFwN2FHMFlrNzE5NEVGYW9ESWVoU2d0S3RUQUtBREdVMGxGOFdtd1hhN3FVVWlBaTYzS1RFLW9IcWZtMTIzdXJDZ2cybWkzWWpqemtqTG5QUFR0eU1pcFpnd2RsbkNldEFFNlo3QmFLc2JZZ21PbDZFaVdOanllUEZERk9IdDBHNjVNXzNKTGtmd0VyTHdfYXNFRzd0Zw?oc=5",
-          "publishedAt": "2026-11-27T11:55:06.000Z",
-          "sentiment": -34,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        },
-        {
-          "title": "Kuwait: Two Italians killed in drone attack",
-          "source": "France 24",
-          "url": "https://www.france24.com/en/video/20261127-kuwait-two-italians-killed-in-drone-attack",
-          "publishedAt": "2026-11-27T11:45:48.000Z",
-          "sentiment": -78,
-          "channel": "Security & Conflict",
-          "severity": "High"
-        }
-      ]
-    },
-    "Iran": {
-      "sentiment": -32,
-      "volume": 15,
-      "severity": "High",
-      "dominantChannel": "Security & Conflict",
-      "channels": {
-        "World & Society": {
-          "count": 2,
-          "sentiment": -28
-        },
-        "Security & Conflict": {
-          "count": 3,
-          "sentiment": -55
-        },
-        "Trade & Tariffs": {
-          "count": 1,
-          "sentiment": -34
-        },
-        "Energy & Supply": {
-          "count": 1,
-          "sentiment": 12
-        },
-        "Growth & Markets": {
-          "count": 1,
-          "sentiment": -12
-        }
-      },
-      "brief": "Coverage is sharply negative across 15 recent reports, led by security & conflict. Top story: “'It Was Just an Accident' Writer Mehdi Mahmoudian Arrested in Iran”.",
-      "articles": [
-        {
-          "title": "'It Was Just an Accident' Writer Mehdi Mahmoudian Arrested in Iran",
-          "source": "Variety",
-          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQZ1ZfUGN5b1ZVeGk3ajlTaG5OUjY1YWxIWDhrbEloT1dpQkR0TGdXNW50V2N1UUlvVkE4ZTI2UkZSSEdnemF2MDJCZjIyeDEwNjc2NUVaZHAyRDF6UUJndWRSSGs4R3I3V05NdTVLU1JpMVFqSFhpMDA1N0U1b1hnYmhCX1piYmxJT2diVDR1Z1RRZHl5bmQ5N1ZwaGdVQVU1STJVbk9vZzlfNHlHeHE4?oc=5",
-          "publishedAt": "2026-11-27T13:51:00.000Z",
-          "sentiment": -23,
-          "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "In Iran, child marriage risks complicated by war",
-          "source": "DW World",
-          "url": "https://www.dw.com/en/in-iran-child-marriage-risks-complicated-by-war/a-80075473?maca=en-rss-en-world-4025-xml-mrss",
-          "publishedAt": "2026-11-27T13:06:00.000Z",
-          "sentiment": -62,
-          "channel": "Security & Conflict",
-          "severity": "High"
-        },
-        {
-          "title": "U.S. Jury Convicts Huawei on Counts Including Iran Sanctions Violations and Conspiring to Steal Trade Secrets",
-          "source": "Latin Times",
-          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNa3dvWkllX1hmWVMtM3ZnUF91TWJkMkNXUTJUdVFWQ3RvSkxKSk0xNWZWT3o1b2VKSkw4Y3E2VWFFMTVfS2xlSV9HU2twa0dBMlMtVnpXOGZxVzZrYlQybThib3Nhc1V2MzdNeXpOMW1OR3RTWHJMQ3FvUGxWZXFOdTlyRVIyOW1H?oc=5",
-          "publishedAt": "2026-11-27T12:07:41.000Z",
-          "sentiment": -34,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
-        },
-        {
-          "title": "Italians killed in Kuwait: Why is Iran denying responsibility?",
-          "source": "Al Jazeera",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQM3JrUmVYMExlMzNxaTY5VU1YWXctcThoZUJmU2FBN1lhbElJVGFrcTBnQWZUTVBtVUpaOTlKcUFwcUZkbTR4UHp1aS1mTUtZYUtmZjZFTGdRdzN3RXduVzZLZTJMLVlTc0tKMGRzTUM1UG9sMDF1dEZHZVZXak5HZnd2dFhkY1RxTFQyTVNpVTJnMU5Vd1NBOU9rYzNmbFlWUE1jQ9IBqgFBVV95cUxONkE1UFBtWXZSQnl0eGFwN2FHMFlrNzE5NEVGYW9ESWVoU2d0S3RUQUtBREdVMGxGOFdtd1hhN3FVVWlBaTYzS1RFLW9IcWZtMTIzdXJDZ2cybWkzWWpqemtqTG5QUFR0eU1pcFpnd2RsbkNldEFFNlo3QmFLc2JZZ21PbDZFaVdOanllUEZERk9IdDBHNjVNXzNKTGtmd0VyTHdfYXNFRzd0Zw?oc=5",
-          "publishedAt": "2026-11-27T11:55:06.000Z",
-          "sentiment": -34,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        },
-        {
-          "title": "Iran accused of deadly drone attack in Kuwait that sparks EU call to step up pressure on Tehran",
-          "source": "CBS News",
-          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE05bmJOWEtxU1hnYmlGcXV2cHM2SzlfUnBhVUk3QklXMzFEd3Eyd1BhRmhORDBNM21BZmhfMnZObENxQTB4QWFDWnJwX0xhdnFUQmVkT1FSYnlBWUNsc0dtc1hVZTk5eDBMbEJDV2hNcl9qN2tEX2Q0RUl6N3pFdw?oc=5",
-          "publishedAt": "2026-11-27T10:07:00.000Z",
-          "sentiment": -68,
-          "channel": "Security & Conflict",
-          "severity": "High"
-        },
-        {
-          "title": "Iran and Turkey Extend Natural Gas Deal Amid US Economic Pressure",
-          "source": "Bloomberg.com",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQUjBwYlcxdllzX2lQVDVlZE1iTXZ4M1B0c3Fza2tkdFVjczZLSGxJOXFjRmxTQW1PNVY2WDVaQzZBMm11VlJyclBoQnZ5X2JrbEI1a250aS1OWmRleWFrZTBKclliZWxCMHpqU2lYQTlha3BkQXUzQWtUb0JkeUlyQXlPdk5CU0RNOTd0NzlCeFJpak1MVzRBYWZJaWpIVHJzc1JhdURwOG9IdW1fTTdFcVFqTQ?oc=5",
-          "publishedAt": "2026-11-27T08:11:53.000Z",
-          "sentiment": 12,
-          "channel": "Energy & Supply",
-          "severity": "Low"
-        },
-        {
-          "title": "Further action against Iran’s IRGC attacks in Australia",
-          "source": "Australian Minister for Foreign Affairs",
-          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQVU91cG15TUFaWkp0VjBQOWhqX2tPRVFLWk5MQ2hNWlhvNUlIajFaN3U4ZG05bktyTjJpUmxiWXhvTzFJdmlsUkVHTTl1Z1owZHNjaWpoTWpEOGRDaHlIcFdUaVJocjN0TGNBb0ZRT2ZhY3FqbkNSQmxnVnhEWTlkN2xxRlFaQnpuZG5QNnJiWmdRRWZ1aDk5bXRpOTdPNjZKRjJZREtYYV9pWXE0SXAzYkhMRjBzZEh6WjBPMw?oc=5",
-          "publishedAt": "2026-11-27T03:14:13.000Z",
-          "sentiment": -34,
-          "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "Iran imposes sweeping austerity measures as U.S. economic pressure mounts",
-          "source": "The Washington Post",
-          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQSXVKN203dmhrRzdjSEV3RC1tMTJnQV9XU1pUdnpwdXVucnlpQzl6RTBjVGhHQWZDRjAxV0Rxd0IwOXNSckNTeDc5TEtjZTRQdFFWdlMwbkdkZTBkNWRtWmVfQzFZT0F6c0Y2TTJjOXJRU3YzRUplVG1FNVVsRzE2M0Q5TkJLSEF4anRtci1LU3BQLVNKQlo2aDBObUZBNG85c0V5dmJDaG9ZcUNSX2R0eHlYeXg3RE1BTHc?oc=5",
-          "publishedAt": "2026-11-26T18:00:00.000Z",
-          "sentiment": -12,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        }
-      ]
-    },
-    "Russia": {
-      "sentiment": -31,
-      "volume": 28,
-      "severity": "High",
-      "dominantChannel": "Trade & Tariffs",
-      "channels": {
-        "Trade & Tariffs": {
-          "count": 3,
-          "sentiment": -43
-        },
-        "Security & Conflict": {
-          "count": 3,
-          "sentiment": -33
-        },
-        "World & Society": {
-          "count": 1,
-          "sentiment": 0
-        },
-        "Inflation & Rates": {
-          "count": 1,
-          "sentiment": -23
-        }
-      },
-      "brief": "Coverage is sharply negative across 28 recent reports, led by trade & tariffs. Top story: “Bulgaria holding EU's 22nd Russia sanctions package hostage in bid to extract concessions”.",
-      "articles": [
-        {
-          "title": "Bulgaria holding EU's 22nd Russia sanctions package hostage in bid to extract concessions",
-          "source": "The Kyiv Independent",
-          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRnlCU2lZWjJWYW1mSk91dHFObkFhX1FpekQzVkJHakRhVm5pamlJR2R1WlR0T2FsSEtFZXBNLW1hbWxlYU9SSy1NbG5WWHpESDF6MkhtUUdfdm95bWhNekIxU2hNSGZxSEZzZmRWV1VaZnpUaC0yZUQ3SFQtSnBnUXBiczUyS1Q0OGdZU3hEYlpoaWNhV2wzZWRPbmE1ODZWREhyLVZEUHVYWEx3azRoZm9RLUx0eGN6?oc=5",
-          "publishedAt": "2026-11-27T16:28:40.000Z",
-          "sentiment": -61,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
-        },
-        {
-          "title": "‘Mass-casualty event’ in Europe possible amid rise in Russian sabotage, says thinktank",
-          "source": "The Guardian",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQckNGajRKWDh1VXh1QU9GOWVpSExSRnJqX0pwbG5SZElCeXpBUUs3N3FNREZlX2xCMmp0ZHdsdmlsd0U1SnRRbl9WY185amVBZ2VOQm5haTFSNkE4QjhJNFBWTC16NDg0d2ZjU0czbDJQLTNmYUVGOG11Q01pd1N4bWNKR0FtazVlY05vV1R6bGFWcEtfMzBGNDBmVlhXVXRqbl9sdERFYlBmU3BWb2ZORWR6cw?oc=5",
-          "publishedAt": "2026-11-27T15:50:00.000Z",
-          "sentiment": -34,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        },
-        {
-          "title": "UK Says Ovsiannikov Sanctions Will Deter Kremlin Supporters",
-          "source": "Law360",
-          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQZ2kwcEJiWks4c3haaVh3bVZ5Q3k2SEFObE5EZ0kwd0JyR2E4RWJ1eHExbjYzaUVRUlhjcGNvblF6eG0wZTlZaTV3RW9aQ0hqNGdtZmhteFdndllYVWc4d0hCSk5sMFA3b2tmWEtMV0dPTkExOWFqNDd0R0lPalkxS3RsTWlCODJYNzV4UkI1UWNwcVlIVm9yRnVfeXFxR3R10gFWQVVfeXFMT0tWbXVsRTNMQVJ2RndITGs0dkxkMzIxdlVpRDIxQ3NjR09qQm1iZmhYMU5QMXk5a2NXNXV4QnY0cEI0UHFJMnJDNV9UeVkyLUhQQTkxU1E?oc=5",
-          "publishedAt": "2026-11-27T15:42:36.000Z",
-          "sentiment": -34,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
-        },
-        {
-          "title": "Russia and Ukraine Exchange Over 40 Elderly Civilians in Belarus",
-          "source": "The Moscow Times",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPd0ZtTThLbzUxRkxKQ3hrSGhYQkh0WUVrc2FuZWhSVG92WjhFdXNqTGNMN2t0dXdqa1hqcmVrSFdoLWlsSFdoZDRpZDNPUGdJUVI2Z3pUbE41cHJWTU1GaHdicmg3VmxSeVYtci05ZjJQLWhsczdlRTJ0NUtBRzZ3ajh5aW02SXk5TkNUUmtOLWRoUUE5QXFGUXltWENDYkdqdzVObjhYUWNrWWc1WU5JMGdaQVQ?oc=5",
-          "publishedAt": "2026-11-27T13:30:41.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "Russia faces stagflation as prices jump",
-          "source": "Semafor",
-          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNY0dSeDVGeTBiQ3Mtb0E5LWtuOHpRaUJJY2laWmF3b2NrOXUtV0x6a24yOTR2ZXJTTUJTc2c4UndDS2xUd282V1huMmpoeGJxT2ZJemRBbnFrVUEtbGNGMHBHYTJrTXlnc2s0TDdqZGlSUDVzODNudEFyMzNwNkxCcTdveVUxYm9vWXc?oc=5",
-          "publishedAt": "2026-11-27T13:12:00.000Z",
-          "sentiment": -23,
-          "channel": "Inflation & Rates",
-          "severity": "Medium"
-        },
-        {
-          "title": "North Korea halts Russia military aid over Seoul row, Kyiv says",
-          "source": "Euronews.com",
-          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
-          "publishedAt": "2026-11-27T12:53:58.000Z",
-          "sentiment": -23,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        },
-        {
-          "title": "ECB eyes tokenized collateral amid stricter Russia sanctions",
-          "source": "CoinGeek",
-          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPNEdNckFkNHFOTk1IWk1KRElHQ09mdlhlZ0p3NERiLS1sRHphRTRJMkROQWxtU2RGMlVoTTF1YXl4ZE1qN25Hb2NHeDFSaWZvVllRSjE3dm0waUVSZ1MyM1dUR0dSdEd6YjBYNjJOZ1hjUFE1SUFSc1Q5SVd5dldlYWFuV3JUbTJLbWc?oc=5",
-          "publishedAt": "2026-11-27T12:00:00.000Z",
-          "sentiment": -34,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
-        },
-        {
-          "title": "Russia’s hybrid war on Europe evolving, but failing: IISS",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/news/2026/11/27/russias-hybrid-war-on-europe-evolving-but-failing-iiss?traffic_source=rss",
-          "publishedAt": "2026-11-27T11:44:46.000Z",
-          "sentiment": -43,
-          "channel": "Security & Conflict",
-          "severity": "High"
-        }
-      ]
-    },
     "United States of America": {
-      "sentiment": -19,
-      "volume": 23,
+      "sentiment": -14,
+      "volume": 24,
       "severity": "High",
       "dominantChannel": "Trade & Tariffs",
       "channels": {
@@ -650,19 +417,23 @@
           "sentiment": 12
         },
         "Trade & Tariffs": {
-          "count": 4,
-          "sentiment": -28
+          "count": 3,
+          "sentiment": -30
         },
         "Energy & Supply": {
           "count": 2,
           "sentiment": -31
         },
+        "Politics & Policy": {
+          "count": 1,
+          "sentiment": 12
+        },
         "Growth & Markets": {
           "count": 1,
           "sentiment": 12
         }
       },
-      "brief": "Coverage is cautious to negative across 23 recent reports, led by trade & tariffs. Top story: “Elon Musk gets the greenlight from the US to launch one million satellites”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (24 matched), led by trade & tariffs. Top story: “Elon Musk gets the greenlight from the US to launch one million satellites”.",
       "articles": [
         {
           "title": "Elon Musk gets the greenlight from the US to launch one million satellites",
@@ -690,6 +461,15 @@
           "sentiment": -62,
           "channel": "Energy & Supply",
           "severity": "High"
+        },
+        {
+          "title": "‘It’s not helping’: calls for guardrails and regulations as AI use rises at US retailers",
+          "source": "The Guardian",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOeDNCYVhQbUE2MU94UkxyalQyWkk3aFNpSk53aTRTaG5YZVp4ME5CdU1wcEVIaFhmam9NdVRweks0Q1M4ZUpMTV9pcnVEWlcwT0NKVUNySE9WcHJLYTd1TVpzZXVGdWQ1eUFhQmFTakVZZkNpelIxa2xVdkxZNFJ6eExEN3ZZQQ?oc=5",
+          "publishedAt": "2026-11-27T10:02:00.000Z",
+          "sentiment": 12,
+          "channel": "Politics & Policy",
+          "severity": "Low"
         },
         {
           "title": "Trade partners protest tariffs, deny US claims",
@@ -723,15 +503,6 @@
           "source": "United States Studies Centre",
           "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE16YkR1RU9kNjFfOUhLbS01c09JTkU3LXdLbEZ0QTBsQjZ3Tmk4ZFliM1d2Z1JORGJRS3dsSlFfZngzSXdISEUzSlZfTkFSVGJMVGZzTlRGMWFfbWJ4Mk5RZVRiQ25nRE1Fd2tLQTBobw?oc=5",
           "publishedAt": "2026-11-26T23:56:48.000Z",
-          "sentiment": -23,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
-          "title": "U.S. proposes higher tariffs on South Korea over excess capacity",
-          "source": "upi",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOcUgzaURBakNtdzFUUWpRR2sxZ2xyTXlRdmlJVjdjVDZkbnI5RnlnaWduRTB6WXJhaktLTmYzNWlGLW5mZzNNelNNRmd2WWxtNjN6b1Jwakt0OFhjdGZKc016bGdyT2YwNUxVeF8wUWUwWG5hd2g1RlVESDB6WXlVNElxVTlqdHZRVTk2MDI4NDJnV3NsVkdSMDBZR2RnREtuQVJNblZuVVpCRlU5T3JodkRQeUzSAboBQVVfeXFMTTc2dGExQjV0bml1R2RYdmNILUJGbTl6aDQ1eS1SbnFOd0ttRExmemJfTFg1TEhGbDZCUE9LdnJWZXVUOWlnZHlweU5vSlo3OHZuUU1QLXBTNFkyOE5vS00zaERxSXlvTGlMMHJZenNNWm9hd2RZcmQ5cHVPenZ3NUpLQnhRLWttU3BLc2h2SnQ1d2tiZFpTLWFKZEdVZ2k3eWM5NzlEWVdGbWtGLVZ6RmN5blREb3BxUEZB?oc=5",
-          "publishedAt": "2026-11-26T23:13:36.000Z",
           "sentiment": -23,
           "channel": "Trade & Tariffs",
           "severity": "Medium"
@@ -839,15 +610,444 @@
         }
       ]
     },
+    "Egypt": {
+      "sentiment": -9,
+      "volume": 11,
+      "severity": "High",
+      "dominantChannel": "Growth & Markets",
+      "channels": {
+        "Growth & Markets": {
+          "count": 3,
+          "sentiment": 19
+        },
+        "Security & Conflict": {
+          "count": 1,
+          "sentiment": -61
+        },
+        "World & Society": {
+          "count": 3,
+          "sentiment": 4
+        },
+        "Energy & Supply": {
+          "count": 1,
+          "sentiment": -79
+        }
+      },
+      "brief": "Coverage is mixed across 8 latest reports (11 matched), led by growth & markets. Top story: “Al-Ahram Weekly examines Egypt’s outreach to Libya, economic reform and regional deadlocks - Society”.",
+      "articles": [
+        {
+          "title": "Al-Ahram Weekly examines Egypt’s outreach to Libya, economic reform and regional deadlocks - Society - Egypt",
+          "source": "Ahram Online",
+          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9qLXBNVTAzT2VMX3YwWUtIQTdDX2c0RHdIX2VPYWx5QzlBWkwweU1iUk01eHk5Y0NWN010Y1RNaGpHVVlaVmR4eWY1dUR5VkNRNjFxZDJUSG0?oc=5",
+          "publishedAt": "2026-11-27T17:09:35.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Funeral prayers held for 31 victims of Egypt tanker crash",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/video/newsfeed/2026/11/27/funeral-prayers-held-for-31-victims-of-egypt-tanker-crash?traffic_source=rss",
+          "publishedAt": "2026-11-27T15:07:22.000Z",
+          "sentiment": -61,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        },
+        {
+          "title": "Why Must the Suez Canal Stay Open to Ships of Every Nation?",
+          "source": "Diplomacy and Law",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFB0YzBrTEVvYzJOYURRdGFDcVpidEZkZnhWNFIxMi0yMWVBUTJHaWRQRzQyVTNZRnZjUFdyYXFDNmhwMG9kaWtjWGVGOExtRUJpTkRpdlJ6U3J0VWxyTTFrOEZWY21ONGpqOEgtT3FRTDRPMWJGem5tSmx3?oc=5",
+          "publishedAt": "2026-11-27T11:37:25.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Qatar, Egypt Discuss Expanding Investment And Energy Cooperation In Cairo",
+          "source": "Forbes Middle East",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPNFI2VHNZblZqdXhNRUdsSGE1X1hmM1VxM290ZmdlOE5wQ0FTQ2cxZDJkUl9YaFVpZ0ZxSkxsbjBwS0pJUWdUMjFiNWh0cEMzWFdMNzV2UTZXLURhVE44Nzh1dl9kZjdhOVc5NWxkVXYwMHp3ZnhRblRvVkZ4N2xWM0MxY2pHY0VkelNlMmhXLWhvcXNsR1ZRbWlTck9Nd24tX3VaOGxwNmEzZmZsVlZPSHBLcGRCeVYxN2RSR2FLMA?oc=5",
+          "publishedAt": "2026-11-27T04:28:02.000Z",
+          "sentiment": 34,
+          "channel": "Growth & Markets",
+          "severity": "Medium"
+        },
+        {
+          "title": "Ancient Egyptian structure hidden beneath Nile mud detected from space",
+          "source": "CNN",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPOHR2dVlYeEdGUldYeXdwbHBLV3Z2RmxTWWxjYzBLcno0bDR1UU9oN3VWTWtIVTF4QVFGOTJEVmFNM2xqb093Ni10ZE5UREpCRDB0czJLRGJHWXRMREJQRjNVdEE2Vm8wTkxXNUxrYmpqUS1GQ1cyM0RSb0F1SDk1TWo0ME1Nb29TYlUtT3JNUFU?oc=5",
+          "publishedAt": "2026-11-26T15:00:15.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Egypt tanker explosion kills 31 people as driver crashes into fuel truck in fiery highway crash",
+          "source": "CBS News",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNcTJtLVRTTmczWXpYalJuY0hOeVNBWTFsU2xGVVc3TnhDVUFldHhCRU1lNEl6dFp2V0ROTTluYjQ4aFBUU0Y4SWF3NnNqWTkzQlg0NEFxMzI2RW9ibF9DTGVvZGVzVjFSX0lmem1ZR0V3Qm5kaGFFZHJxem9JbXJ0QQ?oc=5",
+          "publishedAt": "2026-11-26T11:27:25.000Z",
+          "sentiment": -79,
+          "channel": "Energy & Supply",
+          "severity": "High"
+        },
+        {
+          "title": "Al-Sisi discusses Maersk’s full return to Suez Canal, Scatec’s $5bn investment plans",
+          "source": "Dailynewsegypt",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQTGRudlU5LTBveWZRUmp0LTJUZU5IQVdOaFJ6TE9FSG9WSjdwN0VsbGU1ZFB5SEYzZ1VCVlFrNDFhbGVUMFJ2OFdHdVBhaDZ6aHZWV1F3YXJwNzdza1A5NmJEaW5BQWVUdDBSRFNyZjlLMmpoYnM3Z19VenZKZlZYcnR2RUlFbXBBZUZuQjRpMW5uVVRHSXFUWE81WEgwZmJmaHRLSGdOd2dLRTQwcVFIV3p3eE1penp4dTFJ?oc=5",
+          "publishedAt": "2026-11-25T19:18:10.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Maersk CEO announces in meeting with Sisi fleet expansion in Suez Canal operations",
+          "source": "Egypt Today",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZ0hWUXEwRFYwTVdBYU91VmZEaE4zdVpBX2xWRjJwb3ZJanNMTzAyT0VGN09nSVhRWFQyZkFyM1NDaWVLaFR6TkFXZHpMdS1nQ3RYNUFoU0pGZlBoWTNYVWVGY0IyTzcwSjJqN2NXUnJpVldMRmUxa1FXRFJBT0JpR0N5RkkyVUkyeVlpSDF0OHlDNTdELUJWMFhURTk4TkZaX000UkJDaw?oc=5",
+          "publishedAt": "2026-11-25T12:30:00.000Z",
+          "sentiment": 12,
+          "channel": "World & Society",
+          "severity": "Low"
+        }
+      ]
+    },
+    "Kuwait": {
+      "sentiment": -60,
+      "volume": 2,
+      "severity": "High",
+      "dominantChannel": "Security & Conflict",
+      "channels": {
+        "Security & Conflict": {
+          "count": 2,
+          "sentiment": -60
+        }
+      },
+      "brief": "Coverage is sharply negative across 2 recent reports, led by security & conflict. Top story: “Italians killed in Kuwait: Why is Iran denying responsibility?”.",
+      "articles": [
+        {
+          "title": "Italians killed in Kuwait: Why is Iran denying responsibility?",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/italians-killed-in-kuwait-why-is-iran-denying-responsibility?traffic_source=rss",
+          "publishedAt": "2026-11-27T11:51:26.000Z",
+          "sentiment": -59,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        },
+        {
+          "title": "Two Italians Killed in Iranian Drone Attack on Kuwait, Officials Say",
+          "source": "The New York Times",
+          "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQQzFiWi01aU5HaTlZaHd0THlxMFB6RTdtR1hpUGh1RHVuclpWOGxwNVJEdXFDXzN1LWpBOUpuWmEzR3c5VGp0SGYwajFLYm90eU9OM29VVkFWWlUtQWh4eUZiUHJQN2s4STBELUZfNVhOZHVfRVltRjZsVDloTFdwVUlTU0QyVmFBTHVfQzBBYV80aXhxREh0MzVydXcydw?oc=5",
+          "publishedAt": "2026-11-26T19:33:06.000Z",
+          "sentiment": -61,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        }
+      ]
+    },
+    "Iran": {
+      "sentiment": -33,
+      "volume": 16,
+      "severity": "High",
+      "dominantChannel": "Security & Conflict",
+      "channels": {
+        "World & Society": {
+          "count": 2,
+          "sentiment": -28
+        },
+        "Security & Conflict": {
+          "count": 3,
+          "sentiment": -63
+        },
+        "Trade & Tariffs": {
+          "count": 1,
+          "sentiment": -34
+        },
+        "Energy & Supply": {
+          "count": 2,
+          "sentiment": 6
+        }
+      },
+      "brief": "Coverage is sharply negative across 8 latest reports (16 matched), led by security & conflict. Top story: “'It Was Just an Accident' Writer Mehdi Mahmoudian Arrested in Iran”.",
+      "articles": [
+        {
+          "title": "'It Was Just an Accident' Writer Mehdi Mahmoudian Arrested in Iran",
+          "source": "Variety",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQZ1ZfUGN5b1ZVeGk3ajlTaG5OUjY1YWxIWDhrbEloT1dpQkR0TGdXNW50V2N1UUlvVkE4ZTI2UkZSSEdnemF2MDJCZjIyeDEwNjc2NUVaZHAyRDF6UUJndWRSSGs4R3I3V05NdTVLU1JpMVFqSFhpMDA1N0U1b1hnYmhCX1piYmxJT2diVDR1Z1RRZHl5bmQ5N1ZwaGdVQVU1STJVbk9vZzlfNHlHeHE4?oc=5",
+          "publishedAt": "2026-11-27T13:51:00.000Z",
+          "sentiment": -23,
+          "channel": "World & Society",
+          "severity": "Medium"
+        },
+        {
+          "title": "In Iran, child marriage risks complicated by war",
+          "source": "DW World",
+          "url": "https://www.dw.com/en/in-iran-child-marriage-risks-complicated-by-war/a-80075473?maca=en-rss-en-world-4025-xml-mrss",
+          "publishedAt": "2026-11-27T13:06:00.000Z",
+          "sentiment": -62,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        },
+        {
+          "title": "U.S. Jury Convicts Huawei on Counts Including Iran Sanctions Violations and Conspiring to Steal Trade Secrets",
+          "source": "Latin Times",
+          "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNa3dvWkllX1hmWVMtM3ZnUF91TWJkMkNXUTJUdVFWQ3RvSkxKSk0xNWZWT3o1b2VKSkw4Y3E2VWFFMTVfS2xlSV9HU2twa0dBMlMtVnpXOGZxVzZrYlQybThib3Nhc1V2MzdNeXpOMW1OR3RTWHJMQ3FvUGxWZXFOdTlyRVIyOW1H?oc=5",
+          "publishedAt": "2026-11-27T12:07:41.000Z",
+          "sentiment": -34,
+          "channel": "Trade & Tariffs",
+          "severity": "High"
+        },
+        {
+          "title": "Italians killed in Kuwait: Why is Iran denying responsibility?",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/italians-killed-in-kuwait-why-is-iran-denying-responsibility?traffic_source=rss",
+          "publishedAt": "2026-11-27T11:51:26.000Z",
+          "sentiment": -59,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        },
+        {
+          "title": "Iran says oil tanker explodes after hitting naval mine in Strait of Hormuz",
+          "source": "Anadolu Ajansı",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOdUVPUTlEQ05fLVA1MTNqa2tOejlucTkwaWZjZGxjWm9taWNneG12aFhKLXJqeEQ4QkdSWTYwcTBSX1VhcmlYclBkZXVOZnI3UFh1QThLeHJMbTBfU01Ia2FnTnRJb1NBcjg2c0pPeXRpNG1vejBUd2JoTGU2U2xTakp3UV9weHEzQy00RFZKS0M2bmUtMlpTWWUyWjF5NG1jZFloeUVnMEJrNWk1TVg4OXgydTYxLUFRZjBF?oc=5",
+          "publishedAt": "2026-11-27T11:39:59.000Z",
+          "sentiment": 0,
+          "channel": "Energy & Supply",
+          "severity": "Low"
+        },
+        {
+          "title": "Iran accused of deadly drone attack in Kuwait that sparks EU call to step up pressure on Tehran",
+          "source": "CBS News",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE05bmJOWEtxU1hnYmlGcXV2cHM2SzlfUnBhVUk3QklXMzFEd3Eyd1BhRmhORDBNM21BZmhfMnZObENxQTB4QWFDWnJwX0xhdnFUQmVkT1FSYnlBWUNsc0dtc1hVZTk5eDBMbEJDV2hNcl9qN2tEX2Q0RUl6N3pFdw?oc=5",
+          "publishedAt": "2026-11-27T10:07:00.000Z",
+          "sentiment": -68,
+          "channel": "Security & Conflict",
+          "severity": "High"
+        },
+        {
+          "title": "Iran and Turkey Extend Natural Gas Deal Amid US Economic Pressure",
+          "source": "Bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQUjBwYlcxdllzX2lQVDVlZE1iTXZ4M1B0c3Fza2tkdFVjczZLSGxJOXFjRmxTQW1PNVY2WDVaQzZBMm11VlJyclBoQnZ5X2JrbEI1a250aS1OWmRleWFrZTBKclliZWxCMHpqU2lYQTlha3BkQXUzQWtUb0JkeUlyQXlPdk5CU0RNOTd0NzlCeFJpak1MVzRBYWZJaWpIVHJzc1JhdURwOG9IdW1fTTdFcVFqTQ?oc=5",
+          "publishedAt": "2026-11-27T08:11:53.000Z",
+          "sentiment": 12,
+          "channel": "Energy & Supply",
+          "severity": "Low"
+        },
+        {
+          "title": "Further action against Iran’s IRGC attacks in Australia",
+          "source": "Australian Minister for Foreign Affairs",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQVU91cG15TUFaWkp0VjBQOWhqX2tPRVFLWk5MQ2hNWlhvNUlIajFaN3U4ZG05bktyTjJpUmxiWXhvTzFJdmlsUkVHTTl1Z1owZHNjaWpoTWpEOGRDaHlIcFdUaVJocjN0TGNBb0ZRT2ZhY3FqbkNSQmxnVnhEWTlkN2xxRlFaQnpuZG5QNnJiWmdRRWZ1aDk5bXRpOTdPNjZKRjJZREtYYV9pWXE0SXAzYkhMRjBzZEh6WjBPMw?oc=5",
+          "publishedAt": "2026-11-27T03:14:13.000Z",
+          "sentiment": -34,
+          "channel": "World & Society",
+          "severity": "Medium"
+        }
+      ]
+    },
+    "Russia": {
+      "sentiment": -22,
+      "volume": 28,
+      "severity": "High",
+      "dominantChannel": "Security & Conflict",
+      "channels": {
+        "Security & Conflict": {
+          "count": 3,
+          "sentiment": -20
+        },
+        "Trade & Tariffs": {
+          "count": 2,
+          "sentiment": -47
+        },
+        "World & Society": {
+          "count": 2,
+          "sentiment": 0
+        },
+        "Inflation & Rates": {
+          "count": 1,
+          "sentiment": -23
+        }
+      },
+      "brief": "Coverage is cautious to negative across 8 latest reports (28 matched), led by security & conflict. Top story: “‘Mass-casualty event’ in Europe possible amid rise in Russian sabotage, says thinktank”.",
+      "articles": [
+        {
+          "title": "‘Mass-casualty event’ in Europe possible amid rise in Russian sabotage, says thinktank",
+          "source": "The Guardian",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQckNGajRKWDh1VXh1QU9GOWVpSExSRnJqX0pwbG5SZElCeXpBUUs3N3FNREZlX2xCMmp0ZHdsdmlsd0U1SnRRbl9WY185amVBZ2VOQm5haTFSNkE4QjhJNFBWTC16NDg0d2ZjU0czbDJQLTNmYUVGOG11Q01pd1N4bWNKR0FtazVlY05vV1R6bGFWcEtfMzBGNDBmVlhXVXRqbl9sdERFYlBmU3BWb2ZORWR6cw?oc=5",
+          "publishedAt": "2026-11-27T17:16:00.000Z",
+          "sentiment": -34,
+          "channel": "Security & Conflict",
+          "severity": "Medium"
+        },
+        {
+          "title": "‘Bear trap’: Ukraine hails new operation as Russian casualties mount",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/ukraine-rejects-unfavourable-compromises-as-it-frees-more-territory?traffic_source=rss",
+          "publishedAt": "2026-11-27T17:13:46.000Z",
+          "sentiment": -11,
+          "channel": "Security & Conflict",
+          "severity": "Low"
+        },
+        {
+          "title": "Bulgaria holding EU's 22nd Russia sanctions package hostage in bid to extract concessions",
+          "source": "The Kyiv Independent",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRnlCU2lZWjJWYW1mSk91dHFObkFhX1FpekQzVkJHakRhVm5pamlJR2R1WlR0T2FsSEtFZXBNLW1hbWxlYU9SSy1NbG5WWHpESDF6MkhtUUdfdm95bWhNekIxU2hNSGZxSEZzZmRWV1VaZnpUaC0yZUQ3SFQtSnBnUXBiczUyS1Q0OGdZU3hEYlpoaWNhV2wzZWRPbmE1ODZWREhyLVZEUHVYWEx3azRoZm9RLUx0eGN6?oc=5",
+          "publishedAt": "2026-11-27T16:28:40.000Z",
+          "sentiment": -61,
+          "channel": "Trade & Tariffs",
+          "severity": "High"
+        },
+        {
+          "title": "UK Says Ovsiannikov Sanctions Will Deter Kremlin Supporters",
+          "source": "Law360",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQZ2kwcEJiWks4c3haaVh3bVZ5Q3k2SEFObE5EZ0kwd0JyR2E4RWJ1eHExbjYzaUVRUlhjcGNvblF6eG0wZTlZaTV3RW9aQ0hqNGdtZmhteFdndllYVWc4d0hCSk5sMFA3b2tmWEtMV0dPTkExOWFqNDd0R0lPalkxS3RsTWlCODJYNzV4UkI1UWNwcVlIVm9yRnVfeXFxR3R10gFWQVVfeXFMT0tWbXVsRTNMQVJ2RndITGs0dkxkMzIxdlVpRDIxQ3NjR09qQm1iZmhYMU5QMXk5a2NXNXV4QnY0cEI0UHFJMnJDNV9UeVkyLUhQQTkxU1E?oc=5",
+          "publishedAt": "2026-11-27T15:42:36.000Z",
+          "sentiment": -34,
+          "channel": "Trade & Tariffs",
+          "severity": "High"
+        },
+        {
+          "title": "By Putin's logic, Russia should be given to Mongolia, Lukashenka says",
+          "source": "Euronews.com",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNLVRTUVZEZzBNa193UHNqQmpvV3dnZzZnaUVkUDdrblBpbC1OeGx0OXdBZ0NfRmxDOWhrMEt0cHBqNGNLRGpROE8zdTdSSEdLOUdka0dqWk9WaE03Z01JVzNGYTNaUTA5bURLS09LN2dRMzVkY2FhUTE5c3lhdEJSczgwZmhrTFZnZEZOZTJfM1ZMLUxlWVFpbWVhSlkxWE5qSjJDRWlzUlVYZ1NycFE?oc=5",
+          "publishedAt": "2026-11-27T15:37:01.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Russia and Ukraine Exchange Over 40 Elderly Civilians in Belarus",
+          "source": "The Moscow Times",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPd0ZtTThLbzUxRkxKQ3hrSGhYQkh0WUVrc2FuZWhSVG92WjhFdXNqTGNMN2t0dXdqa1hqcmVrSFdoLWlsSFdoZDRpZDNPUGdJUVI2Z3pUbE41cHJWTU1GaHdicmg3VmxSeVYtci05ZjJQLWhsczdlRTJ0NUtBRzZ3ajh5aW02SXk5TkNUUmtOLWRoUUE5QXFGUXltWENDYkdqdzVObjhYUWNrWWc1WU5JMGdaQVQ?oc=5",
+          "publishedAt": "2026-11-27T13:30:41.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Russia faces stagflation as prices jump",
+          "source": "Semafor",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNY0dSeDVGeTBiQ3Mtb0E5LWtuOHpRaUJJY2laWmF3b2NrOXUtV0x6a24yOTR2ZXJTTUJTc2c4UndDS2xUd282V1huMmpoeGJxT2ZJemRBbnFrVUEtbGNGMHBHYTJrTXlnc2s0TDdqZGlSUDVzODNudEFyMzNwNkxCcTdveVUxYm9vWXc?oc=5",
+          "publishedAt": "2026-11-27T13:12:00.000Z",
+          "sentiment": -23,
+          "channel": "Inflation & Rates",
+          "severity": "Medium"
+        },
+        {
+          "title": "North Korea halts Russia military aid over Seoul row, Kyiv says",
+          "source": "Euronews.com",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
+          "publishedAt": "2026-11-27T12:53:58.000Z",
+          "sentiment": -15,
+          "channel": "Security & Conflict",
+          "severity": "Low"
+        }
+      ]
+    },
+    "Canada": {
+      "sentiment": -9,
+      "volume": 11,
+      "severity": "Medium",
+      "dominantChannel": "Trade & Tariffs",
+      "channels": {
+        "Growth & Markets": {
+          "count": 2,
+          "sentiment": -11
+        },
+        "Politics & Policy": {
+          "count": 2,
+          "sentiment": -27
+        },
+        "Trade & Tariffs": {
+          "count": 3,
+          "sentiment": 1
+        },
+        "World & Society": {
+          "count": 1,
+          "sentiment": 0
+        }
+      },
+      "brief": "Coverage is mixed across 8 latest reports (11 matched), led by trade & tariffs. Top story: “Form 424B2 ROYAL BANK OF CANADA”.",
+      "articles": [
+        {
+          "title": "Form 424B2 ROYAL BANK OF CANADA",
+          "source": "StreetInsider",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPMWtDYXJxLXZNcWh5LTdEMlhIWldacS1pazJTeExSSTE1OU8yOGFxY1ZxN3NBMk80OG42ZmYwMDhDTDFMY0stbWpRNUJ1YmZndFBPWmhxQVhZQkpSYVdyTjIzMW1XVExMdWgtSkFaTDVXUi1URThsYVl0MFpTR1pvSnJURkJydFRDWElWM1RydDk?oc=5",
+          "publishedAt": "2026-11-27T17:42:28.000Z",
+          "sentiment": 0,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Canada’s top court largely upholds Quebec’s religious symbols ban",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/canadas-top-court-largely-upholds-quebecs-religious-symbols-ban?traffic_source=rss",
+          "publishedAt": "2026-11-27T15:15:36.000Z",
+          "sentiment": -31,
+          "channel": "Politics & Policy",
+          "severity": "Medium"
+        },
+        {
+          "title": "Canada's top court largely upholds Quebec ban on religious symbols for public servants",
+          "source": "BBC",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9tNFRraTBycjQ3ZnRzRUVJaWlNN005TGVMWUNYUkFZUC1yb3NjaTZjcWdQRkl1NXczcFR6c3V5a1NmRTBCNVFLd0hGU0NVRkhrS0EzVi1YMXZSMGc?oc=5",
+          "publishedAt": "2026-11-27T14:55:15.000Z",
+          "sentiment": -23,
+          "channel": "Politics & Policy",
+          "severity": "Medium"
+        },
+        {
+          "title": "Canada’s GDP, jobs data to test case for December rate hike",
+          "source": "RBC",
+          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPemMyS2tGcGFPOWhDclUtUHZGMEt3cFdIa0FQSVZlWkhWZGhqNldLRE1fSTFKNGtqV0VXcFhKdjhIckVDaURZOWgzWl84dGF5c0ZEc2dfS253d1Y0dFp3TGNVT3hlTktFUmVsMHU5U2c5Ql9GS09kR2ZoS0JrY3Y3T0tNbzAyRGdQbno3a0Z1bnNPWWZjQ3VWZWpvWVVCUlJZR3R1enBHTy1XMHhB?oc=5",
+          "publishedAt": "2026-11-27T14:37:42.000Z",
+          "sentiment": -23,
+          "channel": "Growth & Markets",
+          "severity": "Medium"
+        },
+        {
+          "title": "Two Years After Trump’s Tariff Declaration, Canada Tries to Move On",
+          "source": "Bloomberg.com",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOaWdwNl9jTnFFSS10Z3BXNVZOWjR6N3ItM3d4MHhIcXZ1TGtyQS03UUV4a0FuYVdMd3FaZ0VVQ09QUTl6d3RDU1RJQW1fcVM3aGZMWURHanZmN3BQanNhT1FVa3Fwb0pUYmtmb3poMm5ZZ0gwelVieGVOQUozVHlXYlkxV1Q4azV5MlNfbEw1T1lSbnFyNndwNjlWUDVBWGFjZkZiUVJLY1dRcU9PU1QwQUZ4V2lnZ3IwNTNGcXMwQldueE5fVWc?oc=5",
+          "publishedAt": "2026-11-26T22:21:40.000Z",
+          "sentiment": -23,
+          "channel": "Trade & Tariffs",
+          "severity": "Medium"
+        },
+        {
+          "title": "Trump's trade czar says he's looking to accommodate Canada on some sectoral tariffs",
+          "source": "Yahoo! Finance Canada",
+          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPMlJ2N0JLbjAyUmZNVlhtYk5CZkppU2FoVG5WdlhwR1JnaW1lcHVxV0VfVklXVkFMQWZCa01HQ182VlhlWXdtNGl4WV9vMHpjZjZqSjc2cXlicmxkVDcwWjcwRFdSaXRQYUNPck9JYjR3aWFGRy1zUzZKQVhlMFV5Rw?oc=5",
+          "publishedAt": "2026-11-25T18:02:04.000Z",
+          "sentiment": -23,
+          "channel": "Trade & Tariffs",
+          "severity": "Medium"
+        },
+        {
+          "title": "Potato Council urges U.S. leaders address Canadian trade barrier",
+          "source": "Capital Press",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOaHRYbU1vdFZDZVpnQ0wxNVpqazllNEJNR0Zyc1F5eUp5aGtUaGs1aVk2ZHBCYU9rdWk4bjdYbWF6VHg2OVNkYk5mOWd4YzQzTEE2MnY5aEJYRVBKT2MxRHFtZngtS1JrcG9QQUpuY20zRElEN29RdjdUOTViXzVMRDJoV0FTUVNITlh4YlN6OURmcWhYcHdEWnM5WHZ4ck04Y2c?oc=5",
+          "publishedAt": "2026-11-25T16:33:46.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Trump Administration Signals Opening for Canada Trade Deal",
+          "source": "Newsweek",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTEx0OTdvS3lONFU5a2QyUW1FNXVpOWhpSU50LWlsdGZXNmI4QUp0TTJNNVlBZlcyTzlDXzBBN2FOeUhDcDJKbFdibVdRLWFIRWhycExTczU3Nk90VFB5ZVRJZTQtbmpUQnlFR0s4WWRRVUlUeG44VXYwd3VzdEJ5SmRzQ1g2YzNpRWVFQlhOMENfQQ?oc=5",
+          "publishedAt": "2026-11-25T15:23:00.000Z",
+          "sentiment": 48,
+          "channel": "Trade & Tariffs",
+          "severity": "High"
+        }
+      ]
+    },
     "Ukraine": {
-      "sentiment": -25,
-      "volume": 23,
+      "sentiment": -21,
+      "volume": 22,
       "severity": "High",
       "dominantChannel": "Security & Conflict",
       "channels": {
         "Security & Conflict": {
           "count": 6,
-          "sentiment": -28
+          "sentiment": -23
         },
         "World & Society": {
           "count": 1,
@@ -858,8 +1058,17 @@
           "sentiment": -31
         }
       },
-      "brief": "Coverage is cautious to negative across 23 recent reports, led by security & conflict. Top story: “Putin’s biggest ally questions a key claim Russia uses to justify invasion of Ukraine”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (22 matched), led by security & conflict. Top story: “‘Bear trap’: Ukraine hails new operation as Russian casualties mount”.",
       "articles": [
+        {
+          "title": "‘Bear trap’: Ukraine hails new operation as Russian casualties mount",
+          "source": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/27/ukraine-rejects-unfavourable-compromises-as-it-frees-more-territory?traffic_source=rss",
+          "publishedAt": "2026-11-27T17:13:46.000Z",
+          "sentiment": -11,
+          "channel": "Security & Conflict",
+          "severity": "Low"
+        },
         {
           "title": "Putin’s biggest ally questions a key claim Russia uses to justify invasion of Ukraine",
           "source": "CNN",
@@ -880,8 +1089,8 @@
         },
         {
           "title": "John Simpson: Ukraine is bowed but still unbroken as freezing weather sets in",
-          "source": "BBC World",
-          "url": "https://www.bbc.co.uk/news/articles/c3pw4yrr8kz9o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1rV2U2NF9zQjRpNkpIc0oyU3ZvaU1wMkl0Z0ZPVl85WmdXZmYzeG5zNWZMQmNkUzF3alRVYnhWeTJpT25BY2hIaGkxRkhzdklWWHpseUZ6RGZaYUU?oc=5",
           "publishedAt": "2026-11-27T15:18:51.000Z",
           "sentiment": 0,
           "channel": "World & Society",
@@ -892,9 +1101,9 @@
           "source": "Euronews.com",
           "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
           "publishedAt": "2026-11-27T12:53:58.000Z",
-          "sentiment": -23,
+          "sentiment": -15,
           "channel": "Security & Conflict",
-          "severity": "Medium"
+          "severity": "Low"
         },
         {
           "title": "Russia Orders Schools to Include Ukraine War Veterans in 2027 Graduation Ceremonies",
@@ -922,15 +1131,6 @@
           "sentiment": -31,
           "channel": "Trade & Tariffs",
           "severity": "Medium"
-        },
-        {
-          "title": "Trump and NATO chief urge Russia to avoid actions that widen Ukraine war",
-          "source": "Reuters",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcVE1ZllSR0xRNHFVUjR0WWJjQXF2MllxbUV3WUQ2Vno2WFFCbzkyODBvWjE1WmtscC1rdkVLdVJXUDhUUXFiMDZQbS01akV2UjhQQUFwMWp2aWdrdm5ZQy11b0tvX3BkSVU1WmdUV2J4N2l0UF9tcHVqRzBuWkxhRUVsU1FtMTl1aEhRWkx3RFI2VDlraEhKemFOV0ZEX0todDFpTTBsTndhZk0zclNaWk5lNA?oc=5",
-          "publishedAt": "2026-11-27T11:13:46.000Z",
-          "sentiment": -34,
-          "channel": "Security & Conflict",
-          "severity": "High"
         }
       ]
     },
@@ -957,13 +1157,13 @@
           "sentiment": -23
         }
       },
-      "brief": "Coverage is mixed across 15 recent reports, led by security & conflict. Top story: “Israel says it killed alleged Hamas members despite Gaza ‘ceasefire’”.",
+      "brief": "Coverage is mixed across 8 latest reports (15 matched), led by security & conflict. Top story: “Israel says it killed alleged Hamas members despite Gaza ‘ceasefire’”.",
       "articles": [
         {
           "title": "Israel says it killed alleged Hamas members despite Gaza ‘ceasefire’",
-          "source": "www.thenationalnews.com",
+          "source": "The National",
           "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNN2EtOVM5eEc2WnFLSWZZSVdjd1U0QW84anMtUEthZGlvZlByc2lycEZ6a3JXX280Q2lNUWh5MkJDQlNmUE4yMjJEcGVFNXdsdXJpa0xYcU4tT1JHY2VueDMzdnROd29OZW5YZ3h3Q19pTHR4VkRtNDR5ajlwZE9WR1kyaVFwTUt4N3lGV3FIZ1VSZzd3TUVkRVRuUlJPRGEwNWtkQy1GU2NXN1VBZVBndUlvSmZ2eWh1eGhYMw?oc=5",
-          "publishedAt": "2026-11-27T16:54:09.000Z",
+          "publishedAt": "2026-11-27T17:37:30.000Z",
           "sentiment": 17,
           "channel": "Security & Conflict",
           "severity": "Medium"
@@ -1094,7 +1294,7 @@
     },
     "United Kingdom": {
       "sentiment": -6,
-      "volume": 19,
+      "volume": 18,
       "severity": "Low",
       "dominantChannel": "Growth & Markets",
       "channels": {
@@ -1111,7 +1311,7 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 19 recent reports, led by growth & markets. Top story: “Bank of England to test how UK finance would recover from an AI disruption”.",
+      "brief": "Coverage is mixed across 8 latest reports (18 matched), led by growth & markets. Top story: “Bank of England to test how UK finance would recover from an AI disruption”.",
       "articles": [
         {
           "title": "Bank of England to test how UK finance would recover from an AI disruption",
@@ -1187,101 +1387,6 @@
         }
       ]
     },
-    "Canada": {
-      "sentiment": -15,
-      "volume": 11,
-      "severity": "Medium",
-      "dominantChannel": "Trade & Tariffs",
-      "channels": {
-        "Politics & Policy": {
-          "count": 3,
-          "sentiment": -26
-        },
-        "Growth & Markets": {
-          "count": 1,
-          "sentiment": -23
-        },
-        "Trade & Tariffs": {
-          "count": 4,
-          "sentiment": -5
-        }
-      },
-      "brief": "Coverage is cautious to negative across 11 recent reports, led by trade & tariffs. Top story: “Canada's top court largely upholds Quebec ban on religious symbols for public servants”.",
-      "articles": [
-        {
-          "title": "Canada's top court largely upholds Quebec ban on religious symbols for public servants",
-          "source": "BBC World",
-          "url": "https://www.bbc.co.uk/news/articles/cq3dgpy9lem3o?at_medium=RSS&at_campaign=rss",
-          "publishedAt": "2026-11-27T16:53:46.000Z",
-          "sentiment": -23,
-          "channel": "Politics & Policy",
-          "severity": "Medium"
-        },
-        {
-          "title": "Canada’s top court largely upholds Quebec’s religious symbols ban",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/news/2026/11/27/canadas-top-court-largely-upholds-quebecs-religious-symbols-ban?traffic_source=rss",
-          "publishedAt": "2026-11-27T15:15:36.000Z",
-          "sentiment": -31,
-          "channel": "Politics & Policy",
-          "severity": "Medium"
-        },
-        {
-          "title": "Canada’s GDP, jobs data to test case for December rate hike",
-          "source": "RBC",
-          "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPemMyS2tGcGFPOWhDclUtUHZGMEt3cFdIa0FQSVZlWkhWZGhqNldLRE1fSTFKNGtqV0VXcFhKdjhIckVDaURZOWgzWl84dGF5c0ZEc2dfS253d1Y0dFp3TGNVT3hlTktFUmVsMHU5U2c5Ql9GS09kR2ZoS0JrY3Y3T0tNbzAyRGdQbno3a0Z1bnNPWWZjQ3VWZWpvWVVCUlJZR3R1enBHTy1XMHhB?oc=5",
-          "publishedAt": "2026-11-27T14:37:42.000Z",
-          "sentiment": -23,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
-        },
-        {
-          "title": "Trump's 50% tariffs on Canada take effect as Carney vows to retaliate - ABC News",
-          "source": "ABC News - Breaking News, Latest News and Videos",
-          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNeDdPQV9hVEo4eEFTSlhrVkowRE9mVVlJQzJkZTJnOG1TTUl1ZWYtNG1CcWk2MWlmZG51eVd2S0NJT0pWeHphblVQWThQMTc2OVhDd3VQQXZRU0gteVYtQlkxa29fcVpVV3VKSkl6NVdRTWhvT0E5X3VfVVI0UlVVdnhoUERGMFpxWVR1YXFiSENWQ2lTUTFNLTBEcU1ObHlfTW9OZ01VcmLSAa4BQVVfeXFMT0NxQThhZzl5Q29YNEt0Nl9FV3NrYzRMa1JXX0Vmd2pROGhvVHM3TFJ5NGRrOWVnY0FCOS1LM25MdVdINW8tNjZSS2NDSmhZbUZ4cFdOMWU4N1RObVVpNG43YTJRelY2R21VRDVjcm51cVk0b0ZISVdmNWFFcTdVOFJRdEZLamtrZXg0eER4cW9RbEt2R0lONGxjSXpYZ3RZbXRxbk9iaWdmREw0YVZB?oc=5",
-          "publishedAt": "2026-11-27T00:03:03.000Z",
-          "sentiment": -23,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
-          "title": "In Canada, Quebec’s religious symbols ban faces a Supreme Court test",
-          "source": "Al Jazeera",
-          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOWDFMVWpnWktYeHdzOTJrNnI1amdScjN1cFY5Vi1tVk9FZ0VKNzd1RnRHVmFsLVZ2S3FUS1hPczFZYVo0RXBqQ0ppUkR4Mnh1Z0pTR084VlUtUThub0k1S2NHREJMWEE2X2MzU2pmVXpjeUppajloQS1BM0VkNk5VdUdiLTZOYmpiNXVsTEVGSmZiX0lpTjNnSkZHYVhrY29zQkV6aExuMGlIM3RienVWUEt30gG3AUFVX3lxTE1ya2Uzc2x5WHdUbzdYbEZvaTI5TnF3eTJ6WVViaFBxVzA1UHJsbi1zU0VKSmF2QTVQQUN3QnBpNFZydkx5anBPSERGUTg3X2kzV1pPMk41dnpfWmRTcDNZSGFIUHRpbXNHZXVDZFotRkxDMDhBNC1nVVdDYUd1X2FfNFF4ZFV2VjlPbThJRks0QjB4NG10MHQtQTZnU3pvVW1VVWlHNUtYYUFhQTRUOFNfYjhDaEJxVQ?oc=5",
-          "publishedAt": "2026-11-26T22:53:28.000Z",
-          "sentiment": -23,
-          "channel": "Politics & Policy",
-          "severity": "Medium"
-        },
-        {
-          "title": "Two Years After Trump’s Tariff Declaration, Canada Tries to Move On",
-          "source": "Bloomberg.com",
-          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOaWdwNl9jTnFFSS10Z3BXNVZOWjR6N3ItM3d4MHhIcXZ1TGtyQS03UUV4a0FuYVdMd3FaZ0VVQ09QUTl6d3RDU1RJQW1fcVM3aGZMWURHanZmN3BQanNhT1FVa3Fwb0pUYmtmb3poMm5ZZ0gwelVieGVOQUozVHlXYlkxV1Q4azV5MlNfbEw1T1lSbnFyNndwNjlWUDVBWGFjZkZiUVJLY1dRcU9PU1QwQUZ4V2lnZ3IwNTNGcXMwQldueE5fVWc?oc=5",
-          "publishedAt": "2026-11-26T22:21:40.000Z",
-          "sentiment": -23,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
-          "title": "Trump's trade czar says he's looking to accommodate Canada on some sectoral tariffs",
-          "source": "Yahoo! Finance Canada",
-          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPMlJ2N0JLbjAyUmZNVlhtYk5CZkppU2FoVG5WdlhwR1JnaW1lcHVxV0VfVklXVkFMQWZCa01HQ182VlhlWXdtNGl4WV9vMHpjZjZqSjc2cXlicmxkVDcwWjcwRFdSaXRQYUNPck9JYjR3aWFGRy1zUzZKQVhlMFV5Rw?oc=5",
-          "publishedAt": "2026-11-25T18:02:04.000Z",
-          "sentiment": -23,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
-          "title": "Trump Administration Signals Opening for Canada Trade Deal",
-          "source": "Newsweek",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTEx0OTdvS3lONFU5a2QyUW1FNXVpOWhpSU50LWlsdGZXNmI4QUp0TTJNNVlBZlcyTzlDXzBBN2FOeUhDcDJKbFdibVdRLWFIRWhycExTczU3Nk90VFB5ZVRJZTQtbmpUQnlFR0s4WWRRVUlUeG44VXYwd3VzdEJ5SmRzQ1g2YzNpRWVFQlhOMENfQQ?oc=5",
-          "publishedAt": "2026-11-25T15:23:00.000Z",
-          "sentiment": 48,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
-        }
-      ]
-    },
     "Serbia": {
       "sentiment": 0,
       "volume": 3,
@@ -1324,22 +1429,121 @@
         }
       ]
     },
-    "Pakistan": {
-      "sentiment": 28,
+    "Sri Lanka": {
+      "sentiment": -3,
       "volume": 11,
+      "severity": "Low",
+      "dominantChannel": "Growth & Markets",
+      "channels": {
+        "Growth & Markets": {
+          "count": 3,
+          "sentiment": 19
+        },
+        "World & Society": {
+          "count": 3,
+          "sentiment": -30
+        },
+        "Inflation & Rates": {
+          "count": 1,
+          "sentiment": 12
+        },
+        "Trade & Tariffs": {
+          "count": 1,
+          "sentiment": 0
+        }
+      },
+      "brief": "Coverage is mixed across 8 latest reports (11 matched), led by growth & markets. Top story: “Sri Lanka credit rating upgraded”.",
+      "articles": [
+        {
+          "title": "Sri Lanka credit rating upgraded",
+          "source": "The Straits Times",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5WWGZFU09qWFJjdW80OE9DMG1NbWoxYk9UQlZXdTIwUElpWjQydnUxdXhrbXpjdmtpQXp6OHIzQmZnTjJjZWplOXVuMUFVeS13YXlqZk9PekNuTk1nOVZyQnJjSkh5S1lsWURTeHR1VWl4NW9LUDY0a1F3?oc=5",
+          "publishedAt": "2026-11-27T13:06:00.000Z",
+          "sentiment": 23,
+          "channel": "Growth & Markets",
+          "severity": "Medium"
+        },
+        {
+          "title": "Fleeing murder suspect crashes into elephant in Sri Lanka",
+          "source": "CTV News",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNWUdiT2R0Rk5wU3BHd3VvV1E5Z1NQUmNvZ1c5YVlSUmg5QmlxS1pjR0NtLWJFcWtoZF8xZExpcW9pbW5EaWVCdGRzZnY0d0N0MWJzRi1sR2R0eUNlZmU5d2tEUXd6OWQyVVVEak90dGhTaEhqUjdCcUpmRC1NQXMybEVHNTY0Tk56N3dMaVBoNmlicElYelM1Qnp0MA?oc=5",
+          "publishedAt": "2026-11-27T12:43:53.000Z",
+          "sentiment": -34,
+          "channel": "World & Society",
+          "severity": "Medium"
+        },
+        {
+          "title": "Murder suspect crashes into elephant while fleeing police in Sri Lanka",
+          "source": "CBS News",
+          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOZW1icFFyUHlJOEdUQk05OVBUbl9qVkdoRU5ibEJzMjlsZ3dqZlNJaVBrUG1WZzloTVBkQ3gtLUthenNsbm05OGZocFJlcTg2dUk3M0dVTVNDT1NqRzFuZEZKT3U3Q21mMzJlMWRRYTRSVzFrUjZFQ0lEekxrZW96WEduQkVNV1NvR3lGRFh6Zw?oc=5",
+          "publishedAt": "2026-11-27T12:31:39.000Z",
+          "sentiment": -34,
+          "channel": "World & Society",
+          "severity": "Medium"
+        },
+        {
+          "title": "S&P raises Sri Lanka’s credit rating to B- on a stable outlook",
+          "source": "EconomyNext",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPMl9IekwwbXJ5TTFfa1B2MXdRZmtRYnJsejNDWjBwbE1JYXd3RG15S01GN1B1LVpkUjlaT3NpMzVRMHA4QmV3VjlOdF82SDJuUV9rcWE5Y0dLZ0FPSVNOUm9rTVpHRk5NQXRvWi0wSVJYWk4yNmRraHdsdXVxXzVjMHFxckprS0V6NVA3M2hLMFVoT0h3ZkE?oc=5",
+          "publishedAt": "2026-11-27T12:00:53.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Sri Lanka Moves Up a Tier as S&P Cites Stronger Finances and Rising Reserves",
+          "source": "Newsfirst",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPWnI0dDVGMlpQVGxNbDF6T29DamgwNDVKY0YwdHBwTzhPV0RJVFhqUEFrci1FREl6YXVvRTUzNW1yWFREcEJGWXA3NnRicEdna0g5c1VUd3p4T09lYkwxZ0ZFaTlCQUZyaV9JSndnOWdOcWQtZGg0OEpLcl9TYUhzal81Q1ZDeXNfQm5LeExSWGFkVEFqYzVBTWZqSW0zMXUzQ0FVb3B3eEtENWVTOXFfWXVR?oc=5",
+          "publishedAt": "2026-11-27T11:19:00.000Z",
+          "sentiment": 23,
+          "channel": "Growth & Markets",
+          "severity": "Medium"
+        },
+        {
+          "title": "COLOMBO, Sri Lanka —A Sri Lankan man suspected of fatally stabbing a woman was arrested on Friday after he crashed his scooter into a wild elephant as he attempted to escape, police said. Read more: https://tmt.news/2479010",
+          "source": "LinkedIn",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNaWpleEU0ZDBPU01YSm13LWhzZkMyS2pGcDdVTTFHQ1lkWXNjdHJ3YVlpUlNmb2RydjdGNG5vaWhsWUpKTjNQYjRjMWFwenA2dUxRXzdMWUMwa0Z0NU5OWkFwTUJHeUJ2TlJQazRpc2R3TlZ6T0dRdXFCZ0J4dXluZ2Q4aks0bXI1U3lVZDRSdmxTeWV3ZWdKVjRzejlzQU9CRDh0N09tWVZHQV9iQnQxZGpUc1ZlZEtrNlZ0cFBKcFZLbGQx?oc=5",
+          "publishedAt": "2026-11-27T11:04:41.000Z",
+          "sentiment": -23,
+          "channel": "World & Society",
+          "severity": "Medium"
+        },
+        {
+          "title": "World Bank Group expands local currency financing in Sri Lanka",
+          "source": "Capital FM Africa",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOX1AwY0VqVlFXVWpSbkp6c3RIOWd0b3B4SkptdjYzc1F1UUo1cDAyTXZ0RHUyY3R2dnpmc25mU2pWX25rWHk2U01KSTN3STVpUnhLZlZ2VHI0QWpiTVFURUxEREdZam9qNlpzWllrOXJTbFp1VGpwX0RWSU1ybFVEYWNuaTNnSGxqeHM2NzJ2bUt3dw?oc=5",
+          "publishedAt": "2026-11-27T07:01:13.000Z",
+          "sentiment": 12,
+          "channel": "Inflation & Rates",
+          "severity": "Low"
+        },
+        {
+          "title": "Report: The Evolving Role of Chinese Imports in Sri Lanka’s Economy",
+          "source": "The China-Global South Project",
+          "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBzRnZqV2dDOGZ4aU1PdGxCaEhXaE44RTFsMG8zSmFDaFhMQU5FblZMVGFIQzVFbVJpQzNKdEptZTFUMHVhYWtmZzFqWDREMWNPcTJLRWRsc2hWdGxuR2otMHhValNqVUhZUVdMcUJOcjc3YzQ4LVA2V19OTm4?oc=5",
+          "publishedAt": "2026-11-27T04:17:54.000Z",
+          "sentiment": 0,
+          "channel": "Trade & Tariffs",
+          "severity": "Low"
+        }
+      ]
+    },
+    "Pakistan": {
+      "sentiment": 30,
+      "volume": 12,
       "severity": "Medium",
       "dominantChannel": "Security & Conflict",
       "channels": {
         "Security & Conflict": {
-          "count": 5,
-          "sentiment": 32
+          "count": 4,
+          "sentiment": 31
         },
         "World & Society": {
-          "count": 3,
-          "sentiment": 23
+          "count": 4,
+          "sentiment": 28
         }
       },
-      "brief": "Coverage is constructively positive across 11 recent reports, led by security & conflict. Top story: “Saudi Arabia, Pakistan, Türkiye open Makkah defense pact talks in Islamabad”.",
+      "brief": "Coverage is markedly positive across 8 latest reports (12 matched), led by security & conflict. Top story: “Saudi Arabia, Pakistan, Türkiye open Makkah defense pact talks in Islamabad”.",
       "articles": [
         {
           "title": "Saudi Arabia, Pakistan, Türkiye open Makkah defense pact talks in Islamabad",
@@ -1348,6 +1552,15 @@
           "publishedAt": "2026-11-27T14:18:15.000Z",
           "sentiment": 34,
           "channel": "Security & Conflict",
+          "severity": "Medium"
+        },
+        {
+          "title": "Erdogan approves Makkah pact as further talks take place in Islamabad",
+          "source": "The National",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNLVdaamg2RXNPTzdpQ1M0UzFfOGJlbk13T3JPaVlUYnVsVEZ6UlNQaW1Pb3A1TDN2enBnb21nUmNBSTFreS1ZZWdvdU5ZS2NBTnl5eHdfaFJmNFhFbm1oVkJtcXBTOUpvZE9CRTFid2VnQWlfRDdEa3VPVXZPWURmSjg0SGVNVmhTM1lEUTdyRTNwWTFvMFJlUkNHODQ5MURIcXQtWHI1UGsxV2JqbHdIZ1pQZVFMNUtVLUJiTnFxNXE?oc=5",
+          "publishedAt": "2026-11-27T13:07:30.000Z",
+          "sentiment": 44,
+          "channel": "World & Society",
           "severity": "Medium"
         },
         {
@@ -1403,15 +1616,6 @@
           "sentiment": 34,
           "channel": "Security & Conflict",
           "severity": "Medium"
-        },
-        {
-          "title": "Shafaq News..Erdogan approves Mecca defense pact with Riyadh and Islamabad",
-          "source": "شفق نيوز",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNXzV2emk5cEZKWnRxMVA2YUNva2dYSGlHMThaRDFpR3h4YXVQbjNKandqYjhtLWJ6US1hMXd0WEd1Z29seFRtVzZCQzVpX3hhTWhrS3NLeGUyQWxCSFNWZ3Q2a2dkdzc5b3dWTW55aGYwajVDbkhJNlJ0ZURTV2M1OFhkdXRZazkxSEVCaG9vLTBTSm8?oc=5",
-          "publishedAt": "2026-11-27T07:31:46.000Z",
-          "sentiment": 34,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
         }
       ]
     },
@@ -1438,7 +1642,7 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 13 recent reports, led by world & society. Top story: “Netherlands stocks higher at close of trade; AEX up 1.24%”.",
+      "brief": "Coverage is mixed across 8 latest reports (13 matched), led by world & society. Top story: “Netherlands stocks higher at close of trade; AEX up 1.24%”.",
       "articles": [
         {
           "title": "Netherlands stocks higher at close of trade; AEX up 1.24%",
@@ -1514,8 +1718,32 @@
         }
       ]
     },
+    "Lebanon": {
+      "sentiment": 0,
+      "volume": 1,
+      "severity": "Low",
+      "dominantChannel": "World & Society",
+      "channels": {
+        "World & Society": {
+          "count": 1,
+          "sentiment": 0
+        }
+      },
+      "brief": "Coverage is mixed across 1 recent report, led by world & society. Top story: “UN peacekeepers are preparing to leave southern Lebanon. There’s no plan for what comes next”.",
+      "articles": [
+        {
+          "title": "UN peacekeepers are preparing to leave southern Lebanon. There’s no plan for what comes next",
+          "source": "AP News",
+          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOVnNUTXowV0lWVzlwOXo5WC1DUlFLT3BhNUF0NGk3MWdfQndxS0JCNzVLNTlUVGpwekxKMThzZ2JHZFF6QklLX082RlhqaFFINkRDLUdYY3M5QldXRTFPeEhNUGREUEtCNWY4cEFTY0RYR1BvT2RiWDhzY2QzanlSM2hQbjh4RWM4WWkyaENjUWZIRnE0Ry1TN0JoaDdyNnZkQ1FIcHg5WQ?oc=5",
+          "publishedAt": "2026-11-27T09:45:01.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        }
+      ]
+    },
     "North Korea": {
-      "sentiment": -6,
+      "sentiment": -4,
       "volume": 4,
       "severity": "Low",
       "dominantChannel": "Energy & Supply",
@@ -1526,7 +1754,7 @@
         },
         "Security & Conflict": {
           "count": 1,
-          "sentiment": -23
+          "sentiment": -15
         },
         "Politics & Policy": {
           "count": 1,
@@ -1553,9 +1781,9 @@
           "source": "Euronews.com",
           "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
           "publishedAt": "2026-11-27T12:53:58.000Z",
-          "sentiment": -23,
+          "sentiment": -15,
           "channel": "Security & Conflict",
-          "severity": "Medium"
+          "severity": "Low"
         },
         {
           "title": "What to know about North Korean move to shut down Swiss diplomatic office",
@@ -1602,14 +1830,14 @@
       ]
     },
     "Saudi Arabia": {
-      "sentiment": -30,
+      "sentiment": -33,
       "volume": 15,
       "severity": "High",
       "dominantChannel": "Energy & Supply",
       "channels": {
         "Energy & Supply": {
           "count": 5,
-          "sentiment": -21
+          "sentiment": -26
         },
         "World & Society": {
           "count": 1,
@@ -1624,17 +1852,8 @@
           "sentiment": -41
         }
       },
-      "brief": "Coverage is sharply negative across 15 recent reports, led by energy & supply. Top story: “US lobbied Iraq and Venezuela to exit Opec, sparking Saudi intervention”.",
+      "brief": "Coverage is sharply negative across 8 latest reports (15 matched), led by energy & supply. Top story: “Saudi oil facility comes under attack again”.",
       "articles": [
-        {
-          "title": "US lobbied Iraq and Venezuela to exit Opec, sparking Saudi intervention",
-          "source": "Middle East Eye",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQOWYza0pibzVwRHFpVHR0TXE1WWtjbjNoOHp0cGJKRHU5RTk3MzFwQVFfSVYxTWpWbXlrOXVSUElQSDVwakFkaTI4Sk82ZkQxMFN0RFJNUWI4QmxvWjhRNEM4VkxMVFQzeDFIM2g2RnZoLVlGUXJhNlMtMnI1ZTVFbHcxcTVxQXBnODI4ZzdPaU5BWmJKclU0c0k3amhLVG1raVhSNg?oc=5",
-          "publishedAt": "2026-11-27T17:15:00.000Z",
-          "sentiment": 0,
-          "channel": "Energy & Supply",
-          "severity": "Low"
-        },
         {
           "title": "Saudi oil facility comes under attack again",
           "source": "VOV World",
@@ -1697,6 +1916,15 @@
           "sentiment": -61,
           "channel": "Energy & Supply",
           "severity": "High"
+        },
+        {
+          "title": "Huge plume of black smoke seen from space after Houthis claim strike on Saudi’s biggest oil refinery",
+          "source": "MSN",
+          "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5OUGZnM1UtaTF5RkQ0bnVNRXhBZFl5MTRmSU1QMFNrZ09XWFRNcEs1M1Y0eUg5b21Fb00tYTZHM2xqOE9oOE4xNmp2UzlUYWhzN2tYV3VIRldLaFJ0?oc=5",
+          "publishedAt": "2026-11-26T18:11:04.000Z",
+          "sentiment": -23,
+          "channel": "Energy & Supply",
+          "severity": "Medium"
         }
       ]
     },
@@ -1719,7 +1947,7 @@
           "sentiment": 6
         }
       },
-      "brief": "Coverage is mixed across 13 recent reports, led by world & society. Top story: “Poland stocks higher at close of trade; WIG30 up 1.16%”.",
+      "brief": "Coverage is mixed across 8 latest reports (13 matched), led by world & society. Top story: “Poland stocks higher at close of trade; WIG30 up 1.16%”.",
       "articles": [
         {
           "title": "Poland stocks higher at close of trade; WIG30 up 1.16%",
@@ -1795,107 +2023,16 @@
         }
       ]
     },
-    "South Korea": {
-      "sentiment": -4,
-      "volume": 10,
-      "severity": "Low",
-      "dominantChannel": "Growth & Markets",
-      "channels": {
-        "Growth & Markets": {
-          "count": 3,
-          "sentiment": 4
-        },
-        "Security & Conflict": {
-          "count": 3,
-          "sentiment": -19
-        },
-        "Trade & Tariffs": {
-          "count": 2,
-          "sentiment": 6
-        }
-      },
-      "brief": "Coverage is mixed across 10 recent reports, led by growth & markets. Top story: “MoF and South Korea seek to strengthen ODA and regional financial coordination”.",
-      "articles": [
-        {
-          "title": "MoF and South Korea seek to strengthen ODA and regional financial coordination - Vietnam Investment Review",
-          "source": "Vietnam Investment Review - VIR",
-          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQMXlQZ2I5Qk9SdUEwUUNZYVhGV0ljdU9jSU5vY01mMXN6Xy1nNHMzYXpkRnRyemdmVG5TWWVmQzhDYUY4UzE4d0V2NW9FSV9xdmY3Ulh1N29nTXZ1bjRSNkl4bm9xRzQwanZGcTktSHFNMFVENUhjdjFZQmN1OHFDVnZaaGZXXzliUDdXanJWMnJXc3hCVS1HRV9JdkRHZ3J3N2dsTUItbnpNZ1ppakE?oc=5",
-          "publishedAt": "2026-11-27T15:59:17.000Z",
-          "sentiment": 12,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "Why Investors Should Consider South Korea ETFs for the Long Term",
-          "source": "Yahoo! Finance Canada",
-          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPVkpVMm0xLWhWRWE5QU52bGhxZFpkTGhwdUtCaFlya2xMck8wWlhod0NjUDB3WXA5VlktU2YzbkxZZWxWZnhOQWd6U3FOa2VNVzhta1VlWWNvQTZnRjlQbmFTZEl4ZkFfYklMaUNOZW5yTGtEYjhtUERISG1lNW9jY3Ixbm8xNnkxQkZB?oc=5",
-          "publishedAt": "2026-11-27T15:39:00.000Z",
-          "sentiment": 0,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "North Korea halts Russia military aid over Seoul row, Kyiv says",
-          "source": "Euronews.com",
-          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
-          "publishedAt": "2026-11-27T12:53:58.000Z",
-          "sentiment": -23,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        },
-        {
-          "title": "South Korea proposes bank-led won stablecoins",
-          "source": "The Paypers",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxORGZHLWNCZ2c0dzljQXJOV1Z5aXdSN0lnY3dnU1NHMHh3d1QzU0ZRRTh2Y1poYWo1Q0czVlRLS1lLYU9ac0xxNER1TWFwcXU2ejl3NFdZV0VGT1ZTR3oyTW9Tam1Md1NWX3dVRUFFWHQwY3dSdndPRTEzOTU2TUd6a3otaTF2b05fYWhaTm91aXktSWUyd3FoLUE5Um5uX01VVFRNMnpSUF9qQnN3ekl4cTd4SQ?oc=5",
-          "publishedAt": "2026-11-27T11:47:15.000Z",
-          "sentiment": 0,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "Iran warns South Korea against expanding Gulf military presence",
-          "source": "The Arab Weekly",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQaVBfeGhUcmZhTGNZSkJKbngwdTEwQjlCR2xQRkRDcmtfT25fRTBlN2RFWDd1LXVVVWhCRzJIYmROc2NVUTNhNk5MWExVXzdQZFViR0hpRWoxc2d6T0E5TmNjTm83MFRTSzQyZzdkRzZ5WFZlNlM3cjkyZ182ZVpZb3hYOFFJWXlvM0RHQWhGZmI5UGs?oc=5",
-          "publishedAt": "2026-11-27T11:02:19.000Z",
-          "sentiment": -12,
-          "channel": "Security & Conflict",
-          "severity": "Low"
-        },
-        {
-          "title": "Why South Korea’s chip boom is now a US tariff trap as a US$350b pledge looms",
-          "source": "South China Morning Post",
-          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOTS0zWGZua2M1NmlYbThiWTNkNWpESUlDS3FOWVRhZjZ0T1BMMG5nT1NtUzJqYkxGRUtVbFI5N2htOUYxX01COW5fQnY2ei1FdnhRRXZWaHU2U2ZQX0pkeVYxRGJvU00zMWwway14bkk1MnRGTDVCUkFNbmdrYzdxdDM3XzhMR1ltRFdxUEdQQmRLV19PRmhGQks4YVZaZjhRU1V5aGNDZklHZlVqeXlDbWxxdjQyTlIxVkNRNGVB0gG-AUFVX3lxTFBYTjlyMHlhNHlLMHZLTGNpbklKYkFqMm12TGpVaFJEMC00SXNkNURfTDRxSjBrQlVUcUc5WFVCXzdkMk0zalllRGp1Rk11dmt4cUU2dk10c0NENlRzMDdYU0wxbnFKZFFhQWo1RktnUmExX2hBV1VFRFVJMHNuNER1eE54dkUwSklDVEtxX2NjWHhNRlNZRXpCbzllbTZqSExsUUd0bDl4ejVaS3VRY1BscllNbzV6UkdMN2M0ZXc?oc=5",
-          "publishedAt": "2026-11-27T11:00:14.000Z",
-          "sentiment": 0,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
-          "title": "South Korea November exports seen posting fastest growth in over 50 years on AI chip surge: Reuters poll",
-          "source": "WKZO",
-          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOcXY5S283akJnTE8yeEJlRjgtOHJEU0NYajZTLTQ1RC11cEhZZlVsSmhSeEk2Z243TUptYmRrSldCTzI5UUlhRkhkYm1BdG5GZVE3a0FBWjVBY2NTWll2Y2dON1lpQ1o3S0VaSUxCbURjaUFzS0VQdU00SS0zdlk3MzBxZHNxOTdZTV9ScnFtdFE2a05KdWRFQ05zejVFR1lXQVFYLWU5bzJGcnlZQlFVeU5nUXNwVXVaOUU0cVlrQnJ2LWFfRnJKVlJTNjQ?oc=5",
-          "publishedAt": "2026-11-27T05:35:26.000Z",
-          "sentiment": 12,
-          "channel": "Trade & Tariffs",
-          "severity": "Low"
-        },
-        {
-          "title": "Iran warns on Gulf military presence as South Korea readies expanded naval role",
-          "source": "Reuters",
-          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNjgyMVEwOUJRYll3NXdiU29vVVlmcGMxc3VhTGdEZ3BaZzZ0bUFtemt1c01oMXhjcHlJMEoxVWppTFV2YU12Qk4xRjlzVTNZaEVyR0dBZGtRNEdvaGhCTHhPY2VEVTUtZUw3a3dGekV4VTZkYmp3ZzFjVmxMRnliRmhwZmJOdkZhS3dBNWVfVkU4SjdObjF4WFY4Mmo4ZDlGWFcxYTZnMmVDUXN3NTVPY2lObHZlRFd0aXhjbTR0NXkwWkFkSHVr?oc=5",
-          "publishedAt": "2026-11-27T05:12:00.000Z",
-          "sentiment": -23,
-          "channel": "Security & Conflict",
-          "severity": "Medium"
-        }
-      ]
-    },
     "France": {
       "sentiment": -14,
-      "volume": 19,
+      "volume": 20,
       "severity": "Medium",
       "dominantChannel": "Politics & Policy",
       "channels": {
+        "Growth & Markets": {
+          "count": 2,
+          "sentiment": -15
+        },
         "World & Society": {
           "count": 1,
           "sentiment": 0
@@ -1908,21 +2045,22 @@
           "count": 3,
           "sentiment": -11
         },
-        "Inflation & Rates": {
-          "count": 1,
-          "sentiment": -12
-        },
         "Trade & Tariffs": {
           "count": 1,
           "sentiment": -44
-        },
-        "Growth & Markets": {
-          "count": 1,
-          "sentiment": -23
         }
       },
-      "brief": "Coverage is cautious to negative across 19 recent reports, led by politics & policy. Top story: “Paris Paloma tackles Greek mythology, generative AI in her second album 'The Fatal Flaw'”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (20 matched), led by politics & policy. Top story: “French far-left candidate Mélenchon demands ‘thorough overhaul’ of Germany ties”.",
       "articles": [
+        {
+          "title": "French far-left candidate Mélenchon demands ‘thorough overhaul’ of Germany ties",
+          "source": "France 24",
+          "url": "https://www.france24.com/en/france/20261127-french-far-left-candidate-m%C3%A9lenchon-demands-thorough-overhaul-germany-ties",
+          "publishedAt": "2026-11-27T17:31:15.000Z",
+          "sentiment": -8,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
         {
           "title": "Paris Paloma tackles Greek mythology, generative AI in her second album 'The Fatal Flaw'",
           "source": "France 24",
@@ -1948,15 +2086,6 @@
           "publishedAt": "2026-11-27T16:35:11.000Z",
           "sentiment": 0,
           "channel": "Politics & Policy",
-          "severity": "Low"
-        },
-        {
-          "title": "France and Spain Deliver Bigger Inflation Cooldown, Easing Pressure on the ECB",
-          "source": "Briefs Finance",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPaFl5WDFPTkJTY1UzWF9JVVl4VllzQXVwY2dzSTdlcEdFTzlLUjZQVTI2UHByN3NjcTlYWEw3MjhuTFRfQW5JT1hYc2M2RGduU1VCVzYtekdtdXdDX0JJS3FWS3BqTlFQMVc5QjMtZ0M5WWZnaHNUcGpwQXlKMTFUbDA2ZVl6OG50WFg0YVMyb2otZw?oc=5",
-          "publishedAt": "2026-11-27T16:24:00.000Z",
-          "sentiment": -12,
-          "channel": "Inflation & Rates",
           "severity": "Low"
         },
         {
@@ -1997,9 +2126,152 @@
         }
       ]
     },
-    "Taiwan": {
-      "sentiment": 7,
+    "Mongolia": {
+      "sentiment": 0,
+      "volume": 1,
+      "severity": "Low",
+      "dominantChannel": "World & Society",
+      "channels": {
+        "World & Society": {
+          "count": 1,
+          "sentiment": 0
+        }
+      },
+      "brief": "Coverage is mixed across 1 recent report, led by world & society. Top story: “By Putin's logic, Russia should be given to Mongolia, Lukashenka says”.",
+      "articles": [
+        {
+          "title": "By Putin's logic, Russia should be given to Mongolia, Lukashenka says",
+          "source": "Euronews.com",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNLVRTUVZEZzBNa193UHNqQmpvV3dnZzZnaUVkUDdrblBpbC1OeGx0OXdBZ0NfRmxDOWhrMEt0cHBqNGNLRGpROE8zdTdSSEdLOUdka0dqWk9WaE03Z01JVzNGYTNaUTA5bURLS09LN2dRMzVkY2FhUTE5c3lhdEJSczgwZmhrTFZnZEZOZTJfM1ZMLUxlWVFpbWVhSlkxWE5qSjJDRWlzUlVYZ1NycFE?oc=5",
+          "publishedAt": "2026-11-27T15:37:01.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        }
+      ]
+    },
+    "South Korea": {
+      "sentiment": -4,
       "volume": 10,
+      "severity": "Low",
+      "dominantChannel": "Security & Conflict",
+      "channels": {
+        "Growth & Markets": {
+          "count": 2,
+          "sentiment": 6
+        },
+        "Security & Conflict": {
+          "count": 3,
+          "sentiment": -24
+        },
+        "Trade & Tariffs": {
+          "count": 3,
+          "sentiment": 8
+        }
+      },
+      "brief": "Coverage is mixed across 8 latest reports (10 matched), led by security & conflict. Top story: “MoF and South Korea seek to strengthen ODA and regional financial coordination”.",
+      "articles": [
+        {
+          "title": "MoF and South Korea seek to strengthen ODA and regional financial coordination - Vietnam Investment Review",
+          "source": "Vietnam Investment Review - VIR",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQMXlQZ2I5Qk9SdUEwUUNZYVhGV0ljdU9jSU5vY01mMXN6Xy1nNHMzYXpkRnRyemdmVG5TWWVmQzhDYUY4UzE4d0V2NW9FSV9xdmY3Ulh1N29nTXZ1bjRSNkl4bm9xRzQwanZGcTktSHFNMFVENUhjdjFZQmN1OHFDVnZaaGZXXzliUDdXanJWMnJXc3hCVS1HRV9JdkRHZ3J3N2dsTUItbnpNZ1ppakE?oc=5",
+          "publishedAt": "2026-11-27T15:59:17.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Why Investors Should Consider South Korea ETFs for the Long Term",
+          "source": "Yahoo! Finance Canada",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPVkpVMm0xLWhWRWE5QU52bGhxZFpkTGhwdUtCaFlya2xMck8wWlhod0NjUDB3WXA5VlktU2YzbkxZZWxWZnhOQWd6U3FOa2VNVzhta1VlWWNvQTZnRjlQbmFTZEl4ZkFfYklMaUNOZW5yTGtEYjhtUERISG1lNW9jY3Ixbm8xNnkxQkZB?oc=5",
+          "publishedAt": "2026-11-27T15:39:00.000Z",
+          "sentiment": 0,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "North Korea halts Russia military aid over Seoul row, Kyiv says",
+          "source": "Euronews.com",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPWVNIZ0d2OHBnRERBR05hTDN3ZVFtVnJWRXBVTmxrdTk1bHBSMjViVF9WY0N1eWdYSzFyRmdub09HWHRHT1dHMlRSZVJzeG5FX0J1N21rcnY2WXNUeWtBUUUwbTVJV21tYWMyU2wwczJKNHYwWjhzRFFQNnEwRmQ4ZzFERmstQjljODFYdmVGQzM3dTVzRklpakRoeHpWUzg?oc=5",
+          "publishedAt": "2026-11-27T12:53:58.000Z",
+          "sentiment": -15,
+          "channel": "Security & Conflict",
+          "severity": "Low"
+        },
+        {
+          "title": "Iran warns South Korea against expanding Gulf military presence",
+          "source": "The Arab Weekly",
+          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQaVBfeGhUcmZhTGNZSkJKbngwdTEwQjlCR2xQRkRDcmtfT25fRTBlN2RFWDd1LXVVVWhCRzJIYmROc2NVUTNhNk5MWExVXzdQZFViR0hpRWoxc2d6T0E5TmNjTm83MFRTSzQyZzdkRzZ5WFZlNlM3cjkyZ182ZVpZb3hYOFFJWXlvM0RHQWhGZmI5UGs?oc=5",
+          "publishedAt": "2026-11-27T11:02:19.000Z",
+          "sentiment": -23,
+          "channel": "Security & Conflict",
+          "severity": "Medium"
+        },
+        {
+          "title": "Why South Korea’s chip boom is now a US tariff trap as a US$350b pledge looms",
+          "source": "South China Morning Post",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOTS0zWGZua2M1NmlYbThiWTNkNWpESUlDS3FOWVRhZjZ0T1BMMG5nT1NtUzJqYkxGRUtVbFI5N2htOUYxX01COW5fQnY2ei1FdnhRRXZWaHU2U2ZQX0pkeVYxRGJvU00zMWwway14bkk1MnRGTDVCUkFNbmdrYzdxdDM3XzhMR1ltRFdxUEdQQmRLV19PRmhGQks4YVZaZjhRU1V5aGNDZklHZlVqeXlDbWxxdjQyTlIxVkNRNGVB0gG-AUFVX3lxTFBYTjlyMHlhNHlLMHZLTGNpbklKYkFqMm12TGpVaFJEMC00SXNkNURfTDRxSjBrQlVUcUc5WFVCXzdkMk0zalllRGp1Rk11dmt4cUU2dk10c0NENlRzMDdYU0wxbnFKZFFhQWo1RktnUmExX2hBV1VFRFVJMHNuNER1eE54dkUwSklDVEtxX2NjWHhNRlNZRXpCbzllbTZqSExsUUd0bDl4ejVaS3VRY1BscllNbzV6UkdMN2M0ZXc?oc=5",
+          "publishedAt": "2026-11-27T11:00:14.000Z",
+          "sentiment": 0,
+          "channel": "Trade & Tariffs",
+          "severity": "Medium"
+        },
+        {
+          "title": "AI Memory Chip Demand Fuels South Korea's November Export Growth to an Estimated 96%, a 52-Year High",
+          "source": "BigGo Finance",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1zcnFnMnl6WUpISlZfbThjSlhReDJBZnVTaFpablFHenlpWFhZUm5xR0Fxc2FCWkFMZk1LVjF1WEFLYm9meGlVaVpkOVFMTHpBYWhQVGhpcXNLdWZ5RVdCbHQ2QjFJYmVmRzNxMDNpUUtJMG1ldGc?oc=5",
+          "publishedAt": "2026-11-27T06:26:00.000Z",
+          "sentiment": 12,
+          "channel": "Trade & Tariffs",
+          "severity": "Low"
+        },
+        {
+          "title": "South Korea November exports seen posting fastest growth in over 50 years on AI chip surge: Reuters poll",
+          "source": "WKZO",
+          "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOcXY5S283akJnTE8yeEJlRjgtOHJEU0NYajZTLTQ1RC11cEhZZlVsSmhSeEk2Z243TUptYmRrSldCTzI5UUlhRkhkYm1BdG5GZVE3a0FBWjVBY2NTWll2Y2dON1lpQ1o3S0VaSUxCbURjaUFzS0VQdU00SS0zdlk3MzBxZHNxOTdZTV9ScnFtdFE2a05KdWRFQ05zejVFR1lXQVFYLWU5bzJGcnlZQlFVeU5nUXNwVXVaOUU0cVlrQnJ2LWFfRnJKVlJTNjQ?oc=5",
+          "publishedAt": "2026-11-27T05:35:26.000Z",
+          "sentiment": 12,
+          "channel": "Trade & Tariffs",
+          "severity": "Low"
+        },
+        {
+          "title": "Iran warns on Gulf military presence as South Korea readies expanded naval role",
+          "source": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNjgyMVEwOUJRYll3NXdiU29vVVlmcGMxc3VhTGdEZ3BaZzZ0bUFtemt1c01oMXhjcHlJMEoxVWppTFV2YU12Qk4xRjlzVTNZaEVyR0dBZGtRNEdvaGhCTHhPY2VEVTUtZUw3a3dGekV4VTZkYmp3ZzFjVmxMRnliRmhwZmJOdkZhS3dBNWVfVkU4SjdObjF4WFY4Mmo4ZDlGWFcxYTZnMmVDUXN3NTVPY2lObHZlRFd0aXhjbTR0NXkwWkFkSHVr?oc=5",
+          "publishedAt": "2026-11-27T05:12:00.000Z",
+          "sentiment": -34,
+          "channel": "Security & Conflict",
+          "severity": "Medium"
+        }
+      ]
+    },
+    "Bulgaria": {
+      "sentiment": 0,
+      "volume": 1,
+      "severity": "Low",
+      "dominantChannel": "World & Society",
+      "channels": {
+        "World & Society": {
+          "count": 1,
+          "sentiment": 0
+        }
+      },
+      "brief": "Coverage is mixed across 1 recent report, led by world & society. Top story: “After initial reluctance, Bulgaria will join €45 billion Ukraine loan”.",
+      "articles": [
+        {
+          "title": "After initial reluctance, Bulgaria will join €45 billion Ukraine loan",
+          "source": "Euronews.com",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcjVTWHZUVnBYdHcxQjZrZW9TYzNXdU9VT0ZxZ0VoTXJSTXdrR042NXZPRXFqREtOUFRtazlfTGFlSG8yMjlZUkhQanVRY2RDQkNoUXU0MUJDVEU3MUs0b2xUVElpenowV09QemxOMVhSQWlRdDdqVXRNcnY3bGVIWmw5WjkyMmFDOG5YVXc4NnNpdTMtZGg3dG9SSmJLaFlSNGxXZDJ0MGRXN2dnbGlTWVVMTkZuSlE?oc=5",
+          "publishedAt": "2026-11-26T10:18:45.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        }
+      ]
+    },
+    "Taiwan": {
+      "sentiment": 3,
+      "volume": 9,
       "severity": "Low",
       "dominantChannel": "Growth & Markets",
       "channels": {
@@ -2017,14 +2289,14 @@
         },
         "Security & Conflict": {
           "count": 1,
-          "sentiment": 0
+          "sentiment": -34
         },
         "Trade & Tariffs": {
           "count": 2,
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 10 recent reports, led by growth & markets. Top story: “The man standing up to China in Taiwan’s local elections”.",
+      "brief": "Coverage is mixed across 8 latest reports (9 matched), led by growth & markets. Top story: “The man standing up to China in Taiwan’s local elections”.",
       "articles": [
         {
           "title": "The man standing up to China in Taiwan’s local elections",
@@ -2076,9 +2348,9 @@
           "source": "Reuters",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQRHU2ODhzTFRNUi1YM1VpRVZEZlg4MXFpaGxIZU5SZ2xxNVZFTWlFWHlITkJLNXhSendCb3RYckhpQkhqcDRVeDdRdVJWRl9WWnJWYlZvV2tMM1VaalU2SlRQQTRYNVZzc0Y2SVp0WmJKai1kN3NtSEU1MkxLSkhGN0M2TW9JOHFianYwZEtrNTE2NW81aGlLTWRpc18xd2hwUmI1XzdQVGxON0dJREhldE5R?oc=5",
           "publishedAt": "2026-11-27T04:36:00.000Z",
-          "sentiment": 0,
+          "sentiment": -34,
           "channel": "Security & Conflict",
-          "severity": "Low"
+          "severity": "Medium"
         },
         {
           "title": "What will Taiwan local elections reveal about 2028 race and cross-strait shifts?",
@@ -2096,30 +2368,6 @@
           "publishedAt": "2026-11-25T09:59:46.000Z",
           "sentiment": 0,
           "channel": "Trade & Tariffs",
-          "severity": "Low"
-        }
-      ]
-    },
-    "Bulgaria": {
-      "sentiment": 0,
-      "volume": 1,
-      "severity": "Low",
-      "dominantChannel": "World & Society",
-      "channels": {
-        "World & Society": {
-          "count": 1,
-          "sentiment": 0
-        }
-      },
-      "brief": "Coverage is mixed across 1 recent report, led by world & society. Top story: “After initial reluctance, Bulgaria will join €45 billion Ukraine loan”.",
-      "articles": [
-        {
-          "title": "After initial reluctance, Bulgaria will join €45 billion Ukraine loan",
-          "source": "Euronews.com",
-          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcjVTWHZUVnBYdHcxQjZrZW9TYzNXdU9VT0ZxZ0VoTXJSTXdrR042NXZPRXFqREtOUFRtazlfTGFlSG8yMjlZUkhQanVRY2RDQkNoUXU0MUJDVEU3MUs0b2xUVElpenowV09QemxOMVhSQWlRdDdqVXRNcnY3bGVIWmw5WjkyMmFDOG5YVXc4NnNpdTMtZGg3dG9SSmJLaFlSNGxXZDJ0MGRXN2dnbGlTWVVMTkZuSlE?oc=5",
-          "publishedAt": "2026-11-26T10:18:45.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
           "severity": "Low"
         }
       ]
@@ -2172,134 +2420,110 @@
         }
       ]
     },
-    "Egypt": {
-      "sentiment": 1,
-      "volume": 10,
-      "severity": "Medium",
+    "Germany": {
+      "sentiment": -3,
+      "volume": 20,
+      "severity": "Low",
       "dominantChannel": "World & Society",
       "channels": {
+        "World & Society": {
+          "count": 5,
+          "sentiment": 2
+        },
         "Growth & Markets": {
-          "count": 3,
-          "sentiment": 19
+          "count": 2,
+          "sentiment": -11
         },
         "Security & Conflict": {
           "count": 1,
-          "sentiment": -61
-        },
-        "World & Society": {
-          "count": 4,
-          "sentiment": 3
+          "sentiment": -12
         }
       },
-      "brief": "Coverage is mixed across 10 recent reports, led by world & society. Top story: “Al-Ahram Weekly examines Egypt’s outreach to Libya, economic reform and regional deadlocks - Society”.",
+      "brief": "Coverage is mixed across 8 latest reports (20 matched), led by world & society. Top story: “IRO Sushi signs landmark international store in Berlin, Germany”.",
       "articles": [
         {
-          "title": "Al-Ahram Weekly examines Egypt’s outreach to Libya, economic reform and regional deadlocks - Society - Egypt",
-          "source": "Ahram Online",
-          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9qLXBNVTAzT2VMX3YwWUtIQTdDX2c0RHdIX2VPYWx5QzlBWkwweU1iUk01eHk5Y0NWN010Y1RNaGpHVVlaVmR4eWY1dUR5VkNRNjFxZDJUSG0?oc=5",
-          "publishedAt": "2026-11-27T17:09:35.000Z",
-          "sentiment": 12,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "Funeral prayers held for 31 victims of Egypt tanker crash",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/video/newsfeed/2026/11/27/funeral-prayers-held-for-31-victims-of-egypt-tanker-crash?traffic_source=rss",
-          "publishedAt": "2026-11-27T15:07:22.000Z",
-          "sentiment": -61,
-          "channel": "Security & Conflict",
-          "severity": "High"
-        },
-        {
-          "title": "Why Must the Suez Canal Stay Open to Ships of Every Nation?",
-          "source": "Diplomacy and Law",
-          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFB0YzBrTEVvYzJOYURRdGFDcVpidEZkZnhWNFIxMi0yMWVBUTJHaWRQRzQyVTNZRnZjUFdyYXFDNmhwMG9kaWtjWGVGOExtRUJpTkRpdlJ6U3J0VWxyTTFrOEZWY21ONGpqOEgtT3FRTDRPMWJGem5tSmx3?oc=5",
-          "publishedAt": "2026-11-27T11:37:25.000Z",
+          "title": "IRO Sushi signs landmark international store in Berlin, Germany",
+          "source": "Premier Construction News",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNajhpRzFtZnRGVUZIZjJjYTlyb2FfUF9zZW9ucUF3NnFlaUlNM2hOcmtTN3hTX1dMTW4wWnBfbUxrSWZLVjBGZEdmOWRiaFZpbW9kQWlpVzN1TjY4bzdMWDRQNVBPWkIzRVNMdTI0Z1E3TVFOLWE0ZFlxRnVzQTdJR3pWd0EtNFZaZF9mWFZFQTd6Qnc1OE11bnpUb2ZTV2lQdzZSZ1lPeUtxTXdLT1VJ?oc=5",
+          "publishedAt": "2026-11-27T17:33:23.000Z",
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
         },
         {
-          "title": "Qatar, Egypt Discuss Expanding Investment And Energy Cooperation In Cairo",
-          "source": "Forbes Middle East",
-          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPNFI2VHNZblZqdXhNRUdsSGE1X1hmM1VxM290ZmdlOE5wQ0FTQ2cxZDJkUl9YaFVpZ0ZxSkxsbjBwS0pJUWdUMjFiNWh0cEMzWFdMNzV2UTZXLURhVE44Nzh1dl9kZjdhOVc5NWxkVXYwMHp3ZnhRblRvVkZ4N2xWM0MxY2pHY0VkelNlMmhXLWhvcXNsR1ZRbWlTck9Nd24tX3VaOGxwNmEzZmZsVlZPSHBLcGRCeVYxN2RSR2FLMA?oc=5",
-          "publishedAt": "2026-11-27T04:28:02.000Z",
-          "sentiment": 34,
+          "title": "French far-left candidate Mélenchon demands ‘thorough overhaul’ of Germany ties",
+          "source": "France 24",
+          "url": "https://www.france24.com/en/france/20261127-french-far-left-candidate-m%C3%A9lenchon-demands-thorough-overhaul-germany-ties",
+          "publishedAt": "2026-11-27T17:31:15.000Z",
+          "sentiment": -8,
           "channel": "Growth & Markets",
+          "severity": "Low"
+        },
+        {
+          "title": "Mélenchon takes aim at Germany in Berlin campaign stop",
+          "source": "Financial Times",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNMjhkQjk4MGFtXzRqdEU1aXZwTHBhZDdUWlNVSUxWTXIydjl5MGpSUldsb2cyUVZ5cm5lTFFmcGdaT0M0ZnFaWXhXcDhtYnpOMDN3M2NWNFBheGNLMXBidnUyQjhDeV9OM0dueEhyeGd3aHZEZUpEZllsS2tRRkxIcVk5S2M?oc=5",
+          "publishedAt": "2026-11-27T16:45:39.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Germany agrees 2027 budget with big outlays for military, infrastructure",
+          "source": "France 24",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOXzA1c3VDZld3MEJyZzFCNkVGYjJlazVoeFV1MWFONjdnZ1Q5UGVQVWxSZ1BRdm1SZTlzMG1YZUJyTFplTG5GRVl2dnJuMGVtOUdUeEplQnV0UkFIbnlOUzdWTTFwV1hhVnFjQUFwd3h1RTJhSkM1SHBZb0hHdDNrOTZYNm9EbUgxUE14cDBFOU5IcDhqNFNqM3lRRGlfbkNCNmdSUVhVLVBvV0FSQjk1S2N6OVpVQ3ZuTmc?oc=5",
+          "publishedAt": "2026-11-27T15:31:15.000Z",
+          "sentiment": -12,
+          "channel": "Security & Conflict",
+          "severity": "Low"
+        },
+        {
+          "title": "Longtime AP journalist Geir Moulson, the heart of its Berlin bureau, dies at 54",
+          "source": "WRAL",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNUWVvTzB3Z3FyUWE3OWlnUHc2YUNWVjd6U1dtZFNZVl82MXgzRzZjMDZZQXJUZHg4YUhfWi1mRGhCZkdWN21HOENOUEFLOTFiYnBLMGVwR0NBSnJ3aDNOb2VzM0UydXMwNGdOLWRvYkhYSHNoSHYybEZJeXhqb2dWa3BSemdLMXdGRlA1b09sY0locHh5VkFHa3ZlcWZVTEZ1aVlpbEEydnBGVjZxZG5la05oRQ?oc=5",
+          "publishedAt": "2026-11-27T13:25:17.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "How East Germany boosted Vietnam's coffee industry",
+          "source": "DW.com",
+          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOQVd1ZTNQS0tFcE85M2psZWtrajVmSHU0SXplUHo3Wkt2UG9ieGx5WnFpb3M2S2NNdHc4TG4zLVc2WnoyYXc2T1NIU2M0OUVoOE1ETk1UX2VnZzMyMUlWVHV2bkpkdDA5TnpjalpqX1VRbjlBTzJmbFFXTG1LOHM0cUUxN01ad1I3Y2fSAYoBQVVfeXFMUGlvYnBaYjRxNExsVFdpRFZ4aC1VaDV0bjFDamlsUkFleGRNeUtsOGVJc2lzd19KSWlrWUk0eEdCNVdjTmxOcEptQXZPLW8zS252Snh1VjF3SEV2R3E4dkoxREFISTRHcXltNkpjUWt4Sk5TM0dQQVY3blBSZ0hONE45eDd4ZmkzTU1n?oc=5",
+          "publishedAt": "2026-11-27T12:08:36.000Z",
+          "sentiment": 23,
+          "channel": "World & Society",
           "severity": "Medium"
         },
         {
-          "title": "Ancient Egyptian structure hidden beneath Nile mud detected from space",
-          "source": "CNN",
-          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPOHR2dVlYeEdGUldYeXdwbHBLV3Z2RmxTWWxjYzBLcno0bDR1UU9oN3VWTWtIVTF4QVFGOTJEVmFNM2xqb093Ni10ZE5UREpCRDB0czJLRGJHWXRMREJQRjNVdEE2Vm8wTkxXNUxrYmpqUS1GQ1cyM0RSb0F1SDk1TWo0ME1Nb29TYlUtT3JNUFU?oc=5",
-          "publishedAt": "2026-11-26T15:00:15.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "Al-Sisi discusses Maersk’s full return to Suez Canal, Scatec’s $5bn investment plans",
-          "source": "Dailynewsegypt",
-          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQTGRudlU5LTBveWZRUmp0LTJUZU5IQVdOaFJ6TE9FSG9WSjdwN0VsbGU1ZFB5SEYzZ1VCVlFrNDFhbGVUMFJ2OFdHdVBhaDZ6aHZWV1F3YXJwNzdza1A5NmJEaW5BQWVUdDBSRFNyZjlLMmpoYnM3Z19VenZKZlZYcnR2RUlFbXBBZUZuQjRpMW5uVVRHSXFUWE81WEgwZmJmaHRLSGdOd2dLRTQwcVFIV3p3eE1penp4dTFJ?oc=5",
-          "publishedAt": "2026-11-25T19:18:10.000Z",
-          "sentiment": 12,
+          "title": "Indian workers fill Germany's labor gaps but face hurdles and risks",
+          "source": "DW World",
+          "url": "https://www.dw.com/en/indian-workers-fill-germany-s-labor-gaps-but-face-hurdles-and-risks/a-80072882?maca=en-rss-en-world-4025-xml-mrss",
+          "publishedAt": "2026-11-27T11:06:00.000Z",
+          "sentiment": -15,
           "channel": "Growth & Markets",
           "severity": "Low"
         },
         {
-          "title": "Maersk CEO announces in meeting with Sisi fleet expansion in Suez Canal operations",
-          "source": "Egypt Today",
-          "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZ0hWUXEwRFYwTVdBYU91VmZEaE4zdVpBX2xWRjJwb3ZJanNMTzAyT0VGN09nSVhRWFQyZkFyM1NDaWVLaFR6TkFXZHpMdS1nQ3RYNUFoU0pGZlBoWTNYVWVGY0IyTzcwSjJqN2NXUnJpVldMRmUxa1FXRFJBT0JpR0N5RkkyVUkyeVlpSDF0OHlDNTdELUJWMFhURTk4TkZaX000UkJDaw?oc=5",
-          "publishedAt": "2026-11-25T12:30:00.000Z",
-          "sentiment": 12,
+          "title": "Trial of Berlin businesswoman accused of spying for Russia starts after delay",
+          "source": "DW.com",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNS21YclVhX3FuTkRjVEFIMXRYVnY5TDhSaFZYcGJfTVQ0X1I0dVVxMGZHTHJqckJLV2lkMnh3el9sWGEwUnloN0N6amlaR0I0VWVtTkpTX2tWLUNhNDVIUGZ4akV4bUZxSldnZlZ5M0ljdHpuS1N0SmhuUVZzVVNrYUNnVW9iRUhCZFQ5dGh5Y0VFekZKNmtmd2xPMGZhalpRR1JWT9IBpAFBVV95cUxQdFVkM3JQaEtILWQ1R2pUTDBwRWdEWlF5enV2N2hZZ2VqaEdBaXJEOVZQRXJ2QTdzS1hzU1ZHOVA4b1h1ZzJIc1RIZ0lib2ZvaGVTSlVDUjNmZXBhWmVOTjFUNUFWdU90UkJmaGUxd2pZVjZlemdJQ3J5aHFKcHlvbjV4TFV2WVcwSktqN1FfcWp4MEpweVRTNExqWFRRZ3MyQ1Jscg?oc=5",
+          "publishedAt": "2026-11-27T10:49:36.000Z",
+          "sentiment": -12,
           "channel": "World & Society",
           "severity": "Low"
-        },
-        {
-          "title": "Suez Canal chief oversees launch of new fishing vessels, tugboat trials",
-          "source": "Egyptian Gazette",
-          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOZUJqUmoteFZHV3lBN1otM2hwOHpqTklSTHIzSEtoeDd3dGVuSVQxQmlEbXRDbk91OFd6NTZqQWlUd3ZzZ2o3ZkYwRXhTNklMTFViTU43MG15eUFyRGtsRHZ4WG4tX2lWd19ZdDYyVzhIcm41X18ydWtxT0FEYjNUaVFwNm5lNGcwYzI2TjFCS29qVXRZZDFlOVNaRW9nMW1kcFRxZEJ4UVBUUQ?oc=5",
-          "publishedAt": "2026-11-24T16:42:50.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        }
-      ]
-    },
-    "Mongolia": {
-      "sentiment": -34,
-      "volume": 1,
-      "severity": "Medium",
-      "dominantChannel": "Security & Conflict",
-      "channels": {
-        "Security & Conflict": {
-          "count": 1,
-          "sentiment": -34
-        }
-      },
-      "brief": "Coverage is sharply negative across 1 recent report, led by security & conflict. Top story: “Europe’s last dictator Lukashenko criticises Putin’s logic for war in Ukraine: ‘Do we give Russia back to Mongolia?’”.",
-      "articles": [
-        {
-          "title": "Europe’s last dictator Lukashenko criticises Putin’s logic for war in Ukraine: ‘Do we give Russia back to Mongolia?’",
-          "source": "The Independent",
-          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOeDRucmUxel90VlN0SWZGYy01enVRWWFYTGhfck82SHl4WFJWNGJiclBCSHd4b2hHYV9BaXRoWmdkMnlSb2trcUhCU0ZqVXBxMGhJOWh2enVDY0JTSE5yd1oxakVYRUkyMnplVTNRUnp1Y2czXzRsZV9nVUhrYnVDM0N4bE4ybDhQVFVVeHdka0pEYnFJbG9xYVJDZUt4SmJkUDNXc0JHNUFFZw?oc=5",
-          "publishedAt": "2026-11-26T11:48:00.000Z",
-          "sentiment": -34,
-          "channel": "Security & Conflict",
-          "severity": "High"
         }
       ]
     },
     "Argentina": {
-      "sentiment": -7,
+      "sentiment": -10,
       "volume": 12,
       "severity": "Medium",
       "dominantChannel": "World & Society",
       "channels": {
         "Security & Conflict": {
           "count": 2,
-          "sentiment": 0
+          "sentiment": -12
         },
         "World & Society": {
           "count": 3,
@@ -2314,14 +2538,14 @@
           "sentiment": -23
         }
       },
-      "brief": "Coverage is mixed across 12 recent reports, led by world & society. Top story: “The South Atlantic Power Play: How Far Can Argentina’s Military Ambitions Go Under Milei?”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (12 matched), led by world & society. Top story: “The South Atlantic Power Play: How Far Can Argentina’s Military Ambitions Go Under Milei?”.",
       "articles": [
         {
           "title": "The South Atlantic Power Play: How Far Can Argentina’s Military Ambitions Go Under Milei?",
           "source": "Modern Diplomacy",
           "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQTTVvYzUzQTdVYld6bEJVZEppbXpDbF9QdmNua1kxSzk5cFpvUS10UkxIZVJaQmliS19mLVc1RnUycDJOLUNadDlYQ2lJWENrV1l1Y2RJYjNiNC10QV91UnllOGNRdkpDT1dZUFRzZ0F6YXJMb0doSmx3QVlYWng4YnBwRk94YzMxYUhiRjZ4bEY0Vm5NQjhGeDR4NmNIVUoweUphZFVsR0tYWU5SNWJqZ2dHUnpITWxBV0Rsdl8xM3NmLTA?oc=5",
           "publishedAt": "2026-11-27T16:20:37.000Z",
-          "sentiment": 0,
+          "sentiment": -12,
           "channel": "Security & Conflict",
           "severity": "Low"
         },
@@ -2348,7 +2572,7 @@
           "source": "Reuters",
           "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNVmRMbS1aMjBWRHN4Z1JiSE5aRVJkRm55Y0ZyTUJWTXBObnlfNVVRVk1Qd2dncXAzVEdqcTFlcVhHXzBmQjRuZzl2c01Oc01JOGkzX2hQOUJMUm9KNUpRckt6eVVXNHJycGd0UkJ2U1JEal9aVFRzNVdIVnZKbVhpUy1wb1p3aDItck10QW5xZFZEVlNjUEpYeGF2ZHdzZEo4V2VhRXVpdW1tSjdjR1JROGI2VHJGdWZFYzJvUkpkM0ptWTlv?oc=5",
           "publishedAt": "2026-11-27T12:06:56.000Z",
-          "sentiment": 0,
+          "sentiment": -12,
           "channel": "Security & Conflict",
           "severity": "Low"
         },
@@ -2390,110 +2614,19 @@
         }
       ]
     },
-    "Germany": {
-      "sentiment": -6,
-      "volume": 20,
-      "severity": "Low",
-      "dominantChannel": "World & Society",
-      "channels": {
-        "World & Society": {
-          "count": 5,
-          "sentiment": 2
-        },
-        "Security & Conflict": {
-          "count": 1,
-          "sentiment": 0
-        },
-        "Growth & Markets": {
-          "count": 2,
-          "sentiment": -29
-        }
-      },
-      "brief": "Coverage is mixed across 20 recent reports, led by world & society. Top story: “Mélenchon takes aim at Germany in Berlin campaign stop”.",
-      "articles": [
-        {
-          "title": "Mélenchon takes aim at Germany in Berlin campaign stop",
-          "source": "Financial Times",
-          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNMjhkQjk4MGFtXzRqdEU1aXZwTHBhZDdUWlNVSUxWTXIydjl5MGpSUldsb2cyUVZ5cm5lTFFmcGdaT0M0ZnFaWXhXcDhtYnpOMDN3M2NWNFBheGNLMXBidnUyQjhDeV9OM0dueEhyeGd3aHZEZUpEZllsS2tRRkxIcVk5S2M?oc=5",
-          "publishedAt": "2026-11-27T16:45:39.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "IRO Sushi signs landmark international store in Berlin, Germany",
-          "source": "Premier Construction News",
-          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNajhpRzFtZnRGVUZIZjJjYTlyb2FfUF9zZW9ucUF3NnFlaUlNM2hOcmtTN3hTX1dMTW4wWnBfbUxrSWZLVjBGZEdmOWRiaFZpbW9kQWlpVzN1TjY4bzdMWDRQNVBPWkIzRVNMdTI0Z1E3TVFOLWE0ZFlxRnVzQTdJR3pWd0EtNFZaZF9mWFZFQTd6Qnc1OE11bnpUb2ZTV2lQdzZSZ1lPeUtxTXdLT1VJ?oc=5",
-          "publishedAt": "2026-11-27T16:32:50.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "Germany agrees 2027 budget with big outlays for military, infrastructure",
-          "source": "France 24",
-          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOXzA1c3VDZld3MEJyZzFCNkVGYjJlazVoeFV1MWFONjdnZ1Q5UGVQVWxSZ1BRdm1SZTlzMG1YZUJyTFplTG5GRVl2dnJuMGVtOUdUeEplQnV0UkFIbnlOUzdWTTFwV1hhVnFjQUFwd3h1RTJhSkM1SHBZb0hHdDNrOTZYNm9EbUgxUE14cDBFOU5IcDhqNFNqM3lRRGlfbkNCNmdSUVhVLVBvV0FSQjk1S2N6OVpVQ3ZuTmc?oc=5",
-          "publishedAt": "2026-11-27T15:31:15.000Z",
-          "sentiment": 0,
-          "channel": "Security & Conflict",
-          "severity": "Low"
-        },
-        {
-          "title": "Longtime AP journalist Geir Moulson, the heart of its Berlin bureau, dies at 54",
-          "source": "WRAL",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNUWVvTzB3Z3FyUWE3OWlnUHc2YUNWVjd6U1dtZFNZVl82MXgzRzZjMDZZQXJUZHg4YUhfWi1mRGhCZkdWN21HOENOUEFLOTFiYnBLMGVwR0NBSnJ3aDNOb2VzM0UydXMwNGdOLWRvYkhYSHNoSHYybEZJeXhqb2dWa3BSemdLMXdGRlA1b09sY0locHh5VkFHa3ZlcWZVTEZ1aVlpbEEydnBGVjZxZG5la05oRQ?oc=5",
-          "publishedAt": "2026-11-27T13:25:17.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "How East Germany boosted Vietnam's coffee industry",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOQVd1ZTNQS0tFcE85M2psZWtrajVmSHU0SXplUHo3Wkt2UG9ieGx5WnFpb3M2S2NNdHc4TG4zLVc2WnoyYXc2T1NIU2M0OUVoOE1ETk1UX2VnZzMyMUlWVHV2bkpkdDA5TnpjalpqX1VRbjlBTzJmbFFXTG1LOHM0cUUxN01ad1I3Y2fSAYoBQVVfeXFMUGlvYnBaYjRxNExsVFdpRFZ4aC1VaDV0bjFDamlsUkFleGRNeUtsOGVJc2lzd19KSWlrWUk0eEdCNVdjTmxOcEptQXZPLW8zS252Snh1VjF3SEV2R3E4dkoxREFISTRHcXltNkpjUWt4Sk5TM0dQQVY3blBSZ0hONE45eDd4ZmkzTU1n?oc=5",
-          "publishedAt": "2026-11-27T12:08:36.000Z",
-          "sentiment": 23,
-          "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "Indian workers fill Germany's labor gaps but face hurdles and risks",
-          "source": "DW World",
-          "url": "https://www.dw.com/en/indian-workers-fill-germany-s-labor-gaps-but-face-hurdles-and-risks/a-80072882?maca=en-rss-en-world-4025-xml-mrss",
-          "publishedAt": "2026-11-27T11:06:00.000Z",
-          "sentiment": -15,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "Trial of Berlin businesswoman accused of spying for Russia starts after delay",
-          "source": "DW.com",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNS21YclVhX3FuTkRjVEFIMXRYVnY5TDhSaFZYcGJfTVQ0X1I0dVVxMGZHTHJqckJLV2lkMnh3el9sWGEwUnloN0N6amlaR0I0VWVtTkpTX2tWLUNhNDVIUGZ4akV4bUZxSldnZlZ5M0ljdHpuS1N0SmhuUVZzVVNrYUNnVW9iRUhCZFQ5dGh5Y0VFekZKNmtmd2xPMGZhalpRR1JWT9IBpAFBVV95cUxQdFVkM3JQaEtILWQ1R2pUTDBwRWdEWlF5enV2N2hZZ2VqaEdBaXJEOVZQRXJ2QTdzS1hzU1ZHOVA4b1h1ZzJIc1RIZ0lib2ZvaGVTSlVDUjNmZXBhWmVOTjFUNUFWdU90UkJmaGUxd2pZVjZlemdJQ3J5aHFKcHlvbjV4TFV2WVcwSktqN1FfcWp4MEpweVRTNExqWFRRZ3MyQ1Jscg?oc=5",
-          "publishedAt": "2026-11-27T10:49:36.000Z",
-          "sentiment": -12,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "German sofware giant SAP weighs at least 10,000 job cuts amid AI shift, reports say",
-          "source": "Euronews.com",
-          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbzAteWFYb1BpODBZcWViSjA3T3pKSUtScFdSZTVjVlhlbzIzRTl0ZXA0eEh1ZGlQZFpHZHpWZDFRaHZvZERxeDRTelhESk1RNjJ4M2FrdDNxNG1Mb0NNVW9lMDhOdFNpNWxISnZ6ZkFvbkNkNjhpbFV5THlhemZha1V4cGZaRXhSOXBMZE55RW5PaXhtZkZSTm44aXVzRWNud0dlVkpzQ1c5UEJ1WDZJaDdtQWxQX01D?oc=5",
-          "publishedAt": "2026-11-27T10:37:52.000Z",
-          "sentiment": -44,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
-        }
-      ]
-    },
     "Nigeria": {
       "sentiment": -14,
       "volume": 8,
       "severity": "High",
-      "dominantChannel": "Inflation & Rates",
+      "dominantChannel": "Energy & Supply",
       "channels": {
         "Politics & Policy": {
           "count": 1,
           "sentiment": -78
+        },
+        "Energy & Supply": {
+          "count": 3,
+          "sentiment": 0
         },
         "Security & Conflict": {
           "count": 1,
@@ -2502,17 +2635,9 @@
         "Inflation & Rates": {
           "count": 3,
           "sentiment": 0
-        },
-        "Energy & Supply": {
-          "count": 2,
-          "sentiment": 0
-        },
-        "Trade & Tariffs": {
-          "count": 1,
-          "sentiment": 0
         }
       },
-      "brief": "Coverage is cautious to negative across 8 recent reports, led by inflation & rates. Top story: “Nigeria: Political violence and attacks on candidates raise fears ahead of January elections”.",
+      "brief": "Coverage is cautious to negative across 8 recent reports, led by energy & supply. Top story: “Nigeria: Political violence and attacks on candidates raise fears ahead of January elections”.",
       "articles": [
         {
           "title": "Nigeria: Political violence and attacks on candidates raise fears ahead of January elections",
@@ -2522,6 +2647,15 @@
           "sentiment": -78,
           "channel": "Politics & Policy",
           "severity": "High"
+        },
+        {
+          "title": "Report: Nigeria’s Oil Sector Missed Revenue Target by N6.11tn in 2025",
+          "source": "THISDAYLIVE",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOU1p1VHpqWUxPT1RCXzFHTFhhVGhrZkJmQk5veG9zXzJPWHI2bFp2VEE5dFV0ZnhvSktienZTSlo0cGZIVzBCai1HS0xVS3AteGdUcHM2dmdCQlNQcXVEa1prclNWUHJzRU5FOHg3MXdmdEhVZzRtSWR5ZU9McU4zaHREWHNiU1l3NWtuVDRObUFKdk9xZWU4bFAxS3RiQ29Na0FBZ3NlSEJab1k?oc=5",
+          "publishedAt": "2026-11-27T06:49:37.000Z",
+          "sentiment": 0,
+          "channel": "Energy & Supply",
+          "severity": "Low"
         },
         {
           "title": "How a Nigerian journalist uncovered Russia's war machine in Africa",
@@ -2551,15 +2685,6 @@
           "severity": "Low"
         },
         {
-          "title": "Nigeria • After his foray into oil refining, Aliko Dangote enters the shipping industry",
-          "source": "Africa Intelligence",
-          "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNRWQzMFNLamFTNWlSM3F5anBwaGl6RzhPb2VCblVOWUU0RjdNVUx6aHVSc0Z4dExBVmZnT0tvTjVDTkR6c1hVOVpIeHZyNlJxanE5TXBxQ3hsaGdsMWhjS0NjejBZX0hWYWl3dzdvdktLNjlLYnhvLU9xb2VZbUk1NXF5ejBLZ0FOWndYT1Ewa2l2aWQyR3dJWDc1Z3djQ0ZaTDV5VXE2T0VRT3lZNjNBX18wN002X2tWU3dkUDloejdZM2w3VVF4QjhyeGdGRjBjNGl5d0tPbERNTENYcmVJNDVR?oc=5",
-          "publishedAt": "2026-11-26T06:02:25.000Z",
-          "sentiment": 0,
-          "channel": "Trade & Tariffs",
-          "severity": "Low"
-        },
-        {
           "title": "Shares of Dangote oil refinery to start trading in Nigeria on Tuesday, group VP says",
           "source": "Reuters",
           "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNdGN5YVlXU3JEcmd1QUZYN2tpQW9Qd3Qzd053V29CdDI4TmlJdWtRbnNJN3lWM2NidzNJcVhERV9VYXNzcGgtZDZuOVZ6QUlCTXlaSlByOWVlamtzU0xpXzhGNnRzc2ZoUmFuSWx3S2lWMWFQUWxTbVFfSWs3SkllS1UwRUhoQlFZVzdYa1lCNjUwdkh6MnBnaW82TnRkeVFpdkEzUjY1WnJBdTVFeEVqMjU1ek9senVWSjUzcFZPZlA?oc=5",
@@ -2584,30 +2709,6 @@
           "publishedAt": "2026-11-23T16:46:21.000Z",
           "sentiment": -12,
           "channel": "Inflation & Rates",
-          "severity": "Medium"
-        }
-      ]
-    },
-    "Iceland": {
-      "sentiment": -23,
-      "volume": 1,
-      "severity": "Medium",
-      "dominantChannel": "World & Society",
-      "channels": {
-        "World & Society": {
-          "count": 1,
-          "sentiment": -23
-        }
-      },
-      "brief": "Coverage is cautious to negative across 1 recent report, led by world & society. Top story: “Iceland Has Deadliest Maritime Accident in Decades as Fishing Vessel Sinks”.",
-      "articles": [
-        {
-          "title": "Iceland Has Deadliest Maritime Accident in Decades as Fishing Vessel Sinks",
-          "source": "The Maritime Executive",
-          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNcmdLbXQ2Q1lVdjhpYWRMMHhwTUh2RXJMcUFCdlRkc0s3N2VFWFZ5cmstTFM2ZWpEWkhqQ0RJRjdZbmN3NXlVR2JCckw4Tkd5OWt6anEwb3VuYlF2VERzeHlKMFJFMVJPRzFCTm1fVmhnOHZaekNXSUtjVlUzVmtVRW00THozTEV0cXV3aS1FZkdiX1p1Y05lMGpFTEhCUXFCQzMxRGJoaldXbjFldjl4LWk0Yw?oc=5",
-          "publishedAt": "2026-11-26T23:11:58.000Z",
-          "sentiment": -23,
-          "channel": "World & Society",
           "severity": "Medium"
         }
       ]
@@ -2661,7 +2762,7 @@
       ]
     },
     "Norway": {
-      "sentiment": 2,
+      "sentiment": 4,
       "volume": 12,
       "severity": "Medium",
       "dominantChannel": "World & Society",
@@ -2676,10 +2777,10 @@
         },
         "Energy & Supply": {
           "count": 2,
-          "sentiment": -11
+          "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 12 recent reports, led by world & society. Top story: “Norway stocks higher at close of trade; Oslo OBX up 0.80%”.",
+      "brief": "Coverage is mixed across 8 latest reports (12 matched), led by world & society. Top story: “Norway stocks higher at close of trade; Oslo OBX up 0.80%”.",
       "articles": [
         {
           "title": "Norway stocks higher at close of trade; Oslo OBX up 0.80%",
@@ -2709,21 +2810,21 @@
           "severity": "Medium"
         },
         {
+          "title": "Tangen is all in on AI. So why is Norway’s Oil Fund holding back on tech stocks?",
+          "source": "NHH",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQeEVXRmMxaHoyV1ZTeFVFekliOXlnTWhwMzFWRDlRZ2oyejNMS0NaRmo5d0w4b0tTNVpWLWdFNmZKSlg2MnkxVnhsZF8tSHlvd0t4cjlheEhsVlE4dW1EWVJuRWwtTkJkYlBDRklXN29iMVFNMFRZblYzUnNzaGVjSHplNmdKQzhjc0dLRHZseW1PREVnbDBZQVNpZk5nVG1KWDRodG5MOGozcW1EdWdn?oc=5",
+          "publishedAt": "2026-11-26T09:03:39.000Z",
+          "sentiment": 0,
+          "channel": "Energy & Supply",
+          "severity": "Low"
+        },
+        {
           "title": "JAPEX Acquires Equinor’s Norway Oil Assets, Targets 10,000 BOED",
           "source": "ChemAnalyst",
           "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNVm1md2pqYXkxeERaeGNEX1lNMjBiNVVDX1FnMGNUSDcyclVvRDlFLW5ueWx4dlNzc3lIN0x4NFd1eVpUNE9jWnRJTU1qQXlCOHAzQy14NFFRbXZhUW1lVWE0SnFjOHcwNEV6TjVrLUdMSXJKSVBhOUlmNzJyS1pfbzdFRjJGbG93R09NbmVsUVY3clhJQTRmQk9Wd0NySHNDT3p0VFhJRW5RYXFX?oc=5",
           "publishedAt": "2026-11-25T14:34:14.000Z",
           "sentiment": 0,
           "channel": "Energy & Supply",
-          "severity": "Low"
-        },
-        {
-          "title": "Norway beyond hydro: building the case for PV & storage",
-          "source": "Solarplaza",
-          "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBDbFV4c1ZiUExQR2pELVNKZ2h5QllvdmdkN3hnTlNBTGZ4UElCOTNRaWRJSjI5cWVHT2xfcHBiNW05dnpqTXA2UWd6R0ZuOGVHVTM0V18zdDlUTkJ1OGllSzhjN2RzbzJvTlE?oc=5",
-          "publishedAt": "2026-11-24T08:00:00.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
           "severity": "Low"
         },
         {
@@ -2736,21 +2837,21 @@
           "severity": "Medium"
         },
         {
+          "title": "ConocoPhillips to sell Norway business, Teesside stake to Vår Energi for $4.4 billion",
+          "source": "World Oil",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQYWFkMzZZMjlXSnh4X0JKcnFMaXFzVkFGUDFDelBQalpkaDFmNFhJaW4wUG8tbWxxZi1va2F6dFZUN0JNS2hvM1RicHEzSUdXUDNCaWpVS3VjR3U1Q3FVNzhwZlAyTjBuZnBVUWZzb09XMkFDRU80amNoUEVkdGZ2ZlV0U3Vsck9kdi1QdnZOSW5DRUFyWk53amkySXlRMDlPLU9md29nSG9rZ1d0bnpOUFpTZnhhZmJMd3RwY0djYXQ3VlE?oc=5",
+          "publishedAt": "2026-11-23T17:36:35.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
           "title": "Vår Energi to acquire ConocoPhillips' Norway business, including Greater Ekofisk operatorship, in $4.4-billion deal",
           "source": "Oil & Gas Journal",
           "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxNUHFfWVU4elJqLUpsVGNXXzFIODRMY0ZFXzhGQTdHdHVmc0d6UEN6LUpHeUtFRG91SkhITzZDd3NzbHhxOFNGUENJWGV4X1c0QktRZVdkOURaemZpRkhqY1Z1VXJvdklVQVk3eTZLcGNRRnZQa2lSalhDSjVOQWZ3YXpZekd0VUFnVXE3SW43cEtQNHBDd29VRkJneTJhUGNmeFZzLXJuNWdlOUh3T2JLNUx5TU9vRDJtVmhSemNQdEhJUy1IaTRxbWREeEZfODFfQUd3Y1BETGM2UnNxVm1NS1BkVmdweXNyYk82SEFacDlhZVQ5WnZab1ZDVGgwdVNa?oc=5",
           "publishedAt": "2026-11-23T17:17:57.000Z",
           "sentiment": 23,
           "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "Nearly 8% of Norway Oil Workers Threaten Strike From June 5",
-          "source": "EnergyNow.com",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPQTNaQ1RTRzgwUVZaWjdEVElna0JYbEpXbnM4M1p3NkYyYmY2dXZhbU9Uc29aQ3VROGl3THJWamQyR0J1UnFCQkF4RDVzSTRQQmNTalpEQ1ZrdHFXX3lNOW03Qm43SkpGX1ViazE2elpJY05wLTdWWHZ4WG16V2F2cDNPTnB6UXdtcjZVbjRhWmNuM2M?oc=5",
-          "publishedAt": "2026-11-23T15:45:21.000Z",
-          "sentiment": -23,
-          "channel": "Energy & Supply",
           "severity": "Medium"
         }
       ]
@@ -2766,12 +2867,12 @@
           "sentiment": -8
         },
         "Growth & Markets": {
-          "count": 4,
-          "sentiment": -17
+          "count": 3,
+          "sentiment": -11
         },
         "Inflation & Rates": {
-          "count": 1,
-          "sentiment": -15
+          "count": 2,
+          "sentiment": -26
         },
         "Politics & Policy": {
           "count": 1,
@@ -2782,7 +2883,7 @@
           "sentiment": -23
         }
       },
-      "brief": "Coverage is cautious to negative across 12 recent reports, led by growth & markets. Top story: “Japan's radical past: Retracing the far-left groups of the 1970s”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (12 matched), led by growth & markets. Top story: “Japan's radical past: Retracing the far-left groups of the 1970s”.",
       "articles": [
         {
           "title": "Japan's radical past: Retracing the far-left groups of the 1970s",
@@ -2821,15 +2922,6 @@
           "severity": "Low"
         },
         {
-          "title": "Bank of Japan executive calls for stablecoin reserve regulation and warns of tokenization risks",
-          "source": "Crypto News",
-          "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPVlA5TWZaNVV2eHlScDZsUC11dERzREZTMkJlN0lVdWRIWUN2Ti1QZm03eGswUE9zTU1pQUJydS1JcjlQbTdFRm5GVkZqWFNoZ2dweUxMM3RoNnVSR2xVV21FMEhjXy1aWTRRMUM2VEh0S05IWkxkQ2dkQklLV3czRQ?oc=5",
-          "publishedAt": "2026-11-27T07:58:00.000Z",
-          "sentiment": -34,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
-        },
-        {
           "title": "Japan to Discuss Regulatory Reform to Promote Driverless Taxis",
           "source": "Nippon.com",
           "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1fb1Q5elFzSUY4Y2JjRS1TQ3FGeEllQ2t0OGxQRTU5dEVzTER2R1pLOGd3UFB3UzhPM1JrMnMzVDNPTDhOcGl6NDE4OHpRVTI0T3NaVg?oc=5",
@@ -2855,6 +2947,15 @@
           "sentiment": 0,
           "channel": "Growth & Markets",
           "severity": "Low"
+        },
+        {
+          "title": "Tokyo inflation backs a Bank of Japan hike that may not rescue the yen",
+          "source": "Startup Fortune",
+          "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPTTlVZkN6U29xOTNmQmxyWnNlVzZCaFlhLWlEU0JsR3h2M2FWcUlQMWpqMmpVb0xyaTN5YW1TbmU4Rzd2bGpSZ2F0bktoVW1ZODdtdlZ0VEcwd2loY0J2TkNJUVBoQk9QWVVLREZNVkN2eWVvLWltMW9laFhQM3ZseG1rbEw0NGJHal81TmJVYUdjQ0lRVGJlY0liTTZBd3c?oc=5",
+          "publishedAt": "2026-11-27T06:58:15.000Z",
+          "sentiment": -38,
+          "channel": "Inflation & Rates",
+          "severity": "Medium"
         }
       ]
     },
@@ -2881,13 +2982,13 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 13 recent reports, led by world & society. Top story: “Brazilian markets rally after Lula taps Bradesco chairman for finance chief”.",
+      "brief": "Coverage is mixed across 8 latest reports (13 matched), led by world & society. Top story: “Brazilian markets rally after Lula taps Bradesco chairman for finance chief”.",
       "articles": [
         {
           "title": "Brazilian markets rally after Lula taps Bradesco chairman for finance chief",
           "source": "Reuters",
           "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOVFRwQWxfcmJJYjdURlh4dEJ6bHRBMXdvZUt3Ry0wMGRmMDduc2N0NXVleHBaSWtFbENkbzVkSjRCMDNrUlp5LTdtdHd1WHBfZ044QllESlc1eTdRLTZCQ1NOTHo0aDVJX2xoeDRxOVZPSGxhdVYyOEZPT2w1eDBkZ0RlWUowdC1DWW52Wl85eEYtTHhNb1ZkMENTVmdzdHRTcEluMTZnSU9QSFF2c19rQ3Z0QXBoS3RoS3AtYy0yUQ?oc=5",
-          "publishedAt": "2026-11-27T16:55:44.000Z",
+          "publishedAt": "2026-11-27T17:25:44.000Z",
           "sentiment": 23,
           "channel": "Growth & Markets",
           "severity": "Medium"
@@ -2980,7 +3081,7 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 9 recent reports, led by inflation & rates. Top story: “Ex-media executive admits saying Australian child sex abuse survivor 'looking to be raped again'”.",
+      "brief": "Coverage is mixed across 8 latest reports (9 matched), led by inflation & rates. Top story: “Ex-media executive admits saying Australian child sex abuse survivor 'looking to be raped again'”.",
       "articles": [
         {
           "title": "Ex-media executive admits saying Australian child sex abuse survivor 'looking to be raped again'",
@@ -3079,13 +3180,13 @@
           "sentiment": 12
         }
       },
-      "brief": "Coverage is mixed across 12 recent reports, led by world & society. Top story: “Italy stocks higher at close of trade; Investing.com Italy 40 up 1.84% By Investing.com”.",
+      "brief": "Coverage is mixed across 8 latest reports (12 matched), led by world & society. Top story: “Italy stocks higher at close of trade; Investing.com Italy 40 up 1.84% By Investing.com”.",
       "articles": [
         {
           "title": "Italy stocks higher at close of trade; Investing.com Italy 40 up 1.84% By Investing.com",
           "source": "Investing.com",
           "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOYWpoakdMa3lGUGpTZS1BZm0yMlRRWFBCY3VLSVNXWTdFc195cktIcTlmaVFRMmlvNTNPTVVqRUJ0UlpJZEFLWXVtS0NBdWtsaU53Q3h3UXJZTXpYYkJ1clVWTGZ5dFNTNk0tUnZOeF8xU3BZejhnNzRsT2F3ZWFTUEw1a1YwaEJ6UWlpM0ozT3FJblFJQWFlV0tlMGVLOHZaU29yVFlVb2xwcnpRQmwzMUxqWFZWbEV3X09Oa2tPQVc?oc=5",
-          "publishedAt": "2026-11-27T17:11:04.000Z",
+          "publishedAt": "2026-11-27T17:12:37.000Z",
           "sentiment": 0,
           "channel": "Growth & Markets",
           "severity": "Low"
@@ -3156,7 +3257,7 @@
       ]
     },
     "Dem. Rep. Congo": {
-      "sentiment": -4,
+      "sentiment": -11,
       "volume": 2,
       "severity": "Low",
       "dominantChannel": "Energy & Supply",
@@ -3167,10 +3268,10 @@
         },
         "Security & Conflict": {
           "count": 1,
-          "sentiment": -12
+          "sentiment": -27
         }
       },
-      "brief": "Coverage is mixed across 2 recent reports, led by energy & supply. Top story: “DR Congo: Copper reserves put Africa at the centre of the global race for critical minerals”.",
+      "brief": "Coverage is cautious to negative across 2 recent reports, led by energy & supply. Top story: “DR Congo: Copper reserves put Africa at the centre of the global race for critical minerals”.",
       "articles": [
         {
           "title": "DR Congo: Copper reserves put Africa at the centre of the global race for critical minerals",
@@ -3186,21 +3287,21 @@
           "source": "BBC World",
           "url": "https://www.bbc.co.uk/news/articles/cq4gnj2ldkyzo?at_medium=RSS&at_campaign=rss",
           "publishedAt": "2026-11-27T10:39:31.000Z",
-          "sentiment": -12,
+          "sentiment": -27,
           "channel": "Security & Conflict",
-          "severity": "Low"
+          "severity": "Medium"
         }
       ]
     },
     "Uganda": {
-      "sentiment": -12,
+      "sentiment": -27,
       "volume": 1,
-      "severity": "Low",
+      "severity": "Medium",
       "dominantChannel": "Security & Conflict",
       "channels": {
         "Security & Conflict": {
           "count": 1,
-          "sentiment": -12
+          "sentiment": -27
         }
       },
       "brief": "Coverage is cautious to negative across 1 recent report, led by security & conflict. Top story: “Uganda to withdraw troops from DR Congo town amid diplomatic row”.",
@@ -3210,31 +3311,31 @@
           "source": "BBC World",
           "url": "https://www.bbc.co.uk/news/articles/cq4gnj2ldkyzo?at_medium=RSS&at_campaign=rss",
           "publishedAt": "2026-11-27T10:39:31.000Z",
-          "sentiment": -12,
+          "sentiment": -27,
           "channel": "Security & Conflict",
-          "severity": "Low"
+          "severity": "Medium"
         }
       ]
     },
     "Guinea-Bissau": {
-      "sentiment": -24,
+      "sentiment": -38,
       "volume": 1,
-      "severity": "Medium",
+      "severity": "High",
       "dominantChannel": "Security & Conflict",
       "channels": {
         "Security & Conflict": {
           "count": 1,
-          "sentiment": -24
+          "sentiment": -38
         }
       },
-      "brief": "Coverage is cautious to negative across 1 recent report, led by security & conflict. Top story: “Guinea-Bissau's military leaders delay return to civilian rule until 2028”.",
+      "brief": "Coverage is sharply negative across 1 recent report, led by security & conflict. Top story: “Guinea-Bissau's military leaders delay return to civilian rule until 2028”.",
       "articles": [
         {
           "title": "Guinea-Bissau's military leaders delay return to civilian rule until 2028",
           "source": "BBC World",
           "url": "https://www.bbc.co.uk/news/articles/cm879e5yxjq5o?at_medium=RSS&at_campaign=rss",
           "publishedAt": "2026-11-27T08:58:08.000Z",
-          "sentiment": -24,
+          "sentiment": -38,
           "channel": "Security & Conflict",
           "severity": "Medium"
         }
@@ -3315,11 +3416,15 @@
       ]
     },
     "Bangladesh": {
-      "sentiment": -14,
+      "sentiment": -11,
       "volume": 12,
       "severity": "Low",
       "dominantChannel": "World & Society",
       "channels": {
+        "Growth & Markets": {
+          "count": 1,
+          "sentiment": 0
+        },
         "Trade & Tariffs": {
           "count": 1,
           "sentiment": 0
@@ -3327,14 +3432,19 @@
         "World & Society": {
           "count": 6,
           "sentiment": -15
-        },
-        "Politics & Policy": {
-          "count": 1,
-          "sentiment": -20
         }
       },
-      "brief": "Coverage is cautious to negative across 12 recent reports, led by world & society. Top story: “Indonesia eyes Bangladesh as new destination for fertilizer exports”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (12 matched), led by world & society. Top story: “Finance minister calls for creative economy, reverse brain drain to advance Bangladesh”.",
       "articles": [
+        {
+          "title": "Finance minister calls for creative economy, reverse brain drain to advance Bangladesh",
+          "source": "Bangladesh Sangbad Sangstha (BSS)",
+          "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE96clZTZkp6a0xzSndJX1pLSVU5S3NpZlVhY2d0M0o4NVZCdGF5d0twbnBtWC1GUUJrQ3lKMmJJVFRVLUtwSDFPYlg1TQ?oc=5",
+          "publishedAt": "2026-11-27T15:57:30.000Z",
+          "sentiment": 0,
+          "channel": "Growth & Markets",
+          "severity": "Low"
+        },
         {
           "title": "Indonesia eyes Bangladesh as new destination for fertilizer exports",
           "source": "ANTARA News",
@@ -3397,15 +3507,6 @@
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
-        },
-        {
-          "title": "Sheikh Hasina's planned return puts Bangladesh on edge",
-          "source": "and India in a bind",
-          "url": "https://www.bbc.co.uk/news/articles/cx30g71rev23o?at_medium=RSS&at_campaign=rss",
-          "publishedAt": "2026-11-27T00:47:43.000Z",
-          "sentiment": -20,
-          "channel": "Politics & Policy",
-          "severity": "Medium"
         }
       ]
     },
@@ -3453,54 +3554,6 @@
           "publishedAt": "2026-11-27T14:17:25.000Z",
           "sentiment": -38,
           "channel": "Security & Conflict",
-          "severity": "Medium"
-        }
-      ]
-    },
-    "Kyrgyzstan": {
-      "sentiment": -8,
-      "volume": 1,
-      "severity": "Low",
-      "dominantChannel": "World & Society",
-      "channels": {
-        "World & Society": {
-          "count": 1,
-          "sentiment": -8
-        }
-      },
-      "brief": "Coverage is mixed across 1 recent report, led by world & society. Top story: “Old wounds reopen as Kyrgyzstan’s Osh embraces a new urban project”.",
-      "articles": [
-        {
-          "title": "Old wounds reopen as Kyrgyzstan’s Osh embraces a new urban project",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/features/2026/11/27/old-wounds-reopen-as-kyrgyzstans-osh-embraces-a-new-urban-project?traffic_source=rss",
-          "publishedAt": "2026-11-27T11:35:34.000Z",
-          "sentiment": -8,
-          "channel": "World & Society",
-          "severity": "Low"
-        }
-      ]
-    },
-    "Morocco": {
-      "sentiment": 0,
-      "volume": 1,
-      "severity": "Low",
-      "dominantChannel": "Politics & Policy",
-      "channels": {
-        "Politics & Policy": {
-          "count": 1,
-          "sentiment": 0
-        }
-      },
-      "brief": "Coverage is mixed across 1 recent report, led by politics & policy. Top story: “What Spain’s election means for Morocco”.",
-      "articles": [
-        {
-          "title": "What Spain’s election means for Morocco",
-          "source": "Al Jazeera",
-          "url": "https://www.aljazeera.com/opinions/2026/11/27/what-spains-election-means-for-morocco?traffic_source=rss",
-          "publishedAt": "2026-11-27T11:33:17.000Z",
-          "sentiment": 0,
-          "channel": "Politics & Policy",
           "severity": "Medium"
         }
       ]
@@ -3604,7 +3657,7 @@
           "sentiment": -23
         }
       },
-      "brief": "Coverage is mixed across 9 recent reports, led by world & society. Top story: “MANILA, Philippines — The northeast monsoon or amihan is expected to strengthen by Sunday, bringing rougher seas along the northern and eastern seaboards of Luzon and possibly prompting the issuance of a gale warning, the Philippine Atmospheric, Ge”.",
+      "brief": "Coverage is mixed across 8 latest reports (9 matched), led by world & society. Top story: “MANILA, Philippines — The northeast monsoon or amihan is expected to strengthen by Sunday, bringing rougher seas along the northern and eastern seaboards of Luzon and possibly prompting the issuance of a gale warning, the Philippine Atmospheric, Ge”.",
       "articles": [
         {
           "title": "MANILA, Philippines — The northeast monsoon or amihan is expected to strengthen by Sunday, bringing rougher seas along the northern and eastern seaboards of Luzon and possibly prompting the issuance of a gale warning, the Philippine Atmospheric, Ge",
@@ -3699,7 +3752,7 @@
           "sentiment": -22
         }
       },
-      "brief": "Coverage is constructively positive across 12 recent reports, led by trade & tariffs. Top story: “China and Asia Stocks Rally; India-US Trade Deal ‘Nearly Done’”.",
+      "brief": "Coverage is constructively positive across 8 latest reports (12 matched), led by trade & tariffs. Top story: “China and Asia Stocks Rally; India-US Trade Deal ‘Nearly Done’”.",
       "articles": [
         {
           "title": "China and Asia Stocks Rally; India-US Trade Deal ‘Nearly Done’",
@@ -3786,12 +3839,12 @@
           "sentiment": -16
         }
       },
-      "brief": "Coverage is cautious to negative across 1 recent report, led by politics & policy. Top story: “Albania's youth are protesting in Flamingo Revolution, not leaving the country anymore”.",
+      "brief": "Coverage is cautious to negative across 1 recent report, led by politics & policy. Top story: “Albania's youth are protesting, no longer leaving the country”.",
       "articles": [
         {
-          "title": "Albania's youth are protesting in Flamingo Revolution, not leaving the country anymore",
+          "title": "Albania's youth are protesting, no longer leaving the country",
           "source": "DW World",
-          "url": "https://www.dw.com/en/albania-s-youth-are-protesting-in-flamingo-revolution-not-leaving-the-country-anymore/a-80068939?maca=en-rss-en-world-4025-xml-mrss",
+          "url": "https://www.dw.com/en/albania-s-youth-are-protesting-no-longer-leaving-the-country/a-80068939?maca=en-rss-en-world-4025-xml-mrss",
           "publishedAt": "2026-11-26T20:44:00.000Z",
           "sentiment": -16,
           "channel": "Politics & Policy",
@@ -3800,14 +3853,14 @@
       ]
     },
     "Indonesia": {
-      "sentiment": -4,
+      "sentiment": -3,
       "volume": 12,
       "severity": "Low",
       "dominantChannel": "World & Society",
       "channels": {
         "World & Society": {
-          "count": 4,
-          "sentiment": -8
+          "count": 3,
+          "sentiment": -11
         },
         "Trade & Tariffs": {
           "count": 1,
@@ -3818,15 +3871,15 @@
           "sentiment": 0
         },
         "Growth & Markets": {
-          "count": 1,
-          "sentiment": 0
+          "count": 2,
+          "sentiment": 6
         },
         "Energy & Supply": {
           "count": 1,
           "sentiment": 23
         }
       },
-      "brief": "Coverage is mixed across 12 recent reports, led by world & society. Top story: “Indonesia calls off search for missing miners”.",
+      "brief": "Coverage is mixed across 8 latest reports (12 matched), led by world & society. Top story: “Indonesia calls off search for missing miners”.",
       "articles": [
         {
           "title": "Indonesia calls off search for missing miners",
@@ -3874,15 +3927,6 @@
           "severity": "Low"
         },
         {
-          "title": "Unilever Indonesia Tbk Says Total Value Of Proposed Sale Of Foods Business (Excluding VAT) 20.5 Trln Rupiah",
-          "source": "TradingView",
-          "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxQaVVrbklhaVUzV09BOVZmWi1iTzFGeW5hRlJzT0g1QkNoUzNWZmgzcm9BZVpraFhtaEIweGxTNDVQTi1mQTdoeHN0bW1Fb29BT0hsNWNDNy1OZzNqUmJNeS1uX1M4emRWN1hWRUJNeFdHNWVxemh5aDdjbnJSdnVNbUFFR01XWlZrbWxZclFSZ2ttMGdUZ09seUI3VU1TWFJ6WVY3MVpTeDkzUjM1dkdDQ09UYUNHUHY4NE5iV1Z0OVk1WUdDUGp0ZGlhQ1FzcE1mSnZvZjFWcGZRbjlBUEhtdFJXWnZmQzlkajhqdElNTHZaYlpYTjVWSjNxckh3MTUtMUJIQ3ZR?oc=5",
-          "publishedAt": "2026-11-27T10:34:14.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
           "title": "Nickel rallies sharply, Indonesia wants 70 per cent for the state",
           "source": "Steel and Stainless Steel News",
           "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBmZ21vOGFjbUY2R0VDNkt6SXJIeHJwdUtpLTgzZVdhaXhjV2NacGNMQ1p3N2tXeW1LUlBEUnI3X1ZwVFJub1N2T3NKYjh1eXZxeE05YXpXaFYwZVVfYlIzRkxYSjctWllYbFBRMWR2dUxPcDZwMW9fSHhRRWpiUQ?oc=5",
@@ -3898,6 +3942,15 @@
           "publishedAt": "2026-11-27T08:00:55.000Z",
           "sentiment": 0,
           "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Indonesia’s Rupiah Hugged Record Lows As Asia Stocks Rose",
+          "source": "Finimize",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQbWVNb1oyTkhONFFIa0pCcUhDaEVIWkY4NHM2dmJxb0M1ZGExN2FCTVlNb0J2N093TlA1TENfbFpWeDJGdmlPZGVzbzFsNExKSXAxYWdFYktabmR5TVF2Ujh2WktzME44RjJrQzIxM1BBNlJwdU9KaHBUb1VFUHB5bkdXYkxxcDVrVi0xNEpR?oc=5",
+          "publishedAt": "2026-11-27T07:24:12.000Z",
+          "sentiment": 12,
+          "channel": "Growth & Markets",
           "severity": "Low"
         }
       ]
@@ -3917,7 +3970,7 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 12 recent reports, led by growth & markets. Top story: “Turkey’s Tightening Steps Show Early Signs of Calming Markets”.",
+      "brief": "Coverage is mixed across 8 latest reports (12 matched), led by growth & markets. Top story: “Turkey’s Tightening Steps Show Early Signs of Calming Markets”.",
       "articles": [
         {
           "title": "Turkey’s Tightening Steps Show Early Signs of Calming Markets",
@@ -3994,14 +4047,14 @@
       ]
     },
     "Mexico": {
-      "sentiment": -3,
+      "sentiment": -6,
       "volume": 11,
       "severity": "Low",
       "dominantChannel": "Trade & Tariffs",
       "channels": {
         "Trade & Tariffs": {
-          "count": 4,
-          "sentiment": 3
+          "count": 3,
+          "sentiment": -4
         },
         "Inflation & Rates": {
           "count": 3,
@@ -4010,9 +4063,13 @@
         "Growth & Markets": {
           "count": 1,
           "sentiment": 23
+        },
+        "Politics & Policy": {
+          "count": 1,
+          "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 11 recent reports, led by trade & tariffs. Top story: “Mexico files complaint with US over DEA tip line, rules out easing tariffs on Chinese goods”.",
+      "brief": "Coverage is mixed across 8 latest reports (11 matched), led by trade & tariffs. Top story: “Mexico files complaint with US over DEA tip line, rules out easing tariffs on Chinese goods”.",
       "articles": [
         {
           "title": "Mexico files complaint with US over DEA tip line, rules out easing tariffs on Chinese goods",
@@ -4060,15 +4117,6 @@
           "severity": "Medium"
         },
         {
-          "title": "Mexico posts $2,068 mln s/a trade surplus in October",
-          "source": "TradingView",
-          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPYzFCc0lXa1VDeE44bzFwcmtNcUFCQUYwZU5nV2lRemFPQWpNOG1EM2h4cDRRVzJoaUJURlZUekJwTER3WmliTDJCUmxZRHFBelZrR2RMSmJDRE93NnNpeFFVOC1pRTBmUEFoRlpJSFg3NTl3dWFkVUNHSklWSVA4VmJBSmNLZzlSa0l2NU9yOEh0N2dpeUc4cVBZZFB3RXFGa1Ayb0g1U2poY3preElUXzNNSTRDMUtJdDg0Z2xKQ3U5U3dvYkE?oc=5",
-          "publishedAt": "2026-11-27T12:00:01.000Z",
-          "sentiment": 23,
-          "channel": "Trade & Tariffs",
-          "severity": "Medium"
-        },
-        {
           "title": "Mexican Peso Hits Five-Year Losing Streak",
           "source": "Briefs Finance",
           "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQYkx6cmNjTU41WndvQWE0cE11YUxhTk8yRklQTzJ3WTJydlktUGRrMVpGNlRJNkNtN2ZHMUdGREhkY0JTNlhPWnN2ZHdRcVFUVUZVRE1fN095bFdxbW5EQlhoVTYzbkxfOTJjakZVcVVwQXZaanBBcjhBMkJWYVpqQm51dDB6bjFoRkNYRTlnX3BNZw?oc=5",
@@ -4076,6 +4124,15 @@
           "sentiment": -34,
           "channel": "Inflation & Rates",
           "severity": "Medium"
+        },
+        {
+          "title": "Mexican president reaffirms solidarity with Cuba, condemns blockades",
+          "source": "chinadailyhk",
+          "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBfSDNDSEtfNUwtSlF0Yi05Vjcxc1lwa203TzdTamR6REZRQm81YU1RTC1QVkFtUDBlaW4wZlkwN29INjZQNWRSaHFEZl84bk44d1VkZTlWUkc?oc=5",
+          "publishedAt": "2026-11-27T06:47:02.000Z",
+          "sentiment": 0,
+          "channel": "Politics & Policy",
+          "severity": "Low"
         },
         {
           "title": "USD/MXN Forecast: Mexican Peso Weakness Persists as Year-End Approaches",
@@ -4107,7 +4164,7 @@
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 9 recent reports, led by energy & supply. Top story: “Chile's Dollar Hits 1,042 Pesos, Government Worried but Won't Intervene”.",
+      "brief": "Coverage is mixed across 8 latest reports (9 matched), led by energy & supply. Top story: “Chile's Dollar Hits 1,042 Pesos, Government Worried but Won't Intervene”.",
       "articles": [
         {
           "title": "Chile's Dollar Hits 1,042 Pesos, Government Worried but Won't Intervene",
@@ -4137,10 +4194,10 @@
           "severity": "Low"
         },
         {
-          "title": "Marimaca early copper mine works in Chile: capex and schedule lens for engineers",
-          "source": "Geomechanics.io",
-          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOU3lYT3lFank0TFFfRTA1S1A5ang3eW5XRUtlZGRWd3VsR3FtbFlQckFYeS1WS245M3VVVkVnV0tPbU9qYzMxYnNCcHdndFRFQ3A4dHowUVJsN29OUGV4MkVGNUJWOURDV3hZQmlsS1l5ZlpiQzlmQUxzOWJNRlZfbHRRd2wyWnVGMkRUN0dvcUk1X0hDZXRxTVdfcUdzVUFWZzVteGlRZGNKZWhEN0pKOGhUYUkxLVNlRkVRVA?oc=5",
-          "publishedAt": "2026-11-27T00:01:52.000Z",
+          "title": "Chile clears Marimaca to start early copper mine works",
+          "source": "Mining.com",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPZHhUYUpZdmVOWGpZSHRKRGlPZmZfUmRZWFhsVzkycjh1ejE2R2htWHh2cjJmdC0zUVg2b3RRRUtQcXhyXzRoUmdQNUgwS1RINlhYdzhDNXNLS1A2ekNoUkFabzI1b1AyR0lNdXhfQmhnMzVTWTNVSHN3eVI0Si1mdDhQVl8?oc=5",
+          "publishedAt": "2026-11-27T02:45:55.000Z",
           "sentiment": 0,
           "channel": "Energy & Supply",
           "severity": "Low"
@@ -4207,7 +4264,7 @@
         {
           "title": "Colombia Peso Stumbles as Mounting Risks Test Carry-Fueled Rally",
           "source": "Bloomberg.com",
-          "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNbzlwS0VQSUJDbjhoejl2a2M5UGI2UzlDNlZjV0JBVzhYRTNZeTdkOFRaVWM5d1Y5SFBmNzVNWFpIcHB2Mk1ndmgyNTJnelZ0c1o1LXFpQl91cDJaaXpsbUdFWF9kUjJRdmNXOU85czhDc0NJV0V4dzdVQ3BaMHU3czhkNlFQV1AwSkdPSUZ3N0VTU2xqMEJLekJ5WjhEWjFJU3pIN2Jmc0ZaamVIREhKeHVBZWQ3TEx3LS1ET0FrWGxaUGo2SHcySUhn?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQLWFmbkNiaWFzcmxYQWpodnpHUG5TdjFoQVVVUWpZMktyM1QxWmxMSzlhZlVzYjZ4bDNXYlhHOWhmS0RtRzQwRUFadW5UMTdVdWFOTnVQQThkZ3F3Z0UxaXIzUS1SZF9SX0lNaWlnYUZ3SFY3UXd5bzEwSVRSVDlGaTdqQldibGZURWxYVzFzUFhqU1lxU2JNR1BGbmQ0T21FbDNlOVMxTUZJcDNwQkw5MUtsQUxVUQ?oc=5",
           "publishedAt": "2026-11-27T16:37:27.000Z",
           "sentiment": -12,
           "channel": "Inflation & Rates",
@@ -4280,7 +4337,7 @@
     },
     "United Arab Emirates": {
       "sentiment": 6,
-      "volume": 8,
+      "volume": 7,
       "severity": "Low",
       "dominantChannel": "World & Society",
       "channels": {
@@ -4301,11 +4358,11 @@
           "sentiment": -12
         },
         "Growth & Markets": {
-          "count": 2,
+          "count": 1,
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 8 recent reports, led by world & society. Top story: “India and UAE strengthen strategic defence partnership in 14th JDCC meeting in Abu Dhabi”.",
+      "brief": "Coverage is mixed across 7 recent reports, led by world & society. Top story: “India and UAE strengthen strategic defence partnership in 14th JDCC meeting in Abu Dhabi”.",
       "articles": [
         {
           "title": "India and UAE strengthen strategic defence partnership in 14th JDCC meeting in Abu Dhabi",
@@ -4341,15 +4398,6 @@
           "publishedAt": "2026-11-27T08:43:08.000Z",
           "sentiment": -12,
           "channel": "Security & Conflict",
-          "severity": "Low"
-        },
-        {
-          "title": "Drug Offence Investigations In Dubai: Arrest, Testing And Court Procedure",
-          "source": "Legal 500",
-          "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQQ05JdGJjSVdDNFQ3UzBNNkRmeTZ1WW5hMDE4eEZGTS1WSURkLXFMc0xTQjJ3WmVHZC1SV045NkY0akdlWk9OM29KWTlNWjhKblZEeVFoS2ZnTWR5YTJtOEl2bTkzNHBidHhFZ2std1NoRVJSV1NGRXoxMEV4Q0owLXRUUjRLYXo4NjIwQTctZDdLSzB5aWxPZXVXSjF2M2VLM3RxUkIxT0xCVVpGcnhOenJBTkZwZGNZak0xck9BM3FNQUF1eWluT2plaEJfM0tNRVVUakpGalNMSHM?oc=5",
-          "publishedAt": "2026-11-27T08:30:02.000Z",
-          "sentiment": 0,
-          "channel": "Growth & Markets",
           "severity": "Low"
         },
         {
@@ -4400,7 +4448,7 @@
           "sentiment": -17
         }
       },
-      "brief": "Coverage is cautious to negative across 10 recent reports, led by trade & tariffs. Top story: “Doha Film Festival Showcases Five Projects From Qatar’s Industry as Local Filmmakers Hail Start of a ‘Golden Era’”.",
+      "brief": "Coverage is cautious to negative across 8 latest reports (10 matched), led by trade & tariffs. Top story: “Doha Film Festival Showcases Five Projects From Qatar’s Industry as Local Filmmakers Hail Start of a ‘Golden Era’”.",
       "articles": [
         {
           "title": "Doha Film Festival Showcases Five Projects From Qatar’s Industry as Local Filmmakers Hail Start of a ‘Golden Era’",
@@ -4477,22 +4525,48 @@
       ]
     },
     "South Africa": {
-      "sentiment": -3,
-      "volume": 6,
+      "sentiment": 5,
+      "volume": 10,
       "severity": "Low",
-      "dominantChannel": "Inflation & Rates",
+      "dominantChannel": "World & Society",
       "channels": {
+        "Energy & Supply": {
+          "count": 1,
+          "sentiment": 0
+        },
+        "World & Society": {
+          "count": 3,
+          "sentiment": 0
+        },
         "Inflation & Rates": {
-          "count": 5,
-          "sentiment": -5
+          "count": 3,
+          "sentiment": 11
         },
         "Trade & Tariffs": {
           "count": 1,
           "sentiment": 3
         }
       },
-      "brief": "Coverage is mixed across 6 recent reports, led by inflation & rates. Top story: “South Africa sells 265 million rand of inflation-linked bonds at auction”.",
+      "brief": "Coverage is mixed across 8 latest reports (10 matched), led by world & society. Top story: “Scatec JV Lyra Energy starts construction of 126 MW solar in South Africa”.",
       "articles": [
+        {
+          "title": "Scatec JV Lyra Energy starts construction of 126 MW solar in South Africa",
+          "source": "Renewable Energy Magazine",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOVFh5ekNzSDVXUWpVdWlXNk9nZFdyZXpBYk1ZMGxlM1UybUhVcU1kZ1RCV2pDZHdfb1hLT3huN1g5RllrdFgtZlBLaUtTaExlTU80THdsWWhuWVVWeG8xS1M0WFFscUdqaEcwVXpiUU9uYTVFVi1fWk1qR0lGc1Ezb19OdmZtUkN5dlNYNHRpWWtCRXpKYmNPV25DWDVBNUxBaGN4UA?oc=5",
+          "publishedAt": "2026-11-27T13:57:44.000Z",
+          "sentiment": 0,
+          "channel": "Energy & Supply",
+          "severity": "Low"
+        },
+        {
+          "title": "South Africa's Takealot sees first profitable half-year as sustainable",
+          "source": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOc0o3LTh6dFVCX2lXR3NmOWpZN2Q0eDl3WFg3NG8zejc0MThjUWhueEszMWJsSXl5MGtkdzRSMkVwR2tXSDhQaFZteW9ZeG5PYkw2d0FBcTBiV2ttVE5qbU5YT3F3ai1aYnh5X3M1M0F5RnUxd3ZGbndQcmJvY0g1VDhiT0stMWNweUtqXzlTM2JjTXNMNlEzUFNiX1EzdTZlb3FQd0djWWFGbDRLNlo0TF9FbXpQUQ?oc=5",
+          "publishedAt": "2026-11-27T12:46:21.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
         {
           "title": "South Africa sells 265 million rand of inflation-linked bonds at auction",
           "source": "TradingView",
@@ -4501,6 +4575,15 @@
           "sentiment": 0,
           "channel": "Inflation & Rates",
           "severity": "Low"
+        },
+        {
+          "title": "South African rand strengthens on precious metals rally",
+          "source": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOeFB4SFJBdWY0S0hvMVFUeWhDNlBFRnR0SlBQX0FaR0NSRUlfNmtCSFViRmlqVDhya3NOQXVBX1lPX1B1WFhLUFQwUlM1a1p1WDdxa1ZEajJ6R0s2dEI3N285bkpnMkdTT3VqMGtQb05BUU1XMEtNYTZWMXpMd3k2ZzdaRTh4aVV6NWp4aUNIY2RLbUlicV94M1pKTTkwcTF5ZmlV?oc=5",
+          "publishedAt": "2026-11-27T07:43:00.000Z",
+          "sentiment": 34,
+          "channel": "Inflation & Rates",
+          "severity": "Medium"
         },
         {
           "title": "South Africa’s Rand Hurtles Toward Worst November Against Dollar in 25 Years",
@@ -4512,6 +4595,24 @@
           "severity": "Low"
         },
         {
+          "title": "South Africa Eyeing SMRs to Supply 5.2 GW of Nuclear Capacity",
+          "source": "Crude Oil Prices Today | OilPrice.com",
+          "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOLVJud2hjdzBTemR1aDRiTkw0OW1Jc1h1bEhRVDdFUC1WaUhFWlRNemdHVWRHWWR3RDZVN2o1WWZERlpubFVmTThkX1JwSXltZzZVZXVncFNmdkxKMjBwTXRJUkVMcUk4bC1HRUZTM3pYZ2dfeXFpU2lNYkR2aXlJNlA1Sy1pOTc1WUFlVUVKanRIa0EwbkhKV0dLRUk4a3NBQXA2cDZxOTRubzE1NVZDU2lrcGVMZ3pnYld30gHAAUFVX3lxTE5HSlA3eE1qVGVtWEVSZUVyNGtIZm9uSHhfTWZ0dnk0UjRtR1FzWjVYbHJ5SWpLSEJUd3g5SjBXcV96bVlPdmh1M0t4cDh2WU1Jd21WekFzZ1JXY0Vob1BYc2tnYmRhLUJNLXl5d1drUXdmVHNzUXFwN2M3T2liLWRWbkRvNGZxcXp6eGEyUS1nNC1UeXNYSzhIOThGX1RLMGhFbGlxOWNVWmd4QzhCWGwtemgybzI4UERQZDJKZUpzag?oc=5",
+          "publishedAt": "2026-11-26T00:00:00.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
+          "title": "Why South Africa’s gang problem is also a gender equality problem - Global Initiative against Transnational Organized Crime (GI-TOC)",
+          "source": "Global Initiative against Transnational Organized Crime (GI-TOC)",
+          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQV3VkV1ZtQUJ0NGhPbXZHSmxId0I3aFhOaGVNb0ozM2E2c19NWi1IUkJSU3UyekdKcDVjZnNrOHdHTnI4ZTNPSldKVHA4bmVYcGd4WUs0Zk1zRno3OVdPSEdteXNVVU9VcWtTWjlyZnh2TU1CV0NITkV0cWQ3RTJyeGRIRkhWZw?oc=5",
+          "publishedAt": "2026-11-25T19:57:37.000Z",
+          "sentiment": 0,
+          "channel": "World & Society",
+          "severity": "Low"
+        },
+        {
           "title": "After facing double hit from South Africa and Canada, world's largest economy moves to slap China with fresh tariffs despite Trump's $30 billion deal with Xi",
           "source": "Business Insider Africa",
           "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOTUs4TnhrX3JMZFozWDhCaDNfalc0UjdnSVd6cW12el9RU01kY0pxMWtIUEk1N3ZELWVRMkJaN3djdE9MWHZyYkNlVkgxUWlqZDdMOFkxalFQZWFSdUxSSFFGQ1g2c29tTFozMzBld1dIeU5KTTRPa3U4VFota29KTkZYT1R6djJ6WjdNaHdpOWRsRjFGT29CbVNhekNwSmZvLUVNZFZ4bHJMWWQ1bFRCYXhFazljNEptQnVoU3JSM3RXUzlfczlfcGZtY0dyV3dha183TzZjUQ?oc=5",
@@ -4519,52 +4620,25 @@
           "sentiment": 3,
           "channel": "Trade & Tariffs",
           "severity": "Medium"
-        },
-        {
-          "title": "South Africa’s Rand Slips As Traders Wait On US PCE",
-          "source": "Finimize",
-          "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNWENPXzNwaXEzUXhMek9Cdmg1YXA5M0NmcFlsRWlmV2J4WWV6WkVrN1RueXkxQTNZV3lMSjNJMmVYZm8taWRhVUFqWTZMbHZlcGdOb1hpRU00cGtMbmJIUExpWXRvSlJuTDRjRExES2QxMGV5RVdYVmJFWWpGWUFTQWlneDd4QQ?oc=5",
-          "publishedAt": "2026-11-25T14:41:07.000Z",
-          "sentiment": -12,
-          "channel": "Inflation & Rates",
-          "severity": "Low"
-        },
-        {
-          "title": "South African rand eases, with US inflation data in focus",
-          "source": "CNBC Africa",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOOHpMTXJndDhWbGJaZTZselB3Q3hMZTBBbFltZ3phMWhJZkUzV0duWUp0ZnZrZXlsUHNoUmVvOUJiLXFYaWVpSFV0U1ZCS09HOFpwRkRwVjBpQlNOZkgyY1E0bFpCa1JIaFJ2azhvNEtHYVdBZzllbVFPY0NNNUREc3A3UEpQTlJGNDNZaFROVTFMQQ?oc=5",
-          "publishedAt": "2026-11-25T12:56:24.000Z",
-          "sentiment": 0,
-          "channel": "Inflation & Rates",
-          "severity": "Low"
-        },
-        {
-          "title": "South African rand hit by a perfect storm",
-          "source": "Daily Investor",
-          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOck5BcDdHMHNxWGNkLVk3UE02OUhVTEVpZ3hZVmxpV09VV1FTNk9VN2I4WEV6ekxCUnEzTmVFSlkxT3JhNUhvM2k3aGs1ZW5TZEZ3ek5vWjZWaEM1dkxiSGpJcVFkZVNSdEJ3ZWY4RmxuOXl0bW85SHo4ZVk5UU43Z1ExNS1JSVowRVo0?oc=5",
-          "publishedAt": "2026-11-24T06:00:00.000Z",
-          "sentiment": -12,
-          "channel": "Inflation & Rates",
-          "severity": "Low"
         }
       ]
     },
     "Kenya": {
-      "sentiment": 6,
-      "volume": 2,
+      "sentiment": 4,
+      "volume": 3,
       "severity": "Low",
       "dominantChannel": "Growth & Markets",
       "channels": {
         "Growth & Markets": {
-          "count": 1,
-          "sentiment": 12
+          "count": 2,
+          "sentiment": 6
         },
         "World & Society": {
           "count": 1,
           "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 2 recent reports, led by growth & markets. Top story: “Kenya News Agency - KNA. . President William Samoei Ruto – stabilising our economy has attracted foreign investment”.",
+      "brief": "Coverage is mixed across 3 recent reports, led by growth & markets. Top story: “Kenya News Agency - KNA. . President William Samoei Ruto – stabilising our economy has attracted foreign investment”.",
       "articles": [
         {
           "title": "Kenya News Agency - KNA. . President William Samoei Ruto – stabilising our economy has attracted foreign investment",
@@ -4583,39 +4657,39 @@
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
+        },
+        {
+          "title": "The Star Kenya: Nairobi named among top cities with stolen wealth in real estate",
+          "source": "thesentry.org",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPRTlrdkJXdGRxQ2dsZ1JRME1jTnY1OU5sQU1MRFA5azNvQ2VMY0VZQ0VEREMxTTdrMEJqOGdHMGJ6TWlNbWJKMmJNeWtzeFR0SEVPVVBRbU1JSGljQ0F6aUZ0T3VDbUpPVDJBWjUwQllsbjRQWXlPTTNtX0xGdnhYb1RXNlltakZCYU12UHhDdUFVVEFVSF9uOTFGbw?oc=5",
+          "publishedAt": "2026-11-23T12:30:44.000Z",
+          "sentiment": 0,
+          "channel": "Growth & Markets",
+          "severity": "Low"
         }
       ]
     },
     "Ethiopia": {
       "sentiment": 2,
-      "volume": 9,
+      "volume": 8,
       "severity": "Low",
-      "dominantChannel": "Growth & Markets",
+      "dominantChannel": "World & Society",
       "channels": {
-        "Growth & Markets": {
-          "count": 3,
-          "sentiment": 8
-        },
         "Inflation & Rates": {
           "count": 2,
           "sentiment": -6
         },
         "World & Society": {
-          "count": 3,
-          "sentiment": 0
+          "count": 4,
+          "sentiment": 3
+        },
+        "Growth & Markets": {
+          "count": 2,
+          "sentiment": 6
         }
       },
-      "brief": "Coverage is mixed across 9 recent reports, led by growth & markets. Top story: “Ethiopia Promotes Investment Opportunities to Turkish Business Community”.",
+      "brief": "Coverage is mixed across 8 recent reports, led by world & society. Top story: “Ethiopia to Repay Nearly 28 Million US Dollars to IMF on Christmas Eve”.",
       "articles": [
-        {
-          "title": "Ethiopia Promotes Investment Opportunities to Turkish Business Community",
-          "source": "ENA English",
-          "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE93YnBpTFgyUjdzcHpORWxrMUtkVTFyMlZ2aWQwcFAxZUZoYzAycGNQOXpERW4yOVRObjdILVRMQTFoZERvbkZ2LXc1VmdPaWt4SXc?oc=5",
-          "publishedAt": "2026-11-27T16:18:31.000Z",
-          "sentiment": 12,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
         {
           "title": "Ethiopia to Repay Nearly 28 Million US Dollars to IMF on Christmas Eve",
           "source": "Birr Metrics",
@@ -4678,29 +4752,42 @@
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
+        },
+        {
+          "title": "Ethiopia’s Abiy launches initiative to host inclusive Sudanese dialogue",
+          "source": "Sudan Tribune",
+          "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5GblFIdnhBcHNwMTNBWmhpRERwUWx1X0R3MlBCcFlMdGUzY2VaajgtdnktRW9tV3pwbDFRQ2I0b3ZrdUg4eWFxbjlLeUREUzU2?oc=5",
+          "publishedAt": "2026-11-24T21:00:14.000Z",
+          "sentiment": 12,
+          "channel": "World & Society",
+          "severity": "Low"
         }
       ]
     },
     "Ghana": {
-      "sentiment": 4,
-      "volume": 8,
+      "sentiment": 5,
+      "volume": 7,
       "severity": "Low",
       "dominantChannel": "World & Society",
       "channels": {
         "World & Society": {
-          "count": 4,
-          "sentiment": 11
+          "count": 3,
+          "sentiment": 15
         },
         "Growth & Markets": {
-          "count": 2,
-          "sentiment": -6
+          "count": 1,
+          "sentiment": -12
         },
         "Inflation & Rates": {
           "count": 2,
           "sentiment": 0
+        },
+        "Trade & Tariffs": {
+          "count": 1,
+          "sentiment": 0
         }
       },
-      "brief": "Coverage is mixed across 8 recent reports, led by world & society. Top story: “Ghana buys back Sh138 billion of domestic bonds ahead of February 2027 maturity”.",
+      "brief": "Coverage is mixed across 7 recent reports, led by world & society. Top story: “Ghana buys back Sh138 billion of domestic bonds ahead of February 2027 maturity”.",
       "articles": [
         {
           "title": "Ghana buys back Sh138 billion of domestic bonds ahead of February 2027 maturity",
@@ -4748,131 +4835,19 @@
           "severity": "Low"
         },
         {
-          "title": "Ghana: Cardinal Peter Poreku Dery features on new GH¢2 banknote",
-          "source": "Vatican News",
-          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUnZQMDJvODF5UEVlVFNxZnp6QWdrcXA2RnhOSFFPSFdobXRtY0VaXzl3ZnIyRnR2aTVvMUlKYmNiZTNKX1FPXzFFUkxVZ3oyRTJFVW91MEFESEtwMmtHdjJHc2FpUDNXR2lPOGlSNW9wUnllVmlWbFk5WXEwSVBoZjFURXhiNl9CdTlhWmkwQTlIc05oQ2NxSzg3S1B2T015Ri00Q0F6cDhMZW5YOXZDRDJfVDE1eV84?oc=5",
-          "publishedAt": "2026-11-25T15:10:10.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        },
-        {
-          "title": "Industrialisation Drive: Mahama Seeks German Technology to Transform Ghana's Economy|Prime Business",
-          "source": "Modern Ghana",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBJT0Q2NHM4eEo0bi1KaVhTZzQ0emx1T1Vfb0dXWWFVM05PdFB6RE1qSmdwd2JVR2w0OGFoV0R3eWdjNkNTY3NMcFNsZE1NRENSMFhSQWhMUkI0NzNLMGQwVWRDVnjSAVxBVV95cUxNVjM5UURGZlNLcC1HVldCMktQLVlhWXZxcjVBYXloaUdXeldHYU00RDJfaXI3TnJJb285RXpKOVJyZ19SX1NIbk1xa1RRS183YVFVZ1FweDZTMGRHTw?oc=5",
-          "publishedAt": "2026-11-24T22:20:00.000Z",
-          "sentiment": 0,
-          "channel": "Growth & Markets",
-          "severity": "Low"
-        },
-        {
-          "title": "The Ghana Cedi Heritage Series – AI and online conversations around new banknotes",
-          "source": "Ghana Fact",
-          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOZDd3Q0JBbEZzbGJ0S2lNNnR1Z3otbWpmRVNDd0pIU21yVXo2NGhOSE4tUmtSRGh4YTIyMjhoQ1I1NWJVSGJjRng5cHVCalE1VjNRdlRER3B3b0l4Q0VGc0pncDQzUDhuM05RemI0OXJGdFlKMUZPOUVWY0xyLXlNWl9SNDZIZ3NiNy1oaTU3Vy05VlZTbHBwcHRxVnVSNXlNVnlZYg?oc=5",
-          "publishedAt": "2026-11-23T13:35:30.000Z",
-          "sentiment": 0,
-          "channel": "World & Society",
-          "severity": "Low"
-        }
-      ]
-    },
-    "Sri Lanka": {
-      "sentiment": -4,
-      "volume": 10,
-      "severity": "Low",
-      "dominantChannel": "World & Society",
-      "channels": {
-        "Growth & Markets": {
-          "count": 2,
-          "sentiment": 6
-        },
-        "World & Society": {
-          "count": 3,
-          "sentiment": -19
-        },
-        "Energy & Supply": {
-          "count": 1,
-          "sentiment": 0
-        },
-        "Inflation & Rates": {
-          "count": 1,
-          "sentiment": 12
-        },
-        "Trade & Tariffs": {
-          "count": 1,
-          "sentiment": 0
-        }
-      },
-      "brief": "Coverage is mixed across 10 recent reports, led by world & society. Top story: “S&P Upgrades Sri Lanka Rating to B-, Default Unlikely”.",
-      "articles": [
-        {
-          "title": "S&P Upgrades Sri Lanka Rating to B-, Default Unlikely",
-          "source": "Rediff MoneyWiz",
-          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOa3YxbkFyVF9HcDZqMlg5R0Z1YkE5YmFiUkFwS0JpVHUyb3hjMTNzT2VFTHBGRkV0NV9CUGVFaGV3dnFPRHdfaDg0MUxleThQeTNTaUJ1RHNfVkVNWVR6ekpJZkdXQS12Zm5FX0RwT1J2YTVCa3prdG05SE90MzdMYVFZY0g1ZkpOZkE3V18tbDVicnpUQjVmOUVBazhpYUc4RG82RjFB0gGrAUFVX3lxTE5TLVhQUUVRWjBYREhzRGswWVZ3WlQweHBJRVIyTlVYMmMwUFJOclk2TGhxV1JCcDhvbEItU09LRHRjNDcwTUhBVjBEdEtwZG1iMmd3UGNFSlZSV2wtdEZMU0dMS3pXcHVrNEprMHV5Z1V6ZVJzWGlzLWIyazZvOGVXVy1FcHFHYXRsbjZTNlFFRDQxNERPZ2VCWXBvVTF5Uk1PMk1PcTRBVVY5SQ?oc=5",
-          "publishedAt": "2026-11-27T15:59:33.000Z",
-          "sentiment": -12,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
-        },
-        {
-          "title": "Sri Lanka credit rating upgraded",
-          "source": "The Straits Times",
-          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5WWGZFU09qWFJjdW80OE9DMG1NbWoxYk9UQlZXdTIwUElpWjQydnUxdXhrbXpjdmtpQXp6OHIzQmZnTjJjZWplOXVuMUFVeS13YXlqZk9PekNuTk1nOVZyQnJjSkh5S1lsWURTeHR1VWl4NW9LUDY0a1F3?oc=5",
-          "publishedAt": "2026-11-27T13:06:00.000Z",
-          "sentiment": 23,
-          "channel": "Growth & Markets",
-          "severity": "Medium"
-        },
-        {
-          "title": "Fleeing murder suspect crashes into elephant in Sri Lanka",
-          "source": "CTV News",
-          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNWUdiT2R0Rk5wU3BHd3VvV1E5Z1NQUmNvZ1c5YVlSUmg5QmlxS1pjR0NtLWJFcWtoZF8xZExpcW9pbW5EaWVCdGRzZnY0d0N0MWJzRi1sR2R0eUNlZmU5d2tEUXd6OWQyVVVEak90dGhTaEhqUjdCcUpmRC1NQXMybEVHNTY0Tk56N3dMaVBoNmlicElYelM1Qnp0MA?oc=5",
-          "publishedAt": "2026-11-27T12:43:53.000Z",
-          "sentiment": -34,
-          "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "EXPLAINER – Why S&P warns Sri Lanka’s recovery facing storm clouds ahead?",
-          "source": "EconomyNext",
-          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQVUYtZkJDdUxHUDcwQVo5NzJTMXZ2RExXY2ZCSG55M21WNFl3UUlkc2t2OXN4bWdPQW9ZMkNGb3dNZEVsRGRoUDB4UjROVUxrbVF2R0hpVTY4WXlQaHZoU3NKdWFUZWZ5QWR0cFAwSFNmQ3N1QnB3akNLNllfYnB3Z3ZqWXRVUTdhdHZIWWZySHllZHFKQ2FSVzhOckowTEkxRWc?oc=5",
-          "publishedAt": "2026-11-27T12:03:39.000Z",
-          "sentiment": 0,
-          "channel": "Energy & Supply",
-          "severity": "Low"
-        },
-        {
-          "title": "COLOMBO, Sri Lanka —A Sri Lankan man suspected of fatally stabbing a woman was arrested on Friday after he crashed his scooter into a wild elephant as he attempted to escape, police said. Read more: https://tmt.news/2479010",
-          "source": "LinkedIn",
-          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNaWpleEU0ZDBPU01YSm13LWhzZkMyS2pGcDdVTTFHQ1lkWXNjdHJ3YVlpUlNmb2RydjdGNG5vaWhsWUpKTjNQYjRjMWFwenA2dUxRXzdMWUMwa0Z0NU5OWkFwTUJHeUJ2TlJQazRpc2R3TlZ6T0dRdXFCZ0J4dXluZ2Q4aks0bXI1U3lVZDRSdmxTeWV3ZWdKVjRzejlzQU9CRDh0N09tWVZHQV9iQnQxZGpUc1ZlZEtrNlZ0cFBKcFZLbGQx?oc=5",
-          "publishedAt": "2026-11-27T11:04:41.000Z",
-          "sentiment": -23,
-          "channel": "World & Society",
-          "severity": "Medium"
-        },
-        {
-          "title": "World Bank Group expands local currency financing in Sri Lanka",
-          "source": "Capital FM Africa",
-          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOX1AwY0VqVlFXVWpSbkp6c3RIOWd0b3B4SkptdjYzc1F1UUo1cDAyTXZ0RHUyY3R2dnpmc25mU2pWX25rWHk2U01KSTN3STVpUnhLZlZ2VHI0QWpiTVFURUxEREdZam9qNlpzWllrOXJTbFp1VGpwX0RWSU1ybFVEYWNuaTNnSGxqeHM2NzJ2bUt3dw?oc=5",
-          "publishedAt": "2026-11-27T07:01:13.000Z",
-          "sentiment": 12,
-          "channel": "Inflation & Rates",
-          "severity": "Low"
-        },
-        {
-          "title": "Report: The Evolving Role of Chinese Imports in Sri Lanka’s Economy",
-          "source": "The China-Global South Project",
-          "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBzRnZqV2dDOGZ4aU1PdGxCaEhXaE44RTFsMG8zSmFDaFhMQU5FblZMVGFIQzVFbVJpQzNKdEptZTFUMHVhYWtmZzFqWDREMWNPcTJLRWRsc2hWdGxuR2otMHhValNqVUhZUVdMcUJOcjc3YzQ4LVA2V19OTm4?oc=5",
-          "publishedAt": "2026-11-27T04:17:54.000Z",
+          "title": "Diversifying Ghana's economy beyond traditional cocoa exports",
+          "source": "CNBC Africa",
+          "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVTJDWmVBd3NCS1lsTDVVRlQ4aE9hN1p1ajBXX2ZqRFluWG14QVAxR0U1Nll4ZXhrTUNadlBMdDloYWxiUXI4a0dqTk80U1BJYVNDN2FNWW1PSFIyb2VTRjdyajJaSWd5cFVFNUpFVjl5S3hPb1pvWlNMWFllcXlSYWx5NEZyT0R2eGw1bGhHblJmT1VPUkQwM2w4cmxYRHlGbDZURnVyc0RwdUE?oc=5",
+          "publishedAt": "2026-11-25T15:43:57.000Z",
           "sentiment": 0,
           "channel": "Trade & Tariffs",
           "severity": "Low"
         },
         {
-          "title": "Report: Sri Lanka’s Trade Balance with China",
-          "source": "The China-Global South Project",
-          "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBIY1RlSDd0bDVIM2Q1bkF5bEs3a29UcHpKb2k0QVVwaFlkVHpFdUpBa0s4WHZJWWZBRjJtcVJTU09xRkg0dFFTQ1FlSVFLUjZkSFVmdnJCMEV0TGRlaTJDN1I0RlRuVExrenEtTUowSS1LdFNLdUUw?oc=5",
-          "publishedAt": "2026-11-27T03:35:59.000Z",
+          "title": "Ghana: Cardinal Peter Poreku Dery features on new GH¢2 banknote",
+          "source": "Vatican News",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUnZQMDJvODF5UEVlVFNxZnp6QWdrcXA2RnhOSFFPSFdobXRtY0VaXzl3ZnIyRnR2aTVvMUlKYmNiZTNKX1FPXzFFUkxVZ3oyRTJFVW91MEFESEtwMmtHdjJHc2FpUDNXR2lPOGlSNW9wUnllVmlWbFk5WXEwSVBoZjFURXhiNl9CdTlhWmkwQTlIc05oQ2NxSzg3S1B2T015Ri00Q0F6cDhMZW5YOXZDRDJfVDE1eV84?oc=5",
+          "publishedAt": "2026-11-25T15:10:10.000Z",
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
@@ -4890,7 +4865,7 @@
           "sentiment": 11
         }
       },
-      "brief": "Coverage is constructively positive across 11 recent reports, led by trade & tariffs. Top story: “Exports of wood pellets from Vietnam to Japan jump 54.7% in October”.",
+      "brief": "Coverage is constructively positive across 8 latest reports (11 matched), led by trade & tariffs. Top story: “Exports of wood pellets from Vietnam to Japan jump 54.7% in October”.",
       "articles": [
         {
           "title": "Exports of wood pellets from Vietnam to Japan jump 54.7% in October",
@@ -4967,25 +4942,21 @@
       ]
     },
     "Thailand": {
-      "sentiment": -3,
-      "volume": 9,
+      "sentiment": -4,
+      "volume": 10,
       "severity": "Low",
       "dominantChannel": "Energy & Supply",
       "channels": {
         "Energy & Supply": {
-          "count": 5,
-          "sentiment": -7
+          "count": 6,
+          "sentiment": -10
         },
         "World & Society": {
           "count": 2,
           "sentiment": 12
-        },
-        "Trade & Tariffs": {
-          "count": 1,
-          "sentiment": -12
         }
       },
-      "brief": "Coverage is mixed across 9 recent reports, led by energy & supply. Top story: “KCC in Thailand hosts rainbow-colored rice cake workshop”.",
+      "brief": "Coverage is mixed across 8 latest reports (10 matched), led by energy & supply. Top story: “KCC in Thailand hosts rainbow-colored rice cake workshop”.",
       "articles": [
         {
           "title": "KCC in Thailand hosts rainbow-colored rice cake workshop",
@@ -5024,15 +4995,6 @@
           "severity": "Low"
         },
         {
-          "title": "Nvidia Halts GPU Exports to Malaysia, Singapore, Thailand, and Indonesia",
-          "source": "PCMag Middle East",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNQzRCZi1wUWk4ZF9BaXZqb3hVVC1mSGRpY3dkNGtnOUJDa2lGV2VJMG93MkFBd1JyNmt1a2oxQTlHM0lHOTIzWHlFNDZtRHJBb1JpbzM0Ny1IeWs5b1l0UkMwcTEzNXQ4Tk50NXpabHY3YVoxNms5UFljVUJCT0xYOTNCNEY1cXZMMDIzSkVKcFNaSlpRNFBYRTBrVmY2Tjl2RnZ0R0NsZ0kxMkJXYU5jQkJxNTU?oc=5",
-          "publishedAt": "2026-11-27T04:05:46.000Z",
-          "sentiment": -12,
-          "channel": "Trade & Tariffs",
-          "severity": "Low"
-        },
-        {
           "title": "Bangkok oil refinery explosion injures at least 9, Thailand company monitoring air quality",
           "source": "Fox News",
           "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNWVJJbzVwNlJLWmI1SnlqeVgtOThOeFJqMzZUV2VLMUlaOU1PVHlYYi1nZTlfNGVsbU1wOEVHTlB5Uk1lNm5YZjJvVi1JTF9haFJzTC0wSHRWOEhjRFBud2tva2JxQTBCX1ZpQkN0US1qSmhqdG9RLUxxSzJ3U0FaWFBZR0pCVHkyUlN1QUc2UnhKbEpFVDA3UzVkNnRBbGdZU2ZuUlpoaFdEbjJGMmZLYmlRakZzZjDSAbwBQVVfeXFMUE1iM1poSGhmYThkdVhuajhwN2Q5UTM3Q2xmWDc3OVZEcmN0ZVk3eFFwNjVfR21CeXl3eEplMWlvSzNBdlFRNGtKeXR0NWtCVkhST0djMnk5TmM2aGpRXzFlVV91emw4bjlqTG5DVG04YjFrUnNvNVQwMmlrSzZtOHBzM21JcWxpQ3dOQmNkMDRrQ2FiRVlyYmJRclhpQW9xV28yaHFqQXpOcmFna2haWG9WYTRiNDhXVm00VW4?oc=5",
@@ -5058,12 +5020,21 @@
           "sentiment": 0,
           "channel": "World & Society",
           "severity": "Low"
+        },
+        {
+          "title": "Thailand's Bangchak shuts all units at Bangkok refinery after fire, says 9 workers injured",
+          "source": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPWlNPSnIxb2YwTEVOMjktMmk4V1YtVkU5MWFHQ1BwaWtPc194NllBSmdpRDg3Ykg2RVBFenJCLVF3QVBDS090c1RicHBscV9mQWRWOHdpVUk2ZlVLdWN4ajJJSVR3a1dzRF9walA2NTcwMW1SeFpNdDhFbzVGbVZadUY4QlBXbVpJZEpYMk5QMmFBMjdtWDdTdzh5OTN5ejdDVEdiSHNnQmh4TktwbnFhY3FqSzI?oc=5",
+          "publishedAt": "2026-11-26T12:35:19.000Z",
+          "sentiment": -23,
+          "channel": "Energy & Supply",
+          "severity": "Medium"
         }
       ]
     },
     "Malaysia": {
       "sentiment": 6,
-      "volume": 8,
+      "volume": 9,
       "severity": "Low",
       "dominantChannel": "Growth & Markets",
       "channels": {
@@ -5080,7 +5051,7 @@
           "sentiment": 7
         }
       },
-      "brief": "Coverage is mixed across 8 recent reports, led by growth & markets. Top story: “Malaysia approves its first spot Bitcoin ETF, and it's Shariah-compliant”.",
+      "brief": "Coverage is mixed across 8 latest reports (9 matched), led by growth & markets. Top story: “Malaysia approves its first spot Bitcoin ETF, and it's Shariah-compliant”.",
       "articles": [
         {
           "title": "Malaysia approves its first spot Bitcoin ETF, and it's Shariah-compliant",
@@ -5157,7 +5128,7 @@
       ]
     },
     "Singapore": {
-      "sentiment": -8,
+      "sentiment": 5,
       "volume": 10,
       "severity": "High",
       "dominantChannel": "Trade & Tariffs",
@@ -5166,12 +5137,16 @@
           "count": 3,
           "sentiment": 4
         },
+        "Growth & Markets": {
+          "count": 1,
+          "sentiment": 34
+        },
         "Trade & Tariffs": {
-          "count": 5,
-          "sentiment": -15
+          "count": 4,
+          "sentiment": -1
         }
       },
-      "brief": "Coverage is mixed across 10 recent reports, led by trade & tariffs. Top story: “Singapore HSA approves Gene Solutions’ SPOT-MAS 10 IVD test”.",
+      "brief": "Coverage is mixed across 8 latest reports (10 matched), led by trade & tariffs. Top story: “Singapore HSA approves Gene Solutions’ SPOT-MAS 10 IVD test”.",
       "articles": [
         {
           "title": "Singapore HSA approves Gene Solutions’ SPOT-MAS 10 IVD test",
@@ -5192,13 +5167,13 @@
           "severity": "Low"
         },
         {
-          "title": "Proposed US tariffs could hit $7.3B of Singapore exports",
-          "source": "VnExpress International",
-          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPTzBGcTl1OG9PNTNZY1RVMFFyOFNHMFNRU1ExQ2JPTzYxenE0Vnc0SE1mOU02eWxMck1uaGNuY2FITDc2LTFqYVc3dkk4U2dQRW5BWFk0cDN0ZUF5eFFJM1VUbTM0eW5yVWZzRXhmdU42cDZ1TDZhN1JRRTU4Nms2ZWgya0dSdXZIaWtKamw1QmNJREJJT2kxbnktU1JtM1pTaF90bVhDVThkcmVPaDJienBpQVA?oc=5",
-          "publishedAt": "2026-11-27T07:29:48.000Z",
-          "sentiment": -34,
-          "channel": "Trade & Tariffs",
-          "severity": "High"
+          "title": "Singapore, Kazakhstan sign four agreements, including one to boost economic cooperation - Singapore Economic Development Board (EDB)",
+          "source": "Singapore Economic Development Board (EDB)",
+          "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQcDNLOTkxcFY3a2IxYmRhM29BVUNjNHhJUmtUUGFLRUdpbzl3UlRxN3RvLURUOTZLQUFOc1l3Q1RvQWxhUDQ3TEphcjczcld2OU1jRnJ6b3pSUGtxRDU2d043bTAwcm8yUGZDaDEzdHBoV3hKcGVFNFl6WkpQSnBJQ0JLWFA3TnhCVVphVlJUZXZabTJsY1hGNEIxZVE0aGdnV29XQlNWcFIzaUVaSld1b1FaZ210R1hUQVN5ejc2cDNRbUsx?oc=5",
+          "publishedAt": "2026-11-27T08:56:11.000Z",
+          "sentiment": 34,
+          "channel": "Growth & Markets",
+          "severity": "Medium"
         },
         {
           "title": "Singapore Talking to US to Keep AI Chip Access, Deputy PM Says",
@@ -5237,13 +5212,13 @@
           "severity": "High"
         },
         {
-          "title": "Singapore rebuts US tariffs logic on pensions scheme, as Southeast Asia hits back",
+          "title": "Singapore challenges US tariff logic as free trade pact faces 20% levy",
           "source": "South China Morning Post",
-          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQUsxX0lWdkRCLV9hUmtOREgxQmw4b1VwNTdvN29UUXoybm11RG1HSVY0QVZIVVlkdjhaUVhKaTNvYUZtc3Jnc2ZsNkVjWmRaVHFEbFVRekdpQnFPSUFpaHZ0R2hydVlPVkNTejlSV0JnWlNpRDdHV0g1M05hdEt1S01kYlhVc2x0Z2dlbTlUSHBiN0xXbnNGRlh5UzZUYndEa1djaUtGb3JfZXpLMTZSei1CNkpYbkgwektBWVo5TdIBvwFBVV95cUxNeFlCc0dycG5ySzhsT1FiQ3IxcVRfQ1lQejBQWVY5eU5INENhSmk5dkxrYXBuakpBckpDdVhnb0J4OWR1WXJYYVZJenRva0VBd3ZCb0IwcWRpX1EzZmJYYWZ2UFdTRkNRUkl1b0xSQzM2RFlSdTZ5bWNLT3gxUEJOMGZ6VHpmVHctcWdpZllIRjNlNmFQXzRPQkdxRVlyNk9vRnJIZWUxMXVQM3FYYllnZTFMTTY5WUp6SURGZ2tNdw?oc=5",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNeFlCc0dycG5ySzhsT1FiQ3IxcVRfQ1lQejBQWVY5eU5INENhSmk5dkxrYXBuakpBckpDdVhnb0J4OWR1WXJYYVZJenRva0VBd3ZCb0IwcWRpX1EzZmJYYWZ2UFdTRkNRUkl1b0xSQzM2RFlSdTZ5bWNLT3gxUEJOMGZ6VHpmVHctcWdpZllIRjNlNmFQXzRPQkdxRVlyNk9vRnJIZWUxMXVQM3FYYllnZTFMTTY5WUp6SURGZ2tNd9IBvwFBVV95cUxNeFlCc0dycG5ySzhsT1FiQ3IxcVRfQ1lQejBQWVY5eU5INENhSmk5dkxrYXBuakpBckpDdVhnb0J4OWR1WXJYYVZJenRva0VBd3ZCb0IwcWRpX1EzZmJYYWZ2UFdTRkNRUkl1b0xSQzM2RFlSdTZ5bWNLT3gxUEJOMGZ6VHpmVHctcWdpZllIRjNlNmFQXzRPQkdxRVlyNk9vRnJIZWUxMXVQM3FYYllnZTFMTTY5WUp6SURGZ2tNdw?oc=5",
           "publishedAt": "2026-11-26T05:49:14.000Z",
-          "sentiment": -34,
+          "sentiment": 0,
           "channel": "Trade & Tariffs",
-          "severity": "High"
+          "severity": "Medium"
         }
       ]
     },
@@ -5266,7 +5241,7 @@
           "sentiment": 23
         }
       },
-      "brief": "Coverage is mixed across 11 recent reports, led by world & society. Top story: “NAPMK: Kazakhstan’s oilseed processors provided farmers over 200 billion tenge in five years”.",
+      "brief": "Coverage is mixed across 8 latest reports (11 matched), led by world & society. Top story: “NAPMK: Kazakhstan’s oilseed processors provided farmers over 200 billion tenge in five years”.",
       "articles": [
         {
           "title": "NAPMK: Kazakhstan’s oilseed processors provided farmers over 200 billion tenge in five years",

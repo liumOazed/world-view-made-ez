@@ -92,6 +92,9 @@ const LEXICON = new Map([
   ['rejects', -1], ['rejected', -1], ['halts', -1], ['halted', -1], ['probe', -1],
   ['probes', -1], ['fine', -1], ['fined', -1], ['gloomy', -1], ['pessimistic', -1],
   ['negative', -1], ['cut', -1], ['cuts', -1], ['hike', -1], ['hikes', -1], ['storms', -1],
+  ['military', -1], ['drills', -1], ['exercises', -1], ['tactics', -1], ['troops', -1],
+  ['deployment', -1], ['deployed', -1], ['tense', -1], ['incursion', -2], ['warship', -2],
+  ['warships', -2], ['weapons', -2], ['combat', -2], ['provocation', -2], ['mobilization', -2],
   // Mild positive (+1)
   ['growth', 1], ['grows', 1], ['growing', 1], ['rises', 1], ['rising', 1], ['rose', 1],
   ['climbs', 1], ['climbed', 1], ['climbing', 1], ['jumps', 1], ['jumped', 1], ['gains', 1],
@@ -235,7 +238,7 @@ export function analyzeArticle(title, summary = '') {
 /**
  * Produce a restrained, editorial 1-sentence brief for a country's live pulse.
  */
-export function buildBrief(_display, sentiment, volume, dominantChannel, topArticle) {
+export function buildBrief(_display, sentiment, shownCount, totalVolume, dominantChannel, topArticle) {
   const toneWord =
     sentiment <= -30
       ? 'sharply negative'
@@ -247,7 +250,11 @@ export function buildBrief(_display, sentiment, volume, dominantChannel, topArti
             ? 'constructively positive'
             : 'mixed';
 
-  const lead = `Coverage is ${toneWord} across ${volume} recent ${volume === 1 ? 'report' : 'reports'}, led by ${dominantChannel.toLowerCase()}.`;
+  const countText =
+    totalVolume > shownCount
+      ? `${shownCount} latest reports (${totalVolume} matched)`
+      : `${shownCount} recent ${shownCount === 1 ? 'report' : 'reports'}`;
+  const lead = `Coverage is ${toneWord} across ${countText}, led by ${dominantChannel.toLowerCase()}.`;
   if (!topArticle) return lead;
   const cleanTitle = topArticle.title.replace(/\s+[-–|]\s+[^-–|]{2,40}$/, '').trim();
   return `${lead} Top story: “${cleanTitle}”.`;

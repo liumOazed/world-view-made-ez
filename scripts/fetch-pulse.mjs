@@ -375,7 +375,7 @@ async function main() {
 
     const highCount = topArticles.filter((a) => a.severity === 'High').length;
     const severity = highCount >= 2 || Math.abs(avgSentiment) >= 35 ? 'High' : highCount >= 1 || Math.abs(avgSentiment) >= 16 ? 'Medium' : 'Low';
-    const brief = buildBrief(country, avgSentiment, arts.length, dominantChannel, topArticles[0]);
+    const brief = buildBrief(country, avgSentiment, topArticles.length, arts.length, dominantChannel, topArticles[0]);
 
     countries[country] = {
       sentiment: avgSentiment,
