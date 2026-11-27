@@ -4,7 +4,7 @@
    "publisher": "Transparency International",
    "via": "Our World in Data",
    "page": "https://ourworldindata.org/grapher/ti-corruption-perception-index",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      55,
@@ -733,7 +733,7 @@
    "via": "Our World in Data",
    "page": "https://ourworldindata.org/grapher/liberal-democracy-index",
    "note": "Liberal Democracy Index, 0–1, used in place of the EIU Democracy Index",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      0.398,
@@ -1438,7 +1438,7 @@
    "via": "Harvard Dataverse (CC0)",
    "page": "https://atlas.hks.harvard.edu/rankings",
    "note": "Economic Complexity Index (HS products)",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Tanzania": [
      -0.923,
@@ -2027,7 +2027,7 @@
    "via": "Fragile States Index download",
    "page": "https://fragilestatesindex.org/excel/",
    "note": "Total score, 0–120, lower is more stable",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      70.2,
@@ -2752,7 +2752,7 @@
    "via": "World Bank API",
    "page": "https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD",
    "note": "GDP per capita, PPP (constant 2021 international $)",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      13961.1183693541,
@@ -3537,7 +3537,7 @@
    "via": "WIPO data file",
    "page": "https://www.wipo.int/global_innovation_index/en/",
    "note": "Overall GII score, 0–100",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Tanzania": [
      17.4521317801997,
@@ -4102,7 +4102,7 @@
    "via": "Our World in Data",
    "page": "https://ourworldindata.org/grapher/happiness-cantril-ladder",
    "note": "Life evaluation, 0–10 (Cantril ladder)",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Tanzania": [
      3.902,
@@ -4726,7 +4726,7 @@
    "publisher": "UNDP Human Development Report",
    "via": "Our World in Data",
    "page": "https://ourworldindata.org/grapher/human-development-index",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      0.731,
@@ -5503,7 +5503,7 @@
    "via": "RSF download",
    "page": "https://rsf.org/en/index",
    "note": "Score 0–100, higher is freer (methodology since 2022)",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      76.76,
@@ -6224,7 +6224,7 @@
    "via": "World Bank API",
    "page": "https://www.worldbank.org/en/publication/worldwide-governance-indicators",
    "note": "Rule of Law estimate, about −2.5 to +2.5. Stands in until World Justice Project data is added.",
-   "retrieved": "2026-10-29",
+   "retrieved": "2026-11-01",
    "values": {
     "Fiji": [
      0.4194798,
