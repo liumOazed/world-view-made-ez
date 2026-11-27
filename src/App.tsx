@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ArrowUp, Hand, LayoutList } from 'lucide-react';
 import { buildProfiles, LINK_META } from './data/countries';
 import { INFLUENCE_COLOR, influenceLinks, supplyLinks, tradeLinks } from './data/connections';
+import { computeRipples } from './data/ripple';
 import { LAYER_BY_ID, layerFor, sectionOf, type LayerId } from './data/layers';
 import { findSub, SECTION_BY_ID, type SectionId } from './data/sections';
 import { buildScorecards } from './data/scorecard';
@@ -105,11 +106,20 @@ export default function App() {
 
   // Connections belong to the measures that explain them; the others keep the colours readable.
   const links = useMemo((): MapLink[] => {
+    if (layerId === 'risk.ripple' && country) {
+      return computeRipples(country.name, 'all')
+        .top.slice(0, 10)
+        .map((h) => ({
+          name: h.name,
+          color: h.hop === 1 ? '#e48a87' : '#e3ad5a',
+          weight: Math.max(8, h.score),
+        }));
+    }
     if (sub?.arcs === 'trade') return trade.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share }));
     if (sub?.arcs === 'energy') return supply.map((l) => ({ name: l.name, color: LINK_META[l.kind].color, weight: l.share }));
     if (sub?.arcs === 'influence') return influence.map((l) => ({ name: l.name, color: INFLUENCE_COLOR, weight: l.score }));
     return [];
-  }, [sub, trade, supply, influence]);
+  }, [layerId, country, sub, trade, supply, influence]);
   const linksMode: LinksMode = sub?.arcs === 'trade' ? 'trade' : sub?.arcs === 'influence' ? 'influence' : null;
 
   const goPlace = useCallback((p: Place) => {

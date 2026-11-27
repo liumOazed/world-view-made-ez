@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Activity, Award, Banknote, ChevronDown, Flame, HeartPulse, Factory, Landmark, Radio, ShieldAlert, Ship, Handshake, type LucideIcon } from 'lucide-react';
-import { DIPLOMACY_LAYERS, PULSE_LAYERS, SECTOR_LAYERS, HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
+import { DIPLOMACY_LAYERS, PULSE_LAYERS, SECTOR_LAYERS, SHOCK_RIPPLE_LAYER, HD_LAYERS, layerFor, PILLAR_LAYERS, REGION_LAYERS, sectionOf, type Layer, type LayerId } from '../data/layers';
 import { SECTIONS, type SectionId } from '../data/sections';
 
 type Group = SectionId | 'scorecard' | 'hd' | 'sectors' | 'pulse';
@@ -29,6 +29,8 @@ const BASE_GROUPS: GroupSpec[] = [
     subs: [
       // Friends, rivals and alliances lead the Diplomacy group.
       ...(s.id === 'influence' ? DIPLOMACY_LAYERS.map((l) => ({ id: l.id, label: l.label })) : []),
+      // Shock ripple simulator leads the Risk group.
+      ...(s.id === 'risk' ? [{ id: SHOCK_RIPPLE_LAYER.id, label: SHOCK_RIPPLE_LAYER.label }] : []),
       // Sectors have their own group, right below Growth.
       ...s.subs
         .filter((sub) => !(s.id === 'growth' && sub.id === 'sectors'))
