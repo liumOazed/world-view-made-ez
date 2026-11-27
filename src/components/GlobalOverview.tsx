@@ -4,6 +4,7 @@ import type { CountryProfile } from '../data/countries';
 import { CHOKEPOINTS } from '../data/global';
 import type { Layer } from '../data/layers';
 import { fmtSentiment, formatSnapshotTime, PULSE_GLOBAL, PULSE_MOVERS, PULSE_RETRIEVED, relativeTime } from '../data/pulse';
+import { fmtUsdVol, GLOBAL_MARKETS } from '../data/nowcast';
 import { FMT, nextYearGrowth, SOURCES, worldSeries } from '../data/sections';
 import { Sparkline, TREND_BAD, TREND_GOOD } from './Sparkline';
 
@@ -169,6 +170,37 @@ export function GlobalOverview({
           })}
         </ul>
       </section>
+
+      {GLOBAL_MARKETS.length > 0 && (
+        <section className="panel-section">
+          <div className="section-title">
+            <h3>Market-implied odds</h3>
+            <span className="pill">Polymarket</span>
+          </div>
+          <ul className="odds-list">
+            {GLOBAL_MARKETS.slice(0, 4).map((m) => (
+              <li key={m.url}>
+                <a className="odds-row" href={m.url} target="_blank" rel="noopener noreferrer">
+                  <div className="odds-top">
+                    <span className="odds-cat">{m.category}</span>
+                    <span className="odds-vol muted small">{fmtUsdVol(m.volume24h)} 24h</span>
+                  </div>
+                  <div className="odds-title">
+                    <span>
+                      {m.title}
+                      {m.outcome ? ` — ${m.outcome}` : ''}
+                    </span>
+                    <strong className="odds-pct">{m.prob}%</strong>
+                  </div>
+                  <div className="odds-bar" aria-hidden="true">
+                    <span style={{ width: `${Math.max(4, Math.min(100, m.prob))}%` }} />
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="panel-section">
         <div className="section-title">

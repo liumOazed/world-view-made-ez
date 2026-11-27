@@ -8,6 +8,7 @@ import { CATEGORIES, CATEGORY, goodsSummary, hasRegionalGoods, headlineGood, REG
 import { alignment, BLOCS, blocOf, FOCUS_COLOR, LEVEL, LEVELS, STANCE, tie, type Level } from './diplomacy';
 import { CONFLICT_YEARS, hasConflict, hasRegional, nationalConflict, nationalHd, regionalConflict, regionalHd, type HdField } from './regional';
 import { attentionOf, divergenceOf, divergenceVerdict, fmtSentiment, pulseOf, sentimentOf, toneLabel } from './pulse';
+import { fmtFxMove, fxMove30dOf, fxOf } from './nowcast';
 
 /** `section.sub` for the seven sections, a scorecard layer, human development, sectors, or live pulse. */
 export type LayerId = `${SectionId}.${string}` | 'scorecard' | `score-${PillarId}` | `hd.${HdField}` | `sectors.${string}` | `pulse.${string}`;
@@ -605,6 +606,27 @@ export const PULSE_LAYERS: Layer[] = [
     tip: (n) => {
       const v = divergenceVerdict(n);
       return v ? `${v.label} · ${v.note}` : null;
+    },
+  },
+  {
+    id: 'pulse.fx30d',
+    label: 'Currency move (30d)',
+    metric: 'FX vs. US dollar (30d)',
+    unit: '% change · ECB reference rates',
+    question: 'Which currencies are under pressure or strengthening against the US dollar?',
+    description:
+      '30-day spot move of each country’s currency against the US dollar from European Central Bank reference rates. Negative values show depreciation (currency stress).',
+    value: (c) => fxMove30dOf(c.name),
+    format: (v) => (Number.isNaN(v) ? 'No ECB feed' : fmtFxMove(v)),
+    color: stops(SENTIMENT_RAMP, [-5, -2, 0, 2, 5]),
+    ramp: SENTIMENT_RAMP,
+    low: 'Weakening',
+    high: 'Strengthening',
+    ticks: ['-5%', '0%', '+5%'],
+    tip: (n) => {
+      const fx = fxOf(n);
+      if (!fx) return null;
+      return `${fx.currency}: ${fx.perUsd} per USD · 7d ${fmtFxMove(fx.move7d)} · 30d ${fmtFxMove(fx.move30d)}`;
     },
   },
 ];

@@ -41,6 +41,7 @@ import {
   relativeTime,
   toneLabel,
 } from '../data/pulse';
+import { fmtFxMove, fmtUsdVol, FX_DATE, FX_SOURCE, fxOf, MARKETS_SOURCE, marketsOf } from '../data/nowcast';
 import { Flag } from './Flag';
 import { GoodBadge } from './GoodIcon';
 import { goodsSummary, GOODS_SOURCE, headlineGood, REGIONAL_GOODS_COUNTRIES } from '../data/goods';
@@ -704,31 +705,110 @@ function ResilienceBreakdown({ c, profiles }: { c: CountryProfile; profiles: Map
 function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; onLayer: (id: LayerId) => void }) {
   const [channel, setChannel] = useState<string | null>(null);
   const pulse = pulseOf(c.name);
+  const fx = fxOf(c.name);
+  const markets = marketsOf(c.name);
   const verdict = divergenceVerdict(c.name);
   const onMap = layerId.startsWith('pulse.');
 
   const toneClass = (v: number) => (v <= -15 ? 'tone-bad' : v >= 15 ? 'tone-good' : 'tone-mid');
+  const fxClass = (v: number | null) => (v === null ? 'tone-mid' : v <= -1.5 ? 'tone-bad' : v >= 1.5 ? 'tone-good' : 'tone-mid');
+
+  const fxCard = fx && (
+    <section className={`sub-card nowcast-fx${layerId === 'pulse.fx30d' ? ' is-on-map' : ''}`}>
+      <div className="sub-head">
+        <div>
+          <h3>Live FX pulse · {fx.currency}</h3>
+          <p className="muted small">ECB reference rate{FX_DATE ? ` · ${FX_DATE}` : ''}</p>
+        </div>
+        <button
+          type="button"
+          className={`map-btn${layerId === 'pulse.fx30d' ? ' is-on' : ''}`}
+          onClick={() => onLayer('pulse.fx30d')}
+        >
+          <MapIcon size={12} /> {layerId === 'pulse.fx30d' ? 'On map' : 'Map FX'}
+        </button>
+      </div>
+      <div className="pulse-metrics">
+        <div className="pulse-stat">
+          <span className="eyebrow">Spot vs USD</span>
+          <strong className="pulse-score">{fx.perUsd}</strong>
+          <span className="muted small">{fx.currency} per $1</span>
+        </div>
+        <div className="pulse-stat">
+          <span className="eyebrow">7d move</span>
+          <strong className={`pulse-score ${fxClass(fx.move7d)}`}>{fmtFxMove(fx.move7d)}</strong>
+          <span className="muted small">vs US dollar</span>
+        </div>
+        <div className="pulse-stat">
+          <span className="eyebrow">30d move</span>
+          <strong className={`pulse-score ${fxClass(fx.move30d)}`}>{fmtFxMove(fx.move30d)}</strong>
+          <span className="muted small">vs US dollar</span>
+        </div>
+      </div>
+      <div className="source-row">
+        <span className="source-chip">{FX_SOURCE}</span>
+      </div>
+    </section>
+  );
+
+  const marketsCard = markets.length > 0 && (
+    <section className="sub-card nowcast-markets">
+      <div className="sub-head">
+        <div>
+          <h3>Market-implied odds</h3>
+          <p className="muted small">Live event probabilities · {MARKETS_SOURCE}</p>
+        </div>
+        <span className="pill">{markets.length} active</span>
+      </div>
+      <ul className="odds-list">
+        {markets.map((m) => (
+          <li key={m.url}>
+            <a className="odds-row" href={m.url} target="_blank" rel="noopener noreferrer">
+              <div className="odds-top">
+                <span className="odds-cat">{m.category}</span>
+                <span className="odds-vol muted small">{fmtUsdVol(m.volume24h)} 24h</span>
+              </div>
+              <div className="odds-title">
+                <span>
+                  {m.title}
+                  {m.outcome ? ` — ${m.outcome}` : ''}
+                </span>
+                <strong className="odds-pct">{m.prob}%</strong>
+              </div>
+              <div className="odds-bar" aria-hidden="true">
+                <span style={{ width: `${Math.max(4, Math.min(100, m.prob))}%` }} />
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 
   if (!pulse) {
     return (
-      <section className="sub-card">
-        <div className="sub-head">
-          <div>
-            <h3>Live pulse</h3>
-            <p className="muted small">Updated {formatSnapshotTime(PULSE_RETRIEVED)}</p>
+      <>
+        {fxCard}
+        {marketsCard}
+        <section className="sub-card">
+          <div className="sub-head">
+            <div>
+              <h3>Live pulse</h3>
+              <p className="muted small">Updated {formatSnapshotTime(PULSE_RETRIEVED)}</p>
+            </div>
+            <button
+              type="button"
+              className={`map-btn${onMap ? ' is-on' : ''}`}
+              onClick={() => onLayer('pulse.sentiment')}
+            >
+              <MapIcon size={12} /> {onMap ? 'On map' : 'Map sentiment'}
+            </button>
           </div>
-          <button
-            type="button"
-            className={`map-btn${onMap ? ' is-on' : ''}`}
-            onClick={() => onLayer('pulse.sentiment')}
-          >
-            <MapIcon size={12} /> {onMap ? 'On map' : 'Map sentiment'}
-          </button>
-        </div>
-        <p className="muted small">
-          No recent wire reports matched {c.display} in this snapshot. News snapshots are refreshed periodically via scheduled GitHub Actions.
-        </p>
-      </section>
+          <p className="muted small">
+            No recent wire reports matched {c.display} in this snapshot. News snapshots are refreshed periodically via scheduled GitHub Actions.
+          </p>
+        </section>
+      </>
     );
   }
 
@@ -740,7 +820,7 @@ function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; on
 
   return (
     <>
-      <section className={`sub-card pulse-hero${onMap ? ' is-on-map' : ''}`}>
+      <section className={`sub-card pulse-hero${onMap && layerId !== 'pulse.fx30d' ? ' is-on-map' : ''}`}>
         <div className="sub-head">
           <div>
             <h3>
@@ -750,11 +830,11 @@ function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; on
           </div>
           <button
             type="button"
-            className={`map-btn${onMap ? ' is-on' : ''}`}
-            onClick={() => onLayer(onMap ? 'pulse.divergence' : 'pulse.sentiment')}
+            className={`map-btn${onMap && layerId !== 'pulse.fx30d' ? ' is-on' : ''}`}
+            onClick={() => onLayer(layerId === 'pulse.sentiment' ? 'pulse.divergence' : 'pulse.sentiment')}
             title="Colour the globe by live news sentiment"
           >
-            <MapIcon size={12} /> {onMap ? 'On map' : 'Map sentiment'}
+            <MapIcon size={12} /> {onMap && layerId !== 'pulse.fx30d' ? 'On map' : 'Map sentiment'}
           </button>
         </div>
 
@@ -806,6 +886,9 @@ function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; on
           ))}
         </div>
       </section>
+
+      {fxCard}
+      {marketsCard}
 
       <ul className="news-list">
         {visible.map((a) => (

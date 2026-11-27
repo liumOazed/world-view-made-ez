@@ -2181,6 +2181,74 @@ span.level-high {
   padding-bottom: 0;
 }
 
+/* ---------- prediction markets & live FX ---------- */
+
+.odds-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.odds-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.odds-row:hover {
+  border-color: var(--brass-line);
+  background: var(--surface-2);
+}
+.odds-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.odds-cat {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass-2);
+}
+.odds-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+.odds-pct {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.odds-bar {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--fill);
+  overflow: hidden;
+}
+.odds-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brass), var(--accent));
+}
+
 /* ---------- explore ---------- */
 
 .explore {
