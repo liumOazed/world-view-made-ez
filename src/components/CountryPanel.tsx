@@ -42,7 +42,7 @@ import {
   toneLabel,
 } from '../data/pulse';
 import { fmtFxMove, fmtUsdVol, FX_DATE, FX_SOURCE, fxOf, MARKETS_SOURCE, marketsOf } from '../data/nowcast';
-import { computeRipples, SHOCK_CHANNELS, type ShockChannel } from '../data/ripple';
+import { computeRipples, RIPPLE_COVERAGE, SHOCK_CHANNELS, type ShockChannel } from '../data/ripple';
 import { Flag } from './Flag';
 import { GoodBadge } from './GoodIcon';
 import { goodsSummary, GOODS_SOURCE, headlineGood, REGIONAL_GOODS_COUNTRIES } from '../data/goods';
@@ -70,6 +70,8 @@ interface Props {
   influence: InfluenceLink[];
   layerId: LayerId;
   onLayer: (id: LayerId) => void;
+  rippleChannel: ShockChannel;
+  onRippleChannel: (ch: ShockChannel) => void;
 }
 
 export function CountryPanel(props: Props) {
@@ -371,7 +373,15 @@ function SectionView({ id, country: c, layerId, onLayer, onTab, ...rest }: Props
             </>
           )}
           {id === 'risk' && i === 0 && (
-            <ShockRippleCard c={c} profiles={rest.profiles} onSelect={rest.onSelect} on={layerId === 'risk.ripple'} onLayer={onLayer} />
+            <ShockRippleCard
+              c={c}
+              profiles={rest.profiles}
+              onSelect={rest.onSelect}
+              on={layerId === 'risk.ripple'}
+              onLayer={onLayer}
+              channel={rest.rippleChannel}
+              onChannel={rest.onRippleChannel}
+            />
           )}
           <section className={`sub-card${layerId === lid ? ' is-on-map' : ''}`}>
             <div className="sub-head">
@@ -1127,16 +1137,19 @@ function ShockRippleCard({
   onSelect,
   on,
   onLayer,
+  channel,
+  onChannel,
 }: {
   c: CountryProfile;
   profiles: Map<string, CountryProfile>;
   onSelect: (n: string) => void;
   on: boolean;
   onLayer: (id: LayerId) => void;
+  channel: ShockChannel;
+  onChannel: (ch: ShockChannel) => void;
 }) {
-  const [channel, setChannel] = useState<ShockChannel>('all');
   const display = nameOf(profiles);
-  const { top } = useMemo(() => computeRipples(c.name, channel), [c.name, channel]);
+  const { covered, top } = useMemo(() => computeRipples(c.name, channel), [c.name, channel]);
   const directCount = top.filter((h) => h.hop === 1).length;
   const secondCount = top.filter((h) => h.hop === 2).length;
 
@@ -1151,63 +1164,73 @@ function ShockRippleCard({
             If a shock hits {c.display}, who feels it next?
           </p>
         </div>
-        <button
-          type="button"
-          className="sub-map"
-          aria-pressed={on}
-          onClick={() => onLayer('risk.ripple')}
-          title="Light up downstream contagion exposure and arcs on the globe"
-        >
-          <MapIcon size={12} /> {on ? 'On map' : 'Map ripple'}
-        </button>
-      </div>
-
-      <div className="pulse-channels" role="group" aria-label="Shock transmission channel">
-        {SHOCK_CHANNELS.map((ch) => (
+        {covered && (
           <button
-            key={ch.id}
             type="button"
-            className={`channel-chip${channel === ch.id ? ' is-active' : ''}`}
-            onClick={() => setChannel(ch.id)}
+            className="sub-map"
+            aria-pressed={on}
+            onClick={() => onLayer('risk.ripple')}
+            title="Light up downstream contagion exposure and arcs on the globe"
           >
-            {ch.label}
+            <MapIcon size={12} /> {on ? 'On map' : 'Map ripple'}
           </button>
-        ))}
+        )}
       </div>
 
-      {top.length === 0 ? (
+      {!covered ? (
         <p className="muted small ripple-empty">
-          No significant bilateral {channel === 'all' ? 'trade or supply' : channel} spillovers found for {c.display} in UN Comtrade data.
+          Bilateral trade flows are not yet loaded for {c.display} — UN Comtrade coverage currently includes {RIPPLE_COVERAGE} reporting economies.
         </p>
       ) : (
         <>
-          <div className="ripple-summary muted small">
-            <strong>{directCount}</strong> direct · <strong>{secondCount}</strong> 2nd-order economies exposed
-          </div>
-          <ul className="ripple-list">
-            {top.slice(0, 8).map((h) => (
-              <li key={h.name}>
-                <button type="button" className="ripple-row" onClick={() => onSelect(h.name)}>
-                  <div className="ripple-main">
-                    <span className="ripple-name">{display(h.name)}</span>
-                    <span className={`ripple-hop hop-${h.hop}`}>{h.hop === 1 ? 'Direct' : `Via ${display(h.via ?? '')}`}</span>
-                  </div>
-                  <div className="ripple-meta">
-                    <span className="muted small">
-                      {h.channel}
-                      {h.hop === 1 && h.sharePct > 0 ? ` · ${h.sharePct}% share` : ''}
-                    </span>
-                    <strong className={`ripple-score tier-${h.tier.toLowerCase()}`}>{h.score}</strong>
-                  </div>
-                </button>
-              </li>
+          <div className="pulse-channels" role="group" aria-label="Shock transmission channel">
+            {SHOCK_CHANNELS.map((ch) => (
+              <button
+                key={ch.id}
+                type="button"
+                className={`channel-chip${channel === ch.id ? ' is-active' : ''}`}
+                onClick={() => onChannel(ch.id)}
+              >
+                {ch.label}
+              </button>
             ))}
-          </ul>
+          </div>
+
+          {top.length === 0 ? (
+            <p className="muted small ripple-empty">
+              No bilateral {channel === 'all' ? 'trade or supply' : channel} partners exceed the exposure threshold for {c.display} in UN Comtrade data.
+            </p>
+          ) : (
+            <>
+              <div className="ripple-summary muted small">
+                <strong>{directCount}</strong> direct · <strong>{secondCount}</strong> 2nd-order economies exposed
+              </div>
+              <ul className="ripple-list">
+                {top.slice(0, 8).map((h) => (
+                  <li key={h.name}>
+                    <button type="button" className="ripple-row" onClick={() => onSelect(h.name)}>
+                      <div className="ripple-main">
+                        <span className="ripple-name">{display(h.name)}</span>
+                        <span className={`ripple-hop hop-${h.hop}`}>{h.hop === 1 ? 'Direct' : `Via ${display(h.via ?? '')}`}</span>
+                      </div>
+                      <div className="ripple-meta">
+                        <span className="muted small">
+                          {h.channel}
+                          {h.hop === 1 && h.sharePct > 0 ? ` · ${h.sharePct}% share` : ''}
+                        </span>
+                        <strong className={`ripple-score tier-${h.tier.toLowerCase()}`}>{h.score}</strong>
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </>
       )}
 
       <Note>
-        Estimated from UN Comtrade bilateral goods, energy, chip and food flows, scaled by each downstream economy’s structural resilience score.
+        Estimated from UN Comtrade bilateral goods, energy, chip and food flows ({RIPPLE_COVERAGE} covered economies), scaled by each downstream economy’s structural resilience score.
       </Note>
     </section>
   );

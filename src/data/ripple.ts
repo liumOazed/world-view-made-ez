@@ -1,6 +1,5 @@
 import snapshot from './trade.json';
 import { resilience } from './sections';
-import { tie } from './diplomacy';
 
 export type ShockChannel = 'all' | 'trade' | 'energy' | 'chips' | 'food';
 
@@ -20,7 +19,7 @@ export interface RippleHit {
   hop: 1 | 2;
   /** Primary transmission channel. */
   channel: string;
-  /** Direct dependence on origin (%), when hop === 1. */
+  /** Direct dependence on origin (%), when hop === 1 (or dependence on `via`, when hop === 2). */
   sharePct: number;
   /** Intermediate hub country name when hop === 2. */
   via?: string;
@@ -48,6 +47,9 @@ interface TradeSnapshot {
 }
 
 const TRADE = snapshot as TradeSnapshot;
+
+export const RIPPLE_COVERAGE = Object.keys(TRADE.countries).length;
+export const hasRippleCoverage = (origin: string): boolean => Boolean(TRADE.countries[origin]);
 
 function tierOf(score: number): RippleHit['tier'] {
   if (score >= 65) return 'Severe';
@@ -104,12 +106,16 @@ function directDependence(
 }
 
 /**
- * Compute 1st-order and 2nd-order shock contagion from `origin` across the global trade & diplomacy graph.
+ * Compute 1st-order and 2nd-order shock contagion from `origin` across UN Comtrade flows,
+ * scaled by each downstream country's structural resilience.
  */
-export function computeRipples(origin: string, channel: ShockChannel = 'all'): { byCountry: Map<string, RippleHit>; top: RippleHit[] } {
+export function computeRipples(
+  origin: string,
+  channel: ShockChannel = 'all',
+): { covered: boolean; byCountry: Map<string, RippleHit>; top: RippleHit[] } {
   const originTrade = TRADE.countries[origin];
   const byCountry = new Map<string, RippleHit>();
-  if (!originTrade) return { byCountry, top: [] };
+  if (!originTrade) return { covered: false, byCountry, top: [] };
 
   const adjustResilience = (name: string, raw: number) => {
     const r = resilience(name)?.score;
@@ -117,45 +123,40 @@ export function computeRipples(origin: string, channel: ShockChannel = 'all'): {
     return Math.max(1, Math.min(100, Math.round(raw * mult)));
   };
 
-  // 1st-order direct exposure
+  // 1st-order direct exposure (meaningful bilateral flow: raw >= 16; weaker links tracked separately)
+  const weakDirect = new Map<string, RippleHit>();
   for (const [name, t] of Object.entries(TRADE.countries)) {
     if (name === origin) continue;
     const dep = directDependence(t, originTrade.iso, channel);
-    let raw = dep?.raw ?? 0;
-    let label = dep?.label ?? 'Diplomatic tie';
-    const sharePct = dep?.sharePct ?? 0;
-
-    // Close diplomatic allies/rivals also feel policy/sanctions spillover when viewing all channels
-    if (channel === 'all') {
-      const d = tie(origin, name);
-      if (d && Math.abs(d.level) >= 2) {
-        raw = Math.max(raw, raw + 12);
-        if (!dep) label = d.level > 0 ? 'Allied spillover' : 'Geopolitical friction';
-      }
+    if (!dep || dep.raw < 6) continue;
+    const score = adjustResilience(name, dep.raw);
+    const hit: RippleHit = { name, score, hop: 1, channel: dep.label, sharePct: dep.sharePct, tier: tierOf(score) };
+    if (dep.raw >= 16) {
+      byCountry.set(name, hit);
+    } else {
+      weakDirect.set(name, hit);
     }
-
-    if (raw < 6) continue;
-    const score = adjustResilience(name, raw);
-    byCountry.set(name, { name, score, hop: 1, channel: label, sharePct, tier: tierOf(score) });
   }
 
-  // 2nd-order contagion via the top 6 most-exposed direct hubs
-  const directHubs = [...byCountry.values()]
-    .filter((h) => h.score >= 28)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 6);
+  // 2nd-order contagion via every direct hub with score >= 12 (so global transit hubs like China, US, NL, ZA propagate too)
+  const directHubs = [...byCountry.values(), ...weakDirect.values()].filter((h) => h.score >= 12);
 
   for (const hub of directHubs) {
     const hubTrade = TRADE.countries[hub.name];
     if (!hubTrade) continue;
     for (const [name, t] of Object.entries(TRADE.countries)) {
       if (name === origin || name === hub.name) continue;
-      const dep = directDependence(t, hubTrade.iso, channel === 'all' ? 'trade' : channel);
-      if (!dep || dep.raw < 14) continue;
-      const indirectRaw = (hub.score / 100) * dep.raw * 0.42;
-      if (indirectRaw < 8) continue;
-      const score = adjustResilience(name, indirectRaw);
+      // Don't overwrite strong direct partners; surface 2nd-order ripples for non-direct or weakly-linked economies.
       const existing = byCountry.get(name);
+      if (existing && existing.hop === 1) continue;
+
+      const dep = directDependence(t, hubTrade.iso, channel === 'all' ? 'trade' : channel);
+      if (!dep || dep.raw < 10) continue;
+      const indirectRaw = (hub.score / 100) * dep.raw * 0.65;
+      if (indirectRaw < 6) continue;
+      const score = adjustResilience(name, indirectRaw);
+      const weak = weakDirect.get(name);
+      if (weak && weak.score >= score) continue;
       if (!existing || score > existing.score) {
         byCountry.set(name, {
           name,
@@ -170,6 +171,11 @@ export function computeRipples(origin: string, channel: ShockChannel = 'all'): {
     }
   }
 
+  // Keep weak direct links if no stronger 2nd-order spillover path replaced them.
+  for (const [name, hit] of weakDirect.entries()) {
+    if (!byCountry.has(name)) byCountry.set(name, hit);
+  }
+
   const top = [...byCountry.values()].sort((a, b) => b.score - a.score);
-  return { byCountry, top };
+  return { covered: true, byCountry, top };
 }
