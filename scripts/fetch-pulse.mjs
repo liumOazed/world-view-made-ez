@@ -13,8 +13,8 @@ const TIMEOUT_MS = 10_000;
 const CONCURRENCY = 8;
 
 const GLOBAL_FEEDS = [
-  { name: 'Google News · World', url: 'https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-US&gl=US&ceid=US:en' },
-  { name: 'Google News · Business', url: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-US&gl=US&ceid=US:en' },
+  { name: 'Google News · World', url: 'https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-US&gl=US&ceid=US:en', google: true },
+  { name: 'Google News · Business', url: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-US&gl=US&ceid=US:en', google: true },
   { name: 'BBC World', url: 'https://feeds.bbci.co.uk/news/world/rss.xml' },
   { name: 'BBC Business', url: 'https://feeds.bbci.co.uk/news/business/rss.xml' },
   { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
@@ -23,70 +23,71 @@ const GLOBAL_FEEDS = [
   { name: 'DW Business', url: 'https://rss.dw.com/xml/rss-en-bus' },
 ];
 
-// Core economies & geopolitical hubs that get a dedicated Google News query so
-// every major country on the globe has fresh, relevant headlines.
+// Core economies & geopolitical hubs with tightly scoped Google News queries
+// (parenthesized OR clauses so the country term is always required).
 const FOCUS_COUNTRIES = [
-  ['United States of America', 'United States economy OR Federal Reserve OR tariffs'],
-  ['China', 'China economy OR trade OR Beijing'],
-  ['India', 'India economy OR RBI OR trade'],
-  ['Japan', 'Japan economy OR Bank of Japan OR yen'],
-  ['Germany', 'Germany economy OR inflation OR industry'],
-  ['United Kingdom', 'UK economy OR Bank of England OR Britain'],
-  ['France', 'France economy OR Paris budget OR trade'],
-  ['Italy', 'Italy economy OR Rome'],
-  ['Spain', 'Spain economy OR Madrid'],
-  ['Netherlands', 'Netherlands economy OR Dutch trade'],
-  ['Poland', 'Poland economy OR Warsaw'],
-  ['Norway', 'Norway economy OR oil OR Oslo'],
-  ['Ukraine', 'Ukraine war OR economy OR Kyiv'],
-  ['Russia', 'Russia economy OR sanctions OR Moscow'],
-  ['Turkey', 'Turkey economy OR lira OR Ankara'],
-  ['Canada', 'Canada economy OR Bank of Canada OR trade'],
-  ['Mexico', 'Mexico economy OR peso OR tariffs'],
-  ['Brazil', 'Brazil economy OR central bank OR trade'],
-  ['Argentina', 'Argentina economy OR peso OR Milei'],
-  ['Chile', 'Chile economy OR copper OR central bank'],
-  ['Colombia', 'Colombia economy OR Bogota'],
-  ['Saudi Arabia', 'Saudi Arabia oil OR economy OR Riyadh'],
-  ['United Arab Emirates', 'UAE economy OR Dubai OR Abu Dhabi'],
-  ['Qatar', 'Qatar LNG OR economy OR Doha'],
-  ['Iran', 'Iran sanctions OR oil OR Tehran'],
-  ['Israel', 'Israel economy OR conflict OR Middle East'],
-  ['Egypt', 'Egypt economy OR Suez Canal OR IMF'],
-  ['Nigeria', 'Nigeria economy OR naira OR oil'],
-  ['South Africa', 'South Africa economy OR rand OR power'],
-  ['Kenya', 'Kenya economy OR Nairobi'],
-  ['Ethiopia', 'Ethiopia economy OR Addis Ababa'],
-  ['Ghana', 'Ghana economy OR debt'],
-  ['Bangladesh', 'Bangladesh economy OR Dhaka OR exports'],
-  ['Pakistan', 'Pakistan economy OR IMF OR Islamabad'],
-  ['Sri Lanka', 'Sri Lanka economy OR Colombo'],
-  ['Vietnam', 'Vietnam economy OR exports OR manufacturing'],
-  ['Thailand', 'Thailand economy OR Bangkok'],
-  ['Malaysia', 'Malaysia economy OR semiconductors OR ringgit'],
-  ['Singapore', 'Singapore economy OR trade OR shipping'],
-  ['Indonesia', 'Indonesia economy OR Jakarta OR nickel'],
-  ['Philippines', 'Philippines economy OR Manila'],
-  ['South Korea', 'South Korea economy OR chips OR Seoul'],
-  ['Taiwan', 'Taiwan semiconductors OR TSMC OR Strait'],
-  ['Kazakhstan', 'Kazakhstan economy OR oil'],
-  ['Australia', 'Australia economy OR RBA OR iron ore'],
+  ['United States of America', '"United States" (economy OR "Federal Reserve" OR tariffs OR inflation)'],
+  ['China', 'China (economy OR trade OR tariffs OR Beijing)'],
+  ['India', 'India (economy OR RBI OR trade OR inflation)'],
+  ['Japan', 'Japan (economy OR "Bank of Japan" OR yen OR trade)'],
+  ['Germany', 'Germany (economy OR inflation OR industry OR Berlin)'],
+  ['United Kingdom', '(UK OR Britain) (economy OR "Bank of England" OR inflation)'],
+  ['France', 'France (economy OR budget OR trade OR inflation)'],
+  ['Italy', 'Italy (economy OR budget OR Rome OR trade)'],
+  ['Spain', 'Spain (economy OR Madrid OR inflation OR trade)'],
+  ['Netherlands', 'Netherlands (economy OR Dutch OR trade OR ASML)'],
+  ['Poland', 'Poland (economy OR Warsaw OR zloty OR trade)'],
+  ['Norway', 'Norway (economy OR oil OR krone OR Oslo)'],
+  ['Ukraine', 'Ukraine (war OR economy OR Kyiv OR ceasefire)'],
+  ['Russia', 'Russia (economy OR sanctions OR Moscow OR ruble)'],
+  ['Turkey', '(Turkey OR Türkiye) (economy OR lira OR inflation OR Ankara)'],
+  ['Canada', 'Canada (economy OR "Bank of Canada" OR trade OR tariffs)'],
+  ['Mexico', 'Mexico -"New Mexico" (economy OR peso OR tariffs OR trade OR Banxico)'],
+  ['Brazil', 'Brazil (economy OR "central bank" OR real OR trade)'],
+  ['Argentina', 'Argentina (economy OR peso OR inflation OR Milei)'],
+  ['Chile', 'Chile (economy OR copper OR peso OR "central bank")'],
+  ['Colombia', 'Colombia (economy OR peso OR Bogota OR inflation)'],
+  ['Saudi Arabia', '"Saudi Arabia" (oil OR economy OR OPEC OR Riyadh)'],
+  ['United Arab Emirates', '(UAE OR "United Arab Emirates") (economy OR Dubai OR "Abu Dhabi")'],
+  ['Qatar', 'Qatar (LNG OR gas OR economy OR Doha)'],
+  ['Iran', 'Iran (sanctions OR oil OR economy OR Tehran)'],
+  ['Israel', 'Israel (economy OR conflict OR ceasefire OR shekel)'],
+  ['Egypt', 'Egypt (economy OR "Suez Canal" OR IMF OR pound)'],
+  ['Nigeria', 'Nigeria (economy OR naira OR oil OR inflation)'],
+  ['South Africa', '"South Africa" (economy OR rand OR power OR Eskom)'],
+  ['Kenya', 'Kenya (economy OR shilling OR Nairobi OR debt)'],
+  ['Ethiopia', 'Ethiopia (economy OR IMF OR "Addis Ababa" OR birr)'],
+  ['Ghana', 'Ghana (economy OR debt OR cedi OR IMF)'],
+  ['Bangladesh', 'Bangladesh (economy OR Dhaka OR exports OR IMF)'],
+  ['Pakistan', 'Pakistan (economy OR IMF OR Islamabad OR rupee)'],
+  ['Sri Lanka', '"Sri Lanka" (economy OR Colombo OR IMF OR debt)'],
+  ['Vietnam', 'Vietnam (economy OR exports OR manufacturing OR trade)'],
+  ['Thailand', 'Thailand (economy OR Bangkok OR baht OR exports)'],
+  ['Malaysia', 'Malaysia (economy OR semiconductors OR ringgit OR trade)'],
+  ['Singapore', 'Singapore (economy OR trade OR shipping OR MAS)'],
+  ['Indonesia', 'Indonesia (economy OR Jakarta OR rupiah OR nickel)'],
+  ['Philippines', 'Philippines (economy OR Manila OR peso OR inflation)'],
+  ['South Korea', '"South Korea" (economy OR chips OR won OR Seoul)'],
+  ['Taiwan', 'Taiwan (semiconductors OR TSMC OR economy OR Strait)'],
+  ['Kazakhstan', 'Kazakhstan (economy OR oil OR tenge OR Astana)'],
+  ['Australia', 'Australia (economy OR RBA OR "iron ore" OR inflation)'],
 ];
 
 // Additional aliases for matching headlines from global wires to ATLAS map names.
+// Entries prefixed with "=" are matched case-sensitively.
 const EXTRA_ALIASES = {
-  'United States of America': ['United States', 'U.S.', 'US ', 'America', 'American', 'Washington', 'Fed ', 'Federal Reserve', 'White House'],
-  'United Kingdom': ['United Kingdom', 'Britain', 'British', 'UK ', 'U.K.', 'London', 'Bank of England'],
+  'United States of America': ['United States', '=U.S.', '=US', 'White House', 'Federal Reserve', '=FOMC'],
+  'United Kingdom': ['United Kingdom', 'Britain', 'British', '=U.K.', '=UK', 'Bank of England', 'Downing Street'],
   'South Korea': ['South Korea', 'South Korean', 'Seoul'],
   'North Korea': ['North Korea', 'North Korean', 'Pyongyang'],
-  'United Arab Emirates': ['UAE', 'United Arab Emirates', 'Dubai', 'Abu Dhabi'],
+  'United Arab Emirates': ['=UAE', 'United Arab Emirates', 'Dubai', 'Abu Dhabi'],
   'Saudi Arabia': ['Saudi Arabia', 'Saudi', 'Riyadh'],
   'South Africa': ['South Africa', 'South African', 'Johannesburg'],
   Turkey: ['Turkey', 'Türkiye', 'Turkish', 'Ankara'],
   Russia: ['Russia', 'Russian', 'Moscow', 'Kremlin'],
   China: ['China', 'Chinese', 'Beijing', 'Shanghai'],
   Ukraine: ['Ukraine', 'Ukrainian', 'Kyiv', 'Kiev'],
-  Israel: ['Israel', 'Israeli', 'Tel Aviv', 'Gaza'],
+  Israel: ['Israel', 'Israeli', 'Tel Aviv'],
   Palestine: ['Palestine', 'Palestinian', 'Gaza', 'West Bank'],
   Iran: ['Iran', 'Iranian', 'Tehran'],
   India: ['India', 'Indian', 'New Delhi', 'Mumbai'],
@@ -96,17 +97,17 @@ const EXTRA_ALIASES = {
   Italy: ['Italy', 'Italian', 'Rome'],
   Spain: ['Spain', 'Spanish', 'Madrid'],
   Canada: ['Canada', 'Canadian', 'Ottawa'],
-  Mexico: ['Mexico', 'Mexican'],
+  Mexico: ['Mexico', 'Mexican', 'Banxico'],
   Brazil: ['Brazil', 'Brazilian', 'Brasilia'],
   Argentina: ['Argentina', 'Argentine', 'Buenos Aires'],
-  Taiwan: ['Taiwan', 'Taiwanese', 'Taipei', 'TSMC'],
+  Taiwan: ['Taiwan', 'Taiwanese', 'Taipei', '=TSMC'],
   Australia: ['Australia', 'Australian', 'Canberra'],
   Indonesia: ['Indonesia', 'Indonesian', 'Jakarta'],
   Vietnam: ['Vietnam', 'Vietnamese', 'Hanoi'],
   Bangladesh: ['Bangladesh', 'Bangladeshi', 'Dhaka'],
   Pakistan: ['Pakistan', 'Pakistani', 'Islamabad'],
-  Egypt: ['Egypt', 'Egyptian', 'Cairo', 'Suez'],
-  Nigeria: ['Nigeria', 'Nigerian', 'Lagos'],
+  Egypt: ['Egypt', 'Egyptian', 'Cairo', 'Suez Canal'],
+  Nigeria: ['Nigeria', 'Nigerian', 'Lagos', 'Abuja'],
   Poland: ['Poland', 'Polish', 'Warsaw'],
   Netherlands: ['Netherlands', 'Dutch', 'Amsterdam'],
   Switzerland: ['Switzerland', 'Swiss', 'Zurich'],
@@ -115,12 +116,33 @@ const EXTRA_ALIASES = {
   Greece: ['Greece', 'Greek', 'Athens'],
   Venezuela: ['Venezuela', 'Venezuelan', 'Caracas'],
   Sudan: ['Sudan', 'Sudanese', 'Khartoum'],
-  Yemen: ['Yemen', 'Yemeni', 'Houthi', 'Red Sea'],
+  'South Sudan': ['South Sudan', 'South Sudanese', 'Juba'],
+  Yemen: ['Yemen', 'Yemeni', 'Houthi'],
   Syria: ['Syria', 'Syrian', 'Damascus'],
   Lebanon: ['Lebanon', 'Lebanese', 'Beirut'],
   Iraq: ['Iraq', 'Iraqi', 'Baghdad'],
   Myanmar: ['Myanmar', 'Burma'],
-  'Dem. Rep. Congo': ['DR Congo', 'Democratic Republic of Congo', 'Congo', 'Kinshasa'],
+  'Dem. Rep. Congo': ['DR Congo', 'D.R. Congo', 'Democratic Republic of Congo', 'Democratic Republic of the Congo', 'Kinshasa'],
+  Congo: ['Republic of Congo', 'Republic of the Congo', 'Congo-Brazzaville', 'Brazzaville'],
+};
+
+// Map names whose bare name is too ambiguous on its own; use EXTRA_ALIASES exclusively.
+const OVERRIDE_BASE_NAME = new Set(['Congo', 'Dem. Rep. Congo', 'United States of America']);
+
+// Compound/false-positive phrases stripped before testing a specific country.
+const STRIP_BEFORE_MATCH = {
+  Guinea: /\b(Guinea-Bissau|Equatorial\s+Guinea|Papua\s+New\s+Guinea|guinea\s+pigs?)\b/gi,
+  Mexico: /\b(New\s+Mexico|Gulf\s+of\s+Mexico)\b/gi,
+  Sudan: /\bSouth\s+Sudan\w*/gi,
+  'United States of America': /\b(Latin|South|Central|North)\s+America\w*/gi,
+  India: /\b(Indiana|Indian\s+Ocean|West\s+Indies|American\s+Indian)\b/gi,
+  Georgia: /\b(Atlanta|Georgia\s+Tech|State\s+of\s+Georgia|University\s+of\s+Georgia)\b/gi,
+  Jordan: /\b(Michael\s+Jordan|Air\s+Jordan|Jordan\s+Peterson|Jim\s+Jordan)\b/gi,
+  Niger: /\bNigeria\w*/gi,
+  Dominica: /\bDominican\s+Republic\b/gi,
+  Ireland: /\bNorthern\s+Ireland\b/gi,
+  'Dem. Rep. Congo': /\b(Republic\s+of\s+(?:the\s+)?Congo|Congo-Brazzaville|Brazzaville)\b/gi,
+  Congo: /\b(DR\s+Congo|D\.R\.\s+Congo|Democratic\s+Republic\s+of\s+(?:the\s+)?Congo|Kinshasa)\b/gi,
 };
 
 function decodeEntities(s) {
@@ -137,7 +159,7 @@ function decodeEntities(s) {
     .trim();
 }
 
-function parseRss(xml, fallbackSource) {
+function parseRss(xml, fallbackSource, isGoogle = false) {
   const items = [];
   const itemRe = /<item\b[^>]*>([\s\S]*?)<\/item>/gi;
   let m;
@@ -163,7 +185,8 @@ function parseRss(xml, fallbackSource) {
     const pubRaw = tag('pubDate');
     const pubDate = pubRaw ? new Date(pubRaw) : null;
     const publishedAt = pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate.toISOString() : new Date().toISOString();
-    const description = tag('description').slice(0, 260);
+    // Google News RSS descriptions just echo the title and links; drop them to avoid double-scoring.
+    const description = isGoogle ? '' : tag('description').slice(0, 260);
     items.push({ title, source, url, publishedAt, description });
   }
   return items;
@@ -200,19 +223,38 @@ async function mapLimit(list, limit, fn) {
   return out;
 }
 
+function compilePattern(alias) {
+  const caseSensitive = alias.startsWith('=') || (alias.length <= 4 && alias === alias.toUpperCase());
+  const clean = alias.startsWith('=') ? alias.slice(1) : alias;
+  const escaped = clean.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Avoid matching trailing periods inside \b when alias ends with "." (e.g. U.S.)
+  const suffix = /\.$/.test(clean) ? '(?!\\w)' : '\\b';
+  return new RegExp(`\\b${escaped}${suffix}`, caseSensitive ? '' : 'i');
+}
+
 function buildMatchers(allMapNames) {
-  const matchers = [];
+  const matchers = new Map();
   for (const name of allMapNames) {
-    const aliases = new Set([name, ...(EXTRA_ALIASES[name] ?? [])]);
+    const base = OVERRIDE_BASE_NAME.has(name) ? [] : [name];
+    const aliases = new Set([...base, ...(EXTRA_ALIASES[name] ?? [])]);
+    // Short ambiguous country names like "Chad" or "Mali" require exact capitalization
     const patterns = [...aliases]
-      .filter((a) => a.length >= 3)
-      .map((a) => {
-        const escaped = a.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        return new RegExp(`\\b${escaped}\\b`, a.length <= 3 && a === a.toUpperCase() ? '' : 'i');
+      .filter((a) => a.replace(/^=/, '').length >= 2)
+      .map((a) => compilePattern(name === 'Chad' || name === 'Mali' ? `=${a.replace(/^=/, '')}` : a));
+    if (patterns.length) {
+      matchers.set(name, {
+        name,
+        strip: STRIP_BEFORE_MATCH[name] ?? null,
+        patterns,
       });
-    if (patterns.length) matchers.push({ name, patterns });
+    }
   }
   return matchers;
+}
+
+function matchesCountry(matcher, text) {
+  const cleaned = matcher.strip ? text.replace(matcher.strip, ' ') : text;
+  return matcher.patterns.some((re) => re.test(cleaned));
 }
 
 function normKey(title) {
@@ -228,13 +270,13 @@ async function main() {
 
   const globalResults = await mapLimit(GLOBAL_FEEDS, CONCURRENCY, async (f) => {
     const xml = await fetchXml(f.url);
-    return parseRss(xml, f.name);
+    return parseRss(xml, f.name, Boolean(f.google));
   });
 
   const countryResults = await mapLimit(FOCUS_COUNTRIES, CONCURRENCY, async ([country, query]) => {
     const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
     const xml = await fetchXml(url);
-    const items = parseRss(xml, 'Google News').slice(0, 10);
+    const items = parseRss(xml, 'Google News', true).slice(0, 12);
     return { country, items };
   });
 
@@ -269,8 +311,8 @@ async function main() {
       };
 
       const matched = [];
-      for (const m of matchers) {
-        if (m.patterns.some((re) => re.test(item.title))) {
+      for (const m of matchers.values()) {
+        if (matchesCountry(m, item.title)) {
           matched.push(m.name);
           addFor(m.name, enriched);
         }
@@ -284,10 +326,12 @@ async function main() {
     }
   }
 
-  // 2. Targeted country feeds
+  // 2. Targeted country feeds (verified against country matcher so off-topic hits are excluded)
   for (const { country, items } of countryResults) {
+    const m = matchers.get(country);
     for (const item of items) {
       if (new Date(item.publishedAt).getTime() < cutoff) continue;
+      if (m && !matchesCountry(m, item.title)) continue;
       const analysis = analyzeArticle(item.title, item.description);
       addFor(country, {
         title: item.title,
@@ -305,20 +349,21 @@ async function main() {
   const countries = {};
   for (const [country, arts] of byCountry.entries()) {
     if (arts.length === 0) continue;
-    // Sort by recency first, then severity
     arts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-    const avgSentiment = Math.round(arts.reduce((s, a) => s + a.sentiment, 0) / arts.length);
+    const topArticles = arts.slice(0, 8);
+    const avgSentiment = Math.round(topArticles.reduce((s, a) => s + a.sentiment, 0) / topArticles.length);
 
+    // Compute channel chips strictly from topArticles so no filter chip can ever yield an empty list.
     /** @type {Record<string, { count: number; sum: number }>} */
     const chanAcc = {};
-    for (const a of arts) {
+    for (const a of topArticles) {
       chanAcc[a.channel] ??= { count: 0, sum: 0 };
       chanAcc[a.channel].count += 1;
       chanAcc[a.channel].sum += a.sentiment;
     }
     const channels = {};
-    let dominantChannel = 'Politics & Policy';
+    let dominantChannel = topArticles[0].channel;
     let maxChan = 0;
     for (const [ch, v] of Object.entries(chanAcc)) {
       channels[ch] = { count: v.count, sentiment: Math.round(v.sum / v.count) };
@@ -328,9 +373,8 @@ async function main() {
       }
     }
 
-    const highCount = arts.filter((a) => a.severity === 'High').length;
-    const severity = highCount >= 2 || Math.abs(avgSentiment) >= 40 ? 'High' : highCount >= 1 || Math.abs(avgSentiment) >= 18 ? 'Medium' : 'Low';
-    const topArticles = arts.slice(0, 6);
+    const highCount = topArticles.filter((a) => a.severity === 'High').length;
+    const severity = highCount >= 2 || Math.abs(avgSentiment) >= 35 ? 'High' : highCount >= 1 || Math.abs(avgSentiment) >= 16 ? 'Medium' : 'Low';
     const brief = buildBrief(country, avgSentiment, arts.length, dominantChannel, topArticles[0]);
 
     countries[country] = {

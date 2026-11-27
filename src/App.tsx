@@ -290,7 +290,7 @@ function Method() {
             The seven sections draw on the IMF World Economic Outlook, World Bank (with ILO, SIPRI, UCDP and debt statistics), BIS, Our
             World in Data, the Fragile States Index, the ND-GAIN climate index, UN Comtrade and the FBIC Index, refreshed by scheduled jobs.
             Every value shows its year, and anything not fetched yet says so. The Live Pulse layers and News tab aggregate open global news
-            wires every 6 hours, classifying each report by economic channel and sentiment tone.
+            wires via scheduled GitHub Actions snapshots, classifying each report by economic channel and sentiment tone.
           </p>
         </div>
         <div>

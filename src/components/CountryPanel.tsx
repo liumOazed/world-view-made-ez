@@ -726,13 +726,16 @@ function News({ c, layerId, onLayer }: { c: CountryProfile; layerId: LayerId; on
           </button>
         </div>
         <p className="muted small">
-          No recent wire reports matched {c.display} in the latest snapshot. Coverage refreshes automatically every 6 hours from open global wires.
+          No recent wire reports matched {c.display} in this snapshot. News snapshots are refreshed periodically via scheduled GitHub Actions.
         </p>
       </section>
     );
   }
 
-  const channels = Object.entries(pulse.channels).sort((a, b) => b[1].count - a[1].count);
+  const presentChannels = new Set(pulse.articles.map((a) => a.channel));
+  const channels = Object.entries(pulse.channels)
+    .filter(([name]) => presentChannels.has(name))
+    .sort((a, b) => b[1].count - a[1].count);
   const visible = channel ? pulse.articles.filter((a) => a.channel === channel) : pulse.articles;
 
   return (
