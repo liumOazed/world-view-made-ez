@@ -1,5 +1,5 @@
 {
-  "retrieved": "2026-11-27T18:09:13.082Z",
+  "retrieved": "2026-11-28T01:33:56.314Z",
   "fxSource": "Frankfurter · European Central Bank reference rates",
   "fxDate": "2026-11-27",
   "fxCountries": {
@@ -305,7 +305,7 @@
       "outcome": "25 bps increase",
       "prob": 95,
       "change24h": 1,
-      "volume24h": 3448581,
+      "volume24h": 4451481,
       "category": "Macro & Rates",
       "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
       "countries": [
@@ -315,9 +315,9 @@
     {
       "title": "Taipei Mayor Election Winner",
       "outcome": "Chiang Wan-an",
-      "prob": 59,
-      "change24h": -3,
-      "volume24h": 1249004,
+      "prob": 56,
+      "change24h": -4,
+      "volume24h": 1616651,
       "category": "Elections",
       "url": "https://polymarket.com/event/taipei-mayor-election-winner-20260813125857100",
       "countries": [
@@ -327,9 +327,9 @@
     {
       "title": "Democratic Presidential Nominee 2028",
       "outcome": "Jon Ossoff",
-      "prob": 24,
-      "change24h": 2.3,
-      "volume24h": 1113471,
+      "prob": 25,
+      "change24h": 1.6,
+      "volume24h": 1236958,
       "category": "Elections",
       "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
       "countries": [
@@ -337,23 +337,11 @@
       ]
     },
     {
-      "title": "Next French Presidential Election",
-      "outcome": "Marine Le Pen",
-      "prob": 44,
-      "change24h": 0.1,
-      "volume24h": 766357,
-      "category": "Elections",
-      "url": "https://polymarket.com/event/next-french-presidential-election",
-      "countries": [
-        "France"
-      ]
-    },
-    {
       "title": "Next Prime Minister of Spain?",
       "outcome": "Alberto Núñez Feijóo",
-      "prob": 90,
+      "prob": 89,
       "change24h": -1,
-      "volume24h": 713051,
+      "volume24h": 1107395,
       "category": "Elections",
       "url": "https://polymarket.com/event/next-prime-minister-of-spain-20260625005215443",
       "countries": [
@@ -361,11 +349,23 @@
       ]
     },
     {
+      "title": "Next French Presidential Election",
+      "outcome": "Marine Le Pen",
+      "prob": 44,
+      "change24h": -0.1,
+      "volume24h": 899845,
+      "category": "Elections",
+      "url": "https://polymarket.com/event/next-french-presidential-election",
+      "countries": [
+        "France"
+      ]
+    },
+    {
       "title": "Prime Minister of Israel after the next election?",
       "outcome": "Gadi Eizenkot",
-      "prob": 78,
-      "change24h": 0.7,
-      "volume24h": 506165,
+      "prob": 81,
+      "change24h": -0.2,
+      "volume24h": 389937,
       "category": "Elections",
       "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
       "countries": [
@@ -373,23 +373,55 @@
       ]
     },
     {
-      "title": "Next Prime Minister of Sweden",
-      "outcome": "Ulf Kristersson",
-      "prob": 84,
-      "change24h": -3.6,
-      "volume24h": 259693,
+      "title": "Republican Presidential Nominee 2028",
+      "outcome": "J.D. Vance",
+      "prob": 32,
+      "change24h": 0.2,
+      "volume24h": 324814,
       "category": "Elections",
-      "url": "https://polymarket.com/event/next-prime-minister-of-sweden",
+      "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
       "countries": [
-        "Sweden"
+        "United States of America"
+      ]
+    },
+    {
+      "title": "Jensen Huang out as NVIDIA CEO again by...?",
+      "outcome": "December 31, 2026",
+      "prob": 9,
+      "change24h": 3.5,
+      "volume24h": 269318,
+      "category": "Policy",
+      "url": "https://polymarket.com/event/jensen-huang-out-as-nvidia-ceo-again-byptptpt",
+      "countries": []
+    },
+    {
+      "title": "Taoyuan Mayor Election Winner",
+      "outcome": "Chang San-cheng",
+      "prob": 91,
+      "change24h": -2,
+      "volume24h": 247693,
+      "category": "Elections",
+      "url": "https://polymarket.com/event/taoyuan-mayor-election-winner-20260813125857300",
+      "countries": []
+    },
+    {
+      "title": "2026 Taipei Mayoral Election: Margin of Victory",
+      "outcome": "Chiang Wan-an <4%",
+      "prob": 25,
+      "change24h": null,
+      "volume24h": 234309,
+      "category": "Elections",
+      "url": "https://polymarket.com/event/2026-taipei-mayoral-election-margin-of-victory-20261103233704870",
+      "countries": [
+        "Taiwan"
       ]
     },
     {
       "title": "Israel x Iran ceasefire continues through...?",
-      "outcome": "November 30",
-      "prob": 95,
-      "change24h": 0.5,
-      "volume24h": 234521,
+      "outcome": "December 15",
+      "prob": 85,
+      "change24h": 1,
+      "volume24h": 215584,
       "category": "Geopolitics",
       "url": "https://polymarket.com/event/israel-x-iran-ceasefire-continues-throughptptpt-20260716224448963",
       "countries": [
@@ -398,49 +430,15 @@
       ]
     },
     {
-      "title": "Republican Presidential Nominee 2028",
-      "outcome": "J.D. Vance",
-      "prob": 32,
+      "title": "Spain General Election Winner",
+      "outcome": "PP",
+      "prob": 74,
       "change24h": -1,
-      "volume24h": 231643,
+      "volume24h": 185297,
       "category": "Elections",
-      "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
+      "url": "https://polymarket.com/event/spain-general-election-winner",
       "countries": [
-        "United States of America"
-      ]
-    },
-    {
-      "title": "2026 Taipei Mayoral Election: Margin of Victory",
-      "outcome": "Chiang Wan-an <4%",
-      "prob": 25,
-      "change24h": null,
-      "volume24h": 221483,
-      "category": "Elections",
-      "url": "https://polymarket.com/event/2026-taipei-mayoral-election-margin-of-victory-20261103233704870",
-      "countries": [
-        "Taiwan"
-      ]
-    },
-    {
-      "title": "What technical failure caused the FAA's nationwide ground stop?",
-      "outcome": "Software or configuration error",
-      "prob": 22,
-      "change24h": -63.3,
-      "volume24h": 215366,
-      "category": "Policy",
-      "url": "https://polymarket.com/event/what-technical-failure-caused-the-faas-nationwide-ground-stop",
-      "countries": []
-    },
-    {
-      "title": "New Taipei Mayor Election Winner",
-      "outcome": "Su Chiao-hui",
-      "prob": 61,
-      "change24h": -3,
-      "volume24h": 207387,
-      "category": "Elections",
-      "url": "https://polymarket.com/event/new-taipei-mayor-election-winner-20260813125857200",
-      "countries": [
-        "Taiwan"
+        "Spain"
       ]
     }
   ],
@@ -451,7 +449,7 @@
         "outcome": "25 bps increase",
         "prob": 95,
         "change24h": 1,
-        "volume24h": 3448581,
+        "volume24h": 4451481,
         "category": "Macro & Rates",
         "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
         "countries": [
@@ -461,9 +459,9 @@
       {
         "title": "Democratic Presidential Nominee 2028",
         "outcome": "Jon Ossoff",
-        "prob": 24,
-        "change24h": 2.3,
-        "volume24h": 1113471,
+        "prob": 25,
+        "change24h": 1.6,
+        "volume24h": 1236958,
         "category": "Elections",
         "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
         "countries": [
@@ -474,8 +472,8 @@
         "title": "Republican Presidential Nominee 2028",
         "outcome": "J.D. Vance",
         "prob": 32,
-        "change24h": -1,
-        "volume24h": 231643,
+        "change24h": 0.2,
+        "volume24h": 324814,
         "category": "Elections",
         "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
         "countries": [
@@ -483,28 +481,28 @@
         ]
       },
       {
-        "title": "Fed Decision in January?",
-        "outcome": "No change",
-        "prob": 42,
-        "change24h": -1.5,
-        "volume24h": 100590,
-        "category": "Macro & Rates",
-        "url": "https://polymarket.com/event/fed-decision-in-january-20260729233815502",
-        "countries": [
-          "United States of America"
-        ]
-      },
-      {
         "title": "US announces end of Iranian blockade by...?",
         "outcome": "December 15",
-        "prob": 9,
+        "prob": 8,
         "change24h": null,
-        "volume24h": 87386,
+        "volume24h": 87494,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/us-announces-end-of-iranian-blockade-byptptpt-20260713152715080",
         "countries": [
           "United States of America",
           "Iran"
+        ]
+      },
+      {
+        "title": "Fed Decision in January?",
+        "outcome": "No change",
+        "prob": 43,
+        "change24h": -1,
+        "volume24h": 72138,
+        "category": "Macro & Rates",
+        "url": "https://polymarket.com/event/fed-decision-in-january-20260729233815502",
+        "countries": [
+          "United States of America"
         ]
       }
     ],
@@ -512,9 +510,9 @@
       {
         "title": "Taipei Mayor Election Winner",
         "outcome": "Chiang Wan-an",
-        "prob": 59,
-        "change24h": -3,
-        "volume24h": 1249004,
+        "prob": 56,
+        "change24h": -4,
+        "volume24h": 1616651,
         "category": "Elections",
         "url": "https://polymarket.com/event/taipei-mayor-election-winner-20260813125857100",
         "countries": [
@@ -526,7 +524,7 @@
         "outcome": "Chiang Wan-an <4%",
         "prob": 25,
         "change24h": null,
-        "volume24h": 221483,
+        "volume24h": 234309,
         "category": "Elections",
         "url": "https://polymarket.com/event/2026-taipei-mayoral-election-margin-of-victory-20261103233704870",
         "countries": [
@@ -536,27 +534,38 @@
       {
         "title": "New Taipei Mayor Election Winner",
         "outcome": "Su Chiao-hui",
-        "prob": 61,
-        "change24h": -3,
-        "volume24h": 207387,
+        "prob": 64,
+        "change24h": 1.5,
+        "volume24h": 159758,
         "category": "Elections",
         "url": "https://polymarket.com/event/new-taipei-mayor-election-winner-20260813125857200",
         "countries": [
           "Taiwan"
         ]
-      }
-    ],
-    "France": [
+      },
       {
-        "title": "Next French Presidential Election",
-        "outcome": "Marine Le Pen",
-        "prob": 44,
-        "change24h": 0.1,
-        "volume24h": 766357,
+        "title": "Mayor Combo: Taipei and New Taipei",
+        "outcome": "DPP sweep",
+        "prob": 36,
+        "change24h": 2,
+        "volume24h": 40356,
         "category": "Elections",
-        "url": "https://polymarket.com/event/next-french-presidential-election",
+        "url": "https://polymarket.com/event/mayor-combo-taipei-and-new-taipei",
         "countries": [
-          "France"
+          "Taiwan"
+        ]
+      },
+      {
+        "title": "Will China invade Taiwan by end of 2026?",
+        "outcome": null,
+        "prob": 2,
+        "change24h": 0,
+        "volume24h": 27711,
+        "category": "Geopolitics",
+        "url": "https://polymarket.com/event/will-china-invade-taiwan-before-2027",
+        "countries": [
+          "China",
+          "Taiwan"
         ]
       }
     ],
@@ -564,9 +573,9 @@
       {
         "title": "Next Prime Minister of Spain?",
         "outcome": "Alberto Núñez Feijóo",
-        "prob": 90,
+        "prob": 89,
         "change24h": -1,
-        "volume24h": 713051,
+        "volume24h": 1107395,
         "category": "Elections",
         "url": "https://polymarket.com/event/next-prime-minister-of-spain-20260625005215443",
         "countries": [
@@ -578,11 +587,37 @@
         "outcome": "PP",
         "prob": 74,
         "change24h": -1,
-        "volume24h": 175038,
+        "volume24h": 185297,
         "category": "Elections",
         "url": "https://polymarket.com/event/spain-general-election-winner",
         "countries": [
           "Spain"
+        ]
+      },
+      {
+        "title": "Spain General Election: Turnout",
+        "outcome": "70%+",
+        "prob": 55,
+        "change24h": -2.5,
+        "volume24h": 29804,
+        "category": "Elections",
+        "url": "https://polymarket.com/event/spain-general-election-turnout",
+        "countries": [
+          "Spain"
+        ]
+      }
+    ],
+    "France": [
+      {
+        "title": "Next French Presidential Election",
+        "outcome": "Marine Le Pen",
+        "prob": 44,
+        "change24h": -0.1,
+        "volume24h": 899845,
+        "category": "Elections",
+        "url": "https://polymarket.com/event/next-french-presidential-election",
+        "countries": [
+          "France"
         ]
       }
     ],
@@ -590,9 +625,9 @@
       {
         "title": "Prime Minister of Israel after the next election?",
         "outcome": "Gadi Eizenkot",
-        "prob": 78,
-        "change24h": 0.7,
-        "volume24h": 506165,
+        "prob": 81,
+        "change24h": -0.2,
+        "volume24h": 389937,
         "category": "Elections",
         "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
         "countries": [
@@ -601,10 +636,10 @@
       },
       {
         "title": "Israel x Iran ceasefire continues through...?",
-        "outcome": "November 30",
-        "prob": 95,
-        "change24h": 0.5,
-        "volume24h": 234521,
+        "outcome": "December 15",
+        "prob": 85,
+        "change24h": 1,
+        "volume24h": 215584,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/israel-x-iran-ceasefire-continues-throughptptpt-20260716224448963",
         "countries": [
@@ -615,9 +650,9 @@
       {
         "title": "Netanyahu out by...?",
         "outcome": "December 31",
-        "prob": 72,
-        "change24h": -13,
-        "volume24h": 48684,
+        "prob": 73,
+        "change24h": -2,
+        "volume24h": 28804,
         "category": "Elections",
         "url": "https://polymarket.com/event/netanyahu-out-before-2027",
         "countries": [
@@ -625,39 +660,13 @@
         ]
       }
     ],
-    "Sweden": [
-      {
-        "title": "Next Prime Minister of Sweden",
-        "outcome": "Ulf Kristersson",
-        "prob": 84,
-        "change24h": -3.6,
-        "volume24h": 259693,
-        "category": "Elections",
-        "url": "https://polymarket.com/event/next-prime-minister-of-sweden",
-        "countries": [
-          "Sweden"
-        ]
-      },
-      {
-        "title": "Which coalition will form the next Swedish government?",
-        "outcome": "M + KD + L + C",
-        "prob": 77,
-        "change24h": -4.8,
-        "volume24h": 53173,
-        "category": "Policy",
-        "url": "https://polymarket.com/event/which-coalition-will-form-the-next-swedish-government",
-        "countries": [
-          "Sweden"
-        ]
-      }
-    ],
     "Iran": [
       {
         "title": "Israel x Iran ceasefire continues through...?",
-        "outcome": "November 30",
-        "prob": 95,
-        "change24h": 0.5,
-        "volume24h": 234521,
+        "outcome": "December 15",
+        "prob": 85,
+        "change24h": 1,
+        "volume24h": 215584,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/israel-x-iran-ceasefire-continues-throughptptpt-20260716224448963",
         "countries": [
@@ -666,23 +675,11 @@
         ]
       },
       {
-        "title": "Iran leadership change by...?",
-        "outcome": "December 31, 2026",
-        "prob": 6,
-        "change24h": -1,
-        "volume24h": 88681,
-        "category": "Policy",
-        "url": "https://polymarket.com/event/iran-leadership-change-by",
-        "countries": [
-          "Iran"
-        ]
-      },
-      {
         "title": "US announces end of Iranian blockade by...?",
         "outcome": "December 15",
-        "prob": 9,
+        "prob": 8,
         "change24h": null,
-        "volume24h": 87386,
+        "volume24h": 87494,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/us-announces-end-of-iranian-blockade-byptptpt-20260713152715080",
         "countries": [
@@ -693,9 +690,9 @@
       {
         "title": "US x Iran Effective Ceasefire begins by...? (2 week pause)",
         "outcome": "November 30",
-        "prob": 76,
-        "change24h": 3.5,
-        "volume24h": 72059,
+        "prob": 75,
+        "change24h": 3,
+        "volume24h": 56574,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/us-x-iran-effective-ceasefire-begins-by-2-week-pause-20261108",
         "countries": [
@@ -704,15 +701,68 @@
         ]
       },
       {
-        "title": "Will the Iranian regime fall before 2027?",
-        "outcome": null,
-        "prob": 2,
-        "change24h": -0.5,
-        "volume24h": 71905,
+        "title": "Iran leader end of 2026?",
+        "outcome": "Mojtaba Khamenei",
+        "prob": 95,
+        "change24h": 0.6,
+        "volume24h": 41684,
         "category": "Policy",
-        "url": "https://polymarket.com/event/will-the-iranian-regime-fall-by-the-end-of-2026",
+        "url": "https://polymarket.com/event/iran-leader-end-of-2026",
         "countries": [
           "Iran"
+        ]
+      },
+      {
+        "title": "US-Iran Final Nuclear Deal by…?",
+        "outcome": "December 31",
+        "prob": 5,
+        "change24h": 1.5,
+        "volume24h": 40827,
+        "category": "Geopolitics",
+        "url": "https://polymarket.com/event/us-iran-final-nuclear-deal-by-20260621201254412",
+        "countries": [
+          "United States of America",
+          "Iran"
+        ]
+      }
+    ],
+    "Sweden": [
+      {
+        "title": "Next Prime Minister of Sweden",
+        "outcome": "Ulf Kristersson",
+        "prob": 85,
+        "change24h": -3.5,
+        "volume24h": 159582,
+        "category": "Elections",
+        "url": "https://polymarket.com/event/next-prime-minister-of-sweden",
+        "countries": [
+          "Sweden"
+        ]
+      }
+    ],
+    "Serbia": [
+      {
+        "title": "Next Prime Minister of Serbia?",
+        "outcome": "Dejan Šoškić",
+        "prob": 57,
+        "change24h": -7.2,
+        "volume24h": 153659,
+        "category": "Elections",
+        "url": "https://polymarket.com/event/next-prime-minister-of-serbia-20260629223938642",
+        "countries": [
+          "Serbia"
+        ]
+      },
+      {
+        "title": "Next Serbia Presidential Election Winner",
+        "outcome": "Radomir Saičić",
+        "prob": 96,
+        "change24h": 4.4,
+        "volume24h": 54261,
+        "category": "Elections",
+        "url": "https://polymarket.com/event/next-serbia-presidential-election-winner-20260629192336823",
+        "countries": [
+          "Serbia"
         ]
       }
     ],
@@ -722,7 +772,7 @@
         "outcome": "Nicolás Maduro",
         "prob": 90,
         "change24h": -0.5,
-        "volume24h": 90281,
+        "volume24h": 111852,
         "category": "Policy",
         "url": "https://polymarket.com/event/venezuela-leader-end-of-2026",
         "countries": [
@@ -730,53 +780,39 @@
         ]
       }
     ],
-    "Serbia": [
+    "Canada": [
       {
-        "title": "Next Serbia Presidential Election Winner",
-        "outcome": "Radomir Saičić",
-        "prob": 97,
-        "change24h": 2.2,
-        "volume24h": 77704,
-        "category": "Elections",
-        "url": "https://polymarket.com/event/next-serbia-presidential-election-winner-20260629192336823",
+        "title": "Canadian unwrought aluminum duty rate on December 31, 2027?",
+        "outcome": ">20-40%",
+        "prob": 22,
+        "change24h": 1,
+        "volume24h": 46799,
+        "category": "Macro & Rates",
+        "url": "https://polymarket.com/event/section-232-rate-on-canadian-primary-aluminum",
         "countries": [
-          "Serbia"
-        ]
-      },
-      {
-        "title": "Next Prime Minister of Serbia?",
-        "outcome": "Dejan Šoškić",
-        "prob": 46,
-        "change24h": -15.6,
-        "volume24h": 66659,
-        "category": "Elections",
-        "url": "https://polymarket.com/event/next-prime-minister-of-serbia-20260629223938642",
-        "countries": [
-          "Serbia"
-        ]
-      }
-    ],
-    "New Zealand": [
-      {
-        "title": "Next Prime Minister of New Zealand?",
-        "outcome": "Christopher Luxon",
-        "prob": 81,
-        "change24h": 1.5,
-        "volume24h": 55986,
-        "category": "Elections",
-        "url": "https://polymarket.com/event/next-prime-minister-of-new-zealand-174",
-        "countries": [
-          "New Zealand"
+          "Canada"
         ]
       }
     ],
     "Russia": [
       {
+        "title": "Will Russia capture the Royal Café Alex in Kostyantynivka by...?",
+        "outcome": "November 30",
+        "prob": 98,
+        "change24h": 95.5,
+        "volume24h": 44904,
+        "category": "Policy",
+        "url": "https://polymarket.com/event/will-russia-capture-the-royal-cafe-alex-in-kostyantynivka-byptptpt",
+        "countries": [
+          "Russia"
+        ]
+      },
+      {
         "title": "Russia x Ukraine ceasefire agreement by...?",
         "outcome": "December 31",
         "prob": 8,
         "change24h": -1,
-        "volume24h": 48945,
+        "volume24h": 35494,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/russia-x-ukraine-ceasefire-agreement-by",
         "countries": [
@@ -789,9 +825,21 @@
         "outcome": "March 31, 2027",
         "prob": 6,
         "change24h": null,
-        "volume24h": 40944,
+        "volume24h": 28645,
         "category": "Elections",
         "url": "https://polymarket.com/event/putin-out-before-2027",
+        "countries": [
+          "Russia"
+        ]
+      },
+      {
+        "title": "NATO x Russia military clash by...?",
+        "outcome": "December 31",
+        "prob": 13,
+        "change24h": null,
+        "volume24h": 25362,
+        "category": "Geopolitics",
+        "url": "https://polymarket.com/event/nato-x-russia-military-clash-in-2025",
         "countries": [
           "Russia"
         ]
@@ -803,7 +851,7 @@
         "outcome": "December 31",
         "prob": 8,
         "change24h": -1,
-        "volume24h": 48945,
+        "volume24h": 35494,
         "category": "Geopolitics",
         "url": "https://polymarket.com/event/russia-x-ukraine-ceasefire-agreement-by",
         "countries": [
@@ -812,17 +860,32 @@
         ]
       }
     ],
-    "Canada": [
+    "United Kingdom": [
       {
-        "title": "Canadian unwrought aluminum duty rate on December 31, 2027?",
-        "outcome": "0%",
-        "prob": 9,
-        "change24h": 0.4,
-        "volume24h": 44753,
+        "title": "Bank of England decision in December?",
+        "outcome": "No change",
+        "prob": 21,
+        "change24h": -2,
+        "volume24h": 28129,
         "category": "Macro & Rates",
-        "url": "https://polymarket.com/event/section-232-rate-on-canadian-primary-aluminum",
+        "url": "https://polymarket.com/event/bank-of-england-decision-in-december-2026",
         "countries": [
-          "Canada"
+          "United Kingdom"
+        ]
+      }
+    ],
+    "China": [
+      {
+        "title": "Will China invade Taiwan by end of 2026?",
+        "outcome": null,
+        "prob": 2,
+        "change24h": 0,
+        "volume24h": 27711,
+        "category": "Geopolitics",
+        "url": "https://polymarket.com/event/will-china-invade-taiwan-before-2027",
+        "countries": [
+          "China",
+          "Taiwan"
         ]
       }
     ]
